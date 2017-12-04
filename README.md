@@ -1,1 +1,2 @@
-# FRC_2018
+# frc-2018
+AEMBot 2017 FRC code.
