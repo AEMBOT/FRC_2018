@@ -37,7 +37,7 @@ boolean d = e || f && g;
 a++;
 d = !e;
 ```
-SMB's Thoughts: Organize expressions in a self-documenting way, and for readibility. Don't be rigid. Long expressions can extra long with too many spaces. Rule of thumb: spaces around binary + and -, no spaces for binary * and /, which parallels their precedence. Break
+SMB's Thoughts: Organize expressions in a self-documenting way, and for readibility. Don't be rigid. Long expressions can extra be long with too many spaces. Rule of thumb: spaces around binary + and -, no spaces for binary * and /, which parallels their precedence. Break
 calculations into subexpressions using temporary variables.
 
 Blocks should be logically seperated with line breaks as appropiate:
