@@ -1,7 +1,4 @@
-# frc-2017
-Liberty Robotics 2017 FRC code
-
-# Liberty Robotics Code Guidelines (v4)
+# Liberty Robotics Code and Git Guidelines (v4)
 Jump to...
 - [Line Breaks, Whitespace](#line-breaks-whitespace)
 - [Conventions](#conventions)
