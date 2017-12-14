@@ -1,4 +1,4 @@
-# Liberty Robotics Code and Git Guidelines (v4)
+# Code and Git Guidelines (v4)
 Jump to...
 - [Line Breaks, Whitespace](#line-breaks-whitespace)
 - [Conventions](#conventions)
