@@ -17,7 +17,7 @@ void someMethod() {
   //code
 }
 ```
-SMB's Thoughts: If a function has too many parameters, break the list across lines, and put the curly brace on a line by itself.
+**SMB's Thoughts**: If a function has too many parameters, break the list across lines, and put the curly brace on a line by itself.
 ```
 void some_method( int a,
                   int b,
@@ -37,12 +37,12 @@ boolean d = e || f && g;
 a++;
 d = !e;
 ```
-SMB's Thoughts: Organize expressions in a self-documenting way, and for readibility. Don't be rigid. Long expressions can be extra long with too many spaces. Rule of thumb: spaces around binary + and -, no spaces for binary * and /, which parallels their precedence. Break
+**SMB's Thoughts**: Organize expressions in a self-documenting way, and for readibility. Don't be rigid. Long expressions can be extra long with too many spaces. Rule of thumb: spaces around binary + and -, no spaces for binary * and /, which parallels their precedence. Break
 calculations into subexpressions using temporary variables.
 
 Blocks should be logically seperated with line breaks as appropiate:
 
-SMB's Thoughts: Yes! Absolutely.
+**SMB's Thoughts**: Yes! Absolutely.
 ```
 determineDirection();
 moveToPoint();
@@ -59,11 +59,10 @@ int* ptr; // does not conform
 Variables and methods should be typed in camelBack. Classes should be typed in PascalCase.
 ```
 SystemsManager sysManager = new SystemsManager();
-
-## SMB's Thoughts
-Use names that are as most like natural English: capital acronyms, underscores_for_spaces when spaces are not allowed, which allows for natural hyphenation, function names with underscores (more readable like spaces in English). Don't be too rigid. Let go of rules when they don't work so well. (Computer programmers sometimes have a psyhology of rigid rules like programming languages. The computer is rigid but you're human.)
-
 ```
+**SMB's Thoughts**
+Use names that are as most like natural English: capital acronyms, underscores_for_spaces when spaces are not allowed, which allows for natural hyphenation, function names with underscores (more readable like spaces in English). Don't be too rigid. Let go of rules when they don't work so well. (Computer programmers sometimes have a psyhology of rigid rules like programming languages. The computer is rigid, but you're human.)
+
 Constants which are only used in the local scope may be in all capitals. However, constants which are accessible members must be in PascalCase.
 ```
 public final int SystemIdentifier = 0;
@@ -71,10 +70,10 @@ public final int SystemIdentifier = 0;
 ...
 
 final int SYSTEM_ID = SystemsManager.SystemIdentifier;
-
-SMB's Thoughts: Constants always all caps.
-
 ```
+
+**SMB's Thoughts**: Constants always all caps (except in rare cases where it might be natural to use some lower case letters).
+
 In a `for` loop, `i` should be the primary iterator, `j` the secondary iterator if necessary, `k` the third, and so on...
 ```
 for (int i = 0; i < sizeX; i++) {
@@ -84,8 +83,6 @@ for (int i = 0; i < sizeX; i++) {
 }
 ```
 Side Note: As seen above, your braces should close on the same level of indentation as their opening statement.
-
-SMB's Thoughts: Sounds good as a rule of thumb--usuall do this. As usual, sometimes a little something else is more natural.
 
 ### Logical Detours
 Code should be as straightforward as possible. Often, inexperienced programmers write code that is unneccessarily complicated, making it more time-consuming to be both understood and executed. The following are examples of some "novice mistakes" to be aware of.
@@ -102,9 +99,6 @@ else if (x == false) {
 //is equivalent to...
 
 x = !x // much cleaner, and takes one instruction instead of several.
-
-SMB's Thoughts: Excellent. I might have done it the first way. LOL
-
 ```
 #### Setting a variable
 This one happens more than it should.
@@ -115,9 +109,6 @@ if (x != 0) {
 
 // the above is actually more expensive than...
 x = 0;
-
-SMB's Thoughts: True dat.
-
 ```
 ## Organization
 In python, all functions should be defined at the top of the file, BEFORE the main block.
@@ -161,7 +152,7 @@ We use git hosted on GitHub for Version Control. To effectively use this tool it
 ### Commits
 When you're committing at a milestone or other significant point, document your commit well. Otherwise, commit and PUSH often in order to keep your code backed up, and available to everyone.
 
-Commits should be in good English, succinct, and effective. For daily commits, something like this is fine: "Saving work, not compiling". For commits at significant point, list the signicant items in a bullet list, and add details as necessary.
+Commits should be in good English, succinct, and effective. For regular commits, something like this is fine: "Saving work, not compiling". For commits at significant point, list the signicant items in a bullet list, and add details as necessary.
 
 ### Branches
 
