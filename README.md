@@ -9,3 +9,7 @@ This code is to be used for FRC 6443's 2018 robot.
 * Hardware
 * Utiliites 
 * Commands
+
+### [6443's Convention Document](Code_and_Git_Guidelines.md)
+This document goes over general Githbu and Java code standards for this repository.
+
