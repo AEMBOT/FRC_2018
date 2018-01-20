@@ -8,8 +8,11 @@ import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 
+import org.usfirst.frc.falcons6443.robot.commands.Delay;
+
+
 /**
- * ROBOTS DON'T QUIT! <- Deprecated
+ * ROBOTS DON'T QUIT!
  * The Robot class is FRC team 6443's implementation of WPIlib's IterativeRobot class.
  *
  * @author Christopher Medlin
@@ -33,7 +36,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        // autonomy = new #Autonomy(); TODO Assign autonomous command
+        autonomy = new Delay(1);
         teleop = new TeleopMode();
     }
 

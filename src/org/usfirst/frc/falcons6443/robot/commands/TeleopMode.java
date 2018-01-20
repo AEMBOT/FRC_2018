@@ -12,7 +12,7 @@ import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
 public class TeleopMode extends SimpleCommand {
 
     private Gamepad gamepad;
-    private boolean reversed, gearToggled, ropeClimberIdled;
+    private boolean reversed;
 
     public TeleopMode() {
         super("Teleop Command");
