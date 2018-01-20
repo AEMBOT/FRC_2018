@@ -19,17 +19,10 @@ public class RobotMap {
     public static final int BackRightVictor = 3;
     public static final int BackLeftVictor = 0;
 
-    //solenoid
-    public static final int GearHolderSolenoidOpen = 0;
-    public static final int GearHolderSolenoidClose = 1;
-
-    //ultrasonics
-    public static final int FrontUltrasonic = -1;
-    public static final int LeftUltrasonic = -1;
-    public static final int RightUltrasonic = -1;
-    public static final int BackUltrasonic = -1;
-
-    //rope climber
-    public static final int RopeClimberSpark = 4;
+    //drive train encoders
+    public static final int LeftEncoderA = -1;
+    public static final int LeftEncoderB = -1;
+    public static final int RightEncoderA = -1;
+    public static final int RightEncoderB = -1;
 
 }
