@@ -9,11 +9,11 @@ public class DriveEncoders {
     private Encoder left;
     private Encoder right;
 
-    public DriveEncoders(){
+    /*public DriveEncoders(){
         left = new Encoder(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
         right = new Encoder(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
         right.setReverseDirection(true);
-    }
+    }*/
 
     public double getLeftDistance(){
         return left.getDistance();
