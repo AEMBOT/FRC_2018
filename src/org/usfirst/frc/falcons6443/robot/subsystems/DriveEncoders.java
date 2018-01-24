@@ -9,11 +9,11 @@ public class DriveEncoders {
     private Encoder left;
     private Encoder right;
 
-    /*public DriveEncoders(){
+    public DriveEncoders(){
         left = new Encoder(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
         right = new Encoder(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
         right.setReverseDirection(true);
-    }*/
+    }
 
     public double getLeftDistance(){
         return left.getDistance();
@@ -34,6 +34,8 @@ public class DriveEncoders {
     public double getRightSpeed(){
         return right.getRate();
     }
+
+    public double getLinearSpeed() { return (getLeftSpeed() + getRightSpeed()) / 2; }
 
     public void reset(){
         left.reset();

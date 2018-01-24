@@ -26,8 +26,13 @@ public class DriveTrainSystem extends Subsystem {
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
-    public DriveEncoders encoders;
+    private DriveEncoders encoders;
+    private NavigationSystem navx;
 
+    private double targetDistance;
+    private double targetAngle;
+    private double distanceBuffer = .5; //inches
+    private double angleBuffer = 2;
     private boolean reversed;
     private double wheelDiameter = 6; //UPDATE!
 
@@ -54,6 +59,7 @@ public class DriveTrainSystem extends Subsystem {
 
         drive = new RobotDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
+        navx = new NavigationSystem();
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
@@ -131,4 +137,37 @@ public class DriveTrainSystem extends Subsystem {
     public double getRightDistance(){
         return encoders.getRightDistance() * wheelDiameter * Math.PI / 1024.0; // In inches
     }
+
+    public void driveToDistance(double distance, double speed){
+        targetDistance = distance;
+        while (!isAtDistance()){
+            tankDrive(speed, speed);
+            //wait for seconds??
+        }
+        tankDrive(0, 0);
+    }
+
+    public boolean isAtDistance(){
+        if ((encoders.getLinearDistance() + distanceBuffer) > targetDistance){
+            return true;
+        } else
+            return false;
+    }
+
+    public void turnToAngle(double angle, double speed){
+        targetAngle = angle;
+        while (!isAtAngle()){
+            spin(speed);
+            //wait for seconds??
+        }
+        tankDrive(0, 0);
+    }
+
+    public boolean isAtAngle(){
+        if ((navx.getYaw() /*Yaw? dispX? dispY?*/ + angleBuffer) > targetAngle){
+            return true;
+        } else
+            return false;
+    }
+
 }
