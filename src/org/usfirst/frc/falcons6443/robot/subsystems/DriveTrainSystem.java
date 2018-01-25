@@ -3,6 +3,7 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 
@@ -17,17 +18,13 @@ import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
  */
 public class DriveTrainSystem extends Subsystem {
 
-    // The constant that determines the maximum curvature at which the robot can move.
-    // It is determined by the formula c = e^(-r/w), where
-    // r is the radius of the turn and w is the wheelbase (distance between the wheels) of the robot
-    // more info in the describtion of drive() method in RobotDrive
-    private static final double MAXIMUM_CURVE = 0.36787944; //UPDATE!
-
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
     private DriveEncoders encoders;
     private NavigationSystem navx;
+
+    private Timer timer;
 
     private double targetDistance;
     private double targetAngle;
@@ -60,6 +57,7 @@ public class DriveTrainSystem extends Subsystem {
         drive = new RobotDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
         navx = new NavigationSystem();
+        timer = new Timer();
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
@@ -114,21 +112,6 @@ public class DriveTrainSystem extends Subsystem {
         return reversed;
     }
 
-    /**
-     * Moves the robot at a specified speed and curvature.
-     * <p>
-     * @param speed the desired speed.
-     * @param curve the desired curvature.
-     */
-    public void drive(double speed, double curve) {
-        if (!reversed) {
-            drive.drive(speed, curve * MAXIMUM_CURVE);
-        } else {
-            drive.drive(-speed, -curve * MAXIMUM_CURVE);
-        }
-    }
-
-
     public double getLeftDistance(){
         // Encoder clicks per rotation = 1024
         return -encoders.getLeftDistance() * wheelDiameter * Math.PI / 1024.0; // In inches
@@ -138,17 +121,21 @@ public class DriveTrainSystem extends Subsystem {
         return encoders.getRightDistance() * wheelDiameter * Math.PI / 1024.0; // In inches
     }
 
+    public double getLinearDistance(){
+        return (getLeftDistance() + getRightDistance()) / 2;
+    }
+
     public void driveToDistance(double distance, double speed){
         targetDistance = distance;
         while (!isAtDistance()){
             tankDrive(speed, speed);
-            //wait for seconds??
+            timer.delay(1);
         }
         tankDrive(0, 0);
     }
 
     public boolean isAtDistance(){
-        if ((encoders.getLinearDistance() + distanceBuffer) > targetDistance){
+        if ((getLinearDistance() + distanceBuffer) > targetDistance){
             return true;
         } else
             return false;
@@ -157,14 +144,15 @@ public class DriveTrainSystem extends Subsystem {
     public void turnToAngle(double angle, double speed){
         targetAngle = angle;
         while (!isAtAngle()){
-            spin(speed);
-            //wait for seconds??
+            int direction = navx.getYaw() < angle ? -1 : 1;
+            spin(speed * direction);
+            timer.delay(.5);
         }
         tankDrive(0, 0);
     }
 
     public boolean isAtAngle(){
-        if ((navx.getYaw() /*Yaw? dispX? dispY?*/ + angleBuffer) > targetAngle){
+        if ((navx.getYaw() + angleBuffer) > targetAngle && (navx.getYaw() - angleBuffer) < targetAngle){
             return true;
         } else
             return false;
