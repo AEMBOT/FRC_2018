@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 
 /**
@@ -21,17 +22,16 @@ public class DriveTrainSystem extends Subsystem {
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
-    private DriveEncoders encoders;
-    private NavigationSystem navx;
+    //private DriveEncoders encoders;
 
     private Timer timer;
 
     private double targetDistance;
-    private double targetAngle;
-    private double distanceBuffer = .5; //inches
-    private double angleBuffer = 2;
+    private static final double DistanceBuffer = .5; //inches
+    //target angle and angle buffer in DriveTrainSystem class
+
     private boolean reversed;
-    private double wheelDiameter = 6; //UPDATE!
+    private static final double WheelDiameter = 6; //UPDATE!
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
@@ -55,8 +55,7 @@ public class DriveTrainSystem extends Subsystem {
                 new VictorSP(RobotMap.BackRightVictor));
 
         drive = new RobotDrive(leftMotors, rightMotors);
-        encoders = new DriveEncoders();
-        navx = new NavigationSystem();
+        //encoders = new DriveEncoders();
         timer = new Timer();
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
@@ -114,11 +113,13 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLeftDistance(){
         // Encoder clicks per rotation = 1024
-        return -encoders.getLeftDistance() * wheelDiameter * Math.PI / 1024.0; // In inches
+        //return -encoders.getLeftDistance() * WheelDiameter * Math.PI / 1024.0; // In inches
+        return 0;
     }
 
     public double getRightDistance(){
-        return encoders.getRightDistance() * wheelDiameter * Math.PI / 1024.0; // In inches
+        //return encoders.getRightDistance() * WheelDiameter * Math.PI / 1024.0; // In inches
+        return 0;
     }
 
     public double getLinearDistance(){
@@ -135,24 +136,7 @@ public class DriveTrainSystem extends Subsystem {
     }
 
     public boolean isAtDistance(){
-        if ((getLinearDistance() + distanceBuffer) > targetDistance){
-            return true;
-        } else
-            return false;
-    }
-
-    public void turnToAngle(double angle, double speed){
-        targetAngle = angle;
-        while (!isAtAngle()){
-            int direction = navx.getYaw() < angle ? -1 : 1;
-            spin(speed * direction);
-            timer.delay(.5);
-        }
-        tankDrive(0, 0);
-    }
-
-    public boolean isAtAngle(){
-        if ((navx.getYaw() + angleBuffer) > targetAngle && (navx.getYaw() - angleBuffer) < targetAngle){
+        if ((getLinearDistance() + DistanceBuffer) > targetDistance){
             return true;
         } else
             return false;

@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 
 /**
@@ -15,6 +16,11 @@ public class RotateToAngle extends SimpleCommand implements PIDOutput {
     private float angle;
     private double time;
     private PIDController pid;
+    private Timer timer;
+    private double targetAngle;
+    private static final double AngleBuffer = 2;
+    //target distance and distance buffer in DriveTrainSystem class
+
 
     /**
      * Constructor for RotateToAngle.
@@ -27,6 +33,7 @@ public class RotateToAngle extends SimpleCommand implements PIDOutput {
         requires(driveTrain);
         this.angle = angle;
         time = seconds;
+        timer = new Timer();
     }
 
     @Override
@@ -70,5 +77,22 @@ public class RotateToAngle extends SimpleCommand implements PIDOutput {
     @Override
     public void pidWrite(double output) {
         pidOutput = output;
+    }
+
+    public void turnToAngle(double angle, double speed){
+        targetAngle = angle;
+        while (!isAtAngle()){
+            int direction = navigation.getYaw() < angle ? -1 : 1;
+            driveTrain.spin(speed * direction);
+            timer.delay(.5);
+        }
+        driveTrain.tankDrive(0, 0);
+    }
+
+    public boolean isAtAngle(){
+        if ((navigation.getYaw() + AngleBuffer) > targetAngle && (navigation.getYaw() - AngleBuffer) < targetAngle){
+            return true;
+        } else
+            return false;
     }
 }
