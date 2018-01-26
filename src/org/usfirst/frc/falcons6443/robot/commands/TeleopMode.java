@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
+import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 
 /**
  * Teleoperated mode for the robot.
@@ -12,29 +13,30 @@ import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
 public class TeleopMode extends SimpleCommand {
 
     private Gamepad gamepad;
-    private boolean reversed, gearToggled, ropeClimberIdled;
+    private boolean reversed;
 
     public TeleopMode() {
         super("Teleop Command");
-
         requires(driveTrain);
+        requires(elevator);
     }
 
     @Override
     public void initialize() {
         gamepad = Robot.oi.getGamepad();
         reversed = false;
-        gearToggled = false;
-        ropeClimberIdled = false;
     }
 
     @Override
     public void execute() {
 
+        //The A button will move the elevator to the switch height
+        if (gamepad.A()){
+            elevator.moveToHeight(ElevatorEnums.Switch);
+        }
 
-
-        // the Y button will toggle the drive train to reverse mode
-        if (gamepad.Y()) {
+        // the Start button will toggle the drive train to reverse mode
+        if (gamepad.Start()) {
             // safeguard for if the driver holds down the Y button.
             if (!reversed) {
                 driveTrain.reverse();

@@ -21,6 +21,7 @@ public class RobotMap {
 
     //elevator victor
     public static final int ElevatorVictor = -1;
+    public static final int ElevatorVictor2 = -1; //?????need???????????
 
     //elevator sensors
     public static final int ElevatorEncoderA = -1;
