@@ -14,10 +14,10 @@ public class RobotMap {
      * You will, trust me. So DON'T FORGET TO SET YOUR PORTS PROPERLY. */
 
     //drive train victors
-    public static final int FrontRightVictor = 2;
-    public static final int FrontLeftVictor = 1;
-    public static final int BackRightVictor = 3;
-    public static final int BackLeftVictor = 0;
+    public static final int FrontRightVictor = 2; //old bot: 2 new bot : 2
+    public static final int FrontLeftVictor = 1; //old bot: 1 new bot : 0
+    public static final int BackRightVictor = 3; //old bot: 3 new bot : 3
+    public static final int BackLeftVictor = 0; //old bot: 0 new bot : 1
 
     //drive train encoders
     public static final int LeftEncoderA = -1;
