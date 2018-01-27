@@ -1,8 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Spark;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 
@@ -28,7 +29,7 @@ public class DriveTrainSystem extends Subsystem {
     public static final double GEAR_TWO = 0.6;  // Medium speed
     public static final double GEAR_THREE = 1;  // Maximum speed
 
-    // The constant that determines the maximum curvature at which the robot can move.
+    // The constant that determines the maximum curvature at which the robot can update.
     // It is determined by the formula c = e^(-r/w), where
     // r is the radius of the turn and w is the wheelbase (distance between the wheels) of the robot
     // more info in the describtion of drive() method in RobotDrive
@@ -43,18 +44,18 @@ public class DriveTrainSystem extends Subsystem {
     private int speedLevel;
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
-    // Use it whenever you want your robot to move.
+    // Use it whenever you want your robot to update.
     private RobotDrive drive;
 
     /**
      * Constructor for DriveTrainSystem.
      */
     public DriveTrainSystem() {
-        leftMotors = new SpeedControllerGroup(new VictorSP(RobotMap.FrontLeftVictor),
-                new VictorSP(RobotMap.BackLeftVictor));
+        leftMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontLeftMotor),
+                new Spark(RobotMap.BackLeftMotor));
 
-        rightMotors = new SpeedControllerGroup(new VictorSP(RobotMap.FrontRightVictor),
-                new VictorSP(RobotMap.BackRightVictor));
+        rightMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontRightMotor),
+                new Spark(RobotMap.BackRightMotor));
 
         drive = new RobotDrive(leftMotors, rightMotors);
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.

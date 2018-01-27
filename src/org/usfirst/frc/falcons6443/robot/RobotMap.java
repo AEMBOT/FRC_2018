@@ -13,15 +13,15 @@ public class RobotMap {
 	/* Ok, here's the deal. You're gonna forget to change them back to their appropriate values.
      * You will, trust me. So DON'T FORGET TO SET YOUR PORTS PROPERLY. */
 
-    //drive train victors
-    public static final int FrontRightVictor = 2;
-    public static final int FrontLeftVictor = 1;
-    public static final int BackRightVictor = 3;
-    public static final int BackLeftVictor = 0;
+    //drive train motors
+    public static final int FrontRightMotor = 2;
+    public static final int FrontLeftMotor = 1;
+    public static final int BackRightMotor = 3;
+    public static final int BackLeftMotor = 0;
 
-    //elevator victor
-    public static final int ElevatorVictor = -1;
-    public static final int ElevatorVictor2 = -1; //?????need???????????
+    //elevator motors
+    public static final int ElevatorMotor = -1;
+    public static final int ElevatorMotor2 = -1; //?????need???????????
 
     //elevator sensors
     public static final int ElevatorEncoderA = -1;

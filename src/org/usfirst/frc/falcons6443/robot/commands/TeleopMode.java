@@ -30,9 +30,9 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void execute() {
 
-        //The A button will move the elevator to the switch height
+        //The A button will update the elevator to the switch height
         if (gamepad.A()){
-            elevator.moveToHeight(ElevatorEnums.Switch);
+            elevator.setToHeight(ElevatorEnums.Switch);
         }
 
         // the Start button will toggle the drive train to reverse mode
@@ -46,6 +46,7 @@ public class TeleopMode extends SimpleCommand {
             reversed = false;
         }
 
+        elevator.update();
     }
 
     public boolean isFinished() {

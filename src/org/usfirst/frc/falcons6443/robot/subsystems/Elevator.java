@@ -1,36 +1,46 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorEncoder;
 import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
+import org.usfirst.frc.falcons6443.robot.utilities.PID;
 
 public class Elevator extends Subsystem {
 
-    public static final double TransferHeight = 0;
-    public static final double SwitchHeight = 0;
-    public static final double ScaleHeight = 0;
+    public static final double TransferHeight = 0; //inches
+    public static final double SwitchHeight = 0; //inches
+    public static final double ScaleHeight = 0; //inches
+    public static final double buffer = 1; //inches
+    public static final double diameter = 2; //inches
 
-    public double buffer = .5; // inches
-    private double diameter = 2; // inches
+    public static final double P = 0;
+    public static final double I = 0;
+    public static final double D = 0;
+    public static final double Eps = 0; //weakest applied power
 
-    private Victor motor;
+    private Spark motor;
+    private Spark scoringMotor;//MOVE TO INTAKE CLASS
 
-    private Victor scoringMotor; //MOTOR??? PISTON??? SERVO??? SOMETHING ELSE?????????
     private DigitalInput touchSensor;
     private ElevatorEncoder encoder;
     private ElevatorEnums state;
+    
+    private PID pid;
     private Timer timer;
-    private double timerDelay = 1; //seconds
 
     public Elevator (){
-        motor = new Victor (RobotMap.ElevatorVictor);
-        scoringMotor = new Victor(RobotMap.ElevatorVictor2);
+        motor = new Spark (RobotMap.ElevatorMotor);
+        scoringMotor = new Spark (RobotMap.ElevatorMotor2); //MOVE TO INTAKE CLASS
         touchSensor = new DigitalInput (RobotMap.ElevatorTouchSensor);
         encoder = new ElevatorEncoder();
+        pid = new PID(P, I, D, Eps);
+        pid.setMaxOutput(.5);
+        pid.setMinDoneCycles(5);
+        pid.setDoneRange(buffer);
         timer = new Timer();
     }
 
@@ -50,59 +60,69 @@ public class Elevator extends Subsystem {
         return state;
     }
 
-    public void moveToHeight(ElevatorEnums elevatorState){
+    public void setToHeight(ElevatorEnums elevatorState){
         switch(elevatorState){
             case Transfer:
-                if(!isAtHeight(TransferHeight)){
-                    move(TransferHeight, .4);
-                }
-                state = ElevatorEnums.Transfer;
+                pid.setDesiredValue(convert(false, TransferHeight));
                 break;
             case Switch:
-                if(isAtHeight(SwitchHeight)){
-                    move(SwitchHeight, .4);
-                }
-                state = ElevatorEnums.Switch;
+                pid.setDesiredValue(convert(false, SwitchHeight));
                 break;
             case Scale:
-                if(isAtHeight(ScaleHeight)){
-                    move(ScaleHeight, .4);
-                }
-                state = ElevatorEnums.Scale;
+                pid.setDesiredValue(convert (false, ScaleHeight));
                 break;
         }
     }
 
-    public void move(double height, double power){
-        while (!isAtHeight(height)){
-            int direction = getDistance() < height ? 1 : -1;
-            motor.set(power * direction);
-            timer.delay(timerDelay);
+    //put in periodic function
+    public void update(){
+        while (!isAtHeight()){
+            double power = pid.calcPID(getHeight()); //ticks
+            motor.set(power);
         }
         motor.set(0);
     }
 
-    public boolean isAtHeight(double height){
-        if((getDistance() + buffer) > height && (getDistance() - buffer) < height){
+    public boolean isAtHeight(){
+        return pid.isDone();
+        /*if((getHeight() + buffer) > height && (getHeight() - buffer) < height){
             return true;
         } else {
             return false;
+        }*/
+    }
+
+    public double getHeight(){
+        return encoder.getTicks();
+    }
+
+    public double getHeightInches(){
+        return convert(true, encoder.getTicks());
+    }
+
+    /**
+     * Converts ticks to inches and inches to ticks
+     *
+     * @param toInches  true if ticks to inches, false if inches to ticks
+     * @param input the value you wish to convert in inches or ticks
+     */
+    public double convert(boolean toInches, double input){
+        // Encoder clicks per rotation = 1024
+        if (toInches){
+            return input * diameter * Math.PI / 1024.0; // In inches
+        } else {
+            return input / diameter / Math.PI * 1024.0; // In ticks
         }
     }
 
-    public double getDistance(){
-        // Encoder clicks per rotation = 1024
-        return encoder.getDistance() * diameter * Math.PI / 1024.0; // In inches
-    }
-
-    //MOTOR?? SOMETHING ELSE??????????
+    //MOVE TO INTAKE CLASS
     public void scoreCube(){
         scoringMotor.set(-.75);
         timer.delay(3);
         scoringMotor.set(0);
     }
 
-    //MOTOR?? SOMETHING ELSE??? IF NOT, DO WE NEED A SEPARATE RESET FUNCTION?????????
+    //MOVE TO INTAKE CLASS
     public void resetScoringMotor(){
         scoringMotor.set(.75);
         timer.delay(3);
@@ -112,7 +132,7 @@ public class Elevator extends Subsystem {
 
 //measure predetermined heights
 //know where to go (buttons, auto code, etc) AKA: integrate with rest of code
-// poss. PID to smooth motion
+//PID to smooth motion
 
 //Done
 //know if it has cube

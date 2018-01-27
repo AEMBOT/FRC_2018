@@ -11,12 +11,8 @@ public class ElevatorEncoder {
         encoder = new Encoder(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
     }
 
-    public double getDistance(){
-        return encoder.getDistance();
-    }
-
-    public double getSpeed(){
-        return encoder.getRate();
+    public int getTicks(){
+        return encoder.getRaw();
     }
 
     public void reset(){
