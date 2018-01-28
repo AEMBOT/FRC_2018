@@ -1,11 +1,10 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 
 /**
@@ -48,11 +47,11 @@ public class DriveTrainSystem extends Subsystem {
      * Constructor for DriveTrainSystem.
      */
     public DriveTrainSystem() {
-        leftMotors = new SpeedControllerGroup(new VictorSP(RobotMap.FrontLeftVictor),
-                new VictorSP(RobotMap.BackLeftVictor));
+        leftMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontLeftMotor),
+                new Spark(RobotMap.BackLeftMotor));
 
-        rightMotors = new SpeedControllerGroup(new VictorSP(RobotMap.FrontRightVictor),
-                new VictorSP(RobotMap.BackRightVictor));
+        rightMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontRightMotor),
+                new Spark(RobotMap.BackRightMotor));
 
         drive = new RobotDrive(leftMotors, rightMotors);
         //encoders = new DriveEncoders();
