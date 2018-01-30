@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
+import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 
 import org.usfirst.frc.falcons6443.robot.commands.Delay;
@@ -24,6 +25,7 @@ public class Robot extends IterativeRobot {
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final NavigationSystem Navigation = new NavigationSystem();
+    public static final FlywheelSystem Flywheel = new FlywheelSystem();
 
     public static OI oi;
 
