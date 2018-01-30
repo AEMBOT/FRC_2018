@@ -2,7 +2,7 @@ package org.usfirst.frc.falcons6443.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
+import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ public class OI {
 
     private final int GAMEPAD_PORT_NUMBER = 0;
 
-    private Gamepad gamepad;
+    private Xbox xbox;
 
     private HashMap<String, Button> buttons;
 
@@ -24,7 +24,7 @@ public class OI {
      * Constructor for OI.
      */
     public OI() {
-        gamepad = new Gamepad(new Joystick(GAMEPAD_PORT_NUMBER));
+        xbox = new Xbox(new Joystick(GAMEPAD_PORT_NUMBER));
         buttons = new HashMap<String, Button>(4);
     }
 
@@ -33,8 +33,8 @@ public class OI {
      *
      * @return the Joystick associated with this OI object.
      */
-    public Gamepad getGamepad() {
-        return gamepad;
+    public Xbox getXbox() {
+        return xbox;
     }
 
     /**
