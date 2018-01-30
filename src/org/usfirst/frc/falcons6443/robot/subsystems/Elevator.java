@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorEncoder;
@@ -23,25 +22,21 @@ public class Elevator extends Subsystem {
     public static final double Eps = 0; //weakest applied power
 
     private Spark motor;
-    private Spark scoringMotor;//MOVE TO INTAKE CLASS
 
     private DigitalInput touchSensor;
     private ElevatorEncoder encoder;
     private ElevatorEnums state;
     
     private PID pid;
-    private Timer timer;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        scoringMotor = new Spark (RobotMap.ElevatorMotor2); //MOVE TO INTAKE CLASS
         touchSensor = new DigitalInput (RobotMap.ElevatorTouchSensor);
         encoder = new ElevatorEncoder();
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.5);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
-        timer = new Timer();
     }
 
     @Override
@@ -113,20 +108,6 @@ public class Elevator extends Subsystem {
         } else {
             return input / diameter / Math.PI * 1024.0; // In ticks
         }
-    }
-
-    //MOVE TO INTAKE CLASS
-    public void scoreCube(){
-        scoringMotor.set(-.75);
-        timer.delay(3);
-        scoringMotor.set(0);
-    }
-
-    //MOVE TO INTAKE CLASS
-    public void resetScoringMotor(){
-        scoringMotor.set(.75);
-        timer.delay(3);
-        scoringMotor.set(0);
     }
 }
 
