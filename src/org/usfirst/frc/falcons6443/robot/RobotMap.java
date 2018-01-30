@@ -25,4 +25,10 @@ public class RobotMap {
     public static final int RightEncoderA = -1;
     public static final int RightEncoderB = -1;
 
+    //intake motors
+    public static final int IntakeMotorLeft = -1;
+    public static final int IntakeMotorRight = -1;
+
+    //intake sensors
+    public static final int IntakeTouchSensor = -1;
 }
