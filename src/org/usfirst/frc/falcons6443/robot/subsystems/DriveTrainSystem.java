@@ -19,6 +19,13 @@ import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
  */
 public class DriveTrainSystem extends Subsystem {
 
+    // PID: proportional–integral–derivative controller
+    // more info at https://en.wikipedia.org/wiki/PID_controller
+    public static final double KP = 0.04;  //.04
+    public static final double KI = 0.001; //.001
+    public static final double KD = 0.00;  //.00
+    public static final double KF = 0.00;
+
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
@@ -36,13 +43,6 @@ public class DriveTrainSystem extends Subsystem {
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
     private RobotDrive drive;
-
-    // PID: proportional–integral–derivative controller
-    // more info at https://en.wikipedia.org/wiki/PID_controller
-    public static final double KP = 0.04;  //.04
-    public static final double KI = 0.001; //.001
-    public static final double KD = 0.00;  //.00
-    public static final double KF = 0.00;
 
     /**
      * Constructor for DriveTrainSystem.
