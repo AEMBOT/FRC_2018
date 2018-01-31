@@ -30,7 +30,7 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void execute() {
 
-        //The A button will update the elevator to the switch height
+        //The A button will move the elevator to the switch height
         if (gamepad.A()){
             elevator.setToHeight(ElevatorEnums.Switch);
         }
@@ -46,7 +46,13 @@ public class TeleopMode extends SimpleCommand {
             reversed = false;
         }
 
-        elevator.update();
+        if (!elevator.isAtHeight()) {
+            elevator.moveToHeight();
+        } else {
+            elevator.stop();
+        }
+
+        elevator.moveToHeight();
     }
 
     public boolean isFinished() {

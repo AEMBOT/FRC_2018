@@ -7,19 +7,20 @@ import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorEncoder;
 import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
+import org.usfirst.frc.falcons6443.robot.utilities.Convert;
 
 public class Elevator extends Subsystem {
 
-    public static final double TransferHeight = 0; //inches
-    public static final double SwitchHeight = 0; //inches
-    public static final double ScaleHeight = 0; //inches
-    public static final double buffer = 1; //inches
-    public static final double diameter = 2; //inches
+    private static final double TransferHeight = 0; //inches
+    private static final double SwitchHeight = 0; //inches
+    private static final double ScaleHeight = 0; //inches
+    private static final double buffer = 1; //inches
+    private static final double diameter = 2; //inches
 
-    public static final double P = 0;
-    public static final double I = 0;
-    public static final double D = 0;
-    public static final double Eps = 0; //weakest applied power
+    private static final double P = 0;
+    private static final double I = 0;
+    private static final double D = 0;
+    private static final double Eps = 0; //weakest applied power
 
     private Spark motor;
 
@@ -28,6 +29,7 @@ public class Elevator extends Subsystem {
     private ElevatorEnums state;
     
     private PID pid;
+    private Convert convert;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
@@ -37,6 +39,7 @@ public class Elevator extends Subsystem {
         pid.setMaxOutput(.5);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
+        convert = new Convert();
     }
 
     @Override
@@ -44,11 +47,7 @@ public class Elevator extends Subsystem {
     }
 
     public boolean hasCube(){
-        if (touchSensor.get()) {
-            return true;
-        } else {
-            return false;
-        }
+        return touchSensor.get();
     }
 
     public ElevatorEnums currentElevatorState(){
@@ -58,23 +57,24 @@ public class Elevator extends Subsystem {
     public void setToHeight(ElevatorEnums elevatorState){
         switch(elevatorState){
             case Transfer:
-                pid.setDesiredValue(convert(false, TransferHeight));
+                pid.setDesiredValue(convert.convert(false, TransferHeight, diameter));
                 break;
             case Switch:
-                pid.setDesiredValue(convert(false, SwitchHeight));
+                pid.setDesiredValue(convert.convert(false, SwitchHeight, diameter));
                 break;
             case Scale:
-                pid.setDesiredValue(convert (false, ScaleHeight));
+                pid.setDesiredValue(convert.convert(false, ScaleHeight, diameter));
                 break;
         }
     }
 
     //put in periodic function
-    public void update(){
-        while (!isAtHeight()){
-            double power = pid.calcPID(getHeight()); //ticks
-            motor.set(power);
-        }
+    public void moveToHeight(){
+        double power = pid.calcPID(getHeight()); //ticks
+        motor.set(power);
+    }
+
+    public void stop(){
         motor.set(0);
     }
 
@@ -92,28 +92,15 @@ public class Elevator extends Subsystem {
     }
 
     public double getHeightInches(){
-        return convert(true, encoder.getTicks());
+        return convert.convert(true, encoder.getTicks(), diameter);
     }
 
-    /**
-     * Converts ticks to inches and inches to ticks
-     *
-     * @param toInches  true if ticks to inches, false if inches to ticks
-     * @param input the value you wish to convert in inches or ticks
-     */
-    public double convert(boolean toInches, double input){
-        // Encoder clicks per rotation = 1024
-        if (toInches){
-            return input * diameter * Math.PI / 1024.0; // In inches
-        } else {
-            return input / diameter / Math.PI * 1024.0; // In ticks
-        }
-    }
 }
 
 //measure predetermined heights
 //know where to go (buttons, auto code, etc) AKA: integrate with rest of code
 //PID to smooth motion
+//tune PID
 
 //Done
 //know if it has cube

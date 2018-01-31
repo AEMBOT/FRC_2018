@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Spark;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
@@ -29,7 +28,7 @@ public class DriveTrainSystem extends Subsystem {
     public static final double GEAR_TWO = 0.6;  // Medium speed
     public static final double GEAR_THREE = 1;  // Maximum speed
 
-    // The constant that determines the maximum curvature at which the robot can update.
+    // The constant that determines the maximum curvature at which the robot can move.
     // It is determined by the formula c = e^(-r/w), where
     // r is the radius of the turn and w is the wheelbase (distance between the wheels) of the robot
     // more info in the describtion of drive() method in RobotDrive
@@ -44,7 +43,7 @@ public class DriveTrainSystem extends Subsystem {
     private int speedLevel;
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
-    // Use it whenever you want your robot to update.
+    // Use it whenever you want your robot to move.
     private RobotDrive drive;
 
     /**
