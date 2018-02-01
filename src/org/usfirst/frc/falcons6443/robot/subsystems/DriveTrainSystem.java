@@ -33,10 +33,6 @@ public class DriveTrainSystem extends Subsystem {
 
     //private Timer timer;
 
-    private double targetDistance;
-    private static final double DistanceBuffer = .5; //inches
-    //target angle and angle buffer in DriveTrainSystem class
-
     private boolean reversed;
     private static final double WheelDiameter = 6; //UPDATE!
 
