@@ -31,7 +31,7 @@ public class DriveTrainSystem extends Subsystem {
 
     private DriveEncoders encoders;
 
-    private Timer timer;
+    //private Timer timer;
 
     private double targetDistance;
     private static final double DistanceBuffer = .5; //inches
@@ -56,7 +56,7 @@ public class DriveTrainSystem extends Subsystem {
 
         drive = new RobotDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
-        timer = new Timer();
+        //timer = new Timer();
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
@@ -124,7 +124,7 @@ public class DriveTrainSystem extends Subsystem {
         return (getLeftDistance() + getRightDistance()) / 2;
     }
 
-    public void driveToDistance(double distance, double speed){
+    /*public void driveToDistance(double distance, double speed){
         targetDistance = distance;
         while (!isAtDistance()){
             tankDrive(speed, speed);
@@ -138,6 +138,6 @@ public class DriveTrainSystem extends Subsystem {
             return true;
         } else
             return false;
-    }
+    }*/
 
 }
