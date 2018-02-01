@@ -20,15 +20,15 @@ public class RobotMap {
     public static final int BackLeftVictor = 0; //old bot: 0 new bot : 1
 
     //drive train encoders
-    public static final int LeftEncoderA = -1;
+    /*public static final int LeftEncoderA = -1;
     public static final int LeftEncoderB = -1;
     public static final int RightEncoderA = -1;
-    public static final int RightEncoderB = -1;
+    public static final int RightEncoderB = -1;*/
 
     //intake motors
-    public static final int IntakeMotorLeft = -1;
-    public static final int IntakeMotorRight = -1;
+    public static final int IntakeMotorLeft = 4;
+    public static final int IntakeMotorRight = 5;
 
     //intake sensors
-    public static final int IntakeTouchSensor = -1;
+    //public static final int IntakeTouchSensor = -1;
 }

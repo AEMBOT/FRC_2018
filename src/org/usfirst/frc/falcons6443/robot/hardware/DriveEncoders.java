@@ -10,8 +10,8 @@ public class DriveEncoders {
     private Encoder right;
 
     public DriveEncoders(){
-        left = new Encoder(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
-        right = new Encoder(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
+        //left = new Encoder(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
+        //right = new Encoder(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
         right.setReverseDirection(true);
     }
 

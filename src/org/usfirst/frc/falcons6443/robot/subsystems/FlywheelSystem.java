@@ -16,13 +16,13 @@ public class FlywheelSystem extends Subsystem {
     private Spark rightMotor;
     private DigitalInput touchSensor;
 
-    private double intakeSpeed = .4;
-    private double outputSpeed = .3;
+    private double intakeSpeed = .5;
+    private double outputSpeed = .4;
 
     public FlywheelSystem(){
         leftMotor = new Spark(RobotMap.IntakeMotorLeft);
         rightMotor = new Spark(RobotMap.IntakeMotorRight);
-        touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
+        //touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
     }
 
     public boolean hasBlock(){

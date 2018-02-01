@@ -32,31 +32,21 @@ public class TeleopMode extends SimpleCommand {
         double leftDrive = gamepad.leftStickY();
         double rightDrive = gamepad.rightStickY();
 
-        // set the driveTrain power.
-        driveTrain.tankDrive(leftDrive, rightDrive);
-
-        // the Y button will toggle the drive train to reverse mode
-        if (gamepad.Y()) {
-            // safeguard for if the driver holds down the Y button.
-            if (!reversed) {
-                driveTrain.reverse();
-                reversed = true;
-            }
-        } else {
-            reversed = false;
-        }
-
         //intake button
         if (gamepad.A()) {
-            if (flywheel.hasBlock()) {
-                flywheel.stop();
-            } else {
+            //if (flywheel.hasBlock()) {
+              //  flywheel.stop();
+            //} else {
                 flywheel.intake();
-            }
+            //}
+        } else {
+            flywheel.stop();
         }
 
         //output button
         if (gamepad.B()) {
+            flywheel.output();
+        } else {
             flywheel.stop();
         }
     }
