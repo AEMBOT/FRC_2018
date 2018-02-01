@@ -7,7 +7,6 @@ import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorEncoder;
 import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
-import org.usfirst.frc.falcons6443.robot.utilities.Convert;
 
 public class Elevator extends Subsystem {
 
@@ -29,7 +28,6 @@ public class Elevator extends Subsystem {
     private ElevatorEnums state;
     
     private PID pid;
-    private Convert convert;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
@@ -39,7 +37,6 @@ public class Elevator extends Subsystem {
         pid.setMaxOutput(.5);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
-        convert = new Convert();
     }
 
     @Override
@@ -57,20 +54,20 @@ public class Elevator extends Subsystem {
     public void setToHeight(ElevatorEnums elevatorState){
         switch(elevatorState){
             case Transfer:
-                pid.setDesiredValue(convert.convert(false, TransferHeight, diameter));
+                pid.setDesiredValue(TransferHeight);
                 break;
             case Switch:
-                pid.setDesiredValue(convert.convert(false, SwitchHeight, diameter));
+                pid.setDesiredValue(SwitchHeight);
                 break;
             case Scale:
-                pid.setDesiredValue(convert.convert(false, ScaleHeight, diameter));
+                pid.setDesiredValue(ScaleHeight);
                 break;
         }
     }
 
     //put in periodic function
     public void moveToHeight(){
-        double power = pid.calcPID(getHeight()); //ticks
+        double power = pid.calcPID(getHeight());
         motor.set(power);
     }
 
@@ -88,13 +85,8 @@ public class Elevator extends Subsystem {
     }
 
     public double getHeight(){
-        return encoder.getTicks();
-    }
-
-    public double getHeightInches(){
-        return convert.convert(true, encoder.getTicks(), diameter);
-    }
-
+        return encoder.getTicks() * diameter * Math.PI / 1024.0;
+    } //inches
 }
 
 //measure predetermined heights
