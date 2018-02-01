@@ -57,6 +57,7 @@ public class DriveTrainSystem extends Subsystem {
         drive = new RobotDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
         //timer = new Timer();
+
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);

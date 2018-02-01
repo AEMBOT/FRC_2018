@@ -18,7 +18,7 @@ public class DriveToDistance extends SimpleCommand{
 
     private PID pid;
 
-    public DriveToDistance(int desiredDistance){
+    public DriveToDistance(int distance){
         super("Restricted PID Drive");
         requires(navigation);
         requires(driveTrain);
@@ -27,7 +27,7 @@ public class DriveToDistance extends SimpleCommand{
         pid.setMaxOutput(1);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
-        targetDistance = desiredDistance;
+        targetDistance = distance;
     }
 
     public void driveToDistance(){
