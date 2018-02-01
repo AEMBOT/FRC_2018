@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
-import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
+import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
 /**
  * Teleoperated mode for the robot.
@@ -11,7 +11,7 @@ import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
  */
 public class TeleopMode extends SimpleCommand {
 
-   // private Gamepad gamepad;
+    private Xbox xbox;
     private boolean reversed;
 
     public TeleopMode() {
@@ -22,20 +22,20 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void initialize() {
-        //gamepad = Robot.oi.getGamepad();
+        xbox = Robot.oi.getXbox();
         reversed = false;
     }
 
     @Override
     public void execute() {
-        //double leftDrive = gamepad.leftStickY();
-        //double rightDrive = gamepad.rightStickY();
+        double leftDrive = xbox.leftStickY();
+        double rightDrive = xbox.rightStickY();
 
         // set the driveTrain power.
-        driveTrain.tankDrive(.6, .6);
+        driveTrain.tankDrive(leftDrive, rightDrive);
 
         // the Y button will toggle the drive train to reverse mode
-       /* if (gamepad.Y()) {
+        if (xbox.Y()) {
             // safeguard for if the driver holds down the Y button.
             if (!reversed) {
                 driveTrain.reverse();
@@ -43,7 +43,7 @@ public class TeleopMode extends SimpleCommand {
             }
         } else {
             reversed = false;
-        }*/
+        }
     }
 
     public boolean isFinished() {
