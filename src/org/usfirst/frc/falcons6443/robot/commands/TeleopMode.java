@@ -34,8 +34,11 @@ public class TeleopMode extends SimpleCommand {
         // set the driveTrain power.
         driveTrain.tankDrive(leftDrive, rightDrive);
 
+        System.out.println("Left: " + driveTrain.getLeftDistance());
+        System.out.println("Right: " + driveTrain.getRightDistance());
+
         // the Y button will toggle the drive train to reverse mode
-        if (gamepad.Y()) {
+        /*if (gamepad.Y()) {
             // safeguard for if the driver holds down the Y button.
             if (!reversed) {
                 driveTrain.reverse();
@@ -43,7 +46,7 @@ public class TeleopMode extends SimpleCommand {
             }
         } else {
             reversed = false;
-        }
+        }*/
     }
 
     public boolean isFinished() {
