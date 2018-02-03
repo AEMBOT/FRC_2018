@@ -26,9 +26,9 @@ public class RobotMap {
     public static final int BackLeftMotor = 0;*/
 
     //drive train encoders
-    public static final int LeftEncoderA = -1;
-    public static final int LeftEncoderB = -1;
-    public static final int RightEncoderA = -1;
-    public static final int RightEncoderB = -1;
+    public static final int LeftEncoderA = 0;
+    public static final int LeftEncoderB = 1;
+    public static final int RightEncoderA = 2;
+    public static final int RightEncoderB = 3;
 
 }
