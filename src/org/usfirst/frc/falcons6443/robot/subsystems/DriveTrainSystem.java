@@ -75,9 +75,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(-left, -right);
+            drive.tankDrive(left, -right);
         } else {
-            drive.tankDrive(left, right);
+            drive.tankDrive(-left, right);
         }
     }
 
@@ -109,16 +109,28 @@ public class DriveTrainSystem extends Subsystem {
     }
 
     public double getLeftDistance(){
-        // Encoder clicks per rotation = 1024
-        return -encoders.getLeftDistance() * WheelDiameter * Math.PI / 1024.0; // In inches
+        // Encoder clicks per rotation = 850
+        return encoders.getLeftDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getRightDistance(){
-        return encoders.getRightDistance() * WheelDiameter * Math.PI / 1024.0; // In inches
+        return encoders.getRightDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getLinearDistance(){
         return (getLeftDistance() + getRightDistance()) / 2;
+    }
+
+    public int getTicksLeft(){
+        return encoders.getLeftDistance();
+    }
+
+    public int getTicksRight(){
+        return encoders.getRightDistance();
+    }
+
+    public void reset(){
+        encoders.reset();
     }
 
     /*public void driveToDistance(double distance, double speed){

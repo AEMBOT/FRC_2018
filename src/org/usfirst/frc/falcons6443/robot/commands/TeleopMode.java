@@ -47,6 +47,10 @@ public class TeleopMode extends SimpleCommand {
         } else {
             reversed = false;
         }*/
+
+        if(gamepad.Y()){
+            driveTrain.reset();
+        }
     }
 
     public boolean isFinished() {
