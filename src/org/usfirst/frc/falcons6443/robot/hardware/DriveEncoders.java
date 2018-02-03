@@ -16,26 +16,16 @@ public class DriveEncoders {
     }
 
     public double getLeftDistance(){
-        return left.getDistance();
+        return left.getRaw();
     }
 
     public double getRightDistance(){
-        return right.getDistance();
+        return right.getRaw();
     }
 
     public double getLinearDistance(){
         return (getLeftDistance() + getRightDistance()) / 2;
     }
-
-    public double getLeftSpeed(){
-        return left.getRate();
-    }
-
-    public double getRightSpeed(){
-        return right.getRate();
-    }
-
-    public double getLinearSpeed() { return (getLeftSpeed() + getRightSpeed()) / 2; }
 
     public void reset(){
         left.reset();

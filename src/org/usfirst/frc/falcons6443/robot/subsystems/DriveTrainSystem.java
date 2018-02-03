@@ -19,12 +19,19 @@ import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
  */
 public class DriveTrainSystem extends Subsystem {
 
+    // PID: proportional–integral–derivative controller
+    // more info at https://en.wikipedia.org/wiki/PID_controller
+    public static final double KP = 0.04;  //.04
+    public static final double KI = 0.001; //.001
+    public static final double KD = 0.00;  //.00
+    public static final double KF = 0.00;
+
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
     private DriveEncoders encoders;
 
-    private Timer timer;
+    //private Timer timer;
 
     private double targetDistance;
     private static final double DistanceBuffer = .5; //inches
@@ -36,13 +43,6 @@ public class DriveTrainSystem extends Subsystem {
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
     private RobotDrive drive;
-
-    // PID: proportional–integral–derivative controller
-    // more info at https://en.wikipedia.org/wiki/PID_controller
-    public static final double KP = 0.04;  //.04
-    public static final double KI = 0.001; //.001
-    public static final double KD = 0.00;  //.00
-    public static final double KF = 0.00;
 
     /**
      * Constructor for DriveTrainSystem.
@@ -56,7 +56,8 @@ public class DriveTrainSystem extends Subsystem {
 
         drive = new RobotDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
-        timer = new Timer();
+        //timer = new Timer();
+
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
@@ -124,7 +125,7 @@ public class DriveTrainSystem extends Subsystem {
         return (getLeftDistance() + getRightDistance()) / 2;
     }
 
-    public void driveToDistance(double distance, double speed){
+    /*public void driveToDistance(double distance, double speed){
         targetDistance = distance;
         while (!isAtDistance()){
             tankDrive(speed, speed);
@@ -138,6 +139,6 @@ public class DriveTrainSystem extends Subsystem {
             return true;
         } else
             return false;
-    }
+    }*/
 
 }
