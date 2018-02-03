@@ -4,11 +4,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.CameraServer;
+
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
-
 import org.usfirst.frc.falcons6443.robot.commands.Delay;
 
 
@@ -40,6 +41,8 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         autonomy = new Delay(1);
         teleop = new TeleopMode();
+
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     /*

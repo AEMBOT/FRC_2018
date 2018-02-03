@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
-import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
+import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
 /**
  * Teleoperated mode for the robot.
@@ -11,7 +11,7 @@ import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Gamepad gamepad;
+    private Xbox xbox;
     private boolean reversed;
 
     public TeleopMode() {
@@ -23,19 +23,30 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void initialize() {
-        gamepad = Robot.oi.getGamepad();
+        xbox = Robot.oi.getXbox();
         reversed = false;
     }
 
     @Override
     public void execute() {
-        double leftDrive = gamepad.leftStickY();
-        double rightDrive = gamepad.rightStickY();
+        double leftDrive = xbox.leftStickY();
+        double rightDrive = xbox.rightStickY();
 
+        // set the driveTrain power.
         driveTrain.tankDrive(leftDrive, rightDrive);
 
+        // the Y button will toggle the drive train to reverse mode
+        if (xbox.Y()) {
+            // safeguard for if the driver holds down the Y button.
+            if (!reversed) {
+                driveTrain.reverse();
+                reversed = true;
+            }
+        } else {
+            reversed = false;
+        }
         //intake button
-        if (gamepad.leftBumper()) {
+        if (xbox.leftBumper()) {
             //if (flywheel.hasBlock()) {
               //  flywheel.stop();
             //} else {
@@ -44,16 +55,16 @@ public class TeleopMode extends SimpleCommand {
         }
 
         //output button
-        if (gamepad.rightBumper()) {
+        if (xbox.rightBumper()) {
             flywheel.output();
         }
 
         //stop
-        if (!gamepad.leftBumper() && !gamepad.rightBumper()){
+        if (!xbox.leftBumper() && !xbox.rightBumper()){
             flywheel.stop();
         }
 
-        if (gamepad.X()){
+        if (xbox.X()){
             flywheel.stop();
         }
     }
