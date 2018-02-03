@@ -32,6 +32,7 @@ public class TeleopMode extends SimpleCommand {
         double leftDrive = gamepad.leftStickY();
         double rightDrive = gamepad.rightStickY();
 
+        
         //intake button
         if (gamepad.A()) {
             //if (flywheel.hasBlock()) {
@@ -39,14 +40,14 @@ public class TeleopMode extends SimpleCommand {
             //} else {
                 flywheel.intake();
             //}
-        } else {
-            flywheel.stop();
         }
 
         //output button
         if (gamepad.B()) {
             flywheel.output();
-        } else {
+        }
+
+        if (gamepad.X()){
             flywheel.stop();
         }
     }

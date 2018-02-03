@@ -16,8 +16,8 @@ public class FlywheelSystem extends Subsystem {
     private Spark rightMotor;
     private DigitalInput touchSensor;
 
-    private double intakeSpeed = .5;
-    private double outputSpeed = .4;
+    private double intakeSpeed = .75;
+    private double outputSpeed = .75;
 
     public FlywheelSystem(){
         leftMotor = new Spark(RobotMap.IntakeMotorLeft);
@@ -35,12 +35,12 @@ public class FlywheelSystem extends Subsystem {
     }
 
     public void intake(){
-        rightMotor.set(intakeSpeed);
+        rightMotor.set(intakeSpeed*-1);
         leftMotor.set(intakeSpeed);
     }
 
     public void output(){
-        rightMotor.set(outputSpeed*-1);
+        rightMotor.set(outputSpeed);
         leftMotor.set(outputSpeed*-1);
     }
 
