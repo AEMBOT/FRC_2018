@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
+import org.usfirst.frc.falcons6443.robot.commands.DriveToDistance;
 
 import org.usfirst.frc.falcons6443.robot.commands.Delay;
 
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        autonomy = new Delay(1);
+        autonomy = new DriveToDistance(12);
         teleop = new TeleopMode();
     }
 
