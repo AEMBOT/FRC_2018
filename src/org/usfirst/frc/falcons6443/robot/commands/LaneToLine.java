@@ -9,6 +9,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class LaneToLine extends CommandGroup {
     LaneToLine(){
-        addSequential(new MoveWithEncoder(120,1));
+        addSequential(new DriveToDistance(120));
     }
 }

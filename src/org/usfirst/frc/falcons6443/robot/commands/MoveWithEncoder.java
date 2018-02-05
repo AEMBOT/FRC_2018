@@ -6,7 +6,7 @@ import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 /**
 *
 *Auto program to test use of encoders, lacks navigation utilization
-*
+* Lowkey Deprecated in favor for DriveToDistance
 * @author Owen Engbretson
  */
 
