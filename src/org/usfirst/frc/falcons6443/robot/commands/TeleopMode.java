@@ -18,6 +18,7 @@ public class TeleopMode extends SimpleCommand {
         super("Teleop Command");
 
         requires(driveTrain);
+        requires(flywheel);
     }
 
     @Override
@@ -43,6 +44,28 @@ public class TeleopMode extends SimpleCommand {
             }
         } else {
             reversed = false;
+        }
+        //intake button
+        if (xbox.leftBumper()) {
+            //if (flywheel.hasBlock()) {
+              //  flywheel.stop();
+            //} else {
+                flywheel.intake();
+            //}
+        }
+
+        //output button
+        if (xbox.rightBumper()) {
+            flywheel.output();
+        }
+
+        //stop
+        if (!xbox.leftBumper() && !xbox.rightBumper()){
+            flywheel.stop();
+        }
+
+        if (xbox.X()){
+            flywheel.stop();
         }
     }
 

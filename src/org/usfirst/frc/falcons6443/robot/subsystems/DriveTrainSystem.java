@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
+import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 
 /**
  * Subsystem for the robot's drive train.
@@ -18,12 +19,19 @@ import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
  */
 public class DriveTrainSystem extends Subsystem {
 
+    // PID: proportional–integral–derivative controller
+    // more info at https://en.wikipedia.org/wiki/PID_controller
+    public static final double KP = 0.04;  //.04
+    public static final double KI = 0.001; //.001
+    public static final double KD = 0.00;  //.00
+    public static final double KF = 0.00;
+
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
-    //private DriveEncoders encoders;
+    private DriveEncoders encoders;
 
-    private Timer timer;
+    //private Timer timer;
 
     private double targetDistance;
     private static final double DistanceBuffer = .5; //inches
@@ -36,13 +44,6 @@ public class DriveTrainSystem extends Subsystem {
     // Use it whenever you want your robot to move.
     private RobotDrive drive;
 
-    // PID: proportional–integral–derivative controller
-    // more info at https://en.wikipedia.org/wiki/PID_controller
-    public static final double KP = 0.04;  //.04
-    public static final double KI = 0.001; //.001
-    public static final double KD = 0.00;  //.00
-    public static final double KF = 0.00;
-
     /**
      * Constructor for DriveTrainSystem.
      */
@@ -54,8 +55,9 @@ public class DriveTrainSystem extends Subsystem {
                 new Spark(RobotMap.BackRightMotor));
 
         drive = new RobotDrive(leftMotors, rightMotors);
-        //encoders = new DriveEncoders();
-        timer = new Timer();
+        encoders = new DriveEncoders();
+        //timer = new Timer();
+
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
@@ -77,9 +79,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(-left, -right);
+            drive.tankDrive(left, -right);
         } else {
-            drive.tankDrive(left, right);
+            drive.tankDrive(-left, right);
         }
     }
 
@@ -111,21 +113,19 @@ public class DriveTrainSystem extends Subsystem {
     }
 
     public double getLeftDistance(){
-        // Encoder clicks per rotation = 1024
-        //return -encoders.getLeftDistance() * WheelDiameter * Math.PI / 1024.0; // In inches
-        return 0;
+        // Encoder clicks per rotation = 850
+        return -encoders.getLeftDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getRightDistance(){
-        //return encoders.getRightDistance() * WheelDiameter * Math.PI / 1024.0; // In inches
-        return 0;
+        return encoders.getRightDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getLinearDistance(){
         return (getLeftDistance() + getRightDistance()) / 2;
     }
 
-    public void driveToDistance(double distance, double speed){
+    /*public void driveToDistance(double distance, double speed){
         targetDistance = distance;
         while (!isAtDistance()){
             tankDrive(speed, speed);
@@ -139,6 +139,6 @@ public class DriveTrainSystem extends Subsystem {
             return true;
         } else
             return false;
-    }
+    }*/
 
 }

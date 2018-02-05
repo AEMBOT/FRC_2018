@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_frc-2018" default="compile.module.frc-2018">
+  <dirname property="module.frc-2018.basedir" file="${ant.file.module_frc-2018}"/>
+  
+  <property name="module.jdk.home.frc-2018" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.frc-2018" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.frc-2018" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.frc-2018" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="frc-2018.output.dir" value="${module.frc-2018.basedir}/out/production/FRC-2018"/>
+  <property name="frc-2018.testoutput.dir" value="${module.frc-2018.basedir}/out/test/FRC-2018"/>
+  
+  <path id="frc-2018.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="frc-2018.module.production.classpath">
+    <path refid="${module.jdk.classpath.frc-2018}"/>
+    <fileset dir="${basedir}/../../wpilib/java/current/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/../../wpilib/user/java/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="frc-2018.runtime.production.module.classpath">
+    <pathelement location="${frc-2018.output.dir}"/>
+    <fileset dir="${basedir}/../../wpilib/java/current/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/../../wpilib/user/java/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="frc-2018.module.classpath">
+    <path refid="${module.jdk.classpath.frc-2018}"/>
+    <pathelement location="${frc-2018.output.dir}"/>
+    <fileset dir="${basedir}/../../wpilib/java/current/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/../../wpilib/user/java/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="frc-2018.runtime.module.classpath">
+    <pathelement location="${frc-2018.testoutput.dir}"/>
+    <pathelement location="${frc-2018.output.dir}"/>
+    <fileset dir="${basedir}/../../wpilib/java/current/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <fileset dir="${basedir}/../../wpilib/user/java/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.frc-2018">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.frc-2018">
+    <patternset refid="excluded.from.module.frc-2018"/>
+  </patternset>
+  
+  <path id="frc-2018.module.sourcepath">
+    <dirset dir="${module.frc-2018.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.frc-2018" depends="compile.module.frc-2018.production,compile.module.frc-2018.tests" description="Compile module FRC-2018"/>
+  
+  <target name="compile.module.frc-2018.production" depends="register.custom.compilers" description="Compile module FRC-2018; production classes">
+    <mkdir dir="${frc-2018.output.dir}"/>
+    <javac2 destdir="${frc-2018.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.frc-2018}/javac">
+      <compilerarg line="${compiler.args.frc-2018}"/>
+      <bootclasspath refid="frc-2018.module.bootclasspath"/>
+      <classpath refid="frc-2018.module.production.classpath"/>
+      <src refid="frc-2018.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.frc-2018"/>
+    </javac2>
+    
+    <copy todir="${frc-2018.output.dir}">
+      <fileset dir="${module.frc-2018.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.frc-2018.tests" depends="register.custom.compilers,compile.module.frc-2018.production" description="compile module FRC-2018; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.frc-2018" description="cleanup module">
+    <delete dir="${frc-2018.output.dir}"/>
+    <delete dir="${frc-2018.testoutput.dir}"/>
+  </target>
+</project>
