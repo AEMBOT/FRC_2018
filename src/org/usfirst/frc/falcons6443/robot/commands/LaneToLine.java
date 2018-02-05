@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author Owen Engbretson
  */
 public class LaneToLine extends CommandGroup {
-    LaneToLine(){
+     public LaneToLine(){
         addSequential(new DriveToDistance(120));
     }
 }

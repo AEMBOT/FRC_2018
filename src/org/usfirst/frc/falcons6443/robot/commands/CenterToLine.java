@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author Owen Engbretson
  */
 public class CenterToLine extends CommandGroup {
-        CenterToLine(){
+      public CenterToLine(){
             // To add delay, add second parameter to addSequential in seconds
             addSequential(new RotateToAngle(45));
             addSequential(new DriveToDistance(170));

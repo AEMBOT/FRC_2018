@@ -1,16 +1,21 @@
 package org.usfirst.frc.falcons6443.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.CameraServer;
 
+
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 import org.usfirst.frc.falcons6443.robot.commands.Delay;
+import org.usfirst.frc.falcons6443.robot.utilities.FMS;
+
+import static org.usfirst.frc.falcons6443.robot.utilities.FMS.startPos.center;
 
 
 /**
@@ -27,8 +32,12 @@ public class Robot extends IterativeRobot {
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final NavigationSystem Navigation = new NavigationSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
+    public static final FMS fms = new FMS();
 
     public static OI oi;
+
+    private String gameData;
+
 
     private Command autonomy;
     private Command teleop;
@@ -39,7 +48,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        autonomy = new Delay(1);
+        autonomy = fms.autoChooser(center,gameData);
         teleop = new TeleopMode();
 
         CameraServer.getInstance().startAutomaticCapture();
@@ -67,6 +76,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         if (autonomy != null) {
+            gameData = DriverStation.getInstance().getGameSpecificMessage();
             autonomy.start();
         }
     }
