@@ -60,4 +60,8 @@ public class FlywheelSystem extends Subsystem {
     public void rotateIntakeDown(){
         //rotateMotor.set();
     }
+
+    public void reset(){
+        //encoder.reset();
+    }
 }
