@@ -15,15 +15,15 @@ public class FMS {
     public Command autoChooser(startPos startPos, String autoMessage){
         if(startPos == FMS.startPos.left){
             if(autoMessage.charAt(1) == 'L') return new LaneToLine();
-            else if if(autoMessage.charAt(1) == 'R') return new LaneToLine();
+            else if(autoMessage.charAt(1) == 'R') return new LaneToLine();
         }
         else if(startPos == FMS.startPos.center){
             if(autoMessage.charAt(0) == 'L') return new CenterToLine();
-            else if if(autoMessage.charAt(0) == 'R') return new CenterToLine();
+            else if(autoMessage.charAt(0) == 'R') return new CenterToLine();
         }
         else if(startPos == FMS.startPos.right){
             if(autoMessage.charAt(1) == 'L') return new LaneToLine();
-            else if if(autoMessage.charAt(1) == 'R') return new LaneToLine();
+            else if(autoMessage.charAt(1) == 'R') return new LaneToLine();
         }
 
     }
