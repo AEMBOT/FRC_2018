@@ -14,14 +14,16 @@ public class FlywheelSystem extends Subsystem {
 
     private Spark leftMotor;
     private Spark rightMotor;
+    private Spark rotateMotor;
     private DigitalInput touchSensor;
 
     private double intakeSpeed = .75;
     private double outputSpeed = .75;
 
     public FlywheelSystem(){
-        leftMotor = new Spark(RobotMap.IntakeMotorLeft);
-        rightMotor = new Spark(RobotMap.IntakeMotorRight);
+        leftMotor = new Spark(RobotMap.IntakeLeftMotor);
+        rightMotor = new Spark(RobotMap.IntakeRightMotor);
+        rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
         //touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
     }
 
@@ -47,5 +49,15 @@ public class FlywheelSystem extends Subsystem {
     public void stop(){
         rightMotor.set(0);
         leftMotor.set(0);
+    }
+
+    //Add sensor/servo to know angle/how far to drive motor
+
+    public void rotateIntakeUp(){
+        //rotateMotor.set();
+    }
+
+    public void rotateIntakeDown(){
+        //rotateMotor.set();
     }
 }
