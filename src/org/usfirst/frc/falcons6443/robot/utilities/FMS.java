@@ -10,6 +10,7 @@ import org.usfirst.frc.falcons6443.robot.commands.LaneToLine;
  */
 public class FMS {
 
+    //@TODO make startPos equal to dashboard imput
     public enum startPos {left,center,right}
 
     public Command autoChooser(startPos startPos, String autoMessage){
@@ -25,6 +26,6 @@ public class FMS {
             if(autoMessage.charAt(1) == 'L') return new LaneToLine();
             else if(autoMessage.charAt(1) == 'R') return new LaneToLine();
         }
-
+        return null;
     }
 }
