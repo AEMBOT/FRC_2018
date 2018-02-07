@@ -97,8 +97,8 @@ public class DriveTrainSystem extends Subsystem {
     /**
      * Toggles the motors to go in reverse.
      */
-    public void reverse() {
-        reversed = !reversed;
+    public void reverse(boolean bool) {
+        reversed = bool;
     }
 
     /**
