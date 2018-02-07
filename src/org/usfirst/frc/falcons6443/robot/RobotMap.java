@@ -21,11 +21,11 @@ public class RobotMap {
 
     //elevator motors
     public static final int ElevatorMotor = -1;
-    public static final int ElevatorMotor2 = -1; //?????need???????????
 
     //elevator sensors
     public static final int ElevatorEncoderA = -1;
     public static final int ElevatorEncoderB = -1;
-    public static final int ElevatorTouchSensor = -1;
+    public static final int ElevatorTopLimit = -1;
+    public static final int ElevatorBottomLimit = -1;
 
 }

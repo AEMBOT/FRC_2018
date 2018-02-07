@@ -13,7 +13,6 @@ import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 public class TeleopMode extends SimpleCommand {
 
     private Gamepad gamepad;
-    private boolean reversed;
 
     public TeleopMode() {
         super("Teleop Command");
@@ -24,7 +23,6 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void initialize() {
         gamepad = Robot.oi.getGamepad();
-        reversed = false;
     }
 
     @Override
@@ -33,23 +31,6 @@ public class TeleopMode extends SimpleCommand {
         //The A button will move the elevator to the switch height
         if (gamepad.A()){
             elevator.setToHeight(ElevatorEnums.Switch);
-        }
-
-        // the Start button will toggle the drive train to reverse mode
-        if (gamepad.Start()) {
-            // safeguard for if the driver holds down the Y button.
-            if (!reversed) {
-                driveTrain.reverse();
-                reversed = true;
-            }
-        } else {
-            reversed = false;
-        }
-
-        if (!elevator.isAtHeight()) {
-            elevator.moveToHeight();
-        } else {
-            elevator.stop();
         }
 
         elevator.moveToHeight();

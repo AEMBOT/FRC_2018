@@ -23,15 +23,18 @@ public class Elevator extends Subsystem {
 
     private Spark motor;
 
-    private DigitalInput touchSensor;
+    private DigitalInput topLimit;
+    private DigitalInput bottomLimit;
     private ElevatorEncoder encoder;
+
     private ElevatorEnums state;
     
     private PID pid;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        touchSensor = new DigitalInput (RobotMap.ElevatorTouchSensor);
+        topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
+        bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
         encoder = new ElevatorEncoder();
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.5);
@@ -41,10 +44,6 @@ public class Elevator extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-    }
-
-    public boolean hasCube(){
-        return touchSensor.get();
     }
 
     public ElevatorEnums currentElevatorState(){
@@ -68,7 +67,11 @@ public class Elevator extends Subsystem {
     //put in periodic function
     public void moveToHeight(){
         double power = pid.calcPID(getHeight());
-        motor.set(power);
+        if (isAtHeight()) {
+            stop();
+        } else {
+            motor.set(power);
+        }
     }
 
     public void stop(){
