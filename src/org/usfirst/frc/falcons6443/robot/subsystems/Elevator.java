@@ -13,8 +13,10 @@ public class Elevator extends Subsystem {
     private static final double TransferHeight = 0; //inches
     private static final double SwitchHeight = 0; //inches
     private static final double ScaleHeight = 0; //inches
-    private static final double buffer = 1; //inches
-    private static final double diameter = 2; //inches
+    private static final double TopLimitHeight = 0; //inches
+    private static final double BottomLimitHeight = 0; //inches
+    private static final double Buffer = 1; //inches
+    private static final double Diameter = 2; //inches
 
     private static final double P = 0;
     private static final double I = 0;
@@ -39,7 +41,7 @@ public class Elevator extends Subsystem {
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.5);
         pid.setMinDoneCycles(5);
-        pid.setDoneRange(buffer);
+        pid.setDoneRange(Buffer);
     }
 
     @Override
@@ -54,12 +56,23 @@ public class Elevator extends Subsystem {
         switch(elevatorState){
             case Transfer:
                 pid.setDesiredValue(TransferHeight);
+                state = ElevatorEnums.Transfer;
                 break;
             case Switch:
                 pid.setDesiredValue(SwitchHeight);
+                state = ElevatorEnums.Switch;
                 break;
             case Scale:
                 pid.setDesiredValue(ScaleHeight);
+                state = ElevatorEnums.Scale;
+                break;
+            case BottomLimit:
+                pid.setDesiredValue(BottomLimitHeight);
+                state = ElevatorEnums.BottomLimit;
+                break;
+            case TopLimit:
+                pid.setDesiredValue(TopLimitHeight);
+                state = ElevatorEnums.TopLimit;
                 break;
         }
     }
@@ -67,6 +80,17 @@ public class Elevator extends Subsystem {
     //put in periodic function
     public void moveToHeight(){
         double power = pid.calcPID(getHeight());
+        if (topLimit.get() || bottomLimit.get()){
+            if(bottomLimit.get()){
+                encoder.reset();
+                setToHeight(ElevatorEnums.BottomLimit);
+                power = Math.abs(power);
+            } else {
+                setToHeight(ElevatorEnums.TopLimit);
+                power = -Math.abs(power);
+            }
+        }
+
         if (isAtHeight()) {
             stop();
         } else {
@@ -80,7 +104,7 @@ public class Elevator extends Subsystem {
 
     public boolean isAtHeight(){
         return pid.isDone();
-        /*if((getHeight() + buffer) > height && (getHeight() - buffer) < height){
+        /*if((getHeight() + Buffer) > height && (getHeight() - Buffer) < height){
             return true;
         } else {
             return false;
@@ -88,16 +112,18 @@ public class Elevator extends Subsystem {
     }
 
     public double getHeight(){
-        return encoder.getTicks() * diameter * Math.PI / 1024.0;
+        return encoder.getTicks() * Diameter * Math.PI / 1024.0;
     } //inches
 }
 
+//To Do:
 //measure predetermined heights
 //know where to go (buttons, auto code, etc) AKA: integrate with rest of code
 //PID to smooth motion
 //tune PID
 
-//Done
+//Done:
 //know if it has cube
 //know current position
 //know predetermined height vals
+//add limit switches
