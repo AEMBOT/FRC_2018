@@ -97,8 +97,8 @@ public class DriveTrainSystem extends Subsystem {
     /**
      * Toggles the motors to go in reverse.
      */
-    public void reverse(boolean bool) {
-        reversed = bool;
+    public void reverse() {
+        reversed = !reversed;
     }
 
     /**
@@ -119,6 +119,10 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLinearDistance(){
         return (getLeftDistance() + getRightDistance()) / 2;
+    }
+
+    public void reset(){
+        encoders.reset();
     }
 
     /*public void driveToDistance(double distance, double speed){
