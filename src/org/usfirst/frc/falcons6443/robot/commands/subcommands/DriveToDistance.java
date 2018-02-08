@@ -1,9 +1,10 @@
-package org.usfirst.frc.falcons6443.robot.commands;
+package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
+import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
 
-public class DriveToDistance extends SimpleCommand{
+public class DriveToDistance extends SimpleCommand {
 
     public static final double P = 0;
     public static final double I = 0;

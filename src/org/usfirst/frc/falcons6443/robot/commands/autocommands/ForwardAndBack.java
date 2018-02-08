@@ -1,4 +1,7 @@
-package org.usfirst.frc.falcons6443.robot.commands;
+package org.usfirst.frc.falcons6443.robot.commands.autocommands;
+
+import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveByTime;
 
 /**
  * Moves the robot forward based one time, then backwards the same distance
@@ -9,7 +12,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 
 
-public class ForwardAndBack extends SimpleCommand{
+public class ForwardAndBack extends SimpleCommand {
 
     MoveByTime moveTime;
 

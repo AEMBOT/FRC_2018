@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.DriverStation;
  * from the FMS.  It can be used to help decide
  * which commands to run.
  *
- *  @author Aleks Vidmantas
+ *  @author Aleks Vidmantas, Owen Engbretson
+ *
  */
 
 public class FieldData {
