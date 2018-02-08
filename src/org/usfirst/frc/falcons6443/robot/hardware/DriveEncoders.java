@@ -15,11 +15,11 @@ public class DriveEncoders {
         right.setReverseDirection(true);
     }
 
-    public double getLeftDistance(){
+    public int getLeftDistance(){
         return left.getRaw();
     }
 
-    public double getRightDistance(){
+    public int getRightDistance(){
         return right.getRaw();
     }
 
