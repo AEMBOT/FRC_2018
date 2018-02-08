@@ -7,11 +7,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.CameraServer;
 
-
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
+import org.usfirst.frc.falcons6443.robot.commands.DriveToDistance;
+
+import org.usfirst.frc.falcons6443.robot.commands.Delay;
 
 
 /**
@@ -31,9 +33,6 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
 
-    private String gameData;
-
-
     private Command autonomy;
     private Command teleop;
 
@@ -43,6 +42,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
+        //autonomy = new DriveToDistance(12);
         teleop = new TeleopMode();
 
         CameraServer.getInstance().startAutomaticCapture();
@@ -70,7 +70,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         if (autonomy != null) {
-            gameData = DriverStation.getInstance().getGameSpecificMessage();
             autonomy.start();
         }
     }
