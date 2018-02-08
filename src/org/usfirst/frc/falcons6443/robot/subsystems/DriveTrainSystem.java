@@ -1,9 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
@@ -38,7 +38,7 @@ public class DriveTrainSystem extends Subsystem {
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
-    private RobotDrive drive;
+    private DifferentialDrive drive;
 
     /**
      * Constructor for DriveTrainSystem.
@@ -50,7 +50,7 @@ public class DriveTrainSystem extends Subsystem {
         rightMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontRightMotor),
                 new Spark(RobotMap.BackRightMotor));
 
-        drive = new RobotDrive(leftMotors, rightMotors);
+        drive = new DifferentialDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
         //timer = new Timer();
 
