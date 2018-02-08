@@ -12,7 +12,7 @@ public class DriveEncoders {
     public DriveEncoders(){
         //left = new Encoder(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
         //right = new Encoder(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
-        right.setReverseDirection(true);
+        //right.setReverseDirection(true); 
     }
 
     public double getLeftDistance(){
