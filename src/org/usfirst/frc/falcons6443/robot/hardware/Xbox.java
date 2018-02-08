@@ -16,8 +16,7 @@ public class Xbox {
      *
      * @param xbox the xbox's joystick.
      */
-    public Xbox(Joystick xbox) {
-        assert xbox.getIsXbox();
+    public Xbox(Joystick xbox) { //TODO: xbox.getIsXbox is now longer a method and needs to be replace
         this.xbox = xbox;
         //ideally, make it rumble
     }
