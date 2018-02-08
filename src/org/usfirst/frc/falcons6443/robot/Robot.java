@@ -1,6 +1,4 @@
 package org.usfirst.frc.falcons6443.robot;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -11,10 +9,6 @@ import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
-import org.usfirst.frc.falcons6443.robot.commands.DriveToDistance;
-
-import org.usfirst.frc.falcons6443.robot.commands.Delay;
-
 
 /**
  * ROBOTS DON'T QUIT!
