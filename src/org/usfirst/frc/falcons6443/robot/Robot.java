@@ -13,8 +13,6 @@ import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 
-import static org.usfirst.frc.falcons6443.robot.utilities.FMS.startPos.center;
-
 
 /**
  * ROBOTS DON'T QUIT!
@@ -30,7 +28,6 @@ public class Robot extends IterativeRobot {
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final NavigationSystem Navigation = new NavigationSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
-    public static final FMS fms = new FMS();
 
     public static OI oi;
 
@@ -46,7 +43,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        autonomy = fms.autoChooser(center,gameData);
         teleop = new TeleopMode();
 
         CameraServer.getInstance().startAutomaticCapture();
