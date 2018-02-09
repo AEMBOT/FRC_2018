@@ -16,16 +16,47 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class FieldData {
 
-    private enum Position{
-        LEFT, RIGHT
+    private enum GameObject {
+        NEARSWITCH, SCALE, FARSWITCH
     }
 
-    private static String gameData = DriverStation.getInstance().getGameSpecificMessage();
+    private enum Position{
+        LEFT, RIGHT, UNKNOWN
+    }
+
+    private static String gameData;
 
     /*
     * Methods that use the ternary operator to
     * get the position the game objects as an enum
     * */
+
+    public static void update(){
+        gameData = DriverStation.getInstance().getGameSpecificMessage();
+    }
+
+    //Designed to be null safe
+    public static Position getObjectSide(GameObject gameObject){
+
+        if(gameData.isEmpty()){
+            update();
+        }else{
+
+            switch (gameObject){
+                case SCALE:
+                    return getScale();
+                case NEARSWITCH:
+                    return getNearSwitch();
+                case FARSWITCH:
+                    return getFarSwitch();
+
+            }
+        }
+
+        return Position.UNKNOWN;
+    }
+
+    //TODO: Set to private after getObjectSide works and makes more sense
     public static Position getNearSwitch(){
         return (gameData.charAt(0) == 'L') ? Position.LEFT : Position.RIGHT;
     }
