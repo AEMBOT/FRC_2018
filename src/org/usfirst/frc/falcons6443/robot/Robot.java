@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.CameraServer;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
@@ -30,6 +32,7 @@ public class Robot extends IterativeRobot {
 
     private Command autonomy;
     private Command teleop;
+    private SendableChooser autoChooser;
 
     /*
      * Called when the robot first starts.
@@ -37,7 +40,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        autonomy = new DriveToDistance(12);
+        //autonomy = new DriveToDistance(12);
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("Drive to distance", new DriveToDistance(12));
+        SmartDashboard.putData("Autonomous mode chooser", autoChooser);
+
         teleop = new TeleopMode();
 
         CameraServer.getInstance().startAutomaticCapture();
@@ -64,8 +71,11 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        if (autonomy != null) {
-            autonomy.start();
+        //if (autonomy != null) Commented out previous code in favor of auto chooser code.
+        //  autonomy.start();
+        {
+          autonomy = (Command)autoChooser.getSelected();
+          autonomy.start();
         }
     }
 
