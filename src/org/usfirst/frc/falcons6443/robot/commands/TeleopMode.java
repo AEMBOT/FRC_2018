@@ -56,6 +56,7 @@ public class TeleopMode extends SimpleCommand {
 
         //manual rotation
         flywheel.manual(xbox.rightStickY(xbox.primary));
+        System.out.println(xbox.rightStickY(xbox.primary));
 
         //stop all
         if (xbox.X(xbox.primary)){
