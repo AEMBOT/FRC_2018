@@ -29,24 +29,14 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void execute() {
-        double leftDrive = xbox.leftStickY();
-        double rightDrive = xbox.rightStickY();
+        //double leftDrive = xbox.leftStickY();
+        //double rightDrive = xbox.rightStickY();
 
         // set the driveTrain power.
-        driveTrain.tankDrive(leftDrive, rightDrive);
+        //driveTrain.tankDrive(leftDrive, rightDrive);
 
-        // the Y button will toggle the drive train to reverse mode
-        if (xbox.Y()) {
-            // safeguard for if the driver holds down the Y button.
-            if (!reversed) {
-                driveTrain.reverse();
-                reversed = true;
-            }
-        } else {
-            reversed = false;
-        }
         //intake button
-        if (xbox.leftBumper()) {
+        if (xbox.leftBumper(xbox.primary)) {
             //if (flywheel.hasBlock()) {
               //  flywheel.stop();
             //} else {
@@ -55,17 +45,22 @@ public class TeleopMode extends SimpleCommand {
         }
 
         //output button
-        if (xbox.rightBumper()) {
+        if (xbox.rightBumper(xbox.primary)) {
             flywheel.output();
         }
 
         //stop
-        if (!xbox.leftBumper() && !xbox.rightBumper()){
+        if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
             flywheel.stop();
         }
 
-        if (xbox.X()){
+        //manual rotation
+        flywheel.manual(xbox.rightStickY(xbox.primary));
+
+        //stop all
+        if (xbox.X(xbox.primary)){
             flywheel.stop();
+            flywheel.manual(0);
         }
     }
 
