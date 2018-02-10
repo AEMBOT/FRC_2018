@@ -10,13 +10,13 @@ import org.usfirst.frc.falcons6443.robot.utilities.PID;
 
 public class Elevator extends Subsystem {
 
-    private static final double TransferHeight = 0; //inches
+    private static final double TransferHeight = 0; //inches -- just leave in ticks???
     private static final double SwitchHeight = 0; //inches
     private static final double ScaleHeight = 0; //inches
     private static final double TopLimitHeight = 0; //inches
     private static final double BottomLimitHeight = 0; //inches
     private static final double Buffer = 1; //inches
-    private static final double Diameter = 2; //inches
+    private static final double Diameter = 2; //inches -- do we want??
 
     private static final double P = 0;
     private static final double I = 0;
@@ -80,15 +80,13 @@ public class Elevator extends Subsystem {
     //put in periodic function
     public void moveToHeight(){
         double power = pid.calcPID(getHeight());
-        if (topLimit.get() || bottomLimit.get()){
-            if(bottomLimit.get()){
-                encoder.reset();
-                setToHeight(ElevatorEnums.BottomLimit);
-                power = Math.abs(power);
-            } else {
-                setToHeight(ElevatorEnums.TopLimit);
-                power = -Math.abs(power);
-            }
+        if(bottomLimit.get()){
+            encoder.reset();
+            setToHeight(ElevatorEnums.BottomLimit);
+            power = Math.abs(power);
+        } else if (topLimit.get()){
+            setToHeight(ElevatorEnums.TopLimit);
+            power = -Math.abs(power);
         }
 
         if (isAtHeight()) {
@@ -100,6 +98,13 @@ public class Elevator extends Subsystem {
 
     public void stop(){
         motor.set(0);
+    }
+
+    public void manual(double power){
+        if (power < .1){
+            power = 0;
+        }
+        motor.set(power);
     }
 
     public boolean isAtHeight(){
@@ -119,7 +124,6 @@ public class Elevator extends Subsystem {
 //To Do:
 //measure predetermined heights
 //know where to go (buttons, auto code, etc) AKA: integrate with rest of code
-//PID to smooth motion
 //tune PID
 
 //Done:
@@ -127,3 +131,4 @@ public class Elevator extends Subsystem {
 //know current position
 //know predetermined height vals
 //add limit switches
+// PID to smooth motion
