@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.Utilities.PID;
 
 /**
  * Subsystem for the flywheels that push the block out.
@@ -17,6 +18,8 @@ public class FlywheelSystem extends Subsystem {
     private Spark rotateMotor;
     private DigitalInput touchSensor;
 
+    private PID pid;
+
     private double intakeSpeed = .75;
     private double outputSpeed = .75;
 
@@ -25,6 +28,7 @@ public class FlywheelSystem extends Subsystem {
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
         //touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
+        pid = new PID (0, 0, 0, 0);
     }
 
     public boolean hasBlock(){
@@ -51,14 +55,18 @@ public class FlywheelSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-    //Add sensor/servo to know angle/how far to drive motor
+    //Add encoder to know angle/how far to drive motor
 
     public void rotateIntakeUp(){
-        //rotateMotor.set();
+        rotateMotor.set(.3);
     }
 
     public void rotateIntakeDown(){
-        //rotateMotor.set();
+        rotateMotor.set(-.3);
+    }
+
+    public void rotateStop(){
+        rotateMotor.set(0);
     }
 
     public void reset(){
