@@ -17,7 +17,6 @@ public class Gamepad {
      * @param gamepad the gamepad's joystick.
      */
     public Gamepad(Joystick gamepad) {
-        assert gamepad.getIsXbox();
         this.gamepad = gamepad;
         //ideally, make it rumble
     }
