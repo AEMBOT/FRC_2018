@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class OI {
 
     private final int PRIMARY_PORT_NUMBER = 0;
-    private final int SECONDARY_PORT_NUMBER = 0;
+    private final int SECONDARY_PORT_NUMBER = 1;
 
     private Xbox xbox;
 
