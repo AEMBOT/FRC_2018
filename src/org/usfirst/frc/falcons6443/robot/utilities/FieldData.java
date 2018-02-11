@@ -56,7 +56,7 @@ public class FieldData {
         return Position.UNKNOWN;
     }
 
-    //TODO: Set to private after getObjectSide works and makes more sense
+    //Returns Postion type enum
     public static Position getNearSwitch(){
         return (gameData.charAt(0) == 'L') ? Position.LEFT : Position.RIGHT;
     }
@@ -68,6 +68,15 @@ public class FieldData {
     public static Position getFarSwitch(){
         return (gameData.charAt(2) == 'L') ? Position.LEFT : Position.RIGHT;
     }
+
+    //Returns char at specifc place
+    public static char getCharSwitch(){return gameData.charAt(1);}
+
+    public static char getCharScale(){return gameData.charAt(2);}
+
+    public static char getCharFarSwitch(){return gameData.charAt(3);}
+
+
 
     //Possibly useless method, shortens things up
     public static String getGameData(){
