@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.LeftToElevator;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RightToElevator;
+import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.FieldData;
 
 
@@ -18,9 +19,11 @@ public class AutoChooser {
     }
 
     Position position;
+    DriveTrainSystem s;
 
     //Pass in the chosen position via dashboard/sendable chooser
-    public AutoChooser(Position position){
+    public AutoChooser(Position position, DriveTrainSystem s){
+        this.s = s;
         this.position = position;
         choose();
     }
@@ -46,5 +49,7 @@ public class AutoChooser {
         }
 
     }
+
+
 
 }
