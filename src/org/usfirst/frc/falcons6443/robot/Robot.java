@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
@@ -30,7 +31,8 @@ public class Robot extends IterativeRobot {
 
     public static OI oi;
 
-    private Command autonomy;
+    //private Command autonomy;
+    AutoChooser autonomy;
     private Command teleop;
     private SendableChooser autoChooser;
 
@@ -44,6 +46,7 @@ public class Robot extends IterativeRobot {
         autoChooser = new SendableChooser();
         autoChooser.addDefault("Drive to distance", new DriveToDistance(12));
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
+        autonomy = new AutoChooser(autoChooser.getSelected());
 
         teleop = new TeleopMode();
 
@@ -71,12 +74,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        //if (autonomy != null) Commented out previous code in favor of auto chooser code.
-        //  autonomy.start();
-        {
-          autonomy = (Command)autoChooser.getSelected();
-          autonomy.start();
-        }
+
     }
 
     /*
@@ -93,9 +91,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        if (autonomy != null) autonomy.cancel();
+        //if (autonomy != null) autonomy.cancel();
 
-        if (teleop != null) teleop.start();
+        //if (teleop != null) teleop.start();
     }
 
     /*
