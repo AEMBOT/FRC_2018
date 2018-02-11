@@ -13,6 +13,7 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.CustomDashboard;
 
 /**
  * ROBOTS DON'T QUIT!
@@ -30,6 +31,7 @@ public class Robot extends IterativeRobot {
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
 
     public static OI oi;
+    private CustomDashboard dashboard;
 
     //private Command autonomy;
     AutoChooser autonomy;
@@ -42,9 +44,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-
-        //autonomy = new AutoChooser();
-
+        dashboard = new CustomDashboard();
+        //autonomy = new DriveToDistance(12);
         teleop = new TeleopMode();
 
         CameraServer.getInstance().startAutomaticCapture();
