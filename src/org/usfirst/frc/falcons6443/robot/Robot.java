@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
     private CustomDashboard dashboard;
 
     //private Command autonomy;
-    AutoChooser autonomy;
+    AutoChooser autonomySelection;
     private Command teleop;
     private SendableChooser autoChooser;
 
@@ -45,7 +45,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         oi = new OI();
         dashboard = new CustomDashboard();
-        //autonomy = new DriveToDistance(12);
         teleop = new TeleopMode();
 
         CameraServer.getInstance().startAutomaticCapture();
@@ -72,7 +71,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-
+       autonomySelection = new AutoChooser(dashboard.getSelectedPos());
     }
 
     /*
