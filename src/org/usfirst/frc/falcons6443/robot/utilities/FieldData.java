@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.utilities;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
+
 /**
  *
  * This command serves as a clean interface
@@ -16,8 +17,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class FieldData {
 
-    private enum GameObject {
-        NEARSWITCH, SCALE, FARSWITCH
+    //The main game pieces, for now assume SWITCH is closest switch
+    //because no one will need the FARSWITCH
+    public enum Object {
+        SWITCH, SCALE, FARSWITCH
     }
 
     private enum Position{
@@ -26,60 +29,48 @@ public class FieldData {
 
     private static String gameData;
 
-    /*
-    * Methods that use the ternary operator to
-    * get the position the game objects as an enum
-    * */
+    //Simple char collection of gameData that handles empty strings
+    public static char getChar(Object object){
 
-    public static void update(){
-        gameData = DriverStation.getInstance().getGameSpecificMessage();
-    }
-
-    //Designed to be null safe
-    public static Position getObjectSide(GameObject gameObject){
-
-        if(gameData.isEmpty()){
-            update();
-        }else{
-
-            switch (gameObject){
+        update();
+        if(!gameData.isEmpty()){
+            switch (object) {
+                case SWITCH:
+                    return gameData.charAt(0);
                 case SCALE:
-                    return getScale();
-                case NEARSWITCH:
-                    return getNearSwitch();
+                    return gameData.charAt(1);
                 case FARSWITCH:
-                    return getFarSwitch();
-
+                    return gameData.charAt(2);
             }
         }
+        return 'X'; //in case something went wrong getting data
+    }
 
+    //enum version of getChar()
+    public static Position getPos(Object object){
+
+        update();
+        if(!gameData.isEmpty()){
+            switch (object) {
+                case SWITCH:
+                    return (gameData.charAt(0) == 'L') ? Position.LEFT : Position.RIGHT ;
+                case SCALE:
+                    return (gameData.charAt(1) == 'L') ? Position.LEFT : Position.RIGHT;
+                case FARSWITCH:
+                    return (gameData.charAt(2) == 'L') ? Position.LEFT : Position.RIGHT;
+            }
+        }
         return Position.UNKNOWN;
     }
 
-    //Returns Postion type enum
-    public static Position getNearSwitch(){
-        return (gameData.charAt(0) == 'L') ? Position.LEFT : Position.RIGHT;
+    //updates, should be called after autoInit() is called
+    private static void update(){
+        gameData = DriverStation.getInstance().getGameSpecificMessage();
     }
-
-    public static Position getScale(){
-        return (gameData.charAt(1) == 'L') ? Position.LEFT : Position.RIGHT;
-    }
-
-    public static Position getFarSwitch(){
-        return (gameData.charAt(2) == 'L') ? Position.LEFT : Position.RIGHT;
-    }
-
-    //Returns char at specifc place
-    public static char getCharSwitch(){return gameData.charAt(1);}
-
-    public static char getCharScale(){return gameData.charAt(2);}
-
-    public static char getCharFarSwitch(){return gameData.charAt(3);}
-
-
 
     //Possibly useless method, shortens things up
     public static String getGameData(){
+        update();
         return gameData;
     }
 }

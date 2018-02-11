@@ -23,7 +23,8 @@ public class CustomDashboard {
 
     public CustomDashboard() {
        autoChoice = new SendableChooser();
-       autoChoice.addDefault("Left", AutoChooser.Position.LEFT);
+       autoChoice.addDefault("Unknown", AutoChooser.Position.UNKNOWN);
+       autoChoice.addObject("Left", AutoChooser.Position.LEFT);
        autoChoice.addObject("Center", AutoChooser.Position.CENTER);
        autoChoice.addObject("Right", AutoChooser.Position.RIGHT);
 

@@ -1,41 +1,46 @@
 package org.usfirst.frc.falcons6443.robot.commands;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLine;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.LeftToElevator;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RightToElevator;
-import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.FieldData;
 
-
 /**
- * This class handles the logic by receiving a selected position
- * by the drive team.  It will call a final CommandGroup.
+ * This class handles will chooose and autonomous mode
+ * based on the starting position then from there, instantiate
+ * a command group based on FMS data once the game starts.
  *
  *@author Aleks Vidmantas
  */
+
 public class AutoChooser {
 
+    //represents the three starting robot positions
     public enum Position {
-        LEFT, CENTER, RIGHT
+        LEFT, CENTER, RIGHT, UNKNOWN
     }
 
-    Position position;
-    DriveTrainSystem s;
+    private Position position;
 
-    //Pass in the chosen position via dashboard/sendable chooser
-    public AutoChooser(Position position, DriveTrainSystem s){
-        this.s = s;
+    //pass in a Position enum from Robot.java
+    public AutoChooser(Position position){
         this.position = position;
         choose();
     }
 
-    //Performs selection process
+    //performs selection process by using a switch for which two
+    //commands then choose command once fms data is received.
     private void choose(){
+
+        //auto class will be created, must be CommandGroup
         CommandGroup finalAuto;
+
         switch (position){
 
-            //Handles which code to run depending on result of the specified char
+            //handles which code to run depending on result of the specified switch/scale
             case LEFT:
-                if(FieldData.getCharScale() == 'L')
+                if(FieldData.getChar(FieldData.Object.SCALE) == 'L')
                     finalAuto = new LeftToElevator();
                 else
                     finalAuto = new RightToElevator();
@@ -45,6 +50,10 @@ public class AutoChooser {
                 break;
 
             case RIGHT:
+                break;
+
+            case UNKNOWN:  //position is UNKNOWN if dashboard fails or user fails to enter choice
+                finalAuto = new CenterToLine();
                 break;
         }
 

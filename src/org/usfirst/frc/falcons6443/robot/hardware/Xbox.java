@@ -16,7 +16,7 @@ public class Xbox {
      *
      * @param xbox the xbox's joystick.
      */
-    public Xbox(Joystick xbox) { //TODO: xbox.getIsXbox is now longer a method and needs to be replace
+    public Xbox(Joystick xbox) { //TODO: xbox.getIsXbox is no longer a method and needs to be replaced
         this.xbox = xbox;
         //ideally, make it rumble
     }
