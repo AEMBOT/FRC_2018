@@ -35,6 +35,8 @@ public class Robot extends IterativeRobot {
     AutoChooser autonomy;
     private Command teleop;
     private SendableChooser autoChooser;
+    private SendableChooser f;
+
 
     /*
      * Called when the robot first starts.
@@ -44,9 +46,10 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         //autonomy = new DriveToDistance(12);
         autoChooser = new SendableChooser();
+
         autoChooser.addDefault("Drive to distance", new DriveToDistance(12));
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
-        autonomy = new AutoChooser(autoChooser.getSelected());
+        //autonomy = new AutoChooser(autoChooser.getSelected());
 
         teleop = new TeleopMode();
 
