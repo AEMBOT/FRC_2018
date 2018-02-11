@@ -35,8 +35,6 @@ public class Robot extends IterativeRobot {
     AutoChooser autonomy;
     private Command teleop;
     private SendableChooser autoChooser;
-    private SendableChooser f;
-
 
     /*
      * Called when the robot first starts.
