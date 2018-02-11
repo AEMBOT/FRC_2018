@@ -43,10 +43,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         oi = new OI();
         //autonomy = new DriveToDistance(12);
-        autoChooser = new SendableChooser();
-        autoChooser.addDefault("Drive to distance", new DriveToDistance(12));
-        SmartDashboard.putData("Autonomous mode chooser", autoChooser);
-        autonomy = new AutoChooser(autoChooser.getSelected());
 
         teleop = new TeleopMode();
 
