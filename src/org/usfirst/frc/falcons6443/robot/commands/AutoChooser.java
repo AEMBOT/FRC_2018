@@ -1,4 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.commands;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.LeftToElevator;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.RightToElevator;
+import org.usfirst.frc.falcons6443.robot.utilities.FieldData;
+
 
 /**
  * This class handles the logic by receiving a selected position
@@ -22,10 +27,15 @@ public class AutoChooser {
 
     //Performs selection process
     private void choose(){
-
+        CommandGroup finalAuto;
         switch (position){
 
+            //Handles which code to run depending on result of the specified char
             case LEFT:
+                if(FieldData.getCharScale() == 'L')
+                    finalAuto = new LeftToElevator();
+                else
+                    finalAuto = new RightToElevator();
                 break;
 
             case CENTER:
