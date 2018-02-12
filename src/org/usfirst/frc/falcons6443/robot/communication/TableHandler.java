@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.utilities;
+package org.usfirst.frc.falcons6443.robot.communication;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -10,11 +10,11 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * @author Aleks Vidmantas
  */
 
-public class Network {
+public class TableHandler {
     
     NetworkTableInstance inst;
 
-    public Network(){
+    public TableHandler(){
         inst = NetworkTableInstance.getDefault();
         NetworkTable table = inst.getTable("datatable");
         NetworkTableEntry entry1 = table.getEntry("Y");

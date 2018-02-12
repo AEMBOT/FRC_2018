@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLine;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.LeftToElevator;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RightToElevator;
-import org.usfirst.frc.falcons6443.robot.utilities.FieldData;
+import org.usfirst.frc.falcons6443.robot.communication.FieldData;
 
 /**
  * This class handles will chooose and autonomous mode
@@ -15,13 +15,15 @@ import org.usfirst.frc.falcons6443.robot.utilities.FieldData;
  */
 
 public class AutoChooser {
-
     //represents the three starting robot positions
     public enum Position {
         LEFT, CENTER, RIGHT, UNKNOWN
     }
 
+    //auto class will be created, must be CommandGroup
+    CommandGroup finalAuto;
     private Position position;
+
 
     //pass in a Position enum from Robot.java
     public AutoChooser(Position position){
@@ -33,8 +35,6 @@ public class AutoChooser {
     //commands then choose command once fms data is received.
     private void choose(){
 
-        //auto class will be created, must be CommandGroup
-        CommandGroup finalAuto;
 
         switch (position){
 
@@ -57,6 +57,12 @@ public class AutoChooser {
                 break;
         }
 
+    }
+
+    public void cancel(){
+        if(!(finalAuto == null)){
+            finalAuto.cancel();
+        }
     }
 
 
