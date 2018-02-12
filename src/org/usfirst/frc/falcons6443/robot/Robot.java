@@ -6,14 +6,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.CameraServer;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.CustomDashboard;
+import org.usfirst.frc.falcons6443.robot.network.CustomDashboard;
 
 /**
  * ROBOTS DON'T QUIT!
@@ -34,9 +32,8 @@ public class Robot extends IterativeRobot {
     private CustomDashboard dashboard;
 
     //private Command autonomy;
-    AutoChooser autonomySelection;
+    private AutoChooser autonomy;
     private Command teleop;
-    private SendableChooser autoChooser;
 
     /*
      * Called when the robot first starts.
@@ -71,7 +68,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-       autonomySelection = new AutoChooser(dashboard.getSelectedPos());
+       autonomy = new AutoChooser(dashboard.getSelectedPos());
     }
 
     /*
@@ -88,9 +85,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        //if (autonomy != null) autonomy.cancel();
+        if (autonomy != null) autonomy.cancel();
 
-        //if (teleop != null) teleop.start();
+        if (teleop != null) teleop.start();
     }
 
     /*
@@ -106,6 +103,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
-        LiveWindow.run();
+        // LiveWindow.run(); no longer required as per API?
     }
 }
