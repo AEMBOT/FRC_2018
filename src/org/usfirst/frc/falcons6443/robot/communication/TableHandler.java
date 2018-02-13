@@ -20,12 +20,12 @@ public class TableHandler {
         inst = NetworkTableInstance.getDefault();
         inst.startClientTeam(6443);
         table = inst.getTable("test");
-        NetworkTableEntry entry1 = table.getEntry("Y");
+        NetworkTableEntry entry1 = table.getEntry("y");
         entry1.setString("Boogaloo");
     }
 
     public String getTest(){
-        return table.getEntry("test").getString("No string found :(");
+        return table.getEntry("y").getString("No string found :(");
     }
 
 
