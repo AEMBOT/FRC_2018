@@ -4,8 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.CameraServer;
 
+import javafx.scene.control.Tab;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
+import org.usfirst.frc.falcons6443.robot.communication.TableHandler;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
@@ -32,16 +34,19 @@ public class Robot extends IterativeRobot {
     //private Command autonomy;
     private AutoChooser autonomy;
     private Command teleop;
+    private TableHandler handler;
 
     /*
      * Called when the robot first starts.
      */
     @Override
     public void robotInit() {
+
         oi = new OI();
         dashboard = new CustomDashboard();
         teleop = new TeleopMode();
 
+        handler = new TableHandler();
         CameraServer.getInstance().startAutomaticCapture();
     }
 
@@ -101,6 +106,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
+        System.out.println(handler.getTest());
         // LiveWindow.run(); no longer required as per API?
     }
 }
