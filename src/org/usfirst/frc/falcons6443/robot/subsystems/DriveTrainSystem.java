@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Spark;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
+import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 
 /**
  * Subsystem for the robot's drive train.
@@ -24,23 +25,19 @@ public class DriveTrainSystem extends Subsystem {
     public static final double KD = 0.00;  //.00
     public static final double KF = 0.00;
 
-    public static final double GEAR_ONE = 0.3; // Lowest speed
-    public static final double GEAR_TWO = 0.6;  // Medium speed
-    public static final double GEAR_THREE = 1;  // Maximum speed
-
-    // The constant that determines the maximum curvature at which the robot can move.
-    // It is determined by the formula c = e^(-r/w), where
-    // r is the radius of the turn and w is the wheelbase (distance between the wheels) of the robot
-    // more info in the describtion of drive() method in RobotDrive
-    private static final double MAXIMUM_CURVE = 0.36787944;
-
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
-    private boolean reversed;
+    private DriveEncoders encoders;
 
-    // can be 1, 2, or 3. determines the maximum power of the RobotDrive instance.
-    private int speedLevel;
+    //private Timer timer;
+
+    private double targetDistance;
+    private static final double DistanceBuffer = .5; //inches
+    //target angle and angle buffer in DriveTrainSystem class
+
+    private boolean reversed;
+    private static final double WheelDiameter = 6; //UPDATE!
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
@@ -57,15 +54,16 @@ public class DriveTrainSystem extends Subsystem {
                 new Spark(RobotMap.BackRightMotor));
 
         drive = new RobotDrive(leftMotors, rightMotors);
+        encoders = new DriveEncoders();
+        //timer = new Timer();
+
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
 
         reversed = false;
 
-        speedLevel = 2; //start in lowest speed mode [SAFETY FIRST]
-        // ^ lies, forget safety
-        drive.setMaxOutput(GEAR_TWO);
+        drive.setMaxOutput(1);
     }
 
     @Override
@@ -80,9 +78,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(-left, -right);
+            drive.tankDrive(left, -right);
         } else {
-            drive.tankDrive(left, right);
+            drive.tankDrive(-left, right);
         }
     }
 
@@ -106,27 +104,6 @@ public class DriveTrainSystem extends Subsystem {
         reversed = !reversed;
     }
 
-
-    /**
-     * Increases the maximum speed level.
-     */
-    public void upshift() {
-        if (speedLevel != 3) {
-            speedLevel++;
-        }
-        updateMaxOutput();
-    }
-
-    /**
-     * Decreases the max speed level.
-     */
-    public void downshift() {
-        if (speedLevel != 1) {
-            speedLevel--;
-        }
-        updateMaxOutput();
-    }
-
     /**
      * @return whether the robot is reversed
      */
@@ -134,45 +111,33 @@ public class DriveTrainSystem extends Subsystem {
         return reversed;
     }
 
-    /**
-     * Gets the current maximum speed level.
-     *
-     * @return the current speed level of the robot.
-     */
-    public int getSpeedLevel() {
-        return speedLevel;
+    public double getLeftDistance(){
+        // Encoder clicks per rotation = 850
+        return -encoders.getLeftDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
-    /**
-     * Moves the robot at a specified speed and curvature.
-     * <p>
-     * This method is mostly used for teleoperated mode.
-     * Unless if you want a really fancy autonomous mode that saves alot of time
-     * it is pretty unlikely that curve will have to be manually specified in the code as
-     * anything other than a joystick value.
-     *
-     * @param speed the desired speed.
-     * @param curve the desired curvature.
-     */
-    public void drive(double speed, double curve) {
-        if (!reversed) {
-            drive.drive(speed, curve * MAXIMUM_CURVE);
-        } else {
-            drive.drive(-speed, -curve * MAXIMUM_CURVE);
-        }
+    public double getRightDistance(){
+        return encoders.getRightDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
-    /* This method is being called from the two shift methods whenever they get called.
-     * If you ever wish to change the three power levels you can simply modify their constants, GEAR_ONE,
-     * GEAR_TWO and GEAR_THREE up above.
-     */
-    private void updateMaxOutput() {
-        if (speedLevel == 1) {
-            drive.setMaxOutput(GEAR_ONE);
-        } else if (speedLevel == 2) {
-            drive.setMaxOutput(GEAR_TWO);
-        } else {
-            drive.setMaxOutput(GEAR_THREE);
-        }
+    public double getLinearDistance(){
+        return (getLeftDistance() + getRightDistance()) / 2;
     }
+
+    /*public void driveToDistance(double distance, double speed){
+        targetDistance = distance;
+        while (!isAtDistance()){
+            tankDrive(speed, speed);
+            timer.delay(1);
+        }
+        tankDrive(0, 0);
+    }
+
+    public boolean isAtDistance(){
+        if ((getLinearDistance() + DistanceBuffer) > targetDistance){
+            return true;
+        } else
+            return false;
+    }*/
+
 }

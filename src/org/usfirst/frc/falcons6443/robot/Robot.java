@@ -4,13 +4,16 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.CameraServer;
+
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
+import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 
 /**
- * ROBOTS DON'T QUIT! <- Deprecated
+ * ROBOTS DON'T QUIT!
  * The Robot class is FRC team 6443's implementation of WPIlib's IterativeRobot class.
  *
  * @author Christopher Medlin
@@ -23,6 +26,7 @@ public class Robot extends IterativeRobot {
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final Elevator Elevator = new Elevator();
     public static final NavigationSystem Navigation = new NavigationSystem();
+    public static final FlywheelSystem Flywheel = new FlywheelSystem();
 
     public static OI oi;
 
@@ -37,6 +41,8 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         // autonomy = new #Autonomy(); TODO Assign autonomous command
         teleop = new TeleopMode();
+
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     /*

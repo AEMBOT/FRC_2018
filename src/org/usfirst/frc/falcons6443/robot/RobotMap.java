@@ -13,12 +13,17 @@ public class RobotMap {
 	/* Ok, here's the deal. You're gonna forget to change them back to their appropriate values.
      * You will, trust me. So DON'T FORGET TO SET YOUR PORTS PROPERLY. */
 
-    //drive train motors
+    //2018 drive train motors
     public static final int FrontRightMotor = 2;
+    public static final int FrontLeftMotor = 0;
+    public static final int BackRightMotor = 3;
+    public static final int BackLeftMotor = 1;
+
+    //2017 drive train motors
+    /*public static final int FrontRightMotor = 2;
     public static final int FrontLeftMotor = 1;
     public static final int BackRightMotor = 3;
-    public static final int BackLeftMotor = 0;
-
+    public static final int BackLeftMotor = 0;*/
     //elevator motors
     public static final int ElevatorMotor = 7;
 
@@ -27,5 +32,19 @@ public class RobotMap {
     public static final int ElevatorEncoderB = 2;
     public static final int ElevatorTopLimit = 4;
     public static final int ElevatorBottomLimit = 3;
+    //drive train encoders
+    public static final int LeftEncoderA = 0;
+    public static final int LeftEncoderB = 1;
+    public static final int RightEncoderA = 2;
+    public static final int RightEncoderB = 3;
 
+    //intake motors
+    public static final int IntakeLeftMotor = 4;
+    public static final int IntakeRightMotor = 5;
+    public static final int IntakeRotateMotor = 7;
+
+    //intake sensors
+    //public static final int IntakeTouchSensor = -1;
+    public static final int IntakeEncoderA = -1;
+    public static final int IntakeEncoderB = -1;
 }

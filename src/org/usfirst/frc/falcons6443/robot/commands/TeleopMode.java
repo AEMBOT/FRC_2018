@@ -1,8 +1,8 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
-import org.usfirst.frc.falcons6443.robot.hardware.Gamepad;
 import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
+import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
 /**
  * Teleoperated mode for the robot.
@@ -12,37 +12,70 @@ import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Gamepad gamepad;
+    private Xbox xbox;
 
     public TeleopMode() {
         super("Teleop Command");
         requires(driveTrain);
+        requires(flywheel);
         requires(elevator);
     }
 
     @Override
     public void initialize() {
-        gamepad = Robot.oi.getGamepad();
+        xbox = Robot.oi.getXbox();
+        reversed = false;
     }
 
     @Override
     public void execute() {
         //for testing
-        elevator.manual(gamepad.rightStickY());
+        elevator.manual(xbox.rightStickY(xbox.primary));
 
-        if(gamepad.X()){
+        if(xbox.X(xbox.primary)){
             elevator.up(true);
         }
 
-        if(gamepad.Y()){
+        if(xbox.Y(xbox.primary)){
             elevator.down(true);
         }
 
-        if (!gamepad.X() && !gamepad.Y()) {
+        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary)) {
             elevator.stop();
         }
 
+        // set the driveTrain power.
+        //driveTrain.tankDrive(leftDrive, rightDrive);
+
+        //intake button
+        if (xbox.leftBumper(xbox.primary)) {
+            //if (flywheel.hasBlock()) {
+              //  flywheel.stop();
+            //} else {
+                flywheel.intake();
+            //}
+        }
+
+        //output button
+        if (xbox.rightBumper(xbox.primary)) {
+            flywheel.output();
+        }
+
+        //stop
+        if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
+            flywheel.stop();
+        }
+
         //elevator.moveToHeight();
+        //manual rotation
+        flywheel.manual(xbox.rightStickY(xbox.primary));
+        System.out.println(xbox.rightStickY(xbox.primary));
+
+        //stop all
+        if (xbox.X(xbox.primary)){
+            flywheel.stop();
+            flywheel.manual(0);
+        }
     }
 
     public boolean isFinished() {
