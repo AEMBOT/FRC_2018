@@ -48,7 +48,7 @@ public class Elevator extends Subsystem {
     public void initDefaultCommand() {
     }
 
-    public ElevatorEnums currentElevatorState(){
+    /*public ElevatorEnums currentElevatorState(){
         return state;
     }
 
@@ -98,13 +98,18 @@ public class Elevator extends Subsystem {
 
     public void stop(){
         motor.set(0);
-    }
+    }*/
 
     public void manual(double power){
-        if (power < .1){
-            power = 0;
-        }
         motor.set(power);
+    }
+
+    public void up (boolean on){
+        if (on){
+            motor.set(.2);
+        } else {
+            motor.set(0);
+        }
     }
 
     public boolean isAtHeight(){

@@ -23,9 +23,9 @@ public class RobotMap {
     public static final int ElevatorMotor = 6;
 
     //elevator sensors
-    public static final int ElevatorEncoderA = -1;
-    public static final int ElevatorEncoderB = -1;
-    public static final int ElevatorTopLimit = -1;
-    public static final int ElevatorBottomLimit = -1;
+    public static final int ElevatorEncoderA = 1;
+    public static final int ElevatorEncoderB = 2;
+    public static final int ElevatorTopLimit = 4;
+    public static final int ElevatorBottomLimit = 3;
 
 }
