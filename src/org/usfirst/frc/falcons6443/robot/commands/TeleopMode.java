@@ -28,13 +28,18 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void execute() {
         //for testing
-        elevator.manual(gamepad.leftStickY());
+        elevator.manual(gamepad.rightStickY());
 
         if(gamepad.X()){
             elevator.up(true);
-        } else {
-            elevator.up(false);
+        }
 
+        if(gamepad.Y()){
+            elevator.down(true);
+        }
+
+        if (!gamepad.X() && !gamepad.Y()) {
+            elevator.stop();
         }
 
         //elevator.moveToHeight();

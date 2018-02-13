@@ -106,10 +106,18 @@ public class Elevator extends Subsystem {
 
     public void up (boolean on){
         if (on){
-            motor.set(.2);
-        } else {
-            motor.set(0);
+            motor.set(-1);
         }
+    }
+
+    public void down (boolean on){
+        if (on){
+            motor.set(1);
+        }
+    }
+
+    public void stop () {
+        motor.set(0);
     }
 
     public boolean isAtHeight(){

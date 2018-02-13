@@ -20,7 +20,7 @@ public class RobotMap {
     public static final int BackLeftMotor = 0;
 
     //elevator motors
-    public static final int ElevatorMotor = 6;
+    public static final int ElevatorMotor = 7;
 
     //elevator sensors
     public static final int ElevatorEncoderA = 1;

@@ -15,7 +15,7 @@ public class TestElevator extends SimpleCommand {
 
     @Override
     public void initialize() {
-        elevator.moveToHeight();
+        //elevator.moveToHeight();
     }
 
     public boolean isFinished() {
