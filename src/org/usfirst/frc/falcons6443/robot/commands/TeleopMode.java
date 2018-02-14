@@ -24,15 +24,19 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void initialize() {
         xbox = Robot.oi.getXbox();
-        reversed = false;
     }
 
     @Override
     public void execute() {
         //for testing
         elevator.manual(xbox.rightStickY(xbox.primary));
+        //manual rotation
+        flywheel.manual(xbox.leftStickY(xbox.primary));
 
-        if(xbox.X(xbox.primary)){
+        System.out.println("intake: " + xbox.leftStickY(xbox.primary));
+        System.out.println("lift: " + xbox.rightStickY(xbox.primary));
+
+        /*if(xbox.X(xbox.primary)){
             elevator.up(true);
         }
 
@@ -40,9 +44,9 @@ public class TeleopMode extends SimpleCommand {
             elevator.down(true);
         }
 
-        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary)) {
+        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary) && xbox.rightStickY(xbox.primary) == 0) {
             elevator.stop();
-        }
+        }*/
 
         // set the driveTrain power.
         //driveTrain.tankDrive(leftDrive, rightDrive);
@@ -67,15 +71,6 @@ public class TeleopMode extends SimpleCommand {
         }
 
         //elevator.moveToHeight();
-        //manual rotation
-        flywheel.manual(xbox.rightStickY(xbox.primary));
-        System.out.println(xbox.rightStickY(xbox.primary));
-
-        //stop all
-        if (xbox.X(xbox.primary)){
-            flywheel.stop();
-            flywheel.manual(0);
-        }
     }
 
     public boolean isFinished() {
