@@ -30,7 +30,7 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void execute() {
         double leftDrive = xbox.leftStickY();
-        double rightDrive = xbox.rightStickY();
+        double rightDrive = -xbox.rightStickY();//TODO electrical can solve it or this works
 
         // set the driveTrain power.
         driveTrain.tankDrive(leftDrive, rightDrive);
