@@ -38,11 +38,12 @@ public class FlywheelSystem extends Subsystem {
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
         //touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
-        encoder = new IntakeEncoder();
+        //encoder = new IntakeEncoder();
         pid = new PID (P, I, D, Eps);
         pid.setMaxOutput(1);
         pid.setDoneRange(20); //ticks
         pid.setMinDoneCycles(5);
+        rotateMotor.setInverted(true);
     }
 
     public boolean hasBlock(){

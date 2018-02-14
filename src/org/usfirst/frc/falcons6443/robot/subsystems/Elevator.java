@@ -35,9 +35,9 @@ public class Elevator extends Subsystem {
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
-        bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
-        encoder = new ElevatorEncoder();
+        //topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
+        //bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
+        //encoder = new ElevatorEncoder();
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.5);
         pid.setMinDoneCycles(5);

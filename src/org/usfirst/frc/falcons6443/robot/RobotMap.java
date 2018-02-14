@@ -41,7 +41,7 @@ public class RobotMap {
     //intake motors
     public static final int IntakeLeftMotor = 4;
     public static final int IntakeRightMotor = 5;
-    public static final int IntakeRotateMotor = 7;
+    public static final int IntakeRotateMotor = 6;
 
     //intake sensors
     //public static final int IntakeTouchSensor = -1;
