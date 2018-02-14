@@ -1,34 +1,36 @@
 package org.usfirst.frc.falcons6443.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.falcons6443.robot.commands.autonomous.DriveToDistance;
-import org.usfirst.frc.falcons6443.robot.commands.autonomous.RotateToAngle;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 
 
 /**
- * Command to move to the right switch from the second position on the right.
+ * Command to move to the right switch from the left starting position and place block
  *
  * @author Goirick Saha
  */
 
-public class RightToRightScaleLong extends CommandGroup {
+
+
+public class LeftToLeftScale extends CommandGroup {
 
     private FlywheelSystem flywheelSystem;
 
-    public RightToRightScaleLong(){
+    public LeftToLeftScale() {
+        flywheelSystem = new FlywheelSystem();
 
         addSequential(new DriveToDistance(242));
-        addSequential(new RotateToAngle(90));
+        addSequential(new RotateToAngle(-90));
         addSequential(new DriveToDistance(12));
         addSequential(new RotateToAngle(180));
         addSequential(new DriveToDistance(32));
-        addSequential(new RotateToAngle(270));
+        addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(53));
 
         //Elevator code here.
 
         flywheelSystem.output();
-
     }
 }
