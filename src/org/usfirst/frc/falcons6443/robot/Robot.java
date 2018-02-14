@@ -1,4 +1,5 @@
 package org.usfirst.frc.falcons6443.robot;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -41,11 +42,10 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-
         oi = new OI();
         dashboard = new CustomDashboard();
         teleop = new TeleopMode();
-
+        TableHandler.init();
         handler = new TableHandler();
         CameraServer.getInstance().startAutomaticCapture();
     }

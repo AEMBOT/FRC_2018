@@ -7,7 +7,7 @@ import org.usfirst.frc.falcons6443.robot.commands.autocommands.RightToElevator;
 import org.usfirst.frc.falcons6443.robot.communication.FieldData;
 
 /**
- * This class handles will chooose and autonomous mode
+ * This class handles will choose and autonomous mode
  * based on the starting position then from there, instantiate
  * a command group based on FMS data once the game starts.
  *

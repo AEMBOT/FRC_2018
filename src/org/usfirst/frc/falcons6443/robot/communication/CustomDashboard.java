@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.communication;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.Robot;
@@ -41,8 +42,10 @@ public class CustomDashboard {
         // smartDashboard.putBoolean("Elevator Raising", ) //Whether or not the elevator is raising. Data from elevator motor.
         smartDashboard.putString("Match time: ", Double.toString(Timer.getMatchTime()));
         smartDashboard.putBoolean("Robot reversed", Robot.DriveTrain.isReversed());
-
         smartDashboard.putData("Autonomous mode chooser", autoChoice);
+
+        //relays current command
+        smartDashboard.putData(Scheduler.getInstance());
     }
 
     public AutoChooser.Position getSelectedPos() {
