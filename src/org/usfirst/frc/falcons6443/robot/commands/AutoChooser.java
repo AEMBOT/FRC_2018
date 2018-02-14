@@ -1,9 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLine;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.LeftToElevator;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.RightToElevator;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
 import org.usfirst.frc.falcons6443.robot.communication.FieldData;
 
 /**
@@ -41,15 +39,23 @@ public class AutoChooser {
             //handles which code to run depending on result of the specified switch/scale
             case LEFT:
                 if(FieldData.getChar(FieldData.Object.SCALE) == 'L')
-                    finalAuto = new LeftToElevator();
+                    finalAuto = new LeftToLeftScale();
                 else
-                    finalAuto = new RightToElevator();
+                    finalAuto = new LeftToRightScale();
                 break;
 
             case CENTER:
+                if(FieldData.getChar(FieldData.Object.SWITCH) == 'L')
+                    finalAuto = new CenterToLeftSwitch();
+                else
+                    finalAuto = new CenterToRightSwitch();
                 break;
 
             case RIGHT:
+                if(FieldData.getChar(FieldData.Object.SCALE) == 'R')
+                    finalAuto = new RightToRightScale();
+                else
+                    finalAuto = new RightToLeftScale();
                 break;
 
             case UNKNOWN:  //position is UNKNOWN if dashboard fails or user fails to enter choice
