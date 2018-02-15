@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
+import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
 /**
@@ -19,6 +20,7 @@ public class TeleopMode extends SimpleCommand {
 
         requires(driveTrain);
         requires(flywheel);
+        requires(elevator);
     }
 
     @Override
@@ -29,11 +31,31 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void execute() {
-        double leftDrive = xbox.leftStickY();
-        double rightDrive = -xbox.rightStickY();//TODO electrical can solve it or this works
+        //for testing
+        elevator.manual(xbox.rightStickY(xbox.primary));
+        //manual rotation
+        flywheel.manual(xbox.leftStickY(xbox.primary));
+
+        System.out.println("intake: " + xbox.leftStickY(xbox.primary));
+        System.out.println("lift: " + xbox.rightStickY(xbox.primary));
+
+        /*if(xbox.X(xbox.primary)){
+            elevator.up(true);
+        }
+
+        if(xbox.Y(xbox.primary)){
+            elevator.down(true);
+        }
+
+        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary) && xbox.rightStickY(xbox.primary) == 0) {
+            elevator.stop();
+        }*/
 
         // set the driveTrain power.
-        driveTrain.tankDrive(leftDrive, rightDrive);
+        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.leftStickY(xbox.primary));
+
+        System.out.println("Left: " + driveTrain.getLeftDistance());
+        System.out.println("Right: " + driveTrain.getRightDistance());
 
         System.out.println("Left: " + driveTrain.getLeftDistance());
         System.out.println("Right: " + driveTrain.getRightDistance());
@@ -49,11 +71,11 @@ public class TeleopMode extends SimpleCommand {
             reversed = false;
         }*/
 
-        if(xbox.Y()){
+        if(xbox.Y(xbox.primary)){
             driveTrain.reset();
         }
         //intake button
-        if (xbox.leftBumper()) {
+        if (xbox.leftBumper(xbox.primary)) {
             //if (flywheel.hasBlock()) {
               //  flywheel.stop();
             //} else {
@@ -62,18 +84,16 @@ public class TeleopMode extends SimpleCommand {
         }
 
         //output button
-        if (xbox.rightBumper()) {
+        if (xbox.rightBumper(xbox.primary)) {
             flywheel.output();
         }
 
         //stop
-        if (!xbox.leftBumper() && !xbox.rightBumper()){
+        if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
             flywheel.stop();
         }
 
-        if (xbox.X()){
-            flywheel.stop();
-        }
+        //elevator.moveToHeight();
     }
 
     public boolean isFinished() {
