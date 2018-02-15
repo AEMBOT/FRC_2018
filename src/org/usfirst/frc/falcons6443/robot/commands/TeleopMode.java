@@ -13,9 +13,11 @@ import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 public class TeleopMode extends SimpleCommand {
 
     private Xbox xbox;
+    private boolean reversed;
 
     public TeleopMode() {
         super("Teleop Command");
+
         requires(driveTrain);
         requires(flywheel);
         requires(elevator);
@@ -24,6 +26,7 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void initialize() {
         xbox = Robot.oi.getXbox();
+        reversed = false;
     }
 
     @Override
@@ -49,8 +52,25 @@ public class TeleopMode extends SimpleCommand {
         }*/
 
         // set the driveTrain power.
-        //driveTrain.tankDrive(leftDrive, rightDrive);
+        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.leftStickY(xbox.primary));
 
+        System.out.println("Left: " + driveTrain.getLeftDistance());
+        System.out.println("Right: " + driveTrain.getRightDistance());
+
+        // the Y button will toggle the drive train to reverse mode
+        /*if (xbox.Y()) {
+            // safeguard for if the driver holds down the Y button.
+            if (!reversed) {
+                driveTrain.reverse();
+                reversed = true;
+            }
+        } else {
+            reversed = false;
+        }*/
+
+        if(xbox.Y(xbox.primary)){
+            driveTrain.reset();
+        }
         //intake button
         if (xbox.leftBumper(xbox.primary)) {
             //if (flywheel.hasBlock()) {

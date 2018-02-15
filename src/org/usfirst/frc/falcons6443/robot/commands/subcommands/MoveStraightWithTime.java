@@ -1,6 +1,7 @@
-package org.usfirst.frc.falcons6443.robot.commands;
+package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import edu.wpi.first.wpilibj.PIDOutput;
+import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 
 /**
  * Command to drive straight ahead using PID for a certain amount of time.

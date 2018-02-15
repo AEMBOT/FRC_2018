@@ -1,4 +1,6 @@
-package org.usfirst.frc.falcons6443.robot.commands;
+package org.usfirst.frc.falcons6443.robot.commands.subcommands;
+
+import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 
 /**
  * Command to stay stationary for x seconds

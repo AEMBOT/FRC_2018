@@ -1,8 +1,10 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
@@ -32,16 +34,12 @@ public class DriveTrainSystem extends Subsystem {
 
     //private Timer timer;
 
-    private double targetDistance;
-    private static final double DistanceBuffer = .5; //inches
-    //target angle and angle buffer in DriveTrainSystem class
-
     private boolean reversed;
     private static final double WheelDiameter = 6; //UPDATE!
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
-    private RobotDrive drive;
+    private DifferentialDrive drive;
 
     /**
      * Constructor for DriveTrainSystem.
@@ -53,7 +51,7 @@ public class DriveTrainSystem extends Subsystem {
         rightMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontRightMotor),
                 new Spark(RobotMap.BackRightMotor));
 
-        drive = new RobotDrive(leftMotors, rightMotors);
+        drive = new DifferentialDrive(leftMotors, rightMotors);
         encoders = new DriveEncoders();
         //timer = new Timer();
 
@@ -122,6 +120,10 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLinearDistance(){
         return (getLeftDistance() + getRightDistance()) / 2;
+    }
+
+    public void reset(){
+        encoders.reset();
     }
 
     /*public void driveToDistance(double distance, double speed){
