@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.CameraServer;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveByTime;
 import org.usfirst.frc.falcons6443.robot.communication.TableHandler;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
@@ -67,7 +68,10 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-       autonomy = new AutoChooser(dashboard.getSelectedPos());
+ //      autonomy = new AutoChooser(dashboard.getSelectedPos());
+        MoveByTime autonomy = new MoveByTime(3333333.0,0.88,0.88);
+        autonomy.initialize();
+        autonomy.execute();
     }
 
     /*
