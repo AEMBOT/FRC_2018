@@ -39,7 +39,8 @@ public class TeleopMode extends SimpleCommand {
         System.out.println("intake: " + xbox.leftStickY(xbox.primary));
         System.out.println("lift: " + xbox.rightStickY(xbox.primary));
 
-        /*if(xbox.X(xbox.primary)){
+        //testing
+        if(xbox.X(xbox.primary)){
             elevator.up(true);
         }
 
@@ -49,31 +50,19 @@ public class TeleopMode extends SimpleCommand {
 
         if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary) && xbox.rightStickY(xbox.primary) == 0) {
             elevator.stop();
-        }*/
+        }
 
         // set the driveTrain power.
-        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.leftStickY(xbox.primary));
+        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
 
         System.out.println("Left: " + driveTrain.getLeftDistance());
         System.out.println("Right: " + driveTrain.getRightDistance());
 
-        System.out.println("Left: " + driveTrain.getLeftDistance());
-        System.out.println("Right: " + driveTrain.getRightDistance());
-
-        // the Y button will toggle the drive train to reverse mode
-        /*if (xbox.Y()) {
-            // safeguard for if the driver holds down the Y button.
-            if (!reversed) {
-                driveTrain.reverse();
-                reversed = true;
-            }
-        } else {
-            reversed = false;
-        }*/
-
+        //testing -- resets encoders
         if(xbox.Y(xbox.primary)){
             driveTrain.reset();
         }
+
         //intake button
         if (xbox.leftBumper(xbox.primary)) {
             //if (flywheel.hasBlock()) {

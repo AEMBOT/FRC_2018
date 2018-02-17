@@ -1,5 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.utilities;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+
 public enum ElevatorEnums {
-    Transfer, Switch, Scale, BottomLimit, TopLimit;
+    Exchange, Switch, Scale, UnderSwitch, OverSwitch;
 }
