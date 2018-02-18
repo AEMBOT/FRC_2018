@@ -7,9 +7,9 @@ public class ElevatorEncoder {
 
     private Encoder encoder;
 
-    public ElevatorEncoder(){
-        encoder = new Encoder(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
-    }
+    //public ElevatorEncoder(){
+   //     encoder = new Encoder(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
+    //}
 
     public int getTicks(){
         return encoder.getRaw();

@@ -24,24 +24,24 @@ public class Elevator extends Subsystem {
 
     private Spark motor;
 
-    private DigitalInput topScaleLimit;
+    /*private DigitalInput topScaleLimit;
     private DigitalInput bottomScaleLimit;
     private DigitalInput topSwitchLimit;
     private DigitalInput bottomSwitchLimit;
     private DigitalInput topExchangeLimit;
-    private DigitalInput bottomExchangeLimit;
+    private DigitalInput bottomExchangeLimit;*/
 
     private ElevatorEnums desiredState;
     private ElevatorEnums previousLimit;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        topScaleLimit = new DigitalInput (RobotMap.ElevatorTopScaleLimit);
+       /* topScaleLimit = new DigitalInput (RobotMap.ElevatorTopScaleLimit);
         bottomScaleLimit = new DigitalInput (RobotMap.ElevatorBottomScaleLimit);
         topSwitchLimit = new DigitalInput (RobotMap.ElevatorTopSwitchLimit);
         bottomSwitchLimit = new DigitalInput (RobotMap.ElevatorBottomSwitchLimit);
         topExchangeLimit = new DigitalInput (RobotMap.ElevatorTopExchangeLimit);
-        bottomExchangeLimit = new DigitalInput (RobotMap.ElevatorBottomExchangeLimit);
+        bottomExchangeLimit = new DigitalInput (RobotMap.ElevatorBottomExchangeLimit);*/
         //encoder = new ElevatorEncoder();
         //pid = new PID(P, I, D, Eps);
         //pid.setMaxOutput(.5);
@@ -53,7 +53,7 @@ public class Elevator extends Subsystem {
     public void initDefaultCommand() {
     }
 
-    private void updatePreviousLimit(){
+    /*private void updatePreviousLimit(){
         if (topScaleLimit.get() || bottomScaleLimit.get()){
             previousLimit = ElevatorEnums.OverSwitch;
         } else if(topExchangeLimit.get() || bottomExchangeLimit.get()){
@@ -123,10 +123,11 @@ public class Elevator extends Subsystem {
         }
         motor.set(power);
     }
-
+*/
     public void manual(double power){
         motor.set(power);
     }
+
 
     public void up (boolean on){
         if (on){

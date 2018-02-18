@@ -34,9 +34,9 @@ public class TeleopMode extends SimpleCommand {
         //for testing
         elevator.manual(xbox.rightStickY(xbox.primary));
         //manual rotation
-        flywheel.manual(xbox.leftStickY(xbox.primary));
+        //flywheel.manual(xbox.leftStickY(xbox.primary));
 
-        System.out.println("intake: " + xbox.leftStickY(xbox.primary));
+        //System.out.println("intake: " + xbox.leftStickY(xbox.primary));
         System.out.println("lift: " + xbox.rightStickY(xbox.primary));
 
         //testing
@@ -48,15 +48,15 @@ public class TeleopMode extends SimpleCommand {
             elevator.down(true);
         }
 
-        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary) && xbox.rightStickY(xbox.primary) == 0) {
+        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary)) {
             elevator.stop();
         }
 
         // set the driveTrain power.
-        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
+        //driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
 
-        System.out.println("Left: " + driveTrain.getLeftDistance());
-        System.out.println("Right: " + driveTrain.getRightDistance());
+        //System.out.println("Left: " + driveTrain.getLeftDistance());
+        //System.out.println("Right: " + driveTrain.getRightDistance());
 
         //testing -- resets encoders
         if(xbox.Y(xbox.primary)){
@@ -64,7 +64,7 @@ public class TeleopMode extends SimpleCommand {
         }
 
         //intake button
-        if (xbox.leftBumper(xbox.primary)) {
+        /*if (xbox.leftBumper(xbox.primary)) {
             //if (flywheel.hasBlock()) {
               //  flywheel.stop();
             //} else {
@@ -80,7 +80,7 @@ public class TeleopMode extends SimpleCommand {
         //stop
         if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
             flywheel.stop();
-        }
+        }*/
 
         //elevator.moveToHeight();
     }
