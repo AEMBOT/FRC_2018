@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
-
+        //Elevator.moveToHeight(); to test elevator movement.
         Scheduler.getInstance().run();
 
     }
