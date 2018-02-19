@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
+import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
@@ -21,6 +22,7 @@ public class TeleopMode extends SimpleCommand {
         requires(driveTrain);
         requires(flywheel);
         requires(elevator);
+        requires(navigation);
     }
 
     @Override
@@ -32,12 +34,12 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void execute() {
         //for testing
-        elevator.manual(xbox.rightStickY(xbox.primary));
+        //elevator.manual(xbox.rightStickY(xbox.primary));
         //manual rotation
         //flywheel.manual(xbox.leftStickY(xbox.primary));
 
         //System.out.println("intake: " + xbox.leftStickY(xbox.primary));
-        System.out.println("lift: " + xbox.rightStickY(xbox.primary));
+        //System.out.println("lift: " + xbox.rightStickY(xbox.primary));
 
         //testing
         if(xbox.X(xbox.primary)){
@@ -53,10 +55,12 @@ public class TeleopMode extends SimpleCommand {
         }
 
         // set the driveTrain power.
-        //driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
+        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
 
-        //System.out.println("Left: " + driveTrain.getLeftDistance());
-        //System.out.println("Right: " + driveTrain.getRightDistance());
+        //System.out.println("Left: " + (driveTrain.getLeftDistance()));
+        //System.out.println("Right: " + (driveTrain.getRightDistance()));
+
+        System.out.println("yaw: " + navigation.getYaw());
 
         //testing -- resets encoders
         if(xbox.Y(xbox.primary)){

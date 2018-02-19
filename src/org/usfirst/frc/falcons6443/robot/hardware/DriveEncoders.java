@@ -16,7 +16,7 @@ public class DriveEncoders {
     }
 
     public int getLeftDistance(){
-        return left.getRaw();
+        return -left.getRaw();
     }
 
     public int getRightDistance(){

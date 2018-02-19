@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
@@ -39,10 +40,10 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        // autonomy = new #Autonomy(); TODO Assign autonomous command
+        autonomy = new RotateToAngle(90);
         teleop = new TeleopMode();
 
-        CameraServer.getInstance().startAutomaticCapture();
+        //CameraServer.getInstance().startAutomaticCapture();
     }
 
     /*
@@ -78,6 +79,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
 
         Scheduler.getInstance().run();
+
     }
 
     /*

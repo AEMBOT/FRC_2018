@@ -10,10 +10,10 @@ import org.usfirst.frc.falcons6443.robot.utilities.PID;
  */
 public class RotateToAngle extends SimpleCommand {
 
-    public static final double P = 0;
+    public static final double P = 0.008;
     public static final double I = 0;
     public static final double D = 0;
-    public static final double Eps = 0; //weakest applied power
+    public static final double Eps = 0.4; //weakest applied power
 
     private static final double buffer = 1; //degrees
 
@@ -31,16 +31,16 @@ public class RotateToAngle extends SimpleCommand {
         requires(navigation);
         requires(driveTrain);
         pid = new PID(P, I, D, Eps);
-        pid.setMaxOutput(1);
+        pid.setMaxOutput(.6);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
         targetAngle = angle;
     }
 
     public void turnToAngle(){
-        int direction = navigation.getYaw() < targetAngle ? -1 : 1;
+        //int direction = navigation.getYaw() < targetAngle ? -1 : 1;
         double power = pid.calcPID(navigation.getYaw());
-        driveTrain.spin(power * direction);
+        driveTrain.tankDrive(-power, power);
     }
 
     public void setAngle(){
@@ -59,6 +59,7 @@ public class RotateToAngle extends SimpleCommand {
     public void execute() {
         setAngle();
         turnToAngle();
+        System.out.println("yaw: " + navigation.getYaw());
     }
 
     @Override

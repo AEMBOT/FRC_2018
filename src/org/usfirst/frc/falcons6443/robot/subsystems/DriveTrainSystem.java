@@ -34,7 +34,7 @@ public class DriveTrainSystem extends Subsystem {
     //private Timer timer;
 
     private boolean reversed;
-    private static final double WheelDiameter = 6; //UPDATE!
+    private static final double WheelDiameter = 6;
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
@@ -75,9 +75,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(left, -right);
+            drive.tankDrive(left, -right - .024);
         } else {
-            drive.tankDrive(-left, right);
+            drive.tankDrive(-left, right + .024);
         }
     }
 
