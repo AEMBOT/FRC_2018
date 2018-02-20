@@ -3,11 +3,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.CameraServer;
 
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngle;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLeftSwitch;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;

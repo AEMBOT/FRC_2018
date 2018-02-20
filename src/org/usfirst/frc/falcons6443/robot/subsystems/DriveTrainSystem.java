@@ -75,9 +75,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(left, -right - .024);
+            drive.tankDrive(left + .05, -right); //.024
         } else {
-            drive.tankDrive(-left, right + .024);
+            drive.tankDrive(-left - .05, right);
         }
     }
 

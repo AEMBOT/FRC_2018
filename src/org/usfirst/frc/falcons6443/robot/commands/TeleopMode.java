@@ -54,13 +54,24 @@ public class TeleopMode extends SimpleCommand {
             elevator.stop();
         }
 
+        //elevator.limitTest();
+
         // set the driveTrain power.
         driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
 
         //System.out.println("Left: " + (driveTrain.getLeftDistance()));
         //System.out.println("Right: " + (driveTrain.getRightDistance()));
+        //System.out.println("left: " + xbox.leftStickY(xbox.primary));
+        //System.out.println("right: " + xbox.rightStickY(xbox.primary));
 
-        System.out.println("yaw: " + navigation.getYaw());
+        /*if (elevator.lowerLimit()){
+            System.out.println("limit on");
+        } else {
+            System.out.println("OFF");
+        }*/
+
+        //elevator.
+        //System.out.println("yaw: " + navigation.getYaw());
 
         //testing -- resets encoders
         if(xbox.Y(xbox.primary)){

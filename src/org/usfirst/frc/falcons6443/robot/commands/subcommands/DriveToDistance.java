@@ -23,14 +23,14 @@ public class DriveToDistance extends SimpleCommand {
         requires(navigation);
         requires(driveTrain);
         pid = new PID(P, I, D, Eps);
-        pid.setMaxOutput(.6);
+        pid.setMaxOutput(.65);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
         targetDistance = distance;
     }
 
     public void driveToDistance(){
-        double power = pid.calcPID(driveTrain.getLinearDistance());
+        double power = pid.calcPID(-driveTrain.getLinearDistance());
         driveTrain.tankDrive(power, power);
     }
 
@@ -52,7 +52,7 @@ public class DriveToDistance extends SimpleCommand {
         driveToDistance();
         //System.out.println("Left: " + (driveTrain.getLeftDistance()));
         //System.out.println("Right: " + (driveTrain.getRightDistance()));
-        System.out.println("Linear: " + driveTrain.getLinearDistance());
+        //System.out.println("Linear: " + driveTrain.getLinearDistance());
     }
 
     @Override

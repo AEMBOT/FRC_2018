@@ -35,7 +35,7 @@ public class RobotMap {
     public static final int ElevatorTopSwitchLimit = 4;
     public static final int ElevatorBottomSwitchLimit = 4;
     public static final int ElevatorTopExchangeLimit = 4;
-    public static final int ElevatorBottomExchangeLimit = 3;
+    public static final int ElevatorBottomExchangeLimit = 9;
 
     //drive train encoders
     public static final int LeftEncoderA = 0;
