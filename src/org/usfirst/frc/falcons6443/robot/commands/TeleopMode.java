@@ -13,7 +13,8 @@ import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Xbox xbox;
+    private Xbox xbox;         //Drive and intake/output
+    private Xbox auxXbox;      //Secondary functions
     private boolean reversed;
 
     public TeleopMode() {
@@ -42,20 +43,20 @@ public class TeleopMode extends SimpleCommand {
         //System.out.println("lift: " + xbox.rightStickY(xbox.primary));
 
         //testing
-        if(xbox.X(xbox.primary)){
+        if(xbox.X()){
             elevator.up(true);
         }
 
-        if(xbox.Y(xbox.primary)){
+        if(xbox.Y()){
             elevator.down(true);
         }
 
-        if (!xbox.X(xbox.primary) && !xbox.Y(xbox.primary)) {
+        if (!xbox.X() && !xbox.Y()) {
             elevator.stop();
         }
 
         // set the driveTrain power.
-        driveTrain.tankDrive(xbox.leftStickY(xbox.primary), xbox.rightStickY(xbox.primary));
+        driveTrain.tankDrive(xbox.leftStickY(), xbox.rightStickY());
 
         //System.out.println("Left: " + (driveTrain.getLeftDistance()));
         //System.out.println("Right: " + (driveTrain.getRightDistance()));
@@ -63,7 +64,7 @@ public class TeleopMode extends SimpleCommand {
         System.out.println("yaw: " + navigation.getYaw());
 
         //testing -- resets encoders
-        if(xbox.Y(xbox.primary)){
+        if(xbox.Y()){
             driveTrain.reset();
         }
 
