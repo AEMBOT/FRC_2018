@@ -1,4 +1,5 @@
 package org.usfirst.frc.falcons6443.robot;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -43,7 +44,9 @@ public class Robot extends IterativeRobot {
         autonomy = new RotateToAngle(90);
         teleop = new TeleopMode();
 
-        //CameraServer.getInstance().startAutomaticCapture();
+        //format 1 is kMJPEG
+        VideoMode vm = new VideoMode(1, 640, 480, 60);
+        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
     }
 
     /*
