@@ -19,7 +19,9 @@ public class OI {
     private final int PRIMARY_PORT_NUMBER = 0;
     private final int SECONDARY_PORT_NUMBER = 1;
 
-    private Xbox xbox;
+    private Xbox primary;
+    private Xbox secondary;
+
 
     private HashMap<String, Button> buttons;
 
@@ -27,7 +29,8 @@ public class OI {
      * Constructor for OI.
      */
     public OI() {
-        xbox = new Xbox(new XboxController(PRIMARY_PORT_NUMBER), new XboxController(SECONDARY_PORT_NUMBER));
+        primary = new Xbox(new XboxController(PRIMARY_PORT_NUMBER));
+        secondary = new Xbox(new XboxController(SECONDARY_PORT_NUMBER));
         buttons = new HashMap<String, Button>(4);
     }
 
@@ -36,8 +39,13 @@ public class OI {
      *
      * @return the Joystick associated with this OI object.
      */
-    public Xbox getXbox() {
-        return xbox;
+    public Xbox getXbox(boolean primaryController) {
+        if(primaryController) {
+            return primary;
+        } else {
+            return secondary;
+        }
+
     }
 
     /**

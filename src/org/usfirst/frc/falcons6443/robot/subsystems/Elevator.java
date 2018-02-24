@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 public class Elevator extends Subsystem {
 
@@ -15,8 +15,8 @@ public class Elevator extends Subsystem {
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
 
-    private ElevatorEnums desiredState;
-    private ElevatorEnums previousLimit;
+    private Enums desiredState;
+    private Enums previousLimit;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
@@ -33,22 +33,22 @@ public class Elevator extends Subsystem {
 
    /* private void updatePreviousLimit(){
         if (!scaleLimit.get() || !topLimit.get()){
-            previousLimit = ElevatorEnums.OverSwitch;
+            previousLimit = Enums.OverSwitch;
         } else if(!bottomLimit.get()){
-            previousLimit = ElevatorEnums.UnderSwitch;
+            previousLimit = Enums.UnderSwitch;
         }
     }
 
-    public void setToHeight (ElevatorEnums elevatorState){
+    public void setToHeight (Enums elevatorState){
         switch (elevatorState){
             case Exchange:
-                desiredState = ElevatorEnums.Exchange;
+                desiredState = Enums.Exchange;
                 break;
             case Switch:
-                desiredState = ElevatorEnums.Switch;
+                desiredState = Enums.Switch;
                 break;
             case Scale:
-                desiredState = ElevatorEnums.Scale;
+                desiredState = Enums.Scale;
                 break;
         }
     }
@@ -77,7 +77,7 @@ public class Elevator extends Subsystem {
                 if (!switchLimit.get()){
                     power = 0;
                 } else {
-                    if (previousLimit == ElevatorEnums.UnderSwitch){
+                    if (previousLimit == Enums.UnderSwitch){
                         power = 1;
                     } else {
                         power = -1;

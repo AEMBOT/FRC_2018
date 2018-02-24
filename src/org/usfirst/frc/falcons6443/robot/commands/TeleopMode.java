@@ -1,9 +1,8 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
-import org.usfirst.frc.falcons6443.robot.hardware.NavX;
-import org.usfirst.frc.falcons6443.robot.utilities.ElevatorEnums;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 /**
  * Teleoperated mode for the robot.
@@ -13,8 +12,8 @@ import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Xbox xbox;         //Drive and intake/output
-    private Xbox auxXbox;      //Secondary functions
+    private Xbox primary;         //Drive and intake/output
+    private Xbox secondary;      //Secondary functions
     private boolean reversed;
 
     public TeleopMode() {
@@ -28,7 +27,8 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void initialize() {
-        xbox = Robot.oi.getXbox();
+        primary = Robot.oi.getXbox(true);
+        secondary = Robot.oi.getXbox(false);
         reversed = false;
     }
 
@@ -43,22 +43,22 @@ public class TeleopMode extends SimpleCommand {
         //System.out.println("lift: " + xbox.rightStickY(xbox.primary));
 
         //testing
-        if(xbox.X()){
+        if(primary.X()){
             elevator.up(true);
         }
 
-        if(xbox.Y()){
+        if(primary.Y()){
             elevator.down(true);
         }
 
-        if (!xbox.X() && !xbox.Y()) {
+        if (!primary.X() && !primary.Y()) {
             elevator.stop();
         }
 
         //elevator.limitTest();
 
         // set the driveTrain power.
-        driveTrain.tankDrive(xbox.leftStickY(), xbox.rightStickY());
+        driveTrain.tankDrive(primary.leftStickY(), primary.rightStickY());
 
         //System.out.println("Left: " + (driveTrain.getLeftDistance()));
         //System.out.println("Right: " + (driveTrain.getRightDistance()));
@@ -75,7 +75,7 @@ public class TeleopMode extends SimpleCommand {
         //System.out.println("yaw: " + navigation.getYaw());
 
         //testing -- resets encoders
-        if(xbox.Y()){
+        if(primary.Y()){
             driveTrain.reset();
         }
 
@@ -97,6 +97,10 @@ public class TeleopMode extends SimpleCommand {
         if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
             flywheel.stop();
         }*/
+
+        if (flywheel.hasBlock()){
+            primary.controller.setRumble(RumbleType.kLeftRumble, 1);
+        }
 
         //elevator.moveToHeight();
     }

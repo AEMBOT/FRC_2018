@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class Xbox {
 
-    private XboxController controller;
+    public XboxController controller;
 
     /**
      * Constructor for Xbox.
@@ -119,4 +119,8 @@ public class Xbox {
     public boolean Y() {
         return controller.getRawButton(4);
     }
+
+    //public boolean setRumble(GenericHID.RumbleType type, double value){
+
+    //}
 }

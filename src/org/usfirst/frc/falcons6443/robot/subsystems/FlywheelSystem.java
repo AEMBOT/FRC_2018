@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
-import org.usfirst.frc.falcons6443.robot.utilities.PID;
+import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 /**
  * Subsystem for the flywheels that push the block out.
@@ -18,36 +18,20 @@ public class FlywheelSystem extends Subsystem {
     private Spark rightMotor;
     private Spark rotateMotor;
     private DigitalInput touchSensor;
-    private IntakeEncoder encoder;
-
-    private PID pid;
+    private Timer timer;
+    private Enums currentPosition;
 
     private final double intakeSpeed = .75;
     private final double outputSpeed = .75;
-
-    private final double P = 0;
-    private final double I = 0;
-    private final double D = 0;
-    private final double Eps = 0;
-
-    private final int storagePosition = 0; //ticks
-    private final int intakePosition = 0; //ticks
 
     public FlywheelSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
+        timer = new Timer();
         //touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
-        //encoder = new IntakeEncoder();
-        pid = new PID (P, I, D, Eps);
-        pid.setMaxOutput(1);
-        pid.setDoneRange(20); //ticks
-        pid.setMinDoneCycles(5);
+        leftMotor.setInverted(true);
         rotateMotor.setInverted(true);
-    }
-
-    public boolean hasBlock(){
-        return touchSensor.get();
     }
 
     @Override
@@ -55,14 +39,23 @@ public class FlywheelSystem extends Subsystem {
 
     }
 
+    public boolean hasBlock(){
+        return !touchSensor.get();
+    }
+
+
     public void intake(){
         rightMotor.set(-intakeSpeed);
-        leftMotor.set(intakeSpeed);
+        leftMotor.set(-intakeSpeed);
     }
 
     public void output(){
-        rightMotor.set(outputSpeed);
-        leftMotor.set(-outputSpeed);
+        if (currentPosition == Enums.IntakeUpPosition){
+            stop();
+        } else {
+            rightMotor.set(outputSpeed);
+            leftMotor.set(outputSpeed);
+        }
     }
 
     public void stop(){
@@ -70,22 +63,26 @@ public class FlywheelSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-    //Add encoder to know angle/how far to drive motor
-
-    public void setStoragePosition(){
-        pid.setDesiredValue(storagePosition);
-    }
-
-    public void setIntakePosition(){
-        pid.setDesiredValue(intakePosition);
-    }
-
-    public void rotateIntake(){
-        double power = pid.calcPID(encoder.getDistance());
-        if (isAtHeight()){
-            power = 0;
+    public void rotateIntake(Enums position){
+        double power = 0;
+        double time = 0;
+        timer.reset();
+        if (position == Enums.IntakeUpPosition && currentPosition != Enums.IntakeUpPosition){
+            power = 0.7;
+            time = 0.5;
+            currentPosition = Enums.IntakeUpPosition;
         }
-        rotateMotor.set(power);
+        if (position == Enums.IntakeDownPosition && currentPosition != Enums.IntakeDownPosition){
+            power = -0.5;
+            time = 0.4;
+            currentPosition = Enums.IntakeDownPosition;
+        }
+        timer.start();
+        while (timer.get() < time){
+            rotateMotor.set(power);
+        }
+        rotateStop();
+        timer.stop();
     }
 
     public void rotateStop(){
@@ -96,9 +93,4 @@ public class FlywheelSystem extends Subsystem {
         rotateMotor.set(power);
     }
 
-    public boolean isAtHeight(){ return pid.isDone(); }
-
-    public void reset(){
-        //encoder.reset();
-    }
 }
