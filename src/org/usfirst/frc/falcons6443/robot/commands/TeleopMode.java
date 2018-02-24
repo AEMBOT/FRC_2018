@@ -3,6 +3,8 @@ package org.usfirst.frc.falcons6443.robot.commands;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.drive.Vector2d;
+
 
 /**
  * Teleoperated mode for the robot.
@@ -14,7 +16,6 @@ public class TeleopMode extends SimpleCommand {
 
     private Xbox primary;         //Drive and intake/output
     private Xbox secondary;      //Secondary functions
-    private boolean reversed;
 
     public TeleopMode() {
         super("Teleop Command");
@@ -29,20 +30,12 @@ public class TeleopMode extends SimpleCommand {
     public void initialize() {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
-        reversed = false;
     }
 
+    Vector2d drive = new Vector2d(0,0);
+    double differential = 0;
     @Override
     public void execute() {
-        //for testing
-        //elevator.manual(xbox.rightStickY(xbox.primary));
-        //manual rotation
-        //flywheel.manual(xbox.leftStickY(xbox.primary));
-
-        //System.out.println("intake: " + xbox.leftStickY(xbox.primary));
-        //System.out.println("lift: " + xbox.rightStickY(xbox.primary));
-
-        //testing
         if(primary.X()){
             elevator.up(true);
         }
@@ -55,37 +48,32 @@ public class TeleopMode extends SimpleCommand {
             elevator.stop();
         }
 
-        //elevator.limitTest();
-
-        // set the driveTrain power.
-        driveTrain.tankDrive(primary.leftStickY(), primary.rightStickY());
-
-        //System.out.println("Left: " + (driveTrain.getLeftDistance()));
-        //System.out.println("Right: " + (driveTrain.getRightDistance()));
-        //System.out.println("left: " + xbox.leftStickY(xbox.primary));
-        //System.out.println("right: " + xbox.rightStickY(xbox.primary));
-
-        /*if (elevator.lowerLimit()){
-            System.out.println("limit on");
+        drive.x = 0;
+        drive.y = 0;
+        if (Math.abs(primary.leftStickX()) < .15) {
+            differential = 0;
         } else {
-            System.out.println("OFF");
-        }*/
-
-        //elevator.
-        //System.out.println("yaw: " + navigation.getYaw());
-
-        //testing -- resets encoders
-        if(primary.Y()){
-            driveTrain.reset();
+            differential = Math.signum(-1 * primary.leftStickX()) * Math.pow(primary.leftStickX(), 2) / 1.8;
         }
+
+        if (primary.rightTrigger() > 0) {
+            drive.x = primary.rightTrigger() * .5 * (primary.rightTrigger() * .7 + .44f) + (differential + .2 * primary.rightTrigger());//x is right
+            drive.y = primary.rightTrigger() * .5 * (primary.rightTrigger() * .7 + .44f) - (differential - .2 * primary.rightTrigger());//y is left
+        } else if (primary.leftTrigger() > 0) {
+            drive.x = primary.leftTrigger() * -.1 * (primary.leftTrigger() * .7 + .44f) + .8 * (differential + primary.leftTrigger());//x is right
+            drive.y = primary.leftTrigger() * -.1 * (primary.leftTrigger() * .7 + .44f) - .8 * (differential - primary.leftTrigger());//y is left
+            drive.x *= -1;
+            drive.y *= -1;
+        } else {
+            drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .2 * primary.rightTrigger());//x is right
+            drive.y = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .2 * primary.rightTrigger());//y is left
+        }
+        // set the driveTrain power.
+        driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
         /*if (xbox.leftBumper(xbox.primary)) {
-            //if (flywheel.hasBlock()) {
-              //  flywheel.stop();
-            //} else {
                 flywheel.intake();
-            //}
         }
 
         //output button
@@ -98,8 +86,10 @@ public class TeleopMode extends SimpleCommand {
             flywheel.stop();
         }*/
 
-        if (flywheel.hasBlock()){
+        if (flywheel.hasBlock() && primary.leftBumper()){
             primary.controller.setRumble(RumbleType.kLeftRumble, 1);
+        } else {
+            primary.controller.setRumble(RumbleType.kRightRumble, 0);
         }
 
         //elevator.moveToHeight();
