@@ -71,6 +71,8 @@ public class AutoChooser {
         }
     }
 
+    public CommandGroup getFinalAuto(){return finalAuto;}
+
 
 
 }
