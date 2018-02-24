@@ -35,14 +35,11 @@ public class FlywheelSystem extends Subsystem {
     }
 
     @Override
-    protected void initDefaultCommand() {
-
-    }
+    protected void initDefaultCommand() {    }
 
     public boolean hasBlock(){
         return !touchSensor.get();
     }
-
 
     public void intake(){
         rightMotor.set(-intakeSpeed);

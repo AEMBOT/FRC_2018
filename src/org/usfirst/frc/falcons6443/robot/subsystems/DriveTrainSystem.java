@@ -31,8 +31,6 @@ public class DriveTrainSystem extends Subsystem {
 
     private DriveEncoders encoders;
 
-    //private Timer timer;
-
     private boolean reversed;
     private static final double WheelDiameter = 6;
 
@@ -46,20 +44,15 @@ public class DriveTrainSystem extends Subsystem {
     public DriveTrainSystem() {
         leftMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontLeftMotor),
                 new Spark(RobotMap.BackLeftMotor));
-
         rightMotors = new SpeedControllerGroup(new Spark(RobotMap.FrontRightMotor),
                 new Spark(RobotMap.BackRightMotor));
-
         drive = new DifferentialDrive(leftMotors, rightMotors);
+        leftMotors.setInverted(true);
         encoders = new DriveEncoders();
-        //timer = new Timer();
-
         // the driver station will complain for some reason if this isn't set so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
-
         reversed = false;
-
         drive.setMaxOutput(1);
     }
 
@@ -75,9 +68,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(left + .05, -right); //.024
+            drive.tankDrive(-left - .05, -right); //.024 //+ +, -
         } else {
-            drive.tankDrive(-left - .05, right);
+            drive.tankDrive(left + .05, right);//- -, +
         }
     }
 
@@ -101,9 +94,6 @@ public class DriveTrainSystem extends Subsystem {
         reversed = !reversed;
     }
 
-    /**
-     * @return whether the robot is reversed
-     */
     public boolean isReversed() {
         return reversed;
     }
@@ -124,21 +114,4 @@ public class DriveTrainSystem extends Subsystem {
     public void reset(){
         encoders.reset();
     }
-
-    /*public void driveToDistance(double distance, double speed){
-        targetDistance = distance;
-        while (!isAtDistance()){
-            tankDrive(speed, speed);
-            timer.delay(1);
-        }
-        tankDrive(0, 0);
-    }
-
-    public boolean isAtDistance(){
-        if ((getLinearDistance() + DistanceBuffer) > targetDistance){
-            return true;
-        } else
-            return false;
-    }*/
-
 }

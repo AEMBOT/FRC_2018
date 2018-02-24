@@ -7,11 +7,7 @@ package org.usfirst.frc.falcons6443.robot;
  * @author Christopher Medlin
  */
 public class RobotMap {
-
     //any -1s are not being used and are yet to be specified
-
-	/* Ok, here's the deal. You're gonna forget to change them back to their appropriate values.
-     * You will, trust me. So DON'T FORGET TO SET YOUR PORTS PROPERLY. */
 
     //2018 drive train motors
     public static final int FrontRightMotor = 2;
@@ -19,23 +15,14 @@ public class RobotMap {
     public static final int BackRightMotor = 3;
     public static final int BackLeftMotor = 1;
 
-    //2017 drive train motors
-    /*public static final int FrontRightMotor = 2;
-    public static final int FrontLeftMotor = 1;
-    public static final int BackRightMotor = 3;
-    public static final int BackLeftMotor = 0;*/
     //elevator motors
     public static final int ElevatorMotor = 7;
 
     //elevator sensors
-    //public static final int ElevatorEncoderA = 1;
-    //public static final int ElevatorEncoderB = 2;
-    public static final int ElevatorTopScaleLimit = 4;
-    public static final int ElevatorBottomScaleLimit = 4;
-    public static final int ElevatorTopSwitchLimit = 4;
-    public static final int ElevatorBottomSwitchLimit = 4;
-    public static final int ElevatorTopExchangeLimit = 4;
-    public static final int ElevatorBottomExchangeLimit = 9;
+    public static final int ElevatorTopLimit = -1;
+    public static final int ElevatorScaleLimit = 8;
+    public static final int ElevatorSwitchLimit = -1;
+    public static final int ElevatorBottomLimit = 9;
 
     //drive train encoders
     public static final int LeftEncoderA = 0;
@@ -50,6 +37,4 @@ public class RobotMap {
 
     //intake sensors
     //public static final int IntakeTouchSensor = -1;
-    public static final int IntakeEncoderA = -1;
-    public static final int IntakeEncoderB = -1;
 }

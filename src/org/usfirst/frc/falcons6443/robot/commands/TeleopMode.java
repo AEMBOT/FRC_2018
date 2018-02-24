@@ -72,19 +72,19 @@ public class TeleopMode extends SimpleCommand {
         driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
-        /*if (xbox.leftBumper(xbox.primary)) {
+        if (primary.leftBumper()) {
                 flywheel.intake();
         }
 
         //output button
-        if (xbox.rightBumper(xbox.primary)) {
+        if (primary.rightBumper()) {
             flywheel.output();
         }
 
         //stop
-        if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
+        if (!primary.leftBumper() && !primary.rightBumper()){
             flywheel.stop();
-        }*/
+        }
 
         if (flywheel.hasBlock() && primary.leftBumper()){
             primary.controller.setRumble(RumbleType.kLeftRumble, 1);

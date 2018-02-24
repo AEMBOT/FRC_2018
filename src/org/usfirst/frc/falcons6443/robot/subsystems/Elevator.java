@@ -20,10 +20,10 @@ public class Elevator extends Subsystem {
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        //topLimit = new DigitalInput (8);
-        scaleLimit = new DigitalInput (8);
-        //switchLimit = new DigitalInput (RobotMap.ElevatorBottomSwitchLimit);
-        bottomLimit = new DigitalInput (9);
+        //topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
+        scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);
+        //switchLimit = new DigitalInput (RobotMap.ElevatorSwitchLimit);
+        bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
         motor.setInverted(true);
     }
 
@@ -89,21 +89,13 @@ public class Elevator extends Subsystem {
             power = -1;
         }
         motor.set(power);
-    }
-
-    public void manual(double power){
-        motor.set(power);
-    }
-
-    public boolean lowerLimit(){
-        return !bottomLimit.get();
     }*/
 
    public void limitTest(){
        double power = -1;
-       if (!bottomLimit.get()){
+      // if (!bottomLimit.get()){
            power = 0;
-       }
+      // }
        //if (!scaleLimit.get()){
          ///  power = 0;
        //}
