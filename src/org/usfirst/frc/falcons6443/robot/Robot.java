@@ -1,17 +1,18 @@
 package org.usfirst.frc.falcons6443.robot;
-
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.CameraServer;
-import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveByTime;
-import org.usfirst.frc.falcons6443.robot.communication.TableHandler;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLeftSwitch;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
+import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
-import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
 
 /**
  * ROBOTS DON'T QUIT!
@@ -25,14 +26,13 @@ public class Robot extends IterativeRobot {
     // If a new subsystem is added, it must also be added to SimpleCommand.
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
+    public static final Elevator Elevator = new Elevator();
     public static final NavigationSystem Navigation = new NavigationSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
 
     public static OI oi;
-    private CustomDashboard dashboard;
 
-    //private Command autonomy;
-    private AutoChooser autonomy;
+    private Command autonomy;
     private Command teleop;
 
     /*
@@ -41,10 +41,12 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        dashboard = new CustomDashboard();
+        autonomy = new RotateToAngle(90);
         teleop = new TeleopMode();
-        TableHandler.init();
-        CameraServer.getInstance().startAutomaticCapture();
+
+        //format 1 is kMJPEG
+        VideoMode vm = new VideoMode(1, 640, 480, 60);
+        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
     }
 
     /*
@@ -68,10 +70,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
- //      autonomy = new AutoChooser(dashboard.getSelectedPos());
-        MoveByTime autonomy = new MoveByTime(3333333.0,0.88,0.88);
-        autonomy.initialize();
-        autonomy.execute();
+        if (autonomy != null) {
+            autonomy.start();
+        }
     }
 
     /*
@@ -79,8 +80,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
-
+        //Elevator.moveToHeight(); to test elevator movement.
         Scheduler.getInstance().run();
+
     }
 
     /*
@@ -106,7 +108,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
-        System.out.println(TableHandler.getTest());
-        // LiveWindow.run(); no longer required as per API?
+        LiveWindow.run();
     }
 }

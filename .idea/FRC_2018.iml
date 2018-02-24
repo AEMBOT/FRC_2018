@@ -44,5 +44,6 @@
         <jarDirectory url="file://$USER_HOME$/wpilib/user/java/lib" recursive="true" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="navx_frc" level="project" />
   </component>
 </module>

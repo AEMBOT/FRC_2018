@@ -46,4 +46,5 @@ public class NavX {
     public float getYaw() {
         return ahrs.getYaw();
     }
+
 }

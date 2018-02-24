@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 /**
  * Teleoperated mode for the robot.
@@ -11,7 +12,8 @@ import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Xbox xbox;
+    private Xbox primary;         //Drive and intake/output
+    private Xbox secondary;      //Secondary functions
     private boolean reversed;
 
     public TeleopMode() {
@@ -19,41 +21,66 @@ public class TeleopMode extends SimpleCommand {
 
         requires(driveTrain);
         requires(flywheel);
+        requires(elevator);
+        requires(navigation);
     }
 
     @Override
     public void initialize() {
-        xbox = Robot.oi.getXbox();
+        primary = Robot.oi.getXbox(true);
+        secondary = Robot.oi.getXbox(false);
         reversed = false;
     }
 
     @Override
     public void execute() {
-        double leftDrive = xbox.leftStickY();
-        double rightDrive = xbox.rightStickY();
+        //for testing
+        //elevator.manual(xbox.rightStickY(xbox.primary));
+        //manual rotation
+        //flywheel.manual(xbox.leftStickY(xbox.primary));
+
+        //System.out.println("intake: " + xbox.leftStickY(xbox.primary));
+        //System.out.println("lift: " + xbox.rightStickY(xbox.primary));
+
+        //testing
+        if(primary.X()){
+            elevator.up(true);
+        }
+
+        if(primary.Y()){
+            elevator.down(true);
+        }
+
+        if (!primary.X() && !primary.Y()) {
+            elevator.stop();
+        }
+
+        //elevator.limitTest();
 
         // set the driveTrain power.
-        driveTrain.tankDrive(leftDrive, rightDrive);
+        driveTrain.tankDrive(primary.leftStickY(), primary.rightStickY());
 
-        System.out.println("Left: " + driveTrain.getLeftDistance());
-        System.out.println("Right: " + driveTrain.getRightDistance());
+        //System.out.println("Left: " + (driveTrain.getLeftDistance()));
+        //System.out.println("Right: " + (driveTrain.getRightDistance()));
+        //System.out.println("left: " + xbox.leftStickY(xbox.primary));
+        //System.out.println("right: " + xbox.rightStickY(xbox.primary));
 
-        // the Y button will toggle the drive train to reverse mode
-        /*if (xbox.Y()) {
-            // safeguard for if the driver holds down the Y button.
-            if (!reversed) {
-                driveTrain.reverse();
-                reversed = true;
-            }
+        /*if (elevator.lowerLimit()){
+            System.out.println("limit on");
         } else {
-            reversed = false;
+            System.out.println("OFF");
         }*/
 
-        if(xbox.Y()){
+        //elevator.
+        //System.out.println("yaw: " + navigation.getYaw());
+
+        //testing -- resets encoders
+        if(primary.Y()){
             driveTrain.reset();
         }
+
         //intake button
-        if (xbox.leftBumper()) {
+        /*if (xbox.leftBumper(xbox.primary)) {
             //if (flywheel.hasBlock()) {
               //  flywheel.stop();
             //} else {
@@ -62,18 +89,20 @@ public class TeleopMode extends SimpleCommand {
         }
 
         //output button
-        if (xbox.rightBumper()) {
+        if (xbox.rightBumper(xbox.primary)) {
             flywheel.output();
         }
 
         //stop
-        if (!xbox.leftBumper() && !xbox.rightBumper()){
+        if (!xbox.leftBumper(xbox.primary) && !xbox.rightBumper(xbox.primary)){
             flywheel.stop();
+        }*/
+
+        if (flywheel.hasBlock()){
+            primary.controller.setRumble(RumbleType.kLeftRumble, 1);
         }
 
-        if (xbox.X()){
-            flywheel.stop();
-        }
+        //elevator.moveToHeight();
     }
 
     public boolean isFinished() {

@@ -1,6 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * Wrapper for an Xbox 360 Xbox. Provides clearer interface with button and axis inputs.
@@ -9,120 +9,118 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Xbox {
 
-    private Joystick xbox;
+    public XboxController controller;
 
     /**
      * Constructor for Xbox.
      *
-     * @param xbox the xbox's joystick.
+     * @param controller the xbox's joystick.
      */
-    public Xbox(Joystick xbox) { //TODO: xbox.getIsXbox is no longer a method and needs to be replaced
-        this.xbox = xbox;
+    public Xbox(XboxController controller) {
+        this.controller = controller;
         //ideally, make it rumble
     }
 
-    /**
-     * @return the Xbox's joystick in the form of a Joystick object.
-     */
-    public Joystick getJoystick() {
-        return this.xbox;
+    public XboxController getJoystick(XboxController xbox) {
+        return xbox;
     }
 
-    /**
-     * @return The value of the X axis of the left stick.
-     */
     public double leftStickX() {
-        return xbox.getRawAxis(0);
+        return controller.getRawAxis(0);
     }
 
     /**
      * @return The value of the Y axis of the left stick.
      */
     public double leftStickY() {
-        return xbox.getRawAxis(1);
+        return controller.getRawAxis(1);
     }
 
     /**
      * @return The value of the X axis of the right stick.
      */
     public double rightStickX() {
-        return xbox.getRawAxis(4);
+        return controller.getRawAxis(4);
     }
 
     /**
      * @return The value of the Y axis of the right stick.
      */
     public double rightStickY() {
-        return xbox.getRawAxis(5);
+        return controller.getRawAxis(5);
     }
 
     /**
      * @return The value of the axis for the left trigger.
      */
     public double leftTrigger() {
-        return xbox.getRawAxis(2);
+        return controller.getRawAxis(2);
     }
 
     /**
      * @return The value of the axis for the right trigger.
      */
     public double rightTrigger() {
-        return xbox.getRawAxis(3);
+        return controller.getRawAxis(3);
     }
 
     /**
      * @return the value of the left bumper.
      */
     public boolean leftBumper() {
-        return xbox.getRawButton(5);
+        return controller.getRawButton(5);
     }
 
     /**
      * @return the value of the right bumper.
      */
     public boolean rightBumper() {
-        return xbox.getRawButton(6);
+        return controller.getRawButton(6);
     }
 
     /**
      * @return the value of the left joystick button.
      */
     public boolean leftStickButton() {
-        return xbox.getRawButton(9);
+        return controller.getRawButton(9);
     }
 
     /**
      * @return the value of the right joystick button.
      */
     public boolean rightStickButton() {
-        return xbox.getRawButton(10);
+        return controller.getRawButton(10);
     }
 
     /**
      * @return the value of the A button.
      */
     public boolean A() {
-        return xbox.getRawButton(1);
+        return controller.getRawButton(1);
     }
 
     /**
      * @return the value of the B button.
      */
     public boolean B() {
-        return xbox.getRawButton(2);
+        return controller.getRawButton(2);
     }
 
     /**
      * @return the value of the X button.
      */
     public boolean X() {
-        return xbox.getRawButton(3);
+        return controller.getRawButton(3);
     }
 
     /**
      * @return the value of the Y button.
      */
     public boolean Y() {
-        return xbox.getRawButton(4);
+        return controller.getRawButton(4);
     }
+
+    //public boolean setRumble(GenericHID.RumbleType type, double value){
+
+    //}
 }

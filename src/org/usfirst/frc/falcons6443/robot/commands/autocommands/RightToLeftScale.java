@@ -1,7 +1,8 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 
 /**
@@ -15,11 +16,11 @@ public class RightToLeftScale extends CommandGroup {
 
         public RightToLeftScale(){
             addSequential(new DriveToDistance(228));
-            addSequential(new RotateToAngle(-90));
+            addSequential(new RotateToAngleSad(-90));
             addSequential(new DriveToDistance(232));
-            addSequential(new RotateToAngle(90));
+            addSequential(new RotateToAngleSad(90));
             addSequential(new DriveToDistance(96));
-            addSequential(new RotateToAngle(90));
+            addSequential(new RotateToAngleSad(90));
             addSequential(new DriveToDistance(54));
 
             //add elevator code

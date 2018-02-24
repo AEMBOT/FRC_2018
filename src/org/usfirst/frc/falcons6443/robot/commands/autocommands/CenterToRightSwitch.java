@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
+import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 
@@ -17,12 +18,13 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 public class CenterToRightSwitch extends CommandGroup {
 
     private FlywheelSystem flywheelSystem;
+    private Elevator elevator;
 
     public CenterToRightSwitch() {
 
         addSequential(new DriveToDistance(101));
 
-        //Elevator code to go here
+        //elevator.setToHeight(Enums.Switch); setToHeight needs to be tested in elevator class.
 
         flywheelSystem = new FlywheelSystem();
         flywheelSystem.output();
