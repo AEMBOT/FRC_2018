@@ -1,9 +1,11 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 /**
  * Command to move to the right switch from the left starting position and place block
@@ -28,8 +30,11 @@ public class LeftToLeftScale extends CommandGroup {
         addSequential(new RotateToAngleSad(90));
         addSequential(new DriveToDistance(53));
 
-        //Elevator code here.
+        //elevator.setToHeight(Enums.SCALE)
 
+        flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
         flywheelSystem.output();
+        addSequential(new Delay(2));
+        flywheelSystem.stop();
     }
 }

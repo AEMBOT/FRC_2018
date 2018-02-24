@@ -2,9 +2,12 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
+import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 /**
  * Command to move to the left switch from the right starting position and place block
@@ -15,7 +18,7 @@ import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 public class CenterToLeftSwitch extends CommandGroup {
 
     private FlywheelSystem flywheelSystem;
-    //private Delay delay;
+    private Elevator elevator;
 
 
     public CenterToLeftSwitch() {
@@ -26,14 +29,13 @@ public class CenterToLeftSwitch extends CommandGroup {
         addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(56));
 
-        //Elevator code to go here
+        //elevator.setToHeight(Enums.SWITCH)
 
-        //flywheelSystem = new FlywheelSystem();
-
-        //flywheelSystem.output();
-        //delay = new Delay(2);
-        //flywheelSystem.stop();
-        //Commented these out since the flywheel can be kept on.
+        flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
+        flywheelSystem.output();
+        addSequential(new Delay(2));
+        flywheelSystem.stop();
+       // Commented these out since the flywheel can be kept on.
 
     }
 }

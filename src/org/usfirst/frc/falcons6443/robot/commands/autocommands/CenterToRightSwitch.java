@@ -5,6 +5,7 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 /**
  * Command to move forward and place cube on right switch from center position
@@ -26,7 +27,9 @@ public class CenterToRightSwitch extends CommandGroup {
 
         //elevator.setToHeight(Enums.Switch); setToHeight needs to be tested in elevator class.
 
-        flywheelSystem = new FlywheelSystem();
+        flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
         flywheelSystem.output();
+        addSequential(new Delay(2));
+        flywheelSystem.stop();
     }
 }

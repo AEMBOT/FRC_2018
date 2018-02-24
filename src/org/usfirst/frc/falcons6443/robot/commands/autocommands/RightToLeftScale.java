@@ -1,9 +1,11 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 /**
  * Command to get to leftside scale from second position
@@ -23,9 +25,12 @@ public class RightToLeftScale extends CommandGroup {
             addSequential(new RotateToAngleSad(90));
             addSequential(new DriveToDistance(54));
 
-            //add elevator code
+            //elevator.setToHeight(Enums.SCALE)
 
+            flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
             flywheelSystem.output();
+            addSequential(new Delay(2));
+            flywheelSystem.stop();
 
 
         }
