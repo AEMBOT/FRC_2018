@@ -25,14 +25,14 @@ public class CustomDashboard {
     // passing its selected value into AutoChooser
     private SendableChooser autoChoice;
     private SmartDashboard smartDashboard;
+    boolean center = false,left = false,right = false;
 
     public CustomDashboard() {
         smartDashboard = new SmartDashboard();
         autoChoice = new SendableChooser();
-        autoChoice.addDefault("Unknown", AutoChooser.Position.UNKNOWN);
-        autoChoice.addObject("Left", AutoChooser.Position.LEFT);
-        autoChoice.addObject("Center", AutoChooser.Position.CENTER);
-        autoChoice.addObject("Right", AutoChooser.Position.RIGHT);
+        smartDashboard.putBoolean("Center",center);
+        smartDashboard.putBoolean("left", left);
+        smartDashboard.putBoolean("right",right);
 
 
         // additions to smart dashboard
@@ -55,7 +55,11 @@ public class CustomDashboard {
     }
 
     public AutoChooser.Position getSelectedPos() {
-        return (AutoChooser.Position)autoChoice.getSelected();
+        if(right = true)return AutoChooser.Position.RIGHT;
+        else if(left = true)return AutoChooser.Position.LEFT;
+        else if(center = true)return AutoChooser.Position.CENTER;
+        else return AutoChooser.Position.UNKNOWN;
     }
+
 
 }
