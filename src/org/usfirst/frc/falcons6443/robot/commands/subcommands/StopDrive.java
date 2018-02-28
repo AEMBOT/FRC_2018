@@ -7,7 +7,7 @@ public class StopDrive extends SimpleCommand {
     private boolean off;
 
     public StopDrive(){
-        super("stop");
+        super("Stop DriveTrain");
         requires(driveTrain);
         off = false;
     }

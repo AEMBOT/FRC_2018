@@ -9,7 +9,7 @@ public class DriveToDistance extends SimpleCommand {
 
     public static final double P = .42; //.42
     public static final double I = 0;
-    public static final double D = 3.5;
+    public static final double D = 3.5; //3.5
     public static final double Eps = 0.5; //weakest applied power
 
     private static final double buffer = .5; //inches
@@ -19,7 +19,7 @@ public class DriveToDistance extends SimpleCommand {
     private PID pid;
 
     public DriveToDistance(int distance){
-        super("Restricted PID Drive");
+        super("Drive To Distance");
         requires(navigation);
         requires(driveTrain);
         pid = new PID(P, I, D, Eps);
@@ -50,9 +50,6 @@ public class DriveToDistance extends SimpleCommand {
     public void execute() {
         setDistance();
         driveToDistance();
-        //System.out.println("Left: " + (driveTrain.getLeftDistance()));
-        //System.out.println("Right: " + (driveTrain.getRightDistance()));
-        //System.out.println("Linear: " + driveTrain.getLinearDistance());
     }
 
     @Override

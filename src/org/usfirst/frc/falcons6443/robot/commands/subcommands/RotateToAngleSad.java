@@ -15,13 +15,13 @@ public class RotateToAngleSad extends SimpleCommand {
     private static final double D = 1.23; //1.23
     private static final double Eps = 0.7; //weakest applied power
 
-    private static final double buffer = 0.5; //1 //degrees
+    private static final double buffer = 1; //0.5?? //degrees
 
     private PID pid;
     private double targetAngle;
 
     public RotateToAngleSad(double angle) {
-        super("Restricted PID Drive");
+        super("Rotate To Angle Beta");
         requires(navigation);
         requires(driveTrain);
         pid = new PID(P, I, D, Eps);
@@ -30,6 +30,8 @@ public class RotateToAngleSad extends SimpleCommand {
         pid.setDoneRange(buffer);
         if (angle > 180){
             angle -= 360;
+        } else if (angle == 180){
+            angle = 179.99;
         }
         targetAngle = angle;
     }
@@ -47,10 +49,7 @@ public class RotateToAngleSad extends SimpleCommand {
     }
 
     @Override
-    public void initialize() {
-        navigation.reset();
-        //direction = targetAngle < 0 ? -1 : 1;
-    }
+    public void initialize() { navigation.reset(); }
 
     @Override
     public void execute() {
@@ -59,7 +58,6 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        System.out.println("yaw: " + navigation.getYaw());
     }
 
     @Override
