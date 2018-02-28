@@ -29,7 +29,8 @@ public class LeftToLeftScale extends CommandGroup {
         addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(53));
 
-        //Elevator code here.
+        //elevator.setToHeight(Enums.Scale);
+
         flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
         flywheelSystem.output();
     }

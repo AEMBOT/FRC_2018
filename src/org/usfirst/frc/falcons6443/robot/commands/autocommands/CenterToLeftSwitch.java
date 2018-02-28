@@ -27,7 +27,7 @@ public class CenterToLeftSwitch extends CommandGroup {
         addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(56));
 
-        //Elevator code to go here
+        //elevator.setToHeight(Enums.Switch);
 
         flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
         flywheelSystem.output();

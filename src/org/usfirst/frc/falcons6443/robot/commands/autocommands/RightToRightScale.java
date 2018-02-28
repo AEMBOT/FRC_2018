@@ -21,7 +21,8 @@ public class RightToRightScale extends CommandGroup{
         addSequential(new RotateToAngle(250));//-110
         addSequential(new DriveToDistance(35));
 
-        // elevator code.
+        //elevator.setToHeight(Enums.Scale);
+
         flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
         flywheelSystem.output();
 
