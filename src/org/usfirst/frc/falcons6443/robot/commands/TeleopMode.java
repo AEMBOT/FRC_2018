@@ -4,6 +4,7 @@ import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.XboxRumble;
 
 
 /**
@@ -87,9 +88,11 @@ public class TeleopMode extends SimpleCommand {
         }
 
         if (flywheel.hasBlock() && primary.leftBumper()){
-            primary.controller.setRumble(RumbleType.kLeftRumble, 1);
+            primary.setRumble(XboxRumble.RumbleLeft, 1);
+            //primary.controller.setRumble(RumbleType.kLeftRumble, 1);
         } else {
-            primary.controller.setRumble(RumbleType.kRightRumble, 0);
+            primary.setRumble(XboxRumble.RumbleLeft, 0);
+            //primary.controller.setRumble(RumbleType.kRightRumble, 0);
         }
 
         //elevator.moveToHeight();

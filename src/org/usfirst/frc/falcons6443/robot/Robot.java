@@ -80,9 +80,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        //Elevator.moveToHeight(); to test elevator movement.
+        //Elevator.moveToHeight();
         Scheduler.getInstance().run();
-
     }
 
     /*
@@ -91,7 +90,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
         if (autonomy != null) autonomy.cancel();
-
         if (teleop != null) teleop.start();
     }
 

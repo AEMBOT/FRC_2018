@@ -1,6 +1,8 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.XboxRumble;
 
 /**
  * Wrapper for an Xbox 360 Xbox. Provides clearer interface with button and axis inputs.
@@ -8,6 +10,10 @@ import edu.wpi.first.wpilibj.XboxController;
  * @author Patrick Higgins
  */
 public class Xbox {
+
+    // To rumble an Xbox controller, use this in TeleopMode:
+    // primary.controller.setRumble(RumbleType.kLeftRumble, 1);
+    //[primary or secondary].controller.setRumble(RumbleType.[kLeftRumble or kRightRumble], [power]);
 
     public XboxController controller;
 
@@ -18,7 +24,6 @@ public class Xbox {
      */
     public Xbox(XboxController controller) {
         this.controller = controller;
-        //ideally, make it rumble
     }
 
     public XboxController getJoystick(XboxController xbox) {
@@ -120,7 +125,18 @@ public class Xbox {
         return controller.getRawButton(4);
     }
 
-    //public boolean setRumble(GenericHID.RumbleType type, double value){
-
-    //}
+    public void setRumble(XboxRumble rumble, double value){
+        switch (rumble){
+            case RumbleLeft:
+                controller.setRumble(GenericHID.RumbleType.kLeftRumble, value);
+                break;
+            case RumbleRight:
+                controller.setRumble(GenericHID.RumbleType.kRightRumble, value);
+                break;
+            case RumbleBoth:
+                controller.setRumble(GenericHID.RumbleType.kLeftRumble, value);
+                controller.setRumble(GenericHID.RumbleType.kRightRumble, value);
+                break;
+        }
+    }
 }

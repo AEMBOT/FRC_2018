@@ -22,7 +22,6 @@ public class OI {
     private Xbox primary;
     private Xbox secondary;
 
-
     private HashMap<String, Button> buttons;
 
     /**
@@ -45,7 +44,6 @@ public class OI {
         } else {
             return secondary;
         }
-
     }
 
     /**

@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.Enums;
 
 /**
  * Subsystem for the flywheels that push the block out.
