@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.Enums;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 
 public class Elevator extends Subsystem {
 
@@ -15,8 +15,8 @@ public class Elevator extends Subsystem {
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
 
-    private Enums desiredState;
-    private Enums previousLimit;
+    private ElevatorPosition desiredState;
+    private ElevatorPosition previousLimit;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
@@ -31,24 +31,24 @@ public class Elevator extends Subsystem {
     public void initDefaultCommand() {
     }
 
-   /* private void updatePreviousLimit(){
+    private void updatePreviousLimit(){
         if (!scaleLimit.get() || !topLimit.get()){
-            previousLimit = Enums.OverSwitch;
+            previousLimit = ElevatorPosition.OverSwitch;
         } else if(!bottomLimit.get()){
-            previousLimit = Enums.UnderSwitch;
+            previousLimit = ElevatorPosition.UnderSwitch;
         }
     }
 
-    public void setToHeight (Enums elevatorState){
+    /*public void setToHeight (ElevatorPosition elevatorState){
         switch (elevatorState){
             case Exchange:
-                desiredState = Enums.Exchange;
+                desiredState = ElevatorPosition.Exchange;
                 break;
             case Switch:
-                desiredState = Enums.Switch;
+                desiredState = ElevatorPosition.Switch;
                 break;
             case Scale:
-                desiredState = Enums.Scale;
+                desiredState = ElevatorPosition.Scale;
                 break;
         }
     }
@@ -77,7 +77,7 @@ public class Elevator extends Subsystem {
                 if (!switchLimit.get()){
                     power = 0;
                 } else {
-                    if (previousLimit == Enums.UnderSwitch){
+                    if (previousLimit == ElevatorPosition.UnderSwitch){
                         power = 1;
                     } else {
                         power = -1;

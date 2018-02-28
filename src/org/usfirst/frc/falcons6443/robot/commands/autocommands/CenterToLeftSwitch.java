@@ -3,7 +3,8 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.Enums;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 /**
  * Command to move to the left switch from the right starting position and place block
@@ -26,9 +27,9 @@ public class CenterToLeftSwitch extends CommandGroup {
         addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(56));
 
-        //elevator.setToHeight(Enums.Switch);
+        //elevator.setToHeight(ElevatorPosition.Switch);
 
-        flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
+        flywheelSystem.rotateIntake(IntakePosition.IntakeDownPosition);
         flywheelSystem.output();
 
     }

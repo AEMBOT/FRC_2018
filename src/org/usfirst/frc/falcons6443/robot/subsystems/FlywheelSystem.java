@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.Enums;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 /**
  * Subsystem for the flywheels that push the block out.
@@ -19,7 +19,7 @@ public class FlywheelSystem extends Subsystem {
     private Spark rotateMotor;
     private DigitalInput touchSensor;
     private Timer timer;
-    private Enums currentPosition;
+    private IntakePosition currentPosition;
 
     private final double intakeSpeed = .75;
     private final double outputSpeed = .75;
@@ -47,7 +47,7 @@ public class FlywheelSystem extends Subsystem {
     }
 
     public void output(){
-        if (currentPosition == Enums.IntakeUpPosition){
+        if (currentPosition == IntakePosition.IntakeUpPosition){
             stop();
         } else {
             rightMotor.set(outputSpeed);
@@ -60,19 +60,19 @@ public class FlywheelSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-    public void rotateIntake(Enums position){
+    public void rotateIntake(IntakePosition position){
         double power = 0;
         double time = 0;
         timer.reset();
-        if (position == Enums.IntakeUpPosition && currentPosition != Enums.IntakeUpPosition){
+        if (position == IntakePosition.IntakeUpPosition && currentPosition != IntakePosition.IntakeUpPosition){
             power = 0.7;
             time = 0.5;
-            currentPosition = Enums.IntakeUpPosition;
+            currentPosition = IntakePosition.IntakeUpPosition;
         }
-        if (position == Enums.IntakeDownPosition && currentPosition != Enums.IntakeDownPosition){
+        if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
             power = -0.5;
             time = 0.4;
-            currentPosition = Enums.IntakeDownPosition;
+            currentPosition = IntakePosition.IntakeDownPosition;
         }
         timer.start();
         while (timer.get() < time){
