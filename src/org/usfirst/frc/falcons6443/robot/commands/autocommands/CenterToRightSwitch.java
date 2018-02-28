@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums;
 
 
 /**
@@ -21,12 +22,11 @@ public class CenterToRightSwitch extends CommandGroup {
     private Elevator elevator;
 
     public CenterToRightSwitch() {
-
+        flywheelSystem = new FlywheelSystem();
         addSequential(new DriveToDistance(101));
 
-        //elevator.setToHeight(Enums.Switch); setToHeight needs to be tested in elevator class.
-
-        flywheelSystem = new FlywheelSystem();
+        //elevator.setToHeight(Enums.Switch); //setToHeight needs to be tested in elevator class.
+        flywheelSystem.rotateIntake(Enums.IntakeDownPosition);
         flywheelSystem.output();
     }
 }
