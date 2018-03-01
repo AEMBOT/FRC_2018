@@ -2,8 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
-import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 /**
@@ -13,9 +12,11 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
  */
 public class RightToLeftScale extends CommandGroup {
 
-    private FlywheelSystem flywheelSystem;
+    private IntakeSystem intakeSystem;
 
         public RightToLeftScale(){
+            intakeSystem = new IntakeSystem();
+
             addSequential(new DriveToDistance(228));
             addSequential(new RotateToAngle(90));
             addSequential(new DriveToDistance(232));
@@ -25,8 +26,8 @@ public class RightToLeftScale extends CommandGroup {
             addSequential(new DriveToDistance(54));
 
             //elevator.setToHeight(ElevatorPosition.Scale);
-            flywheelSystem.rotateIntake(IntakePosition.IntakeDownPosition);
-            flywheelSystem.output();
+            intakeSystem.rotateIntake(IntakePosition.IntakeDownPosition);
+            intakeSystem.output();
 
 
         }

@@ -36,5 +36,5 @@ public class RobotMap {
     public static final int IntakeRotateMotor = 6;
 
     //intake sensors
-    //public static final int IntakeTouchSensor = -1;
+    public static final int IntakeTouchSensor = -1;
 }

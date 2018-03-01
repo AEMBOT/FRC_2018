@@ -33,8 +33,6 @@ public class DriveTrainSystem extends Subsystem {
 
     private boolean reversed;
     private static final double WheelDiameter = 6;
-    public double xPower;
-    public double yPower;
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.

@@ -2,9 +2,8 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
-import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
-import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
+import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 
@@ -19,15 +18,15 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 public class CenterToRightSwitch extends CommandGroup {
 
-    private FlywheelSystem flywheelSystem;
-    private Elevator elevator;
+    private IntakeSystem intakeSystem;
+    private ElevatorSystem elevatorSystem;
 
     public CenterToRightSwitch() {
-        flywheelSystem = new FlywheelSystem();
+        intakeSystem = new IntakeSystem();
         addSequential(new DriveToDistance(101));
 
         //elevator.setToHeight(ElevatorPosition.Switch); //setToHeight needs to be tested in elevator class.
-        flywheelSystem.rotateIntake(IntakePosition.IntakeDownPosition);
-        flywheelSystem.output();
+        intakeSystem.rotateIntake(IntakePosition.IntakeDownPosition);
+        intakeSystem.output();
     }
 }
