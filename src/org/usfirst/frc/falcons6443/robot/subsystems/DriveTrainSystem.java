@@ -3,6 +3,7 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.Vector2d;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
@@ -32,6 +33,8 @@ public class DriveTrainSystem extends Subsystem {
 
     private boolean reversed;
     private static final double WheelDiameter = 6;
+    public double xPower;
+    public double yPower;
 
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
@@ -70,6 +73,31 @@ public class DriveTrainSystem extends Subsystem {
             drive.tankDrive(-left - .05, -right); //.024 //+ +, -
         } else {
             drive.tankDrive(left + .05, right);//- -, +
+        }
+    }
+
+
+    public void calcDrive(Vector2d vector, double leftStickX, double leftTrigger, double rightTrigger) {
+        vector.x = 0;
+        vector.y = 0;
+        double differential = 0;
+        if (Math.abs(leftStickX) < .15) {
+            differential = 0;
+        } else {
+            differential = Math.signum(-1 * leftStickX) * Math.pow(leftStickX, 2) / 1.8;
+        }
+
+        if (rightTrigger > 0) {
+            vector.x = rightTrigger * .5 * (rightTrigger * .7 + .44f) + (differential + .2 * rightTrigger);//x is right
+            vector.y = rightTrigger * .5 * (rightTrigger * .7 + .44f) - (differential - .2 * rightTrigger);//y is left
+        } else if (leftTrigger > 0) {
+            vector.x = leftTrigger * -.1 * (leftTrigger * .7 + .44f) + .8 * (differential + leftTrigger);//x is right
+            vector.y = leftTrigger * -.1 * (leftTrigger * .7 + .44f) - .8 * (differential - leftTrigger);//y is left
+            vector.x *= -1;
+            vector.y *= -1;
+        } else {
+            vector.x = rightTrigger * 1.2 * (rightTrigger * .7 + .44f) + (differential + .2 * rightTrigger);//x is right
+            vector.y = rightTrigger * 1.2 * (rightTrigger * .7 + .44f) - (differential - .2 * rightTrigger);//y is left
         }
     }
 
