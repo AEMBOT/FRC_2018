@@ -1,21 +1,16 @@
 package org.usfirst.frc.falcons6443.robot;
 import edu.wpi.cscore.VideoMode;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLeftSwitch;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
-import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
-import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
+import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 
 /**
@@ -30,12 +25,9 @@ public class Robot extends IterativeRobot {
     // If a new subsystem is added, it must also be added to SimpleCommand.
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
-    public static final Elevator Elevator = new Elevator();
+    public static final ElevatorSystem Elevator = new ElevatorSystem();
     public static final NavigationSystem Navigation = new NavigationSystem();
-    public static final FlywheelSystem Flywheel = new FlywheelSystem();
-
-
-
+    public static final IntakeSystem Intake = new IntakeSystem();
 
     public static OI oi;
 

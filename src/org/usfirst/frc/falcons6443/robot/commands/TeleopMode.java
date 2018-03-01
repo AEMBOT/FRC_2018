@@ -2,11 +2,8 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.drive.Vector2d;
-import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.XboxRumble;
-
 
 /**
  * Teleoperated mode for the robot.
@@ -18,11 +15,12 @@ public class TeleopMode extends SimpleCommand {
 
     private Xbox primary;         //Drive and intake/output
     private Xbox secondary;      //Secondary functions
+    private Vector2d drive;
 
     public TeleopMode() {
         super("Teleop Command");
         requires(driveTrain);
-        requires(flywheel);
+        requires(intake);
         requires(elevator);
         requires(navigation);
     }
@@ -31,48 +29,32 @@ public class TeleopMode extends SimpleCommand {
     public void initialize() {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
+        drive = new Vector2d(0,0);
     }
 
-    Vector2d drive = new Vector2d(0,0);
     @Override
     public void execute() {
-        if(primary.X()){
-            elevator.up(true);
-        }
+        //MANUAL elevator controls
+        if(primary.X()){ elevator.up(true); }
+        if(primary.Y()){ elevator.down(true); }
+        if (!primary.X() && !primary.Y()) { elevator.stop(); }
 
-        if(primary.Y()){
-            elevator.down(true);
-        }
-
-        if (!primary.X() && !primary.Y()) {
-            elevator.stop();
-        }
-
-        driveTrain.calcDrive(drive, primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
         // set the driveTrain power.
+        driveTrain.calcDrive(drive, primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
         driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
-        if (primary.leftBumper()) {
-                flywheel.intake();
-        }
-
+        if (primary.leftBumper()) { intake.intake(); }
         //output button
-        if (primary.rightBumper()) {
-            flywheel.output();
-        }
-
+        if (primary.rightBumper()) { intake.output(); }
         //stop
-        if (!primary.leftBumper() && !primary.rightBumper()){
-            flywheel.stop();
-        }
+        if (!primary.leftBumper() && !primary.rightBumper()){ intake.stop(); }
 
-        if (flywheel.hasBlock() && primary.leftBumper()){
+        //rumble primary controller
+        if (intake.hasBlock() && primary.leftBumper()){
             primary.setRumble(XboxRumble.RumbleLeft, 1);
-            //primary.controller.setRumble(RumbleType.kLeftRumble, 1);
         } else {
             primary.setRumble(XboxRumble.RumbleLeft, 0);
-            //primary.controller.setRumble(RumbleType.kRightRumble, 0);
         }
 
         //elevator.moveToHeight();
@@ -82,6 +64,7 @@ public class TeleopMode extends SimpleCommand {
         return false;
     }
 }
+
 /* TEST NEW, THIS IS OLD FOR BACK-UP
     double differential = 0;
         drive.x = 0;

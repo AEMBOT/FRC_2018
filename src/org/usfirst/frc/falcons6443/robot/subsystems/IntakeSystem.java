@@ -12,7 +12,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
  *
  * @author Aleksandras Vidmantas
  */
-public class FlywheelSystem extends Subsystem {
+public class IntakeSystem extends Subsystem {
 
     private Spark leftMotor;
     private Spark rightMotor;
@@ -24,7 +24,7 @@ public class FlywheelSystem extends Subsystem {
     private final double intakeSpeed = .75;
     private final double outputSpeed = .75;
 
-    public FlywheelSystem(){
+    public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 
-public class Elevator extends Subsystem {
+public class ElevatorSystem extends Subsystem {
 
     private Spark motor;
 
@@ -18,7 +18,7 @@ public class Elevator extends Subsystem {
     private ElevatorPosition desiredState;
     private ElevatorPosition previousLimit;
 
-    public Elevator (){
+    public ElevatorSystem(){
         motor = new Spark (RobotMap.ElevatorMotor);
         //topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
         scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);
@@ -96,17 +96,6 @@ public class Elevator extends Subsystem {
         }
         motor.set(power);
     }*/
-
-   public void limitTest(){
-       double power = -1;
-      // if (!bottomLimit.get()){
-           power = 0;
-      // }
-       //if (!scaleLimit.get()){
-         ///  power = 0;
-       //}
-       motor.set(power);
-   }
 
     public void up (boolean on){
         if (on){
