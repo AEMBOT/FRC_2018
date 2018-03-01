@@ -20,7 +20,6 @@ public class TeleopMode extends SimpleCommand {
 
     public TeleopMode() {
         super("Teleop Command");
-
         requires(driveTrain);
         requires(flywheel);
         requires(elevator);

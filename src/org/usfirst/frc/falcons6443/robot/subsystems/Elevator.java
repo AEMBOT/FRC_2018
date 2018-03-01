@@ -50,6 +50,9 @@ public class Elevator extends Subsystem {
             case Scale:
                 desiredState = ElevatorPosition.Scale;
                 break;
+            case Stop:
+                desiredState = ElevatorPosition.Stop;
+                break;
         }
     }
 
@@ -81,9 +84,12 @@ public class Elevator extends Subsystem {
                         power = 1;
                     } else {
                         power = -1;
+                    }
                 }
                 break;
-            }
+            case Stop:
+                power = 0;
+                break;
         }
         if(!topLimit.get()){
             power = -1;
