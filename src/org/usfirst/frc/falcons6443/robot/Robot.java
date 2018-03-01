@@ -1,14 +1,18 @@
 package org.usfirst.frc.falcons6443.robot;
 import edu.wpi.cscore.VideoMode;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLeftSwitch;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
+import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
@@ -30,10 +34,16 @@ public class Robot extends IterativeRobot {
     public static final NavigationSystem Navigation = new NavigationSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
 
+
+
+
     public static OI oi;
 
+    private AutoChooser chooser;
     private Command autonomy;
     private Command teleop;
+
+    CustomDashboard dashboard = new CustomDashboard();
 
     /*
      * Called when the robot first starts.
@@ -41,7 +51,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        autonomy = new RotateToAngle(90);
+        //autonomy = new RotateToAngle(90);
         teleop = new TeleopMode();
 
         //format 1 is kMJPEG
@@ -70,6 +80,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
+        chooser = new AutoChooser(dashboard.getSelectedPos());
+        autonomy = chooser.getFinalAuto();
         if (autonomy != null) {
             autonomy.start();
         }
