@@ -4,6 +4,8 @@ import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.XboxRumble;
 
 
@@ -20,7 +22,6 @@ public class TeleopMode extends SimpleCommand {
 
     public TeleopMode() {
         super("Teleop Command");
-
         requires(driveTrain);
         requires(flywheel);
         requires(elevator);
@@ -37,17 +38,16 @@ public class TeleopMode extends SimpleCommand {
     double differential = 0;
     @Override
     public void execute() {
-        if(primary.X()){
-            elevator.up(true);
-        }
+        /*EMERGENCY ELEVATOR CONTROLS
+        if(primary.X()){ elevator.up(true); }
+        if(primary.Y()){ elevator.down(true); }
+        if (!primary.X() && !primary.Y()) { elevator.stop(); }*/
 
-        if(primary.Y()){
-            elevator.down(true);
-        }
-
-        if (!primary.X() && !primary.Y()) {
-            elevator.stop();
-        }
+        //elevator set position
+        if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
+        if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
+        if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Scale); }
+        if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
         drive.x = 0;
         drive.y = 0;
@@ -56,7 +56,6 @@ public class TeleopMode extends SimpleCommand {
         } else {
             differential = Math.signum(-1 * primary.leftStickX()) * Math.pow(primary.leftStickX(), 2) / 1.8;
         }
-
         if (primary.rightTrigger() > 0) {
             drive.x = primary.rightTrigger() * .5 * (primary.rightTrigger() * .7 + .44f) + (differential + .2 * primary.rightTrigger());//x is right
             drive.y = primary.rightTrigger() * .5 * (primary.rightTrigger() * .7 + .44f) - (differential - .2 * primary.rightTrigger());//y is left
@@ -73,29 +72,35 @@ public class TeleopMode extends SimpleCommand {
         driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
-        if (primary.leftBumper()) {
-                flywheel.intake();
-        }
+        if (primary.leftBumper()) { flywheel.intake(); }
 
         //output button
-        if (primary.rightBumper()) {
-            flywheel.output();
-        }
+        if (primary.rightBumper()) { flywheel.output(); }
 
-        //stop
-        if (!primary.leftBumper() && !primary.rightBumper()){
+        //flywheel stop
+        if (!primary.leftBumper() && !primary.rightBumper()){ flywheel.stop(); }
+
+        //rotate CHANGE ROTATE POWERS/TIMES!!!
+        if (secondary.leftBumper()){ flywheel.rotateIntake(IntakePosition.IntakeUpPosition); }
+        if (secondary.rightBumper()){ flywheel.rotateIntake(IntakePosition.IntakeDownPosition);}
+
+        //manual rotate
+        if (secondary.leftTrigger() > .1) {
+            flywheel.manual(secondary.leftTrigger());
+        } else {
             flywheel.stop();
         }
 
+        /* VIBRATE IF HAS BLOCK
         if (flywheel.hasBlock() && primary.leftBumper()){
             primary.setRumble(XboxRumble.RumbleLeft, 1);
             //primary.controller.setRumble(RumbleType.kLeftRumble, 1);
         } else {
             primary.setRumble(XboxRumble.RumbleLeft, 0);
             //primary.controller.setRumble(RumbleType.kRightRumble, 0);
-        }
+        }*/
 
-        //elevator.moveToHeight();
+        elevator.moveToHeight();
     }
 
     public boolean isFinished() {

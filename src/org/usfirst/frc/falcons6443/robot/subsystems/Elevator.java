@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 
+import static org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition.Stop;
+
 public class Elevator extends Subsystem {
 
     private Spark motor;
@@ -20,9 +22,9 @@ public class Elevator extends Subsystem {
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        //topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
+        topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
         scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);
-        //switchLimit = new DigitalInput (RobotMap.ElevatorSwitchLimit);
+        switchLimit = new DigitalInput (RobotMap.ElevatorSwitchLimit);
         bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
         motor.setInverted(true);
     }
@@ -39,7 +41,7 @@ public class Elevator extends Subsystem {
         }
     }
 
-    /*public void setToHeight (ElevatorPosition elevatorState){
+    public void setToHeight (ElevatorPosition elevatorState){
         switch (elevatorState){
             case Exchange:
                 desiredState = ElevatorPosition.Exchange;
@@ -49,6 +51,9 @@ public class Elevator extends Subsystem {
                 break;
             case Scale:
                 desiredState = ElevatorPosition.Scale;
+                break;
+            case Stop:
+                desiredState = Stop;
                 break;
         }
     }
@@ -81,15 +86,18 @@ public class Elevator extends Subsystem {
                         power = 1;
                     } else {
                         power = -1;
+                    }
                 }
                 break;
-            }
+            case Stop:
+                power = 0;
+                break;
         }
         if(!topLimit.get()){
             power = -1;
         }
         motor.set(power);
-    }*/
+    }
 
    public void limitTest(){
        double power = -1;
