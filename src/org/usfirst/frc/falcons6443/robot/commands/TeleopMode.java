@@ -73,21 +73,23 @@ public class TeleopMode extends SimpleCommand {
 
         //intake button
         if (primary.leftBumper()) { flywheel.intake(); }
-
         //output button
         if (primary.rightBumper()) { flywheel.output(); }
-
         //flywheel stop
         if (!primary.leftBumper() && !primary.rightBumper()){ flywheel.stop(); }
 
         //rotate CHANGE ROTATE POWERS/TIMES!!!
-        if (secondary.leftBumper()){ flywheel.rotateIntake(IntakePosition.IntakeUpPosition); }
-        if (secondary.rightBumper()){ flywheel.rotateIntake(IntakePosition.IntakeDownPosition);}
+//        if (secondary.leftBumper()){ flywheel.rotateIntake(IntakePosition.IntakeUpPosition); }
+//        if (secondary.rightBumper()){ flywheel.rotateIntake(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
         if (secondary.leftTrigger() > .1) {
             flywheel.manual(secondary.leftTrigger());
-        } else {
+        }
+        if (secondary.rightTrigger() > .1){
+            flywheel.manual(-secondary.rightTrigger());
+        }
+        if(secondary.leftTrigger() < .1 && secondary.rightTrigger() < .1){
             flywheel.stop();
         }
 
