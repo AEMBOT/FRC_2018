@@ -83,15 +83,7 @@ public class TeleopMode extends SimpleCommand {
 //        if (secondary.rightBumper()){ flywheel.rotateIntake(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
-        if (secondary.leftTrigger() > .1) {
-            flywheel.manual(secondary.leftTrigger());
-        }
-        if (secondary.rightTrigger() > .1){
-            flywheel.manual(-secondary.rightTrigger());
-        }
-        if(secondary.leftTrigger() < .1 && secondary.rightTrigger() < .1){
-            flywheel.stop();
-        }
+        flywheel.manual(primary.leftStickY()/2);
 
         /* VIBRATE IF HAS BLOCK
         if (flywheel.hasBlock() && primary.leftBumper()){
