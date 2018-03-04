@@ -38,10 +38,10 @@ public class TeleopMode extends SimpleCommand {
     double differential = 0;
     @Override
     public void execute() {
-        /*EMERGENCY ELEVATOR CONTROLS
-        if(primary.X()){ elevator.up(true); }
-        if(primary.Y()){ elevator.down(true); }
-        if (!primary.X() && !primary.Y()) { elevator.stop(); }*/
+        //EMERGENCY ELEVATOR CONTROLS
+//        if(secondary.seven()){ elevator.up(true); }
+//       if(secondary.eight()){ elevator.down(true); }
+//        if (!secondary.seven() && !secondary.eight()) { elevator.stop(); }
 
         //elevator set position
         if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
@@ -83,7 +83,7 @@ public class TeleopMode extends SimpleCommand {
 //        if (secondary.rightBumper()){ flywheel.rotateIntake(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
-        flywheel.manual(primary.leftStickY()/2);
+        flywheel.manual(secondary.leftStickY()/2);
 
         /* VIBRATE IF HAS BLOCK
         if (flywheel.hasBlock() && primary.leftBumper()){

@@ -125,6 +125,14 @@ public class Xbox {
         return controller.getRawButton(4);
     }
 
+    public boolean seven() {
+        return controller.getRawButton(7);
+    }
+    public boolean eight() {
+        return controller.getRawButton(8);
+    }
+
+
     public void setRumble(XboxRumble rumble, double value){
         switch (rumble){
             case RumbleLeft:

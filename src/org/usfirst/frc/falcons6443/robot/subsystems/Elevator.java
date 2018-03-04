@@ -18,7 +18,7 @@ public class Elevator extends Subsystem {
     private DigitalInput bottomLimit;
 
     private ElevatorPosition desiredState;
-    private ElevatorPosition previousLimit;
+    private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
@@ -76,7 +76,7 @@ public class Elevator extends Subsystem {
                     power = 0;
                 } else {
                     power = 1;
-                }
+               }
                 break;
             case Switch:
                 if (!switchLimit.get()){

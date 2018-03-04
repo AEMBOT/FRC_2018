@@ -25,10 +25,10 @@ public class RobotMap {
     public static final int ElevatorMotor = 7;
 
     //elevator sensors
-    public static final int ElevatorTopLimit = -1;
-    public static final int ElevatorScaleLimit = 8;
-    public static final int ElevatorSwitchLimit = -1;
-    public static final int ElevatorBottomLimit = 9;
+    public static final int ElevatorTopLimit = 8;
+    public static final int ElevatorScaleLimit = 5;
+    public static final int ElevatorSwitchLimit = 4;
+    public static final int ElevatorBottomLimit = 6;
 
     //intake motors
     public static final int IntakeLeftMotor = 4;
