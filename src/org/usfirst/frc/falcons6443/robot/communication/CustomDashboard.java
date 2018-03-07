@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
-import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 
 
@@ -45,10 +44,10 @@ public class CustomDashboard {
         smartDashboard.putBoolean("Robot reversed", Robot.DriveTrain.isReversed());
         smartDashboard.putData("Autonomous mode chooser", autoChoice);
 
-        DriveEncoders encoders = new DriveEncoders();
-        smartDashboard.putNumber("Right Encoder Value", encoders.getRightDistance());
-        smartDashboard.putNumber("Left Encoder Value", encoders.getLeftDistance());
-        smartDashboard.putNumber("Absolute Encoder Distance", encoders.getLinearDistance());
+        //DriveEncoders encoders = new DriveEncoders();
+        //smartDashboard.putNumber("Right Encoder Value", encoders.getRightDistance());
+        //smartDashboard.putNumber("Left Encoder Value", encoders.getLeftDistance());
+        //smartDashboard.putNumber("Absolute Encoder Distance", encoders.getLinearDistance());
 
         //relays current command
         smartDashboard.putData(Scheduler.getInstance());

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 /**
@@ -18,18 +19,25 @@ public class FlywheelSystem extends Subsystem {
     private Spark rightMotor;
     private Spark rotateMotor;
     private DigitalInput touchSensor;
-    private Timer timer;
+    private IntakeEncoder encoder;
     private IntakePosition currentPosition;
 
     private final double intakeSpeed = .75;
     private final double outputSpeed = .75;
+    private final double upSpeed = .5;
+    private final double downSpeed = .5;
+    private final int buffer = 20; //ticks
+    private final int upEncVal = 500;
+    private final int downEncVal = 150;
+
+    private int desiredEncVal = 0;
 
     public FlywheelSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
-        timer = new Timer();
         //touchSensor = new DigitalInput(RobotMap.IntakeTouchSensor);
+        encoder = new IntakeEncoder();
         leftMotor.setInverted(true);
         rotateMotor.setInverted(true);
     }
@@ -60,26 +68,29 @@ public class FlywheelSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-    public void rotateIntake(IntakePosition position){
-        double power = 0;
-        double time = 0;
-        timer.reset();
+    public void setIntakePosition(IntakePosition position){
         if (position == IntakePosition.IntakeUpPosition && currentPosition != IntakePosition.IntakeUpPosition){
-            power = 0.7;
-            time = 0.5;
+            desiredEncVal = upEncVal;
             currentPosition = IntakePosition.IntakeUpPosition;
         }
         if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
-            power = -0.5;
-            time = 0.4;
+            desiredEncVal = downEncVal;
             currentPosition = IntakePosition.IntakeDownPosition;
         }
-        timer.start();
-        while (timer.get() < time){
-            rotateMotor.set(power);
+    }
+
+    public void moveIntake(){
+        double power = 0;
+        if (desiredEncVal == upEncVal) {
+            power = upSpeed;
+        } else if (desiredEncVal == downEncVal){
+            power = downSpeed;
         }
-        rotateStop();
-        timer.stop();
+        if ((encoder.getDistance() + buffer) < desiredEncVal && (encoder.getDistance() - buffer) > desiredEncVal){
+            rotateMotor.set(power);
+        } else {
+            rotateStop();
+        }
     }
 
     public void rotateStop(){

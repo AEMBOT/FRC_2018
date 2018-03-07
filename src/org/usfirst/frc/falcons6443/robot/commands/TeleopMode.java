@@ -79,8 +79,8 @@ public class TeleopMode extends SimpleCommand {
         if (!primary.leftBumper() && !primary.rightBumper()){ flywheel.stop(); }
 
         //rotate CHANGE ROTATE POWERS/TIMES!!!
-//        if (secondary.leftBumper()){ flywheel.rotateIntake(IntakePosition.IntakeUpPosition); }
-//        if (secondary.rightBumper()){ flywheel.rotateIntake(IntakePosition.IntakeDownPosition);}
+//        if (secondary.leftBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeUpPosition); }
+//        if (secondary.rightBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
         flywheel.manual(secondary.leftStickY()/2);
@@ -95,6 +95,7 @@ public class TeleopMode extends SimpleCommand {
         }*/
 
         elevator.moveToHeight();
+        flywheel.moveIntake();
     }
 
     public boolean isFinished() {

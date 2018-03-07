@@ -28,7 +28,7 @@ public class RightToRightScaleLong extends CommandGroup {
 
         //elevator.setToHeight(Enums.Scale);
 
-        flywheelSystem.rotateIntake(IntakePosition.IntakeDownPosition);
+        flywheelSystem.setIntakePosition(IntakePosition.IntakeDownPosition);
         flywheelSystem.output();
 
     }

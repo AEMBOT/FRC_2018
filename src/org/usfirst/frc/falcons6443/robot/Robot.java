@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
         //Elevator.moveToHeight();
+        Flywheel.moveIntake();
         Scheduler.getInstance().run();
     }
 

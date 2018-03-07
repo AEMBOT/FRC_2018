@@ -1,9 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 /**
@@ -29,7 +29,8 @@ public class CenterToLeftSwitch extends CommandGroup {
 
         //elevator.setToHeight(ElevatorPosition.Switch);
 
-        flywheelSystem.rotateIntake(IntakePosition.IntakeDownPosition);
+        flywheelSystem.setIntakePosition(IntakePosition.IntakeDownPosition);
+        addSequential(new Delay(2));
         flywheelSystem.output();
 
     }
