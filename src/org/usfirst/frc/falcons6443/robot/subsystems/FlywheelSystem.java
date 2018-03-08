@@ -22,13 +22,13 @@ public class FlywheelSystem extends Subsystem {
     private IntakeEncoder encoder;
     private IntakePosition currentPosition;
 
-    private final double intakeSpeed = .75;
+    private final double intakeSpeed = -.75;
     private final double outputSpeed = .75;
     private final double upSpeed = .5;
-    private final double downSpeed = .5;
+    private final double downSpeed = -.5;
     private final int buffer = 20; //ticks
-    private final int upEncVal = 500;
-    private final int downEncVal = 150;
+    private final int upEncVal = 1;
+    private final int downEncVal = -580;
 
     private int desiredEncVal = 0;
     private boolean moveDown = false;
@@ -51,8 +51,8 @@ public class FlywheelSystem extends Subsystem {
     }
 
     public void intake(){
-        rightMotor.set(-intakeSpeed);
-        leftMotor.set(-intakeSpeed);
+        rightMotor.set(intakeSpeed);
+        leftMotor.set(intakeSpeed);
     }
 
     public void output(){
@@ -118,7 +118,7 @@ public class FlywheelSystem extends Subsystem {
     }
 
     public void readjust() {
-        rightMotor.set(0);
+        rightMotor.set(intakeSpeed/2);
         leftMotor.set(intakeSpeed);
     }
 

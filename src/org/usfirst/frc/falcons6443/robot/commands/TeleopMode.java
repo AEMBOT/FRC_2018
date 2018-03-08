@@ -85,7 +85,7 @@ public class TeleopMode extends SimpleCommand {
 //        if (secondary.rightBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
-        //flywheel.manual(secondary.leftStickY()/2);
+        flywheel.manual(secondary.leftStickY());
 
         //rotate
         if (secondary.rightBumper()){ flywheel.moveIntake(true); }

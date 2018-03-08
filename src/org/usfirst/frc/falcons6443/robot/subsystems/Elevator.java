@@ -17,7 +17,7 @@ public class Elevator extends Subsystem {
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
 
-    private ElevatorPosition desiredState;
+    private ElevatorPosition desiredState = ElevatorPosition.Exchange;
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
     public Elevator (){
