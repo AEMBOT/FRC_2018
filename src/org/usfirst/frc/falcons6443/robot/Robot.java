@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
-        //CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
     }
 
     /*
