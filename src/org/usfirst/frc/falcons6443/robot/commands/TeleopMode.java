@@ -46,8 +46,8 @@ public class TeleopMode extends SimpleCommand {
         //elevator set position
         if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
         if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
-        if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Scale); }
-        if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Stop); }
+        if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
+        if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
         drive.x = 0;
         drive.y = 0;
@@ -72,18 +72,25 @@ public class TeleopMode extends SimpleCommand {
         driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
-        if (primary.leftBumper()) { flywheel.intake(); }
+        if (primary.A()) { flywheel.intake(); }
         //output button
-        if (primary.rightBumper()) { flywheel.output(); }
+        if (primary.B()) { flywheel.output(); }
         //flywheel stop
-        if (!primary.leftBumper() && !primary.rightBumper()){ flywheel.stop(); }
+        if (!primary.A() && !primary.B() && !primary.Y()){ flywheel.stop(); }
+        //readjust
+        if (primary.Y()) { flywheel.readjust(); }
 
         //rotate CHANGE ROTATE POWERS/TIMES!!!
 //        if (secondary.leftBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeUpPosition); }
 //        if (secondary.rightBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
-        flywheel.manual(secondary.leftStickY()/2);
+        //flywheel.manual(secondary.leftStickY()/2);
+
+        //rotate
+        if (secondary.rightBumper()){ flywheel.moveIntake(true); }
+        if (secondary.leftBumper()){ flywheel.moveIntake(false); }
+        if (!secondary.rightBumper() && !secondary.leftBumper()){ flywheel.rotateStop(); }
 
         /* VIBRATE IF HAS BLOCK
         if (flywheel.hasBlock() && primary.leftBumper()){
@@ -95,7 +102,6 @@ public class TeleopMode extends SimpleCommand {
         }*/
 
         elevator.moveToHeight();
-        flywheel.moveIntake();
     }
 
     public boolean isFinished() {

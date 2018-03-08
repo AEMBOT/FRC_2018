@@ -31,6 +31,7 @@ public class FlywheelSystem extends Subsystem {
     private final int downEncVal = 150;
 
     private int desiredEncVal = 0;
+    private boolean moveDown = false;
 
     public FlywheelSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -68,7 +69,7 @@ public class FlywheelSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-    public void setIntakePosition(IntakePosition position){
+    /*public void setIntakePosition(IntakePosition position){
         if (position == IntakePosition.IntakeUpPosition && currentPosition != IntakePosition.IntakeUpPosition){
             desiredEncVal = upEncVal;
             currentPosition = IntakePosition.IntakeUpPosition;
@@ -77,20 +78,49 @@ public class FlywheelSystem extends Subsystem {
             desiredEncVal = downEncVal;
             currentPosition = IntakePosition.IntakeDownPosition;
         }
+    }*/
+
+    public void setIntakePosition(IntakePosition position){
+        if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
+            moveDown = true;
+        }
+
     }
 
-    public void moveIntake(){
-        double power = 0;
-        if (desiredEncVal == upEncVal) {
-            power = upSpeed;
-        } else if (desiredEncVal == downEncVal){
-            power = downSpeed;
+    public void moveIntake(boolean up){
+        double speed;
+        if (up){
+            speed = upSpeed;
+        } else {
+            speed = downSpeed;
         }
-        if ((encoder.getDistance() + buffer) < desiredEncVal && (encoder.getDistance() - buffer) > desiredEncVal){
-            rotateMotor.set(power);
+
+        if(encoder.getDistance() < downEncVal && speed < 0){
+            speed = 0;
+        }
+
+        if(encoder.getDistance() > upEncVal && speed > 0){
+            speed = 0;
+        }
+
+        rotateMotor.set(speed);
+    }
+
+    public void autoMoveIntake(){
+        if (moveDown){
+            if (encoder.getDistance() < downEncVal + buffer) {
+                rotateStop();
+            } else {
+                rotateMotor.set(downSpeed);
+            }
         } else {
             rotateStop();
         }
+    }
+
+    public void readjust() {
+        rightMotor.set(0);
+        leftMotor.set(intakeSpeed);
     }
 
     public void rotateStop(){
