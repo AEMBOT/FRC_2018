@@ -88,8 +88,8 @@ public class TeleopMode extends SimpleCommand {
         flywheel.manual(secondary.leftStickY());
 
         //rotate
-        if (secondary.rightBumper()){ flywheel.moveIntake(true); }
-        if (secondary.leftBumper()){ flywheel.moveIntake(false); }
+        if (secondary.rightBumper()){ flywheel.moveUp(); }
+        if (secondary.leftBumper()){ flywheel.moveDown(); }
         if (!secondary.rightBumper() && !secondary.leftBumper()){ flywheel.rotateStop(); }
 
         /* VIBRATE IF HAS BLOCK

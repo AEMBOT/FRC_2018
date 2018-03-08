@@ -27,8 +27,8 @@ public class FlywheelSystem extends Subsystem {
     private final double upSpeed = .5;
     private final double downSpeed = -.5;
     private final int buffer = 20; //ticks
-    private final int upEncVal = 1;
-    private final int downEncVal = -580;
+    private final int upEncVal = 0;
+    private final int downEncVal = -550;
 
     private int desiredEncVal = 0;
     private boolean moveDown = false;
@@ -86,22 +86,41 @@ public class FlywheelSystem extends Subsystem {
         }
     }
 
+    public void moveUp(){
+        double speed = -0.7;
+       if(encoder.getDistance() > upEncVal && speed < 0){
+           speed = 0;
+        }
+        rotateMotor.set(speed);
+        System.out.println(encoder.getDistance());
+    }
+
+    public void moveDown(){
+        double speed = 0.5;
+        if(encoder.getDistance() < downEncVal && speed > 0){
+            speed = 0;
+        }
+        rotateMotor.set(speed);
+        System.out.println(encoder.getDistance());
+    }
+
     public void moveIntake(boolean up){
         double speed;
         if (up){
-            speed = upSpeed;
+            speed = .5;
         } else {
-            speed = downSpeed;
+            speed = -.5;
         }
 
-        if(encoder.getDistance() < downEncVal && speed < 0){
-            speed = 0;
-        }
+ //       if(encoder.getDistance() < downEncVal && speed < 0){
+ //           speed = 0;
+ //       }
 
-        if(encoder.getDistance() > upEncVal && speed > 0){
-            speed = 0;
-        }
+ //       if(encoder.getDistance() > upEncVal && speed > 0){
+ //           speed = 0;
+ //       }
 
+        System.out.println("speed: " + speed);
         rotateMotor.set(speed);
     }
 
