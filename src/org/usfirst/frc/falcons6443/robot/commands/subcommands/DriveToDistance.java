@@ -22,6 +22,8 @@ public class DriveToDistance extends SimpleCommand {
         super("Drive To Distance");
         requires(navigation);
         requires(driveTrain);
+        requires(elevator);
+        requires(flywheel);
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.65);
         pid.setMinDoneCycles(5);
@@ -48,6 +50,8 @@ public class DriveToDistance extends SimpleCommand {
 
     @Override
     public void execute() {
+        elevator.moveToHeight();
+        flywheel.autoMoveIntake();
         setDistance();
         driveToDistance();
     }

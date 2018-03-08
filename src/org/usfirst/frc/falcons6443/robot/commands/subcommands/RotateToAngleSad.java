@@ -24,6 +24,8 @@ public class RotateToAngleSad extends SimpleCommand {
         super("Rotate To Angle Beta");
         requires(navigation);
         requires(driveTrain);
+        requires(elevator);
+        requires(flywheel);
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.75);
         pid.setMinDoneCycles(5);
@@ -53,6 +55,8 @@ public class RotateToAngleSad extends SimpleCommand {
 
     @Override
     public void execute() {
+        elevator.moveToHeight();
+        flywheel.autoMoveIntake();
         setAngle();
         turnToAngle();
         if(isAtAngle()){

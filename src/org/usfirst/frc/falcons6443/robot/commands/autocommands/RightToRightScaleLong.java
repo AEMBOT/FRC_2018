@@ -1,8 +1,12 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 
@@ -14,10 +18,10 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 public class RightToRightScaleLong extends CommandGroup {
 
-    private FlywheelSystem flywheelSystem;
 
     public RightToRightScaleLong(){
 
+        addSequential(new MoveElevator(ElevatorPosition.Scale));
         addSequential(new DriveToDistance(242));
         addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(12));
@@ -26,10 +30,10 @@ public class RightToRightScaleLong extends CommandGroup {
         addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(53));
 
-        //elevator.setToHeight(Enums.Scale);
-
-        flywheelSystem.setIntakePosition(IntakePosition.IntakeDownPosition);
-        flywheelSystem.output();
-
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+        addSequential(new Delay(2));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
+        addSequential(new Delay(4));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));
     }
 }

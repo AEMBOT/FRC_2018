@@ -34,9 +34,6 @@ public class Robot extends IterativeRobot {
     public static final NavigationSystem Navigation = new NavigationSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
 
-
-
-
     public static OI oi;
 
     private AutoChooser chooser;
@@ -92,8 +89,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        //Elevator.moveToHeight();
-        Flywheel.moveIntake();
+       // Elevator.moveToHeight();
+        //Flywheel.autoMoveIntake();
         Scheduler.getInstance().run();
     }
 

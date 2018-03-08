@@ -3,8 +3,11 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 
@@ -19,16 +22,15 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 public class CenterToRightSwitch extends CommandGroup {
 
-    private FlywheelSystem flywheelSystem;
-    private Elevator elevator;
-
     public CenterToRightSwitch() {
-        flywheelSystem = new FlywheelSystem();
+        addSequential(new MoveElevator(ElevatorPosition.Switch));
         addSequential(new DriveToDistance(101));
 
         //elevator.setToHeight(ElevatorPosition.Switch); //setToHeight needs to be tested in elevator class.
-        flywheelSystem.setIntakePosition(IntakePosition.IntakeDownPosition);
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
         addSequential(new Delay(2));
-        flywheelSystem.output();
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
+        addSequential(new Delay(4));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));
     }
 }

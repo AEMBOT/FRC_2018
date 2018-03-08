@@ -84,7 +84,6 @@ public class FlywheelSystem extends Subsystem {
         if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
             moveDown = true;
         }
-
     }
 
     public void moveIntake(boolean up){
