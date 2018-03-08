@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLeftSwitch;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToRightSwitch;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
@@ -78,7 +79,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         chooser = new AutoChooser(dashboard.getSelectedPos());
-        autonomy = chooser.getFinalAuto();
+        autonomy = new CenterToRightSwitch();
         if (autonomy != null) {
             autonomy.start();
         }
