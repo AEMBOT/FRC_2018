@@ -3,6 +3,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
 import org.usfirst.frc.falcons6443.robot.communication.FieldData;
+import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 
 /**
  * This class handles will choose and autonomous mode
@@ -33,6 +34,15 @@ public class AutoChooser {
     //commands then choose command once fms data is received.
     private void choose(){
 
+        if(NetTables.getEntry("left").getBoolean(false)){
+            this.position = Position.LEFT;
+        }else if(NetTables.getEntry("center").getBoolean(false)){
+            this.position = Position.CENTER;
+        }else if(NetTables.getEntry("right").getBoolean( false)){
+            this.position = Position.RIGHT;
+        }else{
+            this.position = Position.UNKNOWN;
+        }
 
         switch (position){
 
@@ -59,9 +69,10 @@ public class AutoChooser {
                 break;
 
             case UNKNOWN:  //position is UNKNOWN if dashboard fails or user fails to enter choice
-                finalAuto = new CenterToLine();
+                finalAuto = new LaneToLine();
                 break;
         }
+        finalAuto = new LaneToLine();
 
     }
 

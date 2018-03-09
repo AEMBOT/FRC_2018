@@ -14,6 +14,7 @@ import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToRightSwit
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
+import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
 import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
@@ -55,6 +56,9 @@ public class Robot extends IterativeRobot {
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        NetTables.setBoolean("left", false);
+        NetTables.setBoolean("center", false);
+        NetTables.setBoolean("right", false);
     }
 
     /*
@@ -78,8 +82,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        chooser = new AutoChooser(dashboard.getSelectedPos());
-        autonomy = new CenterToRightSwitch();
+        chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         if (autonomy != null) {
             autonomy.start();
         }
