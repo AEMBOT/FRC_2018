@@ -21,6 +21,8 @@ public class CenterToLeftSwitch extends CommandGroup {
 
 
     public CenterToLeftSwitch() {
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+        addSequential(new Delay(1.5));
         addSequential(new MoveElevator(ElevatorPosition.Switch));
 
         addSequential(new DriveToDistance(45));
@@ -31,8 +33,6 @@ public class CenterToLeftSwitch extends CommandGroup {
 
         //elevator.setToHeight(ElevatorPosition.Switch);
 
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
-        addSequential(new Delay(2));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
         addSequential(new Delay(4));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));

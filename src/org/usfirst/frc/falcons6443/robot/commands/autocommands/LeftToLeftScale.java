@@ -23,6 +23,8 @@ public class LeftToLeftScale extends CommandGroup {
 
 
     public LeftToLeftScale() {
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+        addSequential(new Delay(1.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
 
@@ -34,8 +36,7 @@ public class LeftToLeftScale extends CommandGroup {
         addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(53));
 
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
-        addSequential(new Delay(2));
+
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
         addSequential(new Delay(4));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));

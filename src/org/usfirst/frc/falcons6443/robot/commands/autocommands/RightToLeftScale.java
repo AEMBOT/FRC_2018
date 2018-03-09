@@ -19,6 +19,8 @@ public class RightToLeftScale extends CommandGroup {
     private FlywheelSystem flywheelSystem;
 
         public RightToLeftScale(){
+            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+            addSequential(new Delay(1.5));
             addSequential(new MoveElevator(ElevatorPosition.Scale));
 
             addSequential(new DriveToDistance(228));
@@ -30,8 +32,7 @@ public class RightToLeftScale extends CommandGroup {
             addSequential(new DriveToDistance(54));
 
             //elevator.setToHeight(ElevatorPosition.Scale);
-            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
-            addSequential(new Delay(2));
+
             addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
             addSequential(new Delay(4));
             addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));

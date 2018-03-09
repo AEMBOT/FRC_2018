@@ -20,8 +20,10 @@ public class RightToRightScaleLong extends CommandGroup {
 
 
     public RightToRightScaleLong(){
-
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+        addSequential(new Delay(1.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
+
         addSequential(new DriveToDistance(242));
         addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(12));
@@ -30,8 +32,6 @@ public class RightToRightScaleLong extends CommandGroup {
         addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(53));
 
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
-        addSequential(new Delay(2));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
         addSequential(new Delay(4));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));

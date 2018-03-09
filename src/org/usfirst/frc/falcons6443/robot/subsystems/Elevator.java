@@ -12,7 +12,7 @@ public class Elevator extends Subsystem {
 
     private Spark motor;
 
-    private DigitalInput topLimit;
+   // private DigitalInput topLimit;
     private DigitalInput scaleLimit;
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
@@ -20,9 +20,11 @@ public class Elevator extends Subsystem {
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
+    public boolean manual = false;
+
     public Elevator (){
         motor = new Spark (RobotMap.ElevatorMotor);
-        topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
+        //topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
         scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);
         switchLimit = new DigitalInput (RobotMap.ElevatorSwitchLimit);
         bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
@@ -34,7 +36,7 @@ public class Elevator extends Subsystem {
     }
 
     private void updatePreviousLimit(){
-        if (!scaleLimit.get() || !topLimit.get()){
+        if (!scaleLimit.get()){
             previousLimit = ElevatorPosition.OverSwitch;
         } else if(!bottomLimit.get()){
             previousLimit = ElevatorPosition.UnderSwitch;
@@ -42,6 +44,7 @@ public class Elevator extends Subsystem {
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
+        manual = false;
         switch (elevatorState){
             case Exchange:
                 desiredState = ElevatorPosition.Exchange;
@@ -93,32 +96,20 @@ public class Elevator extends Subsystem {
                 power = 0;
                 break;
         }
-        if(!topLimit.get()){
-            power = -1;
-        }
-        motor.set(power);
+        if (!manual) { motor.set(power);}
     }
-
-   public void limitTest(){
-       double power = -1;
-      // if (!bottomLimit.get()){
-           power = 0;
-      // }
-       //if (!scaleLimit.get()){
-         ///  power = 0;
-       //}
-       motor.set(power);
-   }
 
     public void up (boolean on){
         if (on){
             motor.set(1);
+            manual = true;
         }
     }
 
     public void down (boolean on){
         if (on){
             motor.set(-1);
+            manual = true;
         }
     }
 

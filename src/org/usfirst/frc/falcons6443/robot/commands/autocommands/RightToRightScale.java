@@ -17,6 +17,8 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 public class RightToRightScale extends CommandGroup{
 
     public RightToRightScale(){
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+        addSequential(new Delay(1.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(228));
@@ -27,8 +29,6 @@ public class RightToRightScale extends CommandGroup{
 
         //elevator.setToHeight(Enums.Scale);
 
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
-        addSequential(new Delay(2));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
         addSequential(new Delay(4));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));

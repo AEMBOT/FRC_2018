@@ -38,16 +38,18 @@ public class TeleopMode extends SimpleCommand {
     double differential = 0;
     @Override
     public void execute() {
-        //EMERGENCY ELEVATOR CONTROLS
-//        if(secondary.seven()){ elevator.up(true); }
-//       if(secondary.eight()){ elevator.down(true); }
-//        if (!secondary.seven() && !secondary.eight()) { elevator.stop(); }
 
         //elevator set position
         if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
         if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
         if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
         if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
+
+        //manual elevator
+        if (secondary.seven()) { elevator.up(true);}
+        if (secondary.eight()) { elevator.down(true);}
+        if (!secondary.seven() && !secondary.eight() && elevator.manual) {elevator.stop();}
+        //if (!secondary.seven() && !secondary.eight() && !elevator.manual)
 
         drive.x = 0;
         drive.y = 0;
