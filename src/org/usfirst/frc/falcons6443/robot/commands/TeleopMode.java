@@ -23,7 +23,7 @@ public class TeleopMode extends SimpleCommand {
     public TeleopMode() {
         super("Teleop Command");
         requires(driveTrain);
-        requires(flywheel);
+        //requires(flywheel);
         requires(elevator);
         requires(navigation);
     }
@@ -58,10 +58,10 @@ public class TeleopMode extends SimpleCommand {
         } else {
             differential = Math.signum(-1 * primary.leftStickX()) * Math.pow(primary.leftStickX(), 2) / 1.8;
         }
-        if (primary.rightTrigger() > 0) {
+        if (primary.rightTrigger() > 0) {//forward
             drive.x = primary.rightTrigger() * .5 * (primary.rightTrigger() * .7 + .44f) + (differential + .2 * primary.rightTrigger());//x is right
             drive.y = primary.rightTrigger() * .5 * (primary.rightTrigger() * .7 + .44f) - (differential - .2 * primary.rightTrigger());//y is left
-        } else if (primary.leftTrigger() > 0) {
+        } else if (primary.leftTrigger() > 0) { //reverse
             drive.x = primary.leftTrigger() * -.1 * (primary.leftTrigger() * .7 + .44f) + .8 * (differential + primary.leftTrigger());//x is right
             drive.y = primary.leftTrigger() * -.1 * (primary.leftTrigger() * .7 + .44f) - .8 * (differential - primary.leftTrigger());//y is left
             drive.x *= -1;
@@ -74,25 +74,25 @@ public class TeleopMode extends SimpleCommand {
         driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
-        if (primary.A()) { flywheel.intake(); }
+     //   if (primary.A()) { flywheel.intake(); }
         //output button
-        if (primary.B()) { flywheel.output(); }
+        //if (primary.B()) { flywheel.output(); }
         //flywheel stop
-        if (!primary.A() && !primary.B() && !primary.Y()){ flywheel.stop(); }
+       // if (!primary.A() && !primary.B() && !primary.Y()){ flywheel.stop(); }
         //readjust
-        if (primary.Y()) { flywheel.readjust(); }
+       // if (primary.Y()) { flywheel.readjust(); }
 
         //rotate CHANGE ROTATE POWERS/TIMES!!!
 //        if (secondary.leftBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeUpPosition); }
 //        if (secondary.rightBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
-        flywheel.manual(secondary.leftStickY());
+        //flywheel.manual(secondary.leftStickY());
 
         //rotate
-        if (secondary.rightBumper()){ flywheel.moveUp(); }
-        if (secondary.leftBumper()){ flywheel.moveDown(); }
-        if (!secondary.rightBumper() && !secondary.leftBumper()){ flywheel.rotateStop(); }
+      //  if (secondary.rightBumper()){ flywheel.moveUp(); }
+      //  if (secondary.leftBumper()){ flywheel.moveDown(); }
+      //  if (!secondary.rightBumper() && !secondary.leftBumper()){ flywheel.rotateStop(); }
 
         /* VIBRATE IF HAS BLOCK
         if (flywheel.hasBlock() && primary.leftBumper()){
@@ -102,6 +102,9 @@ public class TeleopMode extends SimpleCommand {
             primary.setRumble(XboxRumble.RumbleLeft, 0);
             //primary.controller.setRumble(RumbleType.kRightRumble, 0);
         }*/
+
+        System.out.println("left" + driveTrain.getLeftDistance());
+        System.out.println("right" + driveTrain.getRightDistance());
 
         elevator.moveToHeight();
     }
