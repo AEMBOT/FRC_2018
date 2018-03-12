@@ -150,7 +150,8 @@ public class NetTables {
         getEntry("Default",entry).setNumber(number);
     }
 
-
-
+    public static void flush(){
+        NetworkTableInstance.getDefault().flush();
+    }
 
 }

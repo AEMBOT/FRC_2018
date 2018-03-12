@@ -23,7 +23,7 @@ public class TeleopMode extends SimpleCommand {
     public TeleopMode() {
         super("Teleop Command");
         requires(driveTrain);
-        //requires(flywheel);
+        requires(flywheel);
         requires(elevator);
         requires(navigation);
     }
@@ -66,33 +66,44 @@ public class TeleopMode extends SimpleCommand {
             drive.y = primary.leftTrigger() * -.1 * (primary.leftTrigger() * .7 + .44f) - .8 * (differential - primary.leftTrigger());//y is left
             drive.x *= -1;
             drive.y *= -1;
-        } else {
-            drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .2 * primary.rightTrigger());//x is right
-            drive.y = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .2 * primary.rightTrigger());//y is left
+        } else { //no trigger values, stationary rotation
+            //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
+            //drive.y = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
+            // drive.x = 2*differential;
+            //drive.y = -2*differential;
+            System.out.println("Diff" + differential);
+
+
+            System.out.println(drive.x);
+            System.out.println(drive.y);
+            if(Math.abs(primary.leftStickX()) > .2){
+                drive.x = -primary.leftStickX()/1.68-(.1*Math.signum(primary.leftStickX()));
+                drive.y = primary.leftStickX()/1.68+(.1*Math.signum(primary.leftStickX()));
+            }
         }
         // set the driveTrain power.
         driveTrain.tankDrive(drive.y, drive.x);
 
         //intake button
-     //   if (primary.A()) { flywheel.intake(); }
+        if (primary.A()) { flywheel.intake(); }
         //output button
-        //if (primary.B()) { flywheel.output(); }
+        if (primary.B()) { flywheel.output(); }
         //flywheel stop
-       // if (!primary.A() && !primary.B() && !primary.Y()){ flywheel.stop(); }
+        if (!primary.A() && !primary.B() && !primary.Y()){ flywheel.stop(); }
         //readjust
-       // if (primary.Y()) { flywheel.readjust(); }
+        if (primary.Y()) { flywheel.readjust(); }
 
         //rotate CHANGE ROTATE POWERS/TIMES!!!
 //        if (secondary.leftBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeUpPosition); }
 //        if (secondary.rightBumper()){ flywheel.setIntakePosition(IntakePosition.IntakeDownPosition);}
 
         //manual rotate
-        //flywheel.manual(secondary.leftStickY());
+        flywheel.manual(secondary.leftStickY());
 
         //rotate
-      //  if (secondary.rightBumper()){ flywheel.moveUp(); }
-      //  if (secondary.leftBumper()){ flywheel.moveDown(); }
-      //  if (!secondary.rightBumper() && !secondary.leftBumper()){ flywheel.rotateStop(); }
+        if (secondary.rightBumper()){ flywheel.moveUp(); }
+        if (secondary.leftBumper()){ flywheel.moveDown(); }
+        if (!secondary.rightBumper() && !secondary.leftBumper()){ flywheel.rotateStop(); }
 
         /* VIBRATE IF HAS BLOCK
         if (flywheel.hasBlock() && primary.leftBumper()){

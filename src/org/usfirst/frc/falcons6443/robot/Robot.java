@@ -1,5 +1,6 @@
 package org.usfirst.frc.falcons6443.robot;
 import edu.wpi.cscore.VideoMode;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,10 +10,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToLeftSwitch;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.CenterToRightSwitch;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.LaneToLine;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
@@ -56,9 +55,11 @@ public class Robot extends IterativeRobot {
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        //CameraServer.getInstance().putVideo();
         NetTables.setBoolean("left", false);
         NetTables.setBoolean("center", false);
         NetTables.setBoolean("right", false);
+        NetTables.flush();
     }
 
     /*
@@ -82,10 +83,12 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
+        //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
+        autonomy = new LaneToLine();
         if (autonomy != null) {
             autonomy.start();
         }
+
     }
 
     /*
@@ -93,7 +96,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
-       // Elevator.moveToHeight();
+        // Elevator.moveToHeight();
         //Flywheel.autoMoveIntake();
         Scheduler.getInstance().run();
     }
