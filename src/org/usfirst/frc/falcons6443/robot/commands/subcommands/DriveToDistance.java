@@ -1,8 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
-import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
-import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
 
 public class DriveToDistance extends SimpleCommand {
@@ -23,7 +21,7 @@ public class DriveToDistance extends SimpleCommand {
         requires(navigation);
         requires(driveTrain);
         requires(elevator);
-        requires(flywheel);
+        requires(intake);
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.65);
         pid.setMinDoneCycles(5);
@@ -51,7 +49,7 @@ public class DriveToDistance extends SimpleCommand {
     @Override
     public void execute() {
         elevator.moveToHeight();
-        flywheel.autoMoveIntake();
+        intake.autoMoveIntake();
         setDistance();
         driveToDistance();
     }

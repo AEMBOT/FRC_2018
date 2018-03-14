@@ -9,7 +9,7 @@ public class MoveElevator extends SimpleCommand{
     private boolean off;
 
     public MoveElevator(ElevatorPosition pos){
-        super("Move Elevator");
+        super("Move ElevatorSystem");
         requires(elevator);
         position = pos;
         off = false;

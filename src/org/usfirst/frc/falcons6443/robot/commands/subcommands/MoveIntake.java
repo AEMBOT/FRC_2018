@@ -11,8 +11,8 @@ public class MoveIntake extends SimpleCommand {
     private boolean off;
 
     public MoveIntake(IntakePosition pos, boolean output, boolean stop){
-        super("Move Elevator");
-        requires(flywheel);
+        super("Move ElevatorSystem");
+        requires(intake);
         position = pos;
         off = false;
         out = output;
@@ -21,16 +21,16 @@ public class MoveIntake extends SimpleCommand {
 
     @Override
     public void initialize() {
-        flywheel.setIntakePosition(position);
+        intake.setIntakePosition(position);
     }
 
     @Override
     public void execute() {
         if (out){
-            flywheel.output();
+            intake.output();
         }
         if(stp){
-            flywheel.stop();
+            intake.stop();
         }
         off = true;
     }

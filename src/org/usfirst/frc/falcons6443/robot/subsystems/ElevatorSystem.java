@@ -8,7 +8,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 
 import static org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition.Stop;
 
-public class Elevator extends Subsystem {
+public class ElevatorSystem extends Subsystem {
 
     private Spark motor;
 
@@ -22,7 +22,7 @@ public class Elevator extends Subsystem {
 
     public boolean manual = false;
 
-    public Elevator (){
+    public ElevatorSystem(){
         motor = new Spark (RobotMap.ElevatorMotor);
         //topLimit = new DigitalInput (RobotMap.ElevatorTopLimit);
         scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);

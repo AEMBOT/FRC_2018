@@ -5,8 +5,6 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
-import org.usfirst.frc.falcons6443.robot.subsystems.Elevator;
-import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 

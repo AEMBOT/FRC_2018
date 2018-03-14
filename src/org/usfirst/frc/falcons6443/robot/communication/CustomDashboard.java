@@ -35,11 +35,11 @@ public class CustomDashboard {
 
 
         // additions to smart dashboard
-        // smartDashboard.putBoolean("Elevator Upper Limit", ); //Upper elevator switch
-        // smartDashboard.putBoolean("Elevator Lower Limit", ); //Lower elevator switch
-        // smartDashboard.putBoolean("Has Cube", ); //Cube capture identification method in flywheel. Data via sensor
+        // smartDashboard.putBoolean("ElevatorSystem Upper Limit", ); //Upper elevator switch
+        // smartDashboard.putBoolean("ElevatorSystem Lower Limit", ); //Lower elevator switch
+        // smartDashboard.putBoolean("Has Cube", ); //Cube capture identification method in intake. Data via sensor
         // smartDashboard.putBoolean("Intake raised", ); //Encoder data from intake motor
-        // smartDashboard.putBoolean("Elevator Raising", ) //Whether or not the elevator is raising. Data from elevator motor.
+        // smartDashboard.putBoolean("ElevatorSystem Raising", ) //Whether or not the elevator is raising. Data from elevator motor.
         smartDashboard.putString("Match time: ", Double.toString(Timer.getMatchTime()));
         smartDashboard.putBoolean("Robot reversed", Robot.DriveTrain.isReversed());
         smartDashboard.putData("Autonomous mode chooser", autoChoice);

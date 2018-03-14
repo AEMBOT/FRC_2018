@@ -5,7 +5,7 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
-import org.usfirst.frc.falcons6443.robot.subsystems.FlywheelSystem;
+import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
@@ -16,7 +16,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
  */
 public class RightToLeftScale extends CommandGroup {
 
-    private FlywheelSystem flywheelSystem;
+    private IntakeSystem flywheelSystem;
 
         public RightToLeftScale(){
             addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
