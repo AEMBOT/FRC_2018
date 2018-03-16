@@ -4,6 +4,7 @@ This code is to be used for FRC 6443's 2018 robot.
 * wpilibj 
 * kauailabs navx library
 * 2018 Robo Rio image
+* FRC Driver Station
 ## Setup and Installation ##
 See [here](https://github.com/LibertyRobotics/FRC_2018/wiki/Setting-up-the-Programming-Environment)
 ## TODO: Package explanations ##
@@ -18,7 +19,7 @@ This document goes over general Github and Java code standards for this reposito
 * [FRC Screen Steps Programming Tutorial](https://wpilib.screenstepslive.com/s/currentCS/m/java)
 * [IntelliJ IDE](https://www.jetbrains.com/idea/)
 * [Chief Delphi Forum](https://www.chiefdelphi.com/forums/portal.php)
+* [navX Software](https://www.pdocs.kauailabs.com/navx-mxp/software/)
 * [PID Background Video](https://www.youtube.com/watch?v=UR0hOmjaHp0)
 * [PID Examples](https://www.youtube.com/watch?annotation_id=annotation_891845&feature=iv&src_vid=UR0hOmjaHp0&v=XfAt6hNV8XM)
 * [PID Tuning PowerPoint](http://www.simbotics.org/files/pdf/programming-pid.pdf)
-
