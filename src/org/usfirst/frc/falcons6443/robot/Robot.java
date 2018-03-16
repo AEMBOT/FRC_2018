@@ -15,6 +15,7 @@ import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 
 /**
  * ROBOTS DON'T QUIT!
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         //autonomy = new RotateToAngle(90);
         teleop = new TeleopMode();
+        Logger.init();
 
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
@@ -64,7 +66,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit() {
-
+        Logger.disabled();
     }
 
     /*
@@ -80,6 +82,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
+        Logger.init();
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         autonomy = new LaneToLine();
         if (autonomy != null) {
@@ -103,6 +106,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
+        Logger.init();
         if (autonomy != null) autonomy.cancel();
         if (teleop != null) teleop.start();
     }
