@@ -8,15 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.usfirst.frc.falcons6443.robot.utilities.Enums.LoggerSystems;
 
-/*
-How to use:
-1. Put init() and disabled() in Robot.jave
-2. Use log() to pring strings to the roboRIO
-3. After the robot runs, connect to roboRIO through printer cable
-4. Go into winSCP (using 172.22.11.2 and Admin) and to Admin/lvuser/log
-5. The file with the correct logs is time stamped from when the robot was last
-   turned on or new code was built
- */
 public class Logger {
 
     private static String startTime;
@@ -30,7 +21,6 @@ public class Logger {
     private static int[] condenser = new int[numberOfSystems];
     private static int[] cacheNumber = new int[numberOfSystems];
     private static boolean[] logOne = new boolean[numberOfSystems];
-    private static boolean[] entryOne = new boolean[numberOfSystems];
 
     //Run in robotInit, autonomousInit, and teleopInit
     public static void init(){
@@ -43,7 +33,6 @@ public class Logger {
                 oldMessage[i] = "";
                 condenser[i] = 0;
                 cacheNumber[i] = 0;
-                entryOne[i] = true;
                 logOne[i] = true;
             }
         }
@@ -69,14 +58,14 @@ public class Logger {
         String out;
         if(messageName.equals(oldMessageName[system.getValue()]) && message.equals(oldMessage[system.getValue()])){
             condenser[system.getValue()]++;
-        } else if(condenser[system.getValue()] > 0) {
-            out =  /*"{" +*/ oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")" /*")}"*/;
+        } else if(condenser[system.getValue()] > 1) {
+            out = oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
             print(system, out);
             oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
             condenser[system.getValue()] = 0;
         } else {
-            out = /*"{" +*/ oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()] /*+ "}"*/;
+            out = oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()];
             print(system, out);
             oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
@@ -88,32 +77,19 @@ public class Logger {
         File file = new File(fileName);
         file.getParentFile().mkdirs();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true), cacheSize)) {
-            if (entryOne[system.getValue()]) {
-                //bw.write("[");
-                entryOne[system.getValue()] = false;
-            } else {
-                bw.write(",");
-            }
-
             if (cacheNumber[system.getValue()] < cacheSize) {
-                //bw.write(",");
                 bw.write(oldMessage);
-                bw.write(",");
                 bw.newLine();
                 bw.write(timeStamp());
                 bw.newLine();
-                //bw.write(",");
                 //bw.newLine();
                 //bw.write(millisecondStamp());
                 cacheNumber[system.getValue()]++;
             } else if (disabled) {
-                //bw.write(",");
                 bw.write(oldMessage);
-                bw.write(",");
                 bw.newLine();
                 bw.write(timeStamp());
                 bw.newLine();
-                //bw.write(",");
                 //bw.newLine();
                 //bw.write(millisecondStamp());
                 bw.flush();
