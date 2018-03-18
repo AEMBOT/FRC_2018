@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
-import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
@@ -38,8 +37,6 @@ public class Robot extends IterativeRobot {
     private AutoChooser chooser;
     private Command autonomy;
     private Command teleop;
-
-    CustomDashboard dashboard = new CustomDashboard();
 
     /*
      * Called when the robot first starts.

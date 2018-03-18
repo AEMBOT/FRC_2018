@@ -118,7 +118,7 @@ public class DriveTrainSystem extends Subsystem {
     //Not sure if good format, but these values are only used for this method
     Vector2d vector = new Vector2d(0,0);
     double differential = 0;
-    public void falconDrive(double leftStickX, double leftTrigger, double rightTrigger) {
+    public void falconDrive(double rotateAxis, double reverseThrottle, double forwardThrottle) {
 
         //safety settings, to prevent rogue robots
         //vector represents the values to be assigned to the drive train
@@ -127,23 +127,23 @@ public class DriveTrainSystem extends Subsystem {
         differential = 0;
 
         // The Math.abs stuff eliminates erroneous values when the joystick springs back close to 0 when it should be 0
-        if (Math.abs(leftStickX) < .15) {
+        if (Math.abs(rotateAxis) < .15) {
             differential = 0;
         } else {
-            differential = Math.signum(-1 * leftStickX) * Math.pow(leftStickX, 2) / 1.8;
+            differential = Math.signum(-1 * rotateAxis) * Math.pow(rotateAxis, 2) / 1.8;
         }
-        if (rightTrigger > 0) {//forward code settings TODO modify so user can quickly drive backwards
-            vector.x = rightTrigger * .5 * (rightTrigger * .7 + .44f) + (differential + .2 * rightTrigger);//x is right
-            vector.y = rightTrigger * .5 * (rightTrigger * .7 + .44f) - (differential - .2 * rightTrigger);//y is left
-        } else if (leftTrigger > 0) { //reverse
-            vector.x = leftTrigger * -.1 * (leftTrigger * .7 + .44f) + .8 * (differential + leftTrigger);//x is right
-            vector.y = leftTrigger * -.1 * (leftTrigger * .7 + .44f) - .8 * (differential - leftTrigger);//y is left
+        if (forwardThrottle > 0) {//forward code settings TODO modify so user can quickly drive backwards, TODO increase speed cap
+            vector.x = forwardThrottle * .5 * (forwardThrottle * .7 + .44f) + (differential + .2 * forwardThrottle);//x is right
+            vector.y = forwardThrottle * .5 * (forwardThrottle * .7 + .44f) - (differential - .2 * forwardThrottle);//y is left
+        } else if (reverseThrottle > 0) { //reverse
+            vector.x = reverseThrottle * -.1 * (reverseThrottle * .7 + .44f) + .8 * (differential + reverseThrottle);//x is right
+            vector.y = reverseThrottle * -.1 * (reverseThrottle * .7 + .44f) - .8 * (differential - reverseThrottle);//y is left
             vector.x *= -1;
             vector.y *= -1;
         } else { //code when none of the triggers are pressed, stationary rotation
-            if(Math.abs(leftStickX) > .2){
-                vector.x = -leftStickX/1.68-(.1*Math.signum(leftStickX));
-                vector.y = leftStickX/1.68+(.1*Math.signum(leftStickX));
+            if(Math.abs(rotateAxis) > .2){
+                vector.x = -rotateAxis/1.68-(.1*Math.signum(rotateAxis));
+                vector.y = rotateAxis/1.68+(.1*Math.signum(rotateAxis));
             }
         }
 
