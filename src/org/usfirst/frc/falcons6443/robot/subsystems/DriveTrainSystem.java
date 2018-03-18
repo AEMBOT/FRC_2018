@@ -115,16 +115,24 @@ public class DriveTrainSystem extends Subsystem {
         encoders.reset();
     }
 
-    public void calcDrive(Vector2d vector, double leftStickX, double leftTrigger, double rightTrigger) {
+    //Not sure if good format, but these values are only used for this method
+    Vector2d vector = new Vector2d(0,0);
+    double differential = 0;
+    public void falconDrive(double leftStickX, double leftTrigger, double rightTrigger) {
+
+        //safety settings, to prevent rogue robots
+        //vector represents the values to be assigned to the drive train
         vector.x = 0;
         vector.y = 0;
-        double differential = 0;
+        differential = 0;
+
+        // The Math.abs stuff eliminates erroneous values when the joystick springs back close to 0 when it should be 0
         if (Math.abs(leftStickX) < .15) {
             differential = 0;
         } else {
             differential = Math.signum(-1 * leftStickX) * Math.pow(leftStickX, 2) / 1.8;
         }
-        if (rightTrigger > 0) {//forward
+        if (rightTrigger > 0) {//forward code settings TODO modify so user can quickly drive backwards
             vector.x = rightTrigger * .5 * (rightTrigger * .7 + .44f) + (differential + .2 * rightTrigger);//x is right
             vector.y = rightTrigger * .5 * (rightTrigger * .7 + .44f) - (differential - .2 * rightTrigger);//y is left
         } else if (leftTrigger > 0) { //reverse
@@ -132,20 +140,14 @@ public class DriveTrainSystem extends Subsystem {
             vector.y = leftTrigger * -.1 * (leftTrigger * .7 + .44f) - .8 * (differential - leftTrigger);//y is left
             vector.x *= -1;
             vector.y *= -1;
-        } else { //no trigger values, stationary rotation
-            //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
-            //drive.y = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
-            // drive.x = 2*differential;
-            //drive.y = -2*differential;
-            System.out.println("Diff" + differential);
-
-
-            System.out.println(vector.x);
-            System.out.println(vector.y);
+        } else { //code when none of the triggers are pressed, stationary rotation
             if(Math.abs(leftStickX) > .2){
                 vector.x = -leftStickX/1.68-(.1*Math.signum(leftStickX));
                 vector.y = leftStickX/1.68+(.1*Math.signum(leftStickX));
             }
         }
+
+        //set power
+        tankDrive(vector.y, vector.x);
     }
 }
