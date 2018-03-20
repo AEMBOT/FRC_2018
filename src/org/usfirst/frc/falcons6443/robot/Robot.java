@@ -10,6 +10,7 @@ import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;

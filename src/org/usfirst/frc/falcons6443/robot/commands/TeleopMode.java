@@ -32,7 +32,6 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void execute() {
-        Vector2d drive = new Vector2d(0,0);
 
         //elevator set position
         if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
@@ -45,10 +44,7 @@ public class TeleopMode extends SimpleCommand {
         if (secondary.eight()) { elevator.down(true);}
         if (!secondary.seven() && !secondary.eight() && elevator.manual) {elevator.stop();}
 
-        driveTrain.calcDrive(drive, primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
-
-        // set the driveTrain power.
-        driveTrain.tankDrive(drive.y, drive.x);
+        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
 
         //intake buttons
         if (primary.A()){ intake.intake(); }
