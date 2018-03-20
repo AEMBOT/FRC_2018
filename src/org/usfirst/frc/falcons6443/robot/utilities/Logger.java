@@ -108,7 +108,7 @@ public class Logger {
             e.printStackTrace();
         }
     }
-    
+
     private static String millisecondStamp() {
         Date date = new Date();
         return Long.toString(date.getTime());
