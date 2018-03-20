@@ -3,34 +3,34 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
 
-public class DriveToDistance extends SimpleCommand {
+public class DriveToDistanceBackUp extends SimpleCommand{
 
     public static final double P = .42; //.42
     public static final double I = 0;
     public static final double D = 3.5; //3.5
-    public static final double Eps = 0.5; //weakest applied power
+    public static final double Eps = 0.4; //weakest applied power //.5
 
-    private static final double buffer = .5; //inches
+    private static final double buffer = 1.5; //inches
 
     private double targetDistance;
 
     private PID pid;
 
-    public DriveToDistance(int distance){
+    public DriveToDistanceBackUp(int distance){
         super("Drive To Distance");
         requires(navigation);
         requires(driveTrain);
         requires(elevator);
         requires(intake);
         pid = new PID(P, I, D, Eps);
-        pid.setMaxOutput(.65);
+        pid.setMaxOutput(.65);//.65
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
         targetDistance = distance;
     }
 
     public void driveToDistance(){
-        double power = pid.calcPID(driveTrain.getLinearDistance());
+        double power = pid.calcPID(driveTrain.getLeftDistance());
         driveTrain.tankDrive(power, power);
     }
 
@@ -52,6 +52,9 @@ public class DriveToDistance extends SimpleCommand {
         elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
+        System.out.println("left: " + driveTrain.getLeftDistance());
+        System.out.println("right: " + driveTrain.getRightDistance());
+        System.out.println("linear: " + driveTrain.getLeftDistance());
     }
 
     @Override

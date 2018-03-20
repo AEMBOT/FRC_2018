@@ -68,9 +68,9 @@ public class DriveTrainSystem extends Subsystem {
      */
     public void tankDrive(double left, double right) {
         if (reversed) {
-            drive.tankDrive(-left, -right); //.024 //+ +, -
+            drive.tankDrive(-left, -right);
         } else {
-            drive.tankDrive(left, right);//- -, +
+            drive.tankDrive(left, right);
         }
     }
 
@@ -100,7 +100,7 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLeftDistance(){
         // Encoder clicks per rotation = 850
-        return -encoders.getLeftDistance() * WheelDiameter * Math.PI / 850; // In inches
+        return encoders.getLeftDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getRightDistance(){

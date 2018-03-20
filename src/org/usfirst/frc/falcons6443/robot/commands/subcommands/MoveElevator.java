@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
 public class MoveElevator extends SimpleCommand{
 

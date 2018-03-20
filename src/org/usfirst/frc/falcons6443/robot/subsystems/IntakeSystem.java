@@ -1,12 +1,10 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
 
 /**
  * Subsystem for the flywheels that push the block out.
@@ -63,7 +61,6 @@ public class IntakeSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-
     public void setIntakePosition(IntakePosition position){
         if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
             moveDown = true;
@@ -115,6 +112,7 @@ public class IntakeSystem extends Subsystem {
         rotateMotor.set(power);
     }
 
+    public void reset(){ encoder.reset(); }
 }
    /* public void moveUp(){
         double speed = -0.7;

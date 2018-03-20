@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
-import static org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition.Stop;
+import static org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition.Stop;
 
 public class ElevatorSystem extends Subsystem {
 

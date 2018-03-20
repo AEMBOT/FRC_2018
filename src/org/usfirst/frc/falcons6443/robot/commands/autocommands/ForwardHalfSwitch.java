@@ -1,15 +1,12 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
 import org.usfirst.frc.falcons6443.robot.communication.FieldData;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
 public class ForwardHalfSwitch extends CommandGroup {
     public ForwardHalfSwitch(){

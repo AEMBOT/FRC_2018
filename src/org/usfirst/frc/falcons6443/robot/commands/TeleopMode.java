@@ -3,7 +3,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 import edu.wpi.first.wpilibj.drive.Vector2d;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
 /**
  * Teleoperated mode for the robot.

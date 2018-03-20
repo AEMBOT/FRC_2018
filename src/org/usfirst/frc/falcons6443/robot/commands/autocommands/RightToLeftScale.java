@@ -6,8 +6,8 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
 import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
 
 /**
  * Command to get to leftside scale from second position
@@ -19,7 +19,7 @@ public class RightToLeftScale extends CommandGroup {
     private IntakeSystem flywheelSystem;
 
         public RightToLeftScale(){
-            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
             addSequential(new Delay(1.5));
             addSequential(new MoveElevator(ElevatorPosition.Scale));
 
@@ -33,9 +33,9 @@ public class RightToLeftScale extends CommandGroup {
 
             //elevator.setToHeight(ElevatorPosition.Scale);
 
-            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
+            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
             addSequential(new Delay(4));
-            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));
+            addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true, false));
         }
 
 }

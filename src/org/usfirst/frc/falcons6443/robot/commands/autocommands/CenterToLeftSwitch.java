@@ -5,8 +5,9 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.Crawl;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
 
 /**
  * Command to move to the left switch from the right starting position and place block
@@ -16,25 +17,20 @@ import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
 
 public class CenterToLeftSwitch extends CommandGroup {
 
-    //private Delay delay;
-
-
     public CenterToLeftSwitch() {
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
-        addSequential(new Delay(1.5));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
+        addSequential(new Delay(.3));
         addSequential(new MoveElevator(ElevatorPosition.Switch));
 
         addSequential(new DriveToDistance(45));
-        addSequential(new RotateToAngle(90)); //Turns 90 degrees left.
+        addSequential(new RotateToAngle(270)); //Turns 90 degrees left.
         addSequential(new DriveToDistance(110));
-        addSequential(new RotateToAngle(270));
-        addSequential(new DriveToDistance(56));
+        addSequential(new RotateToAngle(90));
+        addSequential(new DriveToDistance(60)); //56
+        addSequential(new Crawl(true));
 
-        //elevator.setToHeight(ElevatorPosition.Switch);
-
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
-        addSequential(new Delay(4));
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));
-
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
+        addSequential(new Delay(2));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true, false));
     }
 }

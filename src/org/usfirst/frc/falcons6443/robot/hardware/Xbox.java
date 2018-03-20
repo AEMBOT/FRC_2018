@@ -2,7 +2,7 @@ package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.XboxRumble;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.XboxRumble;
 
 /**
  * Wrapper for an Xbox 360 Xbox. Provides clearer interface with button and axis inputs.

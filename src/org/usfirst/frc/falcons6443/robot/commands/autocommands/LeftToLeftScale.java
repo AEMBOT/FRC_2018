@@ -5,8 +5,8 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.IntakePosition;
-import org.usfirst.frc.falcons6443.robot.utilities.Enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
 
 /**
@@ -21,7 +21,7 @@ public class LeftToLeftScale extends CommandGroup {
 
 
     public LeftToLeftScale() {
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
         addSequential(new Delay(1.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
@@ -35,8 +35,8 @@ public class LeftToLeftScale extends CommandGroup {
         addSequential(new DriveToDistance(53));
 
 
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
         addSequential(new Delay(4));
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true, false));
     }
 }
