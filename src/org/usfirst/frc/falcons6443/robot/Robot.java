@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
 import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
-import org.usfirst.frc.falcons6443.robot.communication.CustomDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
@@ -17,6 +16,7 @@ import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
 import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.Stopwatch;
 
 /**
  * ROBOTS DON'T QUIT!
@@ -40,7 +40,8 @@ public class Robot extends IterativeRobot {
     private Command autonomy;
     private Command teleop;
 
-    CustomDashboard dashboard = new CustomDashboard();
+    public Stopwatch autoWatch;
+
 
     /*
      * Called when the robot first starts.
@@ -84,11 +85,14 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         Logger.init();
+        autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         autonomy = new LaneToLine();
         if (autonomy != null) {
             autonomy.start();
         }
+
+
 
     }
 
