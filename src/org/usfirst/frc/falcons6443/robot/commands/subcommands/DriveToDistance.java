@@ -1,7 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class DriveToDistance extends SimpleCommand {
 
@@ -52,10 +54,14 @@ public class DriveToDistance extends SimpleCommand {
         elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
+        Logger.log(LoggerSystems.Auto, "Distance", Double.toString(driveTrain.getLinearDistance()));
     }
 
     @Override
     protected boolean isFinished() {
+        if(isAtDistance()){
+            Logger.log(LoggerSystems.Auto, "Distance", "to distance");
+        }
         return isAtDistance();
     }
 }

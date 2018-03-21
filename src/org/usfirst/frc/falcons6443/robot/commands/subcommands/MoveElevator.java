@@ -1,7 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class MoveElevator extends SimpleCommand{
 
@@ -27,6 +29,7 @@ public class MoveElevator extends SimpleCommand{
 
     @Override
     public boolean isFinished() {
+        Logger.log(LoggerSystems.Auto, "Elevator auto", "Set height");
         return off;
     }
 }

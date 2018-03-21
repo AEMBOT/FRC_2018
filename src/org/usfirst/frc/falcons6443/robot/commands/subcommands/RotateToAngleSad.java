@@ -1,7 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 /**
  * Command to rotate the robot to an angle specified in a constructor parameter.
@@ -62,12 +64,14 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
+        Logger.log(LoggerSystems.Auto, "Angle", Float.toString(navigation.getYaw()));
     }
 
     @Override
     public boolean isFinished() {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
+            Logger.log(LoggerSystems.Auto, "Angle", "at angle");
         }
         return isAtAngle();
     }

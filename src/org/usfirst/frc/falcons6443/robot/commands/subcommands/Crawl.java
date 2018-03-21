@@ -2,6 +2,8 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class Crawl extends SimpleCommand {
     private boolean m_on;
@@ -20,10 +22,11 @@ public class Crawl extends SimpleCommand {
     public void execute() {
         if (m_on){
             driveTrain.tankDrive(.3, .3);
+            Logger.log(LoggerSystems.Auto, "Auto drive ", "Crawl on");
         } else {
             driveTrain.tankDrive(0, 0);
+            Logger.log(LoggerSystems.Auto, "Auto drive", "Crawl off");
         }
-
         m_off = true;
     }
 

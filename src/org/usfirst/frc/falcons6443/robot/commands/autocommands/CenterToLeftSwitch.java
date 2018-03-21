@@ -6,8 +6,10 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.Crawl;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 /**
  * Command to move to the left switch from the right starting position and place block
@@ -18,6 +20,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
 public class CenterToLeftSwitch extends CommandGroup {
 
     public CenterToLeftSwitch() {
+        Logger.log(LoggerSystems.Auto, "Start auto path", "Center to left switch");
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
         addSequential(new Delay(.3));
         addSequential(new MoveElevator(ElevatorPosition.Switch));

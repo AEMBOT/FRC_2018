@@ -6,13 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
 
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class Logger {
-
-    private Timer timer = new Timer();
 
     private static String startTime;
     private static int numberOfSystems = 10;

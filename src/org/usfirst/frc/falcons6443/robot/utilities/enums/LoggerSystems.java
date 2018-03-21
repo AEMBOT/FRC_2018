@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.utilities.enums;
 
 public enum LoggerSystems {
-    Drive(0), Auto(1), Intake(2), Elevator(3), PDP(4);
+    Drive(0), Auto(1), Teleop(2), Intake(3), Elevator(4), PDP(5);
 
     private int value;
 

@@ -1,19 +1,19 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
-        import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Encoder;
  import org.usfirst.frc.falcons6443.robot.RobotMap;
 
-         public class IntakeEncoder {
+ public class IntakeEncoder {
      private Encoder encoder;
 
-            public IntakeEncoder(){
-                encoder = new Encoder(RobotMap.IntakeEncoderA, RobotMap.IntakeEncoderB);
-            }
+     public IntakeEncoder(){
+         encoder = new Encoder(RobotMap.IntakeEncoderA, RobotMap.IntakeEncoderB);
+     }
 
-             public double getDistance(){
+     public double getDistance(){
                return encoder.getRaw();
            }
-             public void reset(){
+     public void reset(){
                 encoder.reset();
             }
  }

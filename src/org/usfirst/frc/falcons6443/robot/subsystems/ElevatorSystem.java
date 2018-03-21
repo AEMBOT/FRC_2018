@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 import static org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition.Stop;
 
@@ -44,6 +46,7 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
+        Logger.log(LoggerSystems.Elevator, "Set elevator position", elevatorState.getValue());
         manual = false;
         switch (elevatorState){
             case Exchange:
@@ -69,6 +72,7 @@ public class ElevatorSystem extends Subsystem {
         switch (desiredState) {
             case Exchange:
                 if (!bottomLimit.get()){
+                    Logger.log(LoggerSystems.Elevator, "Bottom limit", Boolean.toString(!bottomLimit.get()));
                     power = 0;
                 } else {
                     power = -1;
@@ -76,6 +80,7 @@ public class ElevatorSystem extends Subsystem {
                 break;
             case Scale:
                 if (!scaleLimit.get()){
+                    Logger.log(LoggerSystems.Elevator, "Scale limit", Boolean.toString(!scaleLimit.get()));
                     power = 0;
                 } else {
                     power = 1;
@@ -83,6 +88,7 @@ public class ElevatorSystem extends Subsystem {
                 break;
             case Switch:
                 if (!switchLimit.get()){
+                    Logger.log(LoggerSystems.Elevator, "Switch limit", Boolean.toString(!switchLimit.get()));
                     power = 0;
                 } else {
                     if (previousLimit == ElevatorPosition.UnderSwitch){
@@ -96,7 +102,9 @@ public class ElevatorSystem extends Subsystem {
                 power = 0;
                 break;
         }
-        if (!manual) { motor.set(power);}
+        if (!manual) { motor.set(power);} else {
+            Logger.log(LoggerSystems.Elevator, "manual", "on");
+        }
     }
 
     public void up (boolean on){

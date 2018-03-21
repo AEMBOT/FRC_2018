@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 /**
  * Subsystem for the flywheels that push the block out.
@@ -45,15 +47,13 @@ public class IntakeSystem extends Subsystem {
     public void intake(){
         rightMotor.set(intakeSpeed);
         leftMotor.set(intakeSpeed);
+        Logger.log(LoggerSystems.Intake, "Intake", "intake");
     }
 
     public void output(){
-        if (currentPosition == IntakePosition.IntakeUpPosition){
-            stop();
-        } else {
-            rightMotor.set(outputSpeed);
-            leftMotor.set(outputSpeed);
-        }
+        rightMotor.set(outputSpeed);
+        leftMotor.set(outputSpeed);
+        Logger.log(LoggerSystems.Intake, "Intake", "output");
     }
 
     public void stop(){
@@ -82,8 +82,7 @@ public class IntakeSystem extends Subsystem {
                 speed = 0;
             }
         }
-
-        System.out.println("speed: " + speed);
+        Logger.log(LoggerSystems.Intake, "Intake encoder", Double.toString(encoder.getDistance()));
         rotateMotor.set(speed);
     }
 
