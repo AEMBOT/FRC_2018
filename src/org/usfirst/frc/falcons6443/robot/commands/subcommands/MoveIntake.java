@@ -15,6 +15,10 @@ public class MoveIntake extends SimpleCommand {
     private boolean m_off;
 
     public MoveIntake(IntakePosition position, boolean output, boolean stop, boolean reset, boolean downABit){
+        this(position, output, stop, reset);
+    }
+
+    public MoveIntake(IntakePosition position, boolean output, boolean stop, boolean reset){
         super("Move Elevator System");
         requires(intake);
         m_position = position;
