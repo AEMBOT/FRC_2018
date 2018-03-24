@@ -11,25 +11,39 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
 /**
  * Command to get from second starting position to leftside scale
  *
- * @author Owen Engbretson
+ * @author Owen Engbretson, Goirick Saha
  */
-public class RightToRightScale extends CommandGroup{
+public class RightToRightScale extends CommandGroup {
 
-    public RightToRightScale(){
+    public RightToRightScale() {
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
-        addSequential(new Delay(1.5));
+        addSequential(new Delay(0.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
-        addSequential(new DriveToDistance(228));
-        addSequential(new RotateToAngle(20));
-        addSequential(new DriveToDistance(102));
-        addSequential(new RotateToAngle(250));//-110
-        addSequential(new DriveToDistance(35));
+        addSequential(new DriveToDistance(271)); //Short faster method of travel
+        addSequential(new RotateToAngle(270));
 
-        //elevator.setToHeight(enums.Scale);
-
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, false));
+        addSequential(new Delay(2));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
-        addSequential(new Delay(4));
+        addSequential(new Delay(2));
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true, false));
     }
 }
+//        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
+//        addSequential(new Delay(1.5));
+//        addSequential(new MoveElevator(ElevatorPosition.Scale));
+//
+//        addSequential(new DriveToDistance(228));
+//        addSequential(new RotateToAngle(20));
+//        addSequential(new DriveToDistance(102));
+//        addSequential(new RotateToAngle(250));//-110
+//        addSequential(new DriveToDistance(35));
+//
+//        //elevator.setToHeight(enums.Scale);
+//
+//        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
+//        addSequential(new Delay(4));
+//        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true, false));
+//    }
+

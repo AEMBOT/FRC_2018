@@ -29,7 +29,7 @@ public class CenterToLeftSwitch extends CommandGroup {
         addSequential(new RotateToAngle(270)); //Turns 90 degrees left.
         addSequential(new DriveToDistance(110));
         addSequential(new RotateToAngle(90));
-        addSequential(new DriveToDistance(60)); //56
+        addSequential(new DriveToDistance(62)); //56
         addSequential(new Crawl(true));
 
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
