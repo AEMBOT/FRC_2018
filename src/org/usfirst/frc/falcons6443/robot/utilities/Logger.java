@@ -43,10 +43,11 @@ public class Logger {
     //Run in disabledInit
     public static void disabled(){
         disabled = true;
+        Logger.log(LoggerSystems.RobotInit, "disabled", "disabled");
         Logger.log(LoggerSystems.Auto, "disabled", "disabled");
-        Logger.log(LoggerSystems.Drive, "disabled", "disabled");
-        Logger.log(LoggerSystems.Intake, "disabled", "disabled");
         Logger.log(LoggerSystems.Elevator, "disabled", "disabled");
+        Logger.log(LoggerSystems.Intake, "disabled", "disabled");
+        Logger.log(LoggerSystems.Teleop, "disabled", "disabled");
     }
 
     //Run to log, using system, message name, and message

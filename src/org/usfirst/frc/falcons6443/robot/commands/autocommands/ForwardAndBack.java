@@ -22,14 +22,11 @@ public class ForwardAndBack extends SimpleCommand {
         super("ForwardAndBack");
         stopTime = time;
         requires(driveTrain);
-
-
     }
 
     @Override
     public void initialize() {
         super.initialize();
-
         setTimeout(stopTime);
 
     }
