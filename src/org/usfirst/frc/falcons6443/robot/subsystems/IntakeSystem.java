@@ -30,8 +30,6 @@ public class IntakeSystem extends Subsystem {
     private final int downEncVal = -550;
     private final int halfEncVal = -200;
 
-    private int desiredEncVal = 0;
-
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
@@ -94,20 +92,24 @@ public class IntakeSystem extends Subsystem {
     }
 
     public void autoMoveIntake(){
-        if (currentPosition == IntakePosition.IntakeDownPosition){
-            if (encoder.getDistance() < downEncVal + buffer) {
+        switch (currentPosition){
+            case IntakeUpPosition:
                 rotateStop();
-            } else {
-                rotateMotor.set(downSpeed);
-            }
-        } else if (currentPosition == IntakePosition.IntakeHalfPosition) {
-            if (encoder.getDistance() < halfEncVal + buffer) {
-                rotateStop();
-            } else {
-                rotateMotor.set(downSpeed);
-            }
-        } else {
-            rotateStop();
+                break;
+            case IntakeHalfPosition:
+                if (encoder.getDistance() < halfEncVal + buffer) {
+                    rotateStop();
+                } else {
+                    rotateMotor.set(downSpeed);
+                }
+                break;
+            case IntakeDownPosition:
+                if (encoder.getDistance() < downEncVal + buffer) {
+                    rotateStop();
+                } else {
+                    rotateMotor.set(downSpeed);
+                }
+            break;
         }
     }
 

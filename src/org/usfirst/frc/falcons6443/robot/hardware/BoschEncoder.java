@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Counter;
+//ADD LIMIT SWITCH RESET
 
 public class BoschEncoder {
     private Counter encoder;
