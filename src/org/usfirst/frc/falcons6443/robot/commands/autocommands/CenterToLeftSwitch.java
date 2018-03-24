@@ -21,8 +21,7 @@ public class CenterToLeftSwitch extends CommandGroup {
 
     public CenterToLeftSwitch() {
         Logger.log(LoggerSystems.Auto, "Start auto path", "Center to left switch");
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false,
-                true, false));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
         addSequential(new Delay(.3));
         addSequential(new MoveElevator(ElevatorPosition.Switch));
 
@@ -33,10 +32,8 @@ public class CenterToLeftSwitch extends CommandGroup {
         addSequential(new DriveToDistance(62)); //56
         addSequential(new Crawl(true));
 
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false,
-                false, false));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
         addSequential(new Delay(2));
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true,
-                false, false));
+        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, true, false));
     }
 }

@@ -17,7 +17,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
 public class LeftToRightScale extends CommandGroup {
 
     public LeftToRightScale() {
-        addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, true));
+        addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, false, true));
         addSequential(new Delay(0.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
