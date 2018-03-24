@@ -1,15 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.utilities;
 
-import java.util.Date;
-
 public class Stopwatch {
 
-    /**
-     * Don't stop and start as these aren't completed yet.
-     * @author Aleks Vidmantas
-     * */
-
-    private Date date;
     private long timeAt = 0;
     private boolean isStopped = false;
     private long startTime = 0; //time when the Stopwatch is created
@@ -17,14 +9,13 @@ public class Stopwatch {
     private long elapseEnd = 0;
     private long elapsed  = 0;
 
-
+    /* Gets time based on ms */
     /**
      * @param startAtDefault Lets the user choose to have
      * the timer start ticking at initialization
      * */
     public Stopwatch(boolean startAtDefault){
         startTime = System.currentTimeMillis();
-
         if(startAtDefault){
             isStopped = false;
         }else{
@@ -37,26 +28,29 @@ public class Stopwatch {
         timeAt = (System.currentTimeMillis() - startTime); //time at is clean time
         elapseStart = System.currentTimeMillis();
         isStopped = true;
+        //System.out.println("It is stopped.");
     }
 
     public void start(){
         isStopped = false;
         elapseEnd = System.currentTimeMillis();
         elapsed = elapsed + elapseEnd - elapseStart;
-        System.out.println("ELAPSED: " + elapsed);
+        //  System.out.println("ELAPSED: " + elapsed);
     }
 
-    public long getTime(){
-        long time = 0;
-        time = System.currentTimeMillis() - startTime - elapsed;
+    public String getTime(){
+        float time = 0;
+        //    System.out.println("" + time + " "+isStopped);
+        //      System.out.println("");
+
         if(isStopped){
-            System.out.println("getTime isTopped");
-            return (timeAt);
+//            System.out.println("Took isStopped");
+            return (""+timeAt);
         }else{
-            System.out.println("GetTime isn't stopped");
-            return System.currentTimeMillis() - startTime - elapsed;
+            time =  System.currentTimeMillis() - startTime - elapsed;
+            return ""+time/1000f;
         }
-    }
 
+    }
 
 }

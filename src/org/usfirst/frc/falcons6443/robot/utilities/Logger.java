@@ -11,6 +11,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class Logger {
 
+    private static Stopwatch stopwatch;
     private static String startTime;
     private static int numberOfSystems = 10;
     private static int cacheSize = 25;
@@ -112,11 +113,12 @@ public class Logger {
     }
 
     private static String timeStamp() {
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH-mm-ss-SSSS");
-        String dateString = sdf.format(date);
-        dateString.replaceAll(":", "-");
-        return dateString;
+        if(stopwatch == null){
+            return ("Stopwatch hasn't been initiated");
+        }else{
+            return stopwatch.getTime();
+        }
+        
     }
 
     private static String dateStamp() {
@@ -125,5 +127,9 @@ public class Logger {
         String dateString = sdf.format(date);
         dateString.replaceAll(":", "-");
         return dateString;
+    }
+
+    private static void initiateTimer(){
+        stopwatch = new Stopwatch(true);
     }
 }
