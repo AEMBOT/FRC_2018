@@ -50,7 +50,20 @@ public class Stopwatch {
             time =  System.currentTimeMillis() - startTime - elapsed;
             return ""+time/1000f;
         }
+    }
 
+    public double getTimeDouble(){
+        float time = 0;
+        //    System.out.println("" + time + " "+isStopped);
+        //      System.out.println("");
+
+        if(isStopped){
+//            System.out.println("Took isStopped");
+            return timeAt;
+        }else{
+            time =  System.currentTimeMillis() - startTime - elapsed;
+            return time/1000f;
+        }
     }
 
 }

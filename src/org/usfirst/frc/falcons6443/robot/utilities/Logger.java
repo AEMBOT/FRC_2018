@@ -25,8 +25,9 @@ public class Logger {
     private static boolean[] logOne = new boolean[numberOfSystems];
 
     //Run in robotInit, autonomousInit, and teleopInit
-    public static void init(){
+    public static void init(boolean startTimer){
         disabled = false;
+        if (startTimer) {initiateTimer();}
         if (initOne){
             startTime = timeStamp();
             initOne = false;
@@ -43,15 +44,20 @@ public class Logger {
     //Run in disabledInit
     public static void disabled(){
         disabled = true;
-        Logger.log(LoggerSystems.RobotInit, "disabled", "disabled");
-        Logger.log(LoggerSystems.Auto, "disabled", "disabled");
-        Logger.log(LoggerSystems.Elevator, "disabled", "disabled");
-        Logger.log(LoggerSystems.Intake, "disabled", "disabled");
-        Logger.log(LoggerSystems.Teleop, "disabled", "disabled");
+        Logger.log("disabled", "disabled");
     }
 
     //Run to log, using system, message name, and message
-    public static void log(LoggerSystems system, String messageName, String message){
+    public static void log(String messageName, String message){
+        LoggerSystems system;
+        if(stopwatch == null){
+            system = LoggerSystems.RobotInit;
+        } else if (stopwatch.getTimeDouble() < 15) {
+            system = LoggerSystems.Auto;
+        } else {
+            system = LoggerSystems.Teleop;
+        }
+
         if(logOne[system.getValue()]){
             oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
@@ -119,7 +125,6 @@ public class Logger {
         }else{
             return stopwatch.getTime();
         }
-        
     }
 
     private static String dateStamp() {
@@ -131,6 +136,8 @@ public class Logger {
     }
 
     private static void initiateTimer(){
-        stopwatch = new Stopwatch(true);
+        if (stopwatch == null){
+            stopwatch = new Stopwatch(true);
+        }
     }
 }

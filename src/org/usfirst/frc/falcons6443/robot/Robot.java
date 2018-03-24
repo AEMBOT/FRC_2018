@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
         //autonomy = new RotateToAngle(90);
         teleop = new TeleopMode();
-        Logger.init();
+        Logger.init(false);
 
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
@@ -84,16 +84,13 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        Logger.init();
+        Logger.init(true);
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         autonomy = new LaneToLine();
         if (autonomy != null) {
             autonomy.start();
         }
-
-
-
     }
 
     /*
@@ -111,7 +108,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        Logger.init();
+        Logger.init(true);
         if (autonomy != null) autonomy.cancel();
         if (teleop != null) teleop.start();
     }
