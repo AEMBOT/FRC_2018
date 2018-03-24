@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class Logger {
@@ -14,28 +13,29 @@ public class Logger {
     private static Stopwatch stopwatch;
     private static String startTime;
     private static int numberOfSystems = 10;
-    private static int cacheSize = 25;
+    //private static int cacheSize = 25;
     private static boolean disabled;
     private static boolean initOne = true;
 
     private static String[] oldMessageName = new String[numberOfSystems];
     private static String[] oldMessage = new String[numberOfSystems];
     private static int[] condenser = new int[numberOfSystems];
-    private static int[] cacheNumber = new int[numberOfSystems];
+    // private static int[] cacheNumber = new int[numberOfSystems];
     private static boolean[] logOne = new boolean[numberOfSystems];
 
     //Run in robotInit, autonomousInit, and teleopInit
     public static void init(boolean startTimer){
         disabled = false;
-        if (startTimer) {initiateTimer();}
+        // if (startTimer) {
+        initiateTimer();//}
         if (initOne){
-            startTime = timeStamp();
+            startTime = clockTimeStamp();
             initOne = false;
             for (int i = 0; i < numberOfSystems; i++){
                 oldMessageName[i] = "";
                 oldMessage[i] = "";
                 condenser[i] = 0;
-                cacheNumber[i] = 0;
+                //cacheNumber[i] = 0;
                 logOne[i] = true;
             }
         }
@@ -85,30 +85,17 @@ public class Logger {
         String fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt" /*".json"*/;
         File file = new File(fileName);
         file.getParentFile().mkdirs();
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true), cacheSize)) {
-            if (cacheNumber[system.getValue()] < cacheSize) {
-                bw.write(oldMessage);
-                bw.newLine();
-                bw.write(timeStamp());
-                bw.newLine();
-                //bw.newLine();
-                //bw.write(millisecondStamp());
-                cacheNumber[system.getValue()]++;
-            } else if (disabled) {
-                bw.write(oldMessage);
-                bw.newLine();
-                bw.write(timeStamp());
-                bw.newLine();
-                //bw.newLine();
-                //bw.write(millisecondStamp());
-                bw.flush();
-                bw.close();
-                cacheNumber[system.getValue()] = 0;
-            } else {
-                bw.flush();
-                bw.close();
-                cacheNumber[system.getValue()] = 0;
-            }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
+            //if (cacheNumber[system.getValue()] < cacheSize) {
+            bw.write(oldMessage);
+            bw.newLine();
+            bw.write(timeStamp());
+            bw.newLine();
+            //bw.newLine();
+            //bw.write(millisecondStamp());
+            bw.flush();
+            bw.close();
+            //cacheNumber[system.getValue()] = 0;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,6 +112,14 @@ public class Logger {
         }else{
             return stopwatch.getTime();
         }
+    }
+
+    private static String clockTimeStamp() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH-mm-ss-SSSS");
+        String dateString = sdf.format(date);
+        dateString.replaceAll(":", "-");
+        return dateString;
     }
 
     private static String dateStamp() {

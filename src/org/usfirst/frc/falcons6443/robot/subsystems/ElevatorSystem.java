@@ -46,7 +46,7 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
-        Logger.log(LoggerSystems.Elevator, "Set elevator position", elevatorState.getValue());
+        Logger.log("Set elevator position", elevatorState.getValue());
         manual = false;
         switch (elevatorState){
             case Exchange:
@@ -72,7 +72,7 @@ public class ElevatorSystem extends Subsystem {
         switch (desiredState) {
             case Exchange:
                 if (!bottomLimit.get()){
-                    Logger.log(LoggerSystems.Elevator, "Bottom limit", Boolean.toString(!bottomLimit.get()));
+                    Logger.log("Bottom limit", Boolean.toString(!bottomLimit.get()));
                     power = 0;
                 } else {
                     power = -1;
@@ -80,7 +80,7 @@ public class ElevatorSystem extends Subsystem {
                 break;
             case Scale:
                 if (!scaleLimit.get()){
-                    Logger.log(LoggerSystems.Elevator, "Scale limit", Boolean.toString(!scaleLimit.get()));
+                    Logger.log("Scale limit", Boolean.toString(!scaleLimit.get()));
                     power = 0;
                 } else {
                     power = 1;
@@ -88,7 +88,7 @@ public class ElevatorSystem extends Subsystem {
                 break;
             case Switch:
                 if (!switchLimit.get()){
-                    Logger.log(LoggerSystems.Elevator, "Switch limit", Boolean.toString(!switchLimit.get()));
+                    Logger.log("Switch limit", Boolean.toString(!switchLimit.get()));
                     power = 0;
                 } else {
                     if (previousLimit == ElevatorPosition.UnderSwitch){
@@ -103,7 +103,7 @@ public class ElevatorSystem extends Subsystem {
                 break;
         }
         if (!manual) { motor.set(power);} else {
-            Logger.log(LoggerSystems.Elevator, "manual", "on");
+            Logger.log("manual", "on");
         }
     }
 

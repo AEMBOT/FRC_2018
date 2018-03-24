@@ -64,14 +64,14 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        Logger.log(LoggerSystems.Auto, "Angle", Float.toString(navigation.getYaw()));
+        Logger.log("Angle", Float.toString(navigation.getYaw()));
     }
 
     @Override
     public boolean isFinished() {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
-            Logger.log(LoggerSystems.Auto, "Angle", "at angle");
+            Logger.log("Angle", "at angle");
         }
         return isAtAngle();
     }

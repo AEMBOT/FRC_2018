@@ -45,13 +45,13 @@ public class IntakeSystem extends Subsystem {
     public void intake(){
         rightMotor.set(intakeSpeed);
         leftMotor.set(intakeSpeed);
-        Logger.log(LoggerSystems.Intake, "Intake", "intake");
+        Logger.log("Intake", "intake");
     }
 
     public void output(){
         rightMotor.set(outputSpeed);
         leftMotor.set(outputSpeed);
-        Logger.log(LoggerSystems.Intake, "Intake", "output");
+        Logger.log("Intake", "output");
     }
 
     public void stop(){
@@ -87,7 +87,7 @@ public class IntakeSystem extends Subsystem {
                 speed = 0;
             }
         }
-        Logger.log(LoggerSystems.Intake, "Intake encoder", Double.toString(encoder.getDistance()));
+        Logger.log("Intake encoder", Double.toString(encoder.getDistance()));
         rotateMotor.set(speed);
     }
 

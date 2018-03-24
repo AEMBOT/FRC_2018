@@ -29,7 +29,7 @@ public class MoveElevator extends SimpleCommand{
 
     @Override
     public boolean isFinished() {
-        Logger.log(LoggerSystems.Auto, "Elevator auto", "Set height");
+        Logger.log("Elevator auto", "Set height");
         return off;
     }
 }
