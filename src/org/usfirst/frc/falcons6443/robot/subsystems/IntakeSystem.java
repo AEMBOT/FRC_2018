@@ -45,13 +45,11 @@ public class IntakeSystem extends Subsystem {
     public void intake(){
         rightMotor.set(intakeSpeed);
         leftMotor.set(intakeSpeed);
-        Logger.log("Intake", "intake");
     }
 
     public void output(){
         rightMotor.set(outputSpeed);
         leftMotor.set(outputSpeed);
-        Logger.log("Intake", "output");
     }
 
     public void stop(){
@@ -59,8 +57,9 @@ public class IntakeSystem extends Subsystem {
         leftMotor.set(0);
     }
 
-    public void setIntakePosition(IntakePosition position){
-        switch (position){
+    public void setIntakePosition(IntakePosition intakeState){
+        Logger.log(LoggerSystems.Intake,"Set intake position", intakeState.getValue());
+        switch (intakeState){
             case IntakeUpPosition:
                 currentPosition = IntakePosition.IntakeUpPosition;
                 break;
@@ -73,7 +72,6 @@ public class IntakeSystem extends Subsystem {
         }
     }
 
-    //needs to be tested
     public void moveIntake(boolean up) {
         double speed;
         if (up) {
@@ -87,7 +85,6 @@ public class IntakeSystem extends Subsystem {
                 speed = 0;
             }
         }
-        Logger.log("Intake encoder", Double.toString(encoder.getDistance()));
         rotateMotor.set(speed);
     }
 
@@ -95,19 +92,24 @@ public class IntakeSystem extends Subsystem {
         switch (currentPosition){
             case IntakeUpPosition:
                 rotateStop();
+                Logger.log(LoggerSystems.Intake,"Intake", "at up pos");
                 break;
             case IntakeHalfPosition:
                 if (encoder.getDistance() < halfEncVal + buffer) {
                     rotateStop();
+                    Logger.log(LoggerSystems.Intake,"Intake", "at half pos");
                 } else {
                     rotateMotor.set(downSpeed);
+                    Logger.log(LoggerSystems.Intake,"Intake", "going to half pos");
                 }
                 break;
             case IntakeDownPosition:
                 if (encoder.getDistance() < downEncVal + buffer) {
                     rotateStop();
+                    Logger.log(LoggerSystems.Intake,"Intake", "at down pos");
                 } else {
                     rotateMotor.set(downSpeed);
+                    Logger.log(LoggerSystems.Intake,"Intake", "going to down pos");
                 }
             break;
         }
@@ -116,6 +118,7 @@ public class IntakeSystem extends Subsystem {
     public void readjust() {
         rightMotor.set(intakeSpeed/2);
         leftMotor.set(intakeSpeed);
+        Logger.log(LoggerSystems.Intake,"Intake", "readjust");
     }
 
     public void rotateStop(){
@@ -124,34 +127,8 @@ public class IntakeSystem extends Subsystem {
 
     public void manual(double power){
         rotateMotor.set(power);
+        Logger.log(LoggerSystems.Intake,"Intake", "manual");
     }
 
     public void reset(){ encoder.reset(); }
 }
-   /* public void moveUp(){
-        double speed = -0.7;
-       if(encoder.getDistance() > upEncVal && speed < 0){
-           speed = 0;
-        }
-        rotateMotor.set(speed);
-        System.out.println(encoder.getDistance());
-    }
-
-    public void moveDown(){
-        double speed = 0.5;
-        if(encoder.getDistance() < downEncVal && speed > 0){
-            speed = 0;
-        }
-        rotateMotor.set(speed);
-        //System.out.println(encoder.getDistance());
-    }*/
-   /*public void setIntakePosition(IntakePosition position){
-        if (position == IntakePosition.IntakeUpPosition && currentPosition != IntakePosition.IntakeUpPosition){
-            desiredEncVal = upEncVal;
-            currentPosition = IntakePosition.IntakeUpPosition;
-        }
-        if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
-            desiredEncVal = downEncVal;
-            currentPosition = IntakePosition.IntakeDownPosition;
-        }
-    }*/

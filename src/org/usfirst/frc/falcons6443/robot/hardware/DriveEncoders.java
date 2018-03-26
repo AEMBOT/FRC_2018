@@ -1,8 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Encoder;
-import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 
 public class DriveEncoders {
 

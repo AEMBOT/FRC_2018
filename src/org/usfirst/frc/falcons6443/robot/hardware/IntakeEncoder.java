@@ -2,8 +2,10 @@ package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Encoder;
  import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
- public class IntakeEncoder {
+public class IntakeEncoder {
      private Encoder encoder;
 
      public IntakeEncoder(){
@@ -11,9 +13,12 @@ import edu.wpi.first.wpilibj.Encoder;
      }
 
      public double getDistance(){
-               return encoder.getRaw();
-           }
+         Logger.log(LoggerSystems.Intake,"Intake", Double.toString(encoder.getRaw()));
+         return encoder.getRaw();
+     }
+
      public void reset(){
-                encoder.reset();
-            }
+         encoder.reset();
+         Logger.log(LoggerSystems.Intake,"Intake", "reset encoder");
+     }
  }

@@ -1,7 +1,9 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.PID;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class DriveToDistanceBackUp extends SimpleCommand{
 
@@ -52,13 +54,14 @@ public class DriveToDistanceBackUp extends SimpleCommand{
         elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
-        System.out.println("left: " + driveTrain.getLeftDistance());
-        System.out.println("right: " + driveTrain.getRightDistance());
-        System.out.println("linear: " + driveTrain.getLeftDistance());
+        Logger.log(LoggerSystems.Drive,"Distance", Double.toString(driveTrain.getLinearDistance()));
     }
 
     @Override
     protected boolean isFinished() {
+        if(isAtDistance()){
+            Logger.log(LoggerSystems.Drive,"Distance", "to distance");
+        }
         return isAtDistance();
     }
 }

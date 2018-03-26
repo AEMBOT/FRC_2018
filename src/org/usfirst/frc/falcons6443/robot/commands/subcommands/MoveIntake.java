@@ -26,7 +26,6 @@ public class MoveIntake extends SimpleCommand {
     @Override
     public void initialize() {
         intake.setIntakePosition(m_position);
-        Logger.log("Intake auto", "Set height");
         if(m_reset){
             intake.reset();
         }
@@ -35,11 +34,11 @@ public class MoveIntake extends SimpleCommand {
     @Override
     public void execute() {
         if (m_output){
-            Logger.log("Intake auto", "Output");
+            Logger.log(LoggerSystems.Intake,"Intake auto", "Output");
             intake.output();
         }
         if(m_stop){
-            Logger.log("Intake auto", "Stop");
+            Logger.log(LoggerSystems.Intake,"Intake auto", "Stop");
             intake.stop();
         }
         m_off = true;
