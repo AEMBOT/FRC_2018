@@ -9,7 +9,6 @@ public class CenterToSwitch extends CommandGroup{
     public CenterToSwitch() {
         if ((FieldData.getChar(FieldData.Object.SWITCH) == 'R') ) {
             addSequential(new CenterToRightSwitch());
-
         } else if ((FieldData.getChar(FieldData.Object.SWITCH) == 'L')) {
             addSequential(new CenterToLeftSwitch());
         }

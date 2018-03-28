@@ -38,6 +38,7 @@ public class TeleopMode extends SimpleCommand {
         if (!primary.A() && !primary.B() && !primary.Y()){ intake.stop(); }
         if (primary.Y()){ intake.readjust(); }
 
+        //drive
         driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
 
         //elevator set position

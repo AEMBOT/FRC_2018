@@ -9,7 +9,7 @@ package org.usfirst.frc.falcons6443.robot;
 public class RobotMap {
     //any -1s are not being used and are yet to be specified
 
-    //2018 drive train motors
+    //drive train motors
     public static final int FrontRightMotor = 2;
     public static final int FrontLeftMotor = 0;
     public static final int BackRightMotor = 3;

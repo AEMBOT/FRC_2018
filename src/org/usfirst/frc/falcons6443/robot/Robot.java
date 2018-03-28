@@ -41,15 +41,14 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
-
-
+    
     /*
      * Called when the robot first starts.
      */
     @Override
     public void robotInit() {
         oi = new OI();
-        autonomy = null;
+        //autonomy = null;
         teleop = new TeleopMode();
 
         //format 1 is kMJPEG
@@ -86,7 +85,7 @@ public class Robot extends IterativeRobot {
         Logger.init();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
-        autonomy = new LaneToLine();
+        autonomy = new CenterToRightSwitch();
         if (autonomy != null) {
             autonomy.start();
         }

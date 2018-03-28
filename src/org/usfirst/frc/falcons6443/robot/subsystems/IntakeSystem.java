@@ -28,7 +28,7 @@ public class IntakeSystem extends Subsystem {
     private final int buffer = 20; //ticks
     private final int upEncVal = 0;
     private final int downEncVal = -550;
-    private final int halfEncVal = -200;
+    private final int midEncVal = -230;
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -95,7 +95,7 @@ public class IntakeSystem extends Subsystem {
                 Logger.log(LoggerSystems.Intake,"Intake", "at up pos");
                 break;
             case IntakeHalfPosition:
-                if (encoder.getDistance() < halfEncVal + buffer) {
+                if (encoder.getDistance() < midEncVal + buffer) {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake", "at half pos");
                 } else {
@@ -128,6 +128,16 @@ public class IntakeSystem extends Subsystem {
     public void manual(double power){
         rotateMotor.set(power);
         Logger.log(LoggerSystems.Intake,"Intake", "manual");
+    }
+
+    public void rotateMid(){
+        if(encoder.getDistance()> -210){
+            rotateMotor.set(downSpeed);
+        } else if(encoder.getDistance() < -250){
+            rotateMotor.set(upSpeed);
+        } else {
+            rotateStop();
+        }
     }
 
     public void reset(){ encoder.reset(); }
