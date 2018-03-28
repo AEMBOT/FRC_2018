@@ -32,6 +32,9 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void execute() {
+        //ALWAYS CHECK THAT MANUAL/OTHER CONTROLS DO NOT TURN THE MOTOR OFF IN OTHER SETTINGS
+        //THIS SHOULD BE YOUR FIRST STEP IN MOTOR DEBUGGING!!!!!
+
         //intake buttons
         if (primary.A()){ intake.intake(); }
         if (primary.B()){ intake.output(); }
@@ -42,14 +45,11 @@ public class TeleopMode extends SimpleCommand {
         driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
 
         //elevator set position
-        if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
-        if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
-        if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
-        if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
-        if(Math.abs(secondary.leftStickY()) > .15){
-            elevator.manual(secondary.leftStickY());
-        } else { elevator.stop(); }
+  //      if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
+  //      if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
+  //      if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
+   //*     if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
         if(secondary.seven()){ elevator.up(true); }
         if(secondary.eight()){ elevator.down(true); }

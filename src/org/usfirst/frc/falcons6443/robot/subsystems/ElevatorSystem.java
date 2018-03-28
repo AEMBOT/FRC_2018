@@ -19,8 +19,8 @@ public class ElevatorSystem extends Subsystem {
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
     public boolean manual = false;
-    private final double upSpeed = 0.5;
-    private final double downSpeed = -0.5;
+    private final double upSpeed = 1;
+    private final double downSpeed = -1;
 
     public ElevatorSystem(){
         motor = new Spark (RobotMap.ElevatorMotor);
