@@ -20,6 +20,8 @@ public class ElevatorSystem extends Subsystem {
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
     public boolean manual = false;
+    private final double upSpeed = 0.5;
+    private final double downSpeed = -0.5;
 
     public ElevatorSystem(){
         motor = new Spark (RobotMap.ElevatorMotor);
@@ -72,7 +74,7 @@ public class ElevatorSystem extends Subsystem {
                     power = 0;
                 } else {
                     Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
-                    power = -1;
+                    power = downSpeed;
                 }
                 break;
             case Scale:
@@ -81,7 +83,7 @@ public class ElevatorSystem extends Subsystem {
                     power = 0;
                 } else {
                     Logger.log(LoggerSystems.Elevator,"Scale limit", Boolean.toString(!scaleLimit.get()));
-                    power = 1;
+                    power = upSpeed;
                }
                 break;
             case Switch:
@@ -91,9 +93,9 @@ public class ElevatorSystem extends Subsystem {
                 } else {
                     Logger.log(LoggerSystems.Elevator,"Switch limit", Boolean.toString(!switchLimit.get()));
                     if (previousLimit == ElevatorPosition.UnderSwitch){
-                        power = 1;
+                        power = upSpeed;
                     } else {
-                        power = -1;
+                        power = downSpeed;
                     }
                 }
                 break;
@@ -109,14 +111,14 @@ public class ElevatorSystem extends Subsystem {
 
     public void up (boolean on){
         if (on){
-            motor.set(1);
+            motor.set(upSpeed);
             manual = true;
         }
     }
 
     public void down (boolean on){
         if (on){
-            motor.set(-1);
+            motor.set(downSpeed);
             manual = true;
         }
     }
@@ -124,4 +126,6 @@ public class ElevatorSystem extends Subsystem {
     public void stop () {
         motor.set(0);
     }
+
+    public void manual(double x) {motor.set(x);}
 }
