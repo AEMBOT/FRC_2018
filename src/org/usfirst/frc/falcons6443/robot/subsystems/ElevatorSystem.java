@@ -11,7 +11,6 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 public class ElevatorSystem extends Subsystem {
 
     private Spark motor;
-
     private DigitalInput scaleLimit;
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
@@ -32,8 +31,7 @@ public class ElevatorSystem extends Subsystem {
     }
 
     @Override
-    public void initDefaultCommand() {
-    }
+    public void initDefaultCommand() { }
 
     private void updatePreviousLimit(){
         if (!scaleLimit.get()){

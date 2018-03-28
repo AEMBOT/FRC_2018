@@ -77,7 +77,7 @@ public class IntakeSystem extends Subsystem {
         if (up) {
             speed = upSpeed;
             if (encoder.getDistance() > upEncVal) {
-                speed = 0.1;
+                speed = 0.1; //0? less strain on the motor
             }
         } else {
             speed = downSpeed;
