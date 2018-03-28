@@ -12,13 +12,13 @@ public class DriveToDistance extends SimpleCommand {
     public static final double D = 3.5; //3.5
     public static final double Eps = 0.5; //weakest applied power
 
-    private static final double buffer = .5; //inches
+    private static final double buffer = 1; //inches //0.5
 
     private double targetDistance;
 
     private PID pid;
 
-    public DriveToDistance(int distance){
+    public DriveToDistance(double distance){
         super("Drive To Distance");
         requires(navigation);
         requires(driveTrain);

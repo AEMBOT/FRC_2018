@@ -38,26 +38,22 @@ public class TeleopMode extends SimpleCommand {
         //intake buttons
         if (primary.A()){ intake.intake(); }
         if (primary.B()){ intake.output(); }
-        if (!primary.A() && !primary.B() && !primary.Y()){ intake.stop(); }
         if (primary.Y()){ intake.readjust(); }
+        if (!primary.A() && !primary.B() && !primary.Y()){ intake.stop(); }
 
-        //drive
+        //drive controls
         driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
 
         //elevator set position
+        if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
+        if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
+        if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
+        if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
-  //      if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
-  //      if (secondary.B()){ elevator.setToHeight(ElevatorPosition.Switch); }
-  //      if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
-   //*     if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
-
-        if(secondary.seven()){ elevator.up(true); }
-        if(secondary.eight()){ elevator.down(true); }
-        if(!secondary.seven() && !secondary.eight()){
-            elevator.stop();
-            elevator.up(false);
-            elevator.down(false);
-        }
+        //elevator manual
+        if(secondary.seven()){ elevator.up(); }
+        if(secondary.eight()){ elevator.down(); }
+        if(!secondary.seven() && !secondary.eight()){ elevator.stop(); }
 
         //rotate
         if (secondary.rightBumper()){ intake.moveIntake(true); }

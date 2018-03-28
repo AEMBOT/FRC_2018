@@ -13,12 +13,12 @@ public class IntakeEncoder {
      }
 
      public double getDistance(){
-         Logger.log(LoggerSystems.Intake,"Intake", Double.toString(encoder.getRaw()));
+         Logger.log(LoggerSystems.Intake,"Encoder", Double.toString(encoder.getRaw()));
          return encoder.getRaw();
      }
 
      public void reset(){
          encoder.reset();
-         Logger.log(LoggerSystems.Intake,"Intake", "reset encoder");
+         Logger.log(LoggerSystems.Intake,"Encoder", "reset");
      }
  }

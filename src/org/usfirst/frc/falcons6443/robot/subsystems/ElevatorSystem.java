@@ -107,18 +107,14 @@ public class ElevatorSystem extends Subsystem {
         }
     }
 
-    public void up (boolean on){
-        if (on){
+    public void up (){
             motor.set(upSpeed);
             manual = true;
-        }
     }
 
-    public void down (boolean on){
-        if (on){
+    public void down (){
             motor.set(downSpeed);
             manual = true;
-        }
     }
 
     public void stop () {

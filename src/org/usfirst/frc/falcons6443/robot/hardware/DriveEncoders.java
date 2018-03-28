@@ -25,10 +25,6 @@ public class DriveEncoders {
         return right.getRaw();
     }
 
-    public double getLinearDistance(){
-        return (getLeftDistance() + getRightDistance()) / 2;
-    }
-
     public void reset(){
         left.reset();
         right.reset();

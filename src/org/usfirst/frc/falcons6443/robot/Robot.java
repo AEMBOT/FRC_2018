@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        Logger.init();
+        Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         autonomy = new CenterToRightSwitch();
@@ -104,7 +104,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        Logger.init();
+        Logger.teleopInit();
         if (autonomy != null) autonomy.cancel();
         if (teleop != null) teleop.start();
     }
