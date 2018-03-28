@@ -77,9 +77,9 @@ public class Logger {
             condenser[system.getValue()]++;
         } else if(condenser[system.getValue()] > 1) {
             if(all) {
-                out = name.getName() + ": " + oldMessageName[system.getValue()] + ";" + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
+                out = name.getName() + ": " + oldMessageName[system.getValue()] + "; " + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
             } else {
-                out = oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
+                out = oldMessageName[system.getValue()] + ": " + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
             }
             print(system, out);
             oldMessageName[system.getValue()] = messageName;
@@ -87,9 +87,9 @@ public class Logger {
             condenser[system.getValue()] = 0;
         } else {
             if(all) {
-                out = name.getName() + ": " + oldMessageName[system.getValue()] + ";" + oldMessage[system.getValue()];
+                out = name.getName() + ": " + oldMessageName[system.getValue()] + "; " + oldMessage[system.getValue()];
             } else {
-                out = oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()];
+                out = oldMessageName[system.getValue()] + ": " + oldMessage[system.getValue()];
             }
             print(system, out);
             oldMessageName[system.getValue()] = messageName;
