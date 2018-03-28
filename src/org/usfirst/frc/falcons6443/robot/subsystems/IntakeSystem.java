@@ -21,14 +21,14 @@ public class IntakeSystem extends Subsystem {
     private IntakeEncoder encoder;
     private IntakePosition currentPosition = IntakePosition.IntakeUpPosition;
 
-    private final double intakeSpeed = -.75;
-    private final double outputSpeed = .75;
-    private final double upSpeed = -0.7;
-    private final double downSpeed = 0.5;
-    private final int buffer = 20; //ticks
+    private final double intakeSpeed = 0.75;
+    private final double outputSpeed = 0.75;
+    private final double upSpeed = .75;
+    private final double downSpeed = -.3;
     private final int upEncVal = 0;
-    private final int downEncVal = -550;
+    private final int downEncVal = -700;
     private final int midEncVal = -230;
+    private final int buffer = 20; //ticks
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -77,12 +77,12 @@ public class IntakeSystem extends Subsystem {
         if (up) {
             speed = upSpeed;
             if (encoder.getDistance() > upEncVal) {
-                speed = 0;
+                speed = 0.1;
             }
         } else {
             speed = downSpeed;
             if (encoder.getDistance() < downEncVal) {
-                speed = 0;
+                speed = 0.1;
             }
         }
         rotateMotor.set(speed);
@@ -95,16 +95,19 @@ public class IntakeSystem extends Subsystem {
                 Logger.log(LoggerSystems.Intake,"Intake", "at up pos");
                 break;
             case IntakeHalfPosition:
-                if (encoder.getDistance() < midEncVal + buffer) {
+                if(encoder.getDistance() > (midEncVal + buffer)){
+                    rotateMotor.set(downSpeed);
+                    Logger.log(LoggerSystems.Intake,"Intake", "going down to half pos");
+                } else if(encoder.getDistance() < (midEncVal - buffer)){
+                    rotateMotor.set(upSpeed);
+                    Logger.log(LoggerSystems.Intake,"Intake", "going up to half pos");
+                } else {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake", "at half pos");
-                } else {
-                    rotateMotor.set(downSpeed);
-                    Logger.log(LoggerSystems.Intake,"Intake", "going to half pos");
                 }
                 break;
             case IntakeDownPosition:
-                if (encoder.getDistance() < downEncVal + buffer) {
+                if (encoder.getDistance() < (downEncVal + buffer)) {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake", "at down pos");
                 } else {
@@ -122,7 +125,7 @@ public class IntakeSystem extends Subsystem {
     }
 
     public void rotateStop(){
-        rotateMotor.set(0);
+        rotateMotor.set(0.1);
     }
 
     public void manual(double power){
@@ -131,9 +134,9 @@ public class IntakeSystem extends Subsystem {
     }
 
     public void rotateMid(){
-        if(encoder.getDistance()> -210){
+        if(encoder.getDistance() > (midEncVal + buffer)){
             rotateMotor.set(downSpeed);
-        } else if(encoder.getDistance() < -250){
+        } else if(encoder.getDistance() < (midEncVal - buffer)){
             rotateMotor.set(upSpeed);
         } else {
             rotateStop();
