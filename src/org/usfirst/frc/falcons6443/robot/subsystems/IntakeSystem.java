@@ -28,7 +28,7 @@ public class IntakeSystem extends Subsystem {
     private final int buffer = 20; //ticks
     private final int upEncVal = 0;
     private final int downEncVal = -550;
-    private final int halfEncVal = -200;
+    private final int halfEncVal = -230;
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -57,6 +57,16 @@ public class IntakeSystem extends Subsystem {
     public void stop(){
         rightMotor.set(0);
         leftMotor.set(0);
+    }
+
+    public void rotateMid(){
+        if(encoder.getDistance()> -210){
+            rotateMotor.set(downSpeed);
+        } else if(encoder.getDistance() < -250){
+            rotateMotor.set(upSpeed);
+        } else {
+            rotateStop();
+        }
     }
 
     public void setIntakePosition(IntakePosition position){
@@ -128,30 +138,3 @@ public class IntakeSystem extends Subsystem {
 
     public void reset(){ encoder.reset(); }
 }
-   /* public void moveUp(){
-        double speed = -0.7;
-       if(encoder.getDistance() > upEncVal && speed < 0){
-           speed = 0;
-        }
-        rotateMotor.set(speed);
-        System.out.println(encoder.getDistance());
-    }
-
-    public void moveDown(){
-        double speed = 0.5;
-        if(encoder.getDistance() < downEncVal && speed > 0){
-            speed = 0;
-        }
-        rotateMotor.set(speed);
-        //System.out.println(encoder.getDistance());
-    }*/
-   /*public void setIntakePosition(IntakePosition position){
-        if (position == IntakePosition.IntakeUpPosition && currentPosition != IntakePosition.IntakeUpPosition){
-            desiredEncVal = upEncVal;
-            currentPosition = IntakePosition.IntakeUpPosition;
-        }
-        if (position == IntakePosition.IntakeDownPosition && currentPosition != IntakePosition.IntakeDownPosition){
-            desiredEncVal = downEncVal;
-            currentPosition = IntakePosition.IntakeDownPosition;
-        }
-    }*/

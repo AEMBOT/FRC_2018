@@ -32,6 +32,13 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void execute() {
+        //intake buttons
+        if (primary.A()){ intake.intake(); }
+        if (primary.B()){ intake.output(); }
+        if (!primary.A() && !primary.B() && !primary.Y()){ intake.stop(); }
+        if (primary.Y()){ intake.readjust(); }
+
+        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
 
         //elevator set position
         if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
@@ -39,26 +46,12 @@ public class TeleopMode extends SimpleCommand {
         if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
         if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
-        //manual elevator
-        if (secondary.seven()) { elevator.up(true);}
-        if (secondary.eight()) { elevator.down(true);}
-        if (!secondary.seven() && !secondary.eight() && elevator.manual) {elevator.stop();}
-
-        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
-
-        //intake buttons
-        if (primary.A()){ intake.intake(); }
-        if (primary.B()){ intake.output(); }
-        if (!primary.A() && !primary.B() && !primary.Y()){ intake.stop(); }
-        if (primary.Y()){ intake.readjust(); }
-
-        //manual rotate
-        intake.manual(secondary.leftStickY());
-
         //rotate
         if (secondary.rightBumper()){ intake.moveIntake(true); }
         if (secondary.leftBumper()){ intake.moveIntake(false); }
-        if (!secondary.rightBumper() && !secondary.leftBumper()){ intake.rotateStop(); }
+        if (secondary.seven()) { intake.rotateMid();}
+        if (!secondary.rightBumper() && !secondary.leftBumper() &&
+                !secondary.seven()){ intake.rotateStop(); }
 
         elevator.moveToHeight();
     }
