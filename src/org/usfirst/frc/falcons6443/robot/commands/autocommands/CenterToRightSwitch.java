@@ -23,7 +23,7 @@ public class CenterToRightSwitch extends CommandGroup {
         Logger.log(LoggerSystems.Auto,"Start auto path", "Center to right switch");
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, false, true));
         addSequential(new Delay(0.3));
-        addSequential(new MoveElevator(ElevatorPosition.Switch));
+      //  addSequential(new MoveElevator(ElevatorPosition.Switch));
 
         addSequential(new DriveToDistance(108)); //101
         addSequential(new Crawl(true));

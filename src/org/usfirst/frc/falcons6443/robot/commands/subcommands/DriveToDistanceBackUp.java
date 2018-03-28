@@ -51,7 +51,7 @@ public class DriveToDistanceBackUp extends SimpleCommand{
 
     @Override
     public void execute() {
-        elevator.moveToHeight();
+     //   elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
         Logger.log(LoggerSystems.Drive,"Distance", Double.toString(driveTrain.getLinearDistance()));

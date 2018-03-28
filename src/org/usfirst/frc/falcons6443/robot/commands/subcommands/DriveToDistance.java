@@ -51,7 +51,7 @@ public class DriveToDistance extends SimpleCommand {
 
     @Override
     public void execute() {
-        elevator.moveToHeight();
+     //   elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
     }

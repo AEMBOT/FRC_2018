@@ -57,7 +57,7 @@ public class RotateToAngleSad extends SimpleCommand {
 
     @Override
     public void execute() {
-        elevator.moveToHeight();
+      //  elevator.moveToHeight();
         intake.autoMoveIntake();
         setAngle();
         turnToAngle();
