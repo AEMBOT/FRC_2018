@@ -49,9 +49,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        //autonomy = new RotateToAngle(90);
+        autonomy = null;
         teleop = new TeleopMode();
-        Logger.init(false);
 
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
@@ -84,7 +83,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        Logger.init(true);
+        Logger.init();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         autonomy = new LaneToLine();
@@ -98,8 +97,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        // ElevatorSystem.moveToHeight();
-        //Intake.autoMoveIntake();
         Scheduler.getInstance().run();
     }
 
@@ -108,7 +105,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        Logger.init(true);
+        Logger.init();
         if (autonomy != null) autonomy.cancel();
         if (teleop != null) teleop.start();
     }

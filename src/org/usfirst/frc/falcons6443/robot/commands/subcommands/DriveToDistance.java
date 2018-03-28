@@ -54,13 +54,12 @@ public class DriveToDistance extends SimpleCommand {
         elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
-        Logger.log("Distance", Double.toString(driveTrain.getLinearDistance()));
     }
 
     @Override
     protected boolean isFinished() {
         if(isAtDistance()){
-            Logger.log("Distance", "to distance");
+            Logger.log(LoggerSystems.Drive,"Distance", "to distance");
         }
         return isAtDistance();
     }

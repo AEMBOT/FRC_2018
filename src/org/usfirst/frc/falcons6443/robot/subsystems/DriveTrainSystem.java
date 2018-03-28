@@ -7,6 +7,8 @@ import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
 import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 /**
  * Subsystem for the robot's drive train.
@@ -100,19 +102,23 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLeftDistance(){
         // Encoder clicks per rotation = 850
+        Logger.log(LoggerSystems.Drive, "left distance", Double.toString(encoders.getLeftDistance() * WheelDiameter * Math.PI / 850));
         return encoders.getLeftDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getRightDistance(){
+        Logger.log(LoggerSystems.Drive, "right distance", Double.toString(encoders.getRightDistance() * WheelDiameter * Math.PI / 850));
         return encoders.getRightDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getLinearDistance(){
+        Logger.log(LoggerSystems.Drive, "linear distance", Double.toString((getLeftDistance() + getRightDistance()) / 2));
         return (getLeftDistance() + getRightDistance()) / 2;
     }
 
     public void reset(){
         encoders.reset();
+        Logger.log(LoggerSystems.Drive, "drive encoders", "reset");
     }
 
     //Not sure if good format, but these values are only used for this method

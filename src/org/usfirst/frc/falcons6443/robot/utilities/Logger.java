@@ -23,11 +23,10 @@ public class Logger {
     // private static int[] cacheNumber = new int[numberOfSystems];
     private static boolean[] logOne = new boolean[numberOfSystems];
 
-    //Run in robotInit, autonomousInit, and teleopInit
-    public static void init(boolean startTimer){
+    //Run in autonomousInit and teleopInit
+    public static void init(){
         disabled = false;
-        // if (startTimer) {
-        initiateTimer();//}
+        initiateTimer();
         if (initOne){
             startTime = clockTimeStamp();
             initOne = false;
@@ -44,20 +43,47 @@ public class Logger {
     //Run in disabledInit
     public static void disabled(){
         disabled = true;
-        Logger.log("disabled", "disabled");
+        Logger.log(LoggerSystems.Master,"disabled", "disabled");
+        Logger.log(LoggerSystems.Drive,"disabled", "disabled");
+        Logger.log(LoggerSystems.Elevator,"disabled", "disabled");
+        Logger.log(LoggerSystems.Intake,"disabled", "disabled");
+        Logger.log(LoggerSystems.Gyro,"disabled", "disabled");
+        Logger.log(LoggerSystems.Auto,"disabled", "disabled");
     }
 
     //Run to log, using system, message name, and message
-    public static void log(String messageName, String message){
-        LoggerSystems system;
-        if(stopwatch == null){
-            system = LoggerSystems.RobotInit;
-        } else if (stopwatch.getTimeDouble() < 15) {
-            system = LoggerSystems.Auto;
-        } else {
-            system = LoggerSystems.Teleop;
+    public static void log(LoggerSystems system, String messageName, String message){
+        logInterior(messageName, message);
+        logInterior(system, messageName, message);
+    }
+
+    private static void logInterior(String messageName, String message){
+        LoggerSystems system = LoggerSystems.Master;
+
+        if(logOne[system.getValue()]){
+            oldMessageName[system.getValue()] = messageName;
+            oldMessage[system.getValue()] = message;
+            logOne[system.getValue()] = false;
         }
 
+        String out;
+        if(messageName.equals(oldMessageName[system.getValue()]) && message.equals(oldMessage[system.getValue()])){
+            condenser[system.getValue()]++;
+        } else if(condenser[system.getValue()] > 1) {
+            out = oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
+            print(system, out);
+            oldMessageName[system.getValue()] = messageName;
+            oldMessage[system.getValue()] = message;
+            condenser[system.getValue()] = 0;
+        } else {
+            out = oldMessageName[system.getValue()] + ":" + oldMessage[system.getValue()];
+            print(system, out);
+            oldMessageName[system.getValue()] = messageName;
+            oldMessage[system.getValue()] = message;
+        }
+    }
+
+    private static void logInterior(LoggerSystems system, String messageName, String message){
         if(logOne[system.getValue()]){
             oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
@@ -89,10 +115,8 @@ public class Logger {
             //if (cacheNumber[system.getValue()] < cacheSize) {
             bw.write(oldMessage);
             bw.newLine();
-            bw.write(timeStamp());
+            bw.write(timeStamp() + ", " + clockTimeStamp());
             bw.newLine();
-            //bw.newLine();
-            //bw.write(millisecondStamp());
             bw.flush();
             bw.close();
             //cacheNumber[system.getValue()] = 0;
