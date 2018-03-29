@@ -12,7 +12,6 @@ public class DriveToDistanceBackUp extends SimpleCommand{
 
     public DriveToDistanceBackUp(int distance){
         super("Drive To Distance");
-        requires(navigation);
         requires(driveTrain);
         requires(elevator);
         requires(intake);

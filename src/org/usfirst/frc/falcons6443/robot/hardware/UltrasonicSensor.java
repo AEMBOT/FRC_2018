@@ -15,8 +15,6 @@ public class UltrasonicSensor extends I2C {
 
     private int deviceAddress; //deviceAddress = write register, deviceAddress + 1 = read register
 
-    private PIDSourceType pidSourceType;
-
     private int[] lastFewValues;
     private final double JUMP_TOLERANCE = 2.5;
 
@@ -27,13 +25,9 @@ public class UltrasonicSensor extends I2C {
      * @param deviceAddress the address location of the sensor on the bus. Default address is 224.
      */
     public UltrasonicSensor(int deviceAddress) {
-
         //to initialize via navx bus, replace kOnboard with kMXP
         super(Port.kOnboard, deviceAddress);
-
-        pidSourceType = PIDSourceType.kDisplacement;
         this.deviceAddress = deviceAddress;
-
         // Populate with sensible possible average readings at initialization
         lastFewValues = new int[]{32, 32, 32};
     }
@@ -45,6 +39,7 @@ public class UltrasonicSensor extends I2C {
     }
 
     public int readLow() {
+        ping();
         byte[] buffer = new byte[1];
 
         //read the first byte from the sensor, range-low
@@ -53,6 +48,7 @@ public class UltrasonicSensor extends I2C {
     }
 
     public double read() {
+        ping();
         byte[] buffer = new byte[2];
 
         //read the two bytes from the sensor, range-low and range-high
@@ -98,6 +94,7 @@ public class UltrasonicSensor extends I2C {
     }
 
     public double readInches() {
+        ping();
         //multiply return by cm:inch ratio
         return read() * 0.393700787402;
     }

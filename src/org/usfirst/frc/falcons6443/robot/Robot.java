@@ -26,7 +26,6 @@ public class Robot extends IterativeRobot {
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final ElevatorSystem Elevator = new ElevatorSystem();
-    public static final NavigationSystem Navigation = new NavigationSystem();
     public static final IntakeSystem Intake = new IntakeSystem();
 
     public static OI oi;

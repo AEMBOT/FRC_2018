@@ -36,7 +36,6 @@ public class SpeedControllerGroup implements SpeedController {
         for (SpeedController controller : controllers) {
             controller.pidWrite(arg0);
         }
-
     }
 
     @Override
@@ -50,7 +49,6 @@ public class SpeedControllerGroup implements SpeedController {
     public double get() {
         //does get() return set power or actual power?
         //would getting an average of the get() value for each index be more useful?
-
         return controllers[0].get();
     }
 
@@ -64,7 +62,6 @@ public class SpeedControllerGroup implements SpeedController {
         for (SpeedController controller : controllers) {
             controller.set(arg0);
         }
-
     }
 
     @Override
@@ -72,7 +69,6 @@ public class SpeedControllerGroup implements SpeedController {
         for (SpeedController controller : controllers) {
             controller.setInverted(arg0);
         }
-
     }
 
     @Override
@@ -80,7 +76,6 @@ public class SpeedControllerGroup implements SpeedController {
         for (SpeedController controller : controllers) {
             controller.stopMotor();
         }
-
     }
 
     /**

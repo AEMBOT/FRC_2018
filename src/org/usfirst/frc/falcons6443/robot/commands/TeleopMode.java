@@ -20,7 +20,6 @@ public class TeleopMode extends SimpleCommand {
         requires(driveTrain);
         requires(intake);
         requires(elevator);
-        requires(navigation);
     }
 
     @Override

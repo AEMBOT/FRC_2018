@@ -23,7 +23,6 @@ public class DriveToDistance extends SimpleCommand {
 
     public DriveToDistance(double distance){
         super("Drive To Distance");
-        requires(navigation);
         requires(driveTrain);
         requires(elevator);
         requires(intake);

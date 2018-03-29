@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -10,12 +11,14 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
     private boolean done;
     private double targetAngle;
 
+    private NavX navX;
+
     public RotateToAngleSadBackUp(double angle) {
         super("Rotate To Angle Beta");
-        requires(navigation);
         requires(driveTrain);
         requires(elevator);
         requires(intake);
+        navX = navX.get();
         if (angle > 180){
             angle -= 360;
         } else if (angle == 180){
@@ -27,10 +30,10 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
     private void turnToAngle(){
         double power = .72; //too fast? too slow?
 
-        if(targetAngle >= 0 && navigation.getYaw() > (targetAngle - buffer)){
+        if(targetAngle >= 0 && navX.getYaw() > (targetAngle - buffer)){
             done = true;
             power = 0;
-        } else if (targetAngle < 0 && navigation.getYaw() < (targetAngle + buffer)){
+        } else if (targetAngle < 0 && navX.getYaw() < (targetAngle + buffer)){
             done = true;
             power = 0;
         }
@@ -40,7 +43,7 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
 
     @Override
     public void initialize() {
-        navigation.reset();
+        navX.reset();
         done = false;
     }
 
@@ -49,14 +52,14 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
         // elevator.moveToHeight(true);
         intake.autoMoveIntake();
         turnToAngle();
-        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navigation.getYaw()));
+        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navX.getYaw()));
     }
 
     @Override
     public boolean isFinished() {
         if(done){
             driveTrain.tankDrive(0, 0);
-            Logger.log(LoggerSystems.Gyro,"Angle " + targetAngle, "at angle " + navigation.getYaw());
+            Logger.log(LoggerSystems.Gyro,"Angle " + targetAngle, "at angle " + navX.getYaw());
         }
         return done;
     }

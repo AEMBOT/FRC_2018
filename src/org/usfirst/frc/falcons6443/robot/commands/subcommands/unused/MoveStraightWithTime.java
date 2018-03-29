@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands.unused;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 
 /**
  * Command to drive straight ahead using PID for a certain amount of time.
@@ -12,6 +13,7 @@ public class MoveStraightWithTime extends SimpleCommand implements PIDOutput {
 
     private double pidOutput;
     private double duration;
+    private NavX navX;
 
     /**
      * Constructor for MoveStraightWithTime.
@@ -20,9 +22,9 @@ public class MoveStraightWithTime extends SimpleCommand implements PIDOutput {
      */
     public MoveStraightWithTime(double sec) {
         super("Move Straight With Tine");
-        requires(navigation);
         requires(driveTrain);
         duration = sec;
+        navX = navX.get();
     }
 
     public double getDuration() {
@@ -35,9 +37,7 @@ public class MoveStraightWithTime extends SimpleCommand implements PIDOutput {
 
     @Override
     public void initialize() {
-        navigation.reset();
-        navigation.initPIDController(this);
-        navigation.pidSetPoint(0);
+        navX.reset();
         setTimeout(duration);
     }
 

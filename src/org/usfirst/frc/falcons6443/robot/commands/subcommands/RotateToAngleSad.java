@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -24,15 +25,16 @@ public class RotateToAngleSad extends SimpleCommand {
     private boolean directionPos;
     private boolean done;
 
+    private NavX navX;
     private PID pid;
     private double targetAngle;
 
     public RotateToAngleSad(double angle) {
         super("Rotate To Angle Beta");
-        requires(navigation);
         requires(driveTrain);
         requires(elevator);
         requires(intake);
+        navX = navX.get();
         directionPos = true;
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.7);
@@ -48,7 +50,7 @@ public class RotateToAngleSad extends SimpleCommand {
     }
 
     private void turnToAngle(){
-        double power = pid.calcPID(navigation.getYaw());
+        double power = pid.calcPID(navX.getYaw());
         driveTrain.tankDrive(power, -power );
     }
 
@@ -61,7 +63,7 @@ public class RotateToAngleSad extends SimpleCommand {
 
     @Override
     public void initialize() {
-        navigation.reset();
+        navX.reset();
         oldAngle = 0;
         counter = 0;
         done = false;
@@ -89,7 +91,7 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navigation.getYaw()));
+        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navX.getYaw()));
     }
 
     @Override
