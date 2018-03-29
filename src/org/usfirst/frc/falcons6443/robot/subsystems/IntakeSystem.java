@@ -47,9 +47,13 @@ public class IntakeSystem extends Subsystem {
         leftMotor.set(intakeSpeed);
     }
 
+    public double getIntekeEnc(){
+        return encoder.getDistance();
+    }
+
     public void output(){
-        rightMotor.set(outputSpeed);
-        leftMotor.set(outputSpeed);
+        rightMotor.set(-outputSpeed);
+        leftMotor.set(-outputSpeed);
     }
 
     public void stop(){

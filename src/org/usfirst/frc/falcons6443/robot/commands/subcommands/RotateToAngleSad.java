@@ -12,10 +12,10 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
  */
 public class RotateToAngleSad extends SimpleCommand {
 
-    private static final double P = 0.3; //.3
+    private static final double P = 0.15; //.3
     private static final double I = 0;
-    private static final double D = 1.23; //1.23
-    private static final double Eps = 0.7; //weakest applied power
+    private static final double D = .4; //1.23
+    private static final double Eps = 0.4; //weakest applied power
 
     private static final double buffer = 1; //0.5?? //degrees
 
@@ -29,7 +29,7 @@ public class RotateToAngleSad extends SimpleCommand {
         requires(elevator);
         requires(intake);
         pid = new PID(P, I, D, Eps);
-        pid.setMaxOutput(.75);
+        pid.setMaxOutput(.7);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
         if (angle > 180){
@@ -57,13 +57,14 @@ public class RotateToAngleSad extends SimpleCommand {
 
     @Override
     public void execute() {
-      //  elevator.moveToHeight();
+        //elevator.moveToHeight();
         intake.autoMoveIntake();
         setAngle();
         turnToAngle();
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
+        System.out.println("angle: " + navigation.getYaw());
         Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navigation.getYaw()));
     }
 

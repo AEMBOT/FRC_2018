@@ -21,7 +21,7 @@ public class Crawl extends SimpleCommand {
     @Override
     public void execute() {
         if (m_on){
-            driveTrain.tankDrive(.3, .3);
+            driveTrain.tankDrive(.45, .45 + .045);
             Logger.log(LoggerSystems.Auto,"Auto drive ", "Crawl on");
         } else {
             driveTrain.tankDrive(0, 0);

@@ -7,11 +7,10 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class DriveToDistance extends SimpleCommand {
 
-    public static final double P = .42; //.42
+    public static final double P = .1; //.42
     public static final double I = 0;
-    public static final double D = 3.5; //3.5
-    public static final double Eps = 0.5; //weakest applied power
-
+    public static final double D = .1; //3.5
+    public static final double Eps = 0.4; //weakest applied power
     private static final double buffer = 1; //inches //0.5
 
     private double targetDistance;
@@ -33,7 +32,7 @@ public class DriveToDistance extends SimpleCommand {
 
     public void driveToDistance(){
         double power = pid.calcPID(driveTrain.getLinearDistance());
-        driveTrain.tankDrive(power, power);
+        driveTrain.tankDrive(power, power + .05);
     }
 
     public void setDistance(){
@@ -51,9 +50,10 @@ public class DriveToDistance extends SimpleCommand {
 
     @Override
     public void execute() {
-     //   elevator.moveToHeight();
+       // elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
+        System.out.println("limit" + elevator.getMidLimit());
     }
 
     @Override

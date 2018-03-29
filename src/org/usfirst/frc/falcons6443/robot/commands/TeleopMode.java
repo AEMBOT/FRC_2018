@@ -50,10 +50,14 @@ public class TeleopMode extends SimpleCommand {
         if (secondary.Y()){ elevator.setToHeight(ElevatorPosition.Scale); }
         if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
+        if(primary.seven()){ intake.reset();}
+        System.out.println("limit: " + elevator.getMidLimit());
+
         //elevator manual
-        if(secondary.seven()){ elevator.up(); }
-        if(secondary.eight()){ elevator.down(); }
-        if(!secondary.seven() && !secondary.eight()){ elevator.stop(); }
+      //  if(secondary.seven()){ elevator.up(); }
+      //  if(secondary.eight()){ elevator.down(); }
+
+      //  if(!secondary.seven() && !secondary.eight()){ elevator.stop(); }
 
         //rotate
         if (secondary.rightBumper()){ intake.moveIntake(true); }

@@ -60,6 +60,10 @@ public class ElevatorSystem extends Subsystem {
         }
     }
 
+    public boolean getMidLimit(){
+        return !switchLimit.get();
+    }
+
     //put in periodic function
     public void moveToHeight(){
         double power = 0;
