@@ -37,4 +37,7 @@ public class RobotMap {
     //intake sensors
     public static final int IntakeEncoderA = 8;
     public static final int IntakeEncoderB = 9;
+
+    //auto
+    public static final boolean BackUp = false;
 }

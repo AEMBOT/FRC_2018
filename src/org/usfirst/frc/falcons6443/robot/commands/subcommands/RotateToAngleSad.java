@@ -14,12 +14,14 @@ public class RotateToAngleSad extends SimpleCommand {
     private static final double P = 0.15; //.3
     private static final double I = 0;
     private static final double D = .4; //1.23
-    private static final double Eps = 0.4; //weakest applied power
+    private static final double Eps = 0.44; //weakest applied power
 
     private static final double buffer = 1; //0.5?? //degrees
+    private static final double counterBuffer = 0.5; //degrees
 
-    private double oldDistance;
+    private double oldAngle;
     private int counter;
+    private boolean directionPos;
     private boolean done;
 
     private PID pid;
@@ -31,12 +33,14 @@ public class RotateToAngleSad extends SimpleCommand {
         requires(driveTrain);
         requires(elevator);
         requires(intake);
+        directionPos = true;
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.7);
         pid.setMinDoneCycles(5);
         pid.setDoneRange(buffer);
         if (angle > 180){
             angle -= 360;
+            directionPos = false;
         } else if (angle == 180){
             angle = 179.99;
         }
@@ -58,23 +62,26 @@ public class RotateToAngleSad extends SimpleCommand {
     @Override
     public void initialize() {
         navigation.reset();
-        oldDistance = 0;
+        oldAngle = 0;
         counter = 0;
         done = false;
     }
 
     @Override
     public void execute() {
-        if(counter > 50) {
-            oldDistance = driveTrain.getLinearDistance();
+        //backup counter
+/*        if(counter > 50) {
+            oldAngle = navigation.getYaw();
             counter = 0;
         } else if (counter == 50){
-            if(oldDistance == driveTrain.getLinearDistance()){
+            if((oldAngle + counterBuffer) >= navigation.getYaw() && directionPos){
+                done = true;
+            } else if((oldAngle - counterBuffer) <= navigation.getYaw() && !directionPos){
                 done = true;
             }
         } else {
             counter++;
-        }
+        }*/
        // elevator.moveToHeight(true);
         intake.autoMoveIntake();
         setAngle();

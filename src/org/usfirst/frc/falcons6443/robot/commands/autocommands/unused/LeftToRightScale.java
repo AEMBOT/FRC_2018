@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands.unused;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
@@ -11,18 +12,17 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
  * @author Goirick Saha
  */
 public class LeftToRightScale extends CommandGroup {
-
     public LeftToRightScale() {
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, false, true));
         addSequential(new Delay(0.5));
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(228));
-        addSequential(new RotateToAngle(90));
+        addSequential(new RotateToAngle(90, RobotMap.BackUp));
         addSequential(new DriveToDistance(232));
-        addSequential(new RotateToAngle(270));
+        addSequential(new RotateToAngle(270, RobotMap.BackUp));
         addSequential(new DriveToDistance(96));
-        addSequential(new RotateToAngle(270));
+        addSequential(new RotateToAngle(270, RobotMap.BackUp));
         addSequential(new DriveToDistance(54));
 
 

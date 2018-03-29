@@ -6,16 +6,9 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class DriveToDistanceBackUp extends SimpleCommand{
 
-    public static final double P = .42; //.42
-    public static final double I = 0;
-    public static final double D = 3.5; //3.5
-    public static final double Eps = 0.4; //weakest applied power //.5
-
-    private static final double buffer = 1.5; //inches
-
     private double targetDistance;
-
-    private PID pid;
+    private double buffer = 1; //inches
+    private boolean done;
 
     public DriveToDistanceBackUp(int distance){
         super("Drive To Distance");
@@ -23,29 +16,22 @@ public class DriveToDistanceBackUp extends SimpleCommand{
         requires(driveTrain);
         requires(elevator);
         requires(intake);
-        pid = new PID(P, I, D, Eps);
-        pid.setMaxOutput(.65);//.65
-        pid.setMinDoneCycles(5);
-        pid.setDoneRange(buffer);
         targetDistance = distance;
     }
 
-    public void driveToDistance(){
-        double power = pid.calcPID(driveTrain.getLeftDistance());
+    private void driveToDistance(){
+        double power = 0.6; //faster? slower?
+        if(driveTrain.getLinearDistance() > (targetDistance - buffer)){
+            power = 0;
+            done = true;
+        }
         driveTrain.tankDrive(power, power);
-    }
-
-    public void setDistance(){
-        pid.setDesiredValue(targetDistance);
-    }
-    public boolean isAtDistance(){
-        return pid.isDone();
     }
 
     @Override
     public void initialize() {
         driveTrain.reset();
-        setDistance();
+        done = false;
     }
 
     @Override
@@ -58,9 +44,9 @@ public class DriveToDistanceBackUp extends SimpleCommand{
 
     @Override
     protected boolean isFinished() {
-        if(isAtDistance()){
-            Logger.log(LoggerSystems.Drive,"Distance", "to distance");
+        if(done){
+            Logger.log(LoggerSystems.Drive,"Distance " + targetDistance, "At distance " + driveTrain.getLinearDistance());
         }
-        return isAtDistance();
+        return done;
     }
 }

@@ -103,9 +103,9 @@ public class IntakeSystem extends Subsystem {
                 if(encoder.getDistance() > (midEncVal + buffer)){
                     rotateMotor.set(downSpeed);
                     Logger.log(LoggerSystems.Intake,"Intake", "going down to half pos");
-                } else if(encoder.getDistance() < (midEncVal - buffer)){
-                    rotateMotor.set(upSpeed);
-                    Logger.log(LoggerSystems.Intake,"Intake", "going up to half pos");
+           //     } else if(encoder.getDistance() < (midEncVal - buffer)){
+//try w/o upSpeed??   rotateMotor.set(upSpeed);
+           //         Logger.log(LoggerSystems.Intake,"Intake", "going up to half pos");
                 } else {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake", "at half pos");

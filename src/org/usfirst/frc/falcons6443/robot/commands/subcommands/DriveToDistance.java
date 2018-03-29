@@ -12,6 +12,7 @@ public class DriveToDistance extends SimpleCommand {
     public static final double Eps = 0.5; //weakest applied power //0.4???
 
     private static final double buffer = 1; //inches //0.5
+    private static final double counterBuffer = 4; //inches //0.5
 
     private double targetDistance;
     private double oldDistance;
@@ -33,16 +34,16 @@ public class DriveToDistance extends SimpleCommand {
         targetDistance = distance;
     }
 
-    public void driveToDistance(){
+    private void driveToDistance(){
         double power = pid.calcPID(driveTrain.getLinearDistance());
         driveTrain.tankDrive(power, power + .05);
     }
 
-    public void setDistance(){
+    private void setDistance(){
         pid.setDesiredValue(targetDistance);
     }
 
-    public boolean isAtDistance(){
+    private boolean isAtDistance(){
         return pid.isDone();
     }
 
@@ -61,7 +62,7 @@ public class DriveToDistance extends SimpleCommand {
             oldDistance = driveTrain.getLinearDistance();
             counter = 0;
         } else if (counter == 50){
-            if(oldDistance == driveTrain.getLinearDistance()){
+            if((oldDistance + buffer) >= driveTrain.getLinearDistance()){
                 done = true;
             }
         } else {

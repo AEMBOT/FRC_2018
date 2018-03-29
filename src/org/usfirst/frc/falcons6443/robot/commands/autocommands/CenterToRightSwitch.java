@@ -17,9 +17,11 @@ public class CenterToRightSwitch extends CommandGroup {
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, false, true));
       //  addSequential(new MoveElevator(ElevatorPosition.Switch));
 
-        addSequential(new DriveToDistanceStop(76)); //101
+        addSequential(new DriveToDistance(76)); //101  //Stop
         addSequential(new Crawl(true));
 
+        //try intakeStopPosition??
+        addSequential(new Delay(0)); //add delay??
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, true, false, false));
         addSequential(new Delay(4));
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, true, false));

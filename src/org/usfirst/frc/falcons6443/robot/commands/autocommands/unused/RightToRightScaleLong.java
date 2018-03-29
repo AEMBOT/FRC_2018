@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands.unused;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
@@ -18,11 +19,11 @@ public class RightToRightScaleLong extends CommandGroup {
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(242));
-        addSequential(new RotateToAngle(270));
+        addSequential(new RotateToAngle(270, RobotMap.BackUp));
         addSequential(new DriveToDistance(12));
-        addSequential(new RotateToAngle(90));
+        addSequential(new RotateToAngle(90, RobotMap.BackUp));
         addSequential(new DriveToDistance(32));
-        addSequential(new RotateToAngle(90));
+        addSequential(new RotateToAngle(90, RobotMap.BackUp));
         addSequential(new DriveToDistance(53));
 
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));
