@@ -20,13 +20,6 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
  */
 public class DriveTrainSystem extends Subsystem {
 
-    // PID: proportional–integral–derivative controller
-    // more info at https://en.wikipedia.org/wiki/PID_controller
-    public static final double KP = 0.04;  //.04
-    public static final double KI = 0.001; //.001
-    public static final double KD = 0.00;  //.00
-    public static final double KF = 0.00;
-
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
@@ -60,8 +53,7 @@ public class DriveTrainSystem extends Subsystem {
     }
 
     @Override
-    public void initDefaultCommand() {
-    }
+    public void initDefaultCommand() { }
 
     /**
      * Allows for custom setting of motor power level.
@@ -75,19 +67,6 @@ public class DriveTrainSystem extends Subsystem {
         } else {
             drive.tankDrive(left, right);
         }
-    }
-
-    /**
-     * Spins the robot.
-     * <p>
-     * A negative speed spins the robot clockwise and a positive speed
-     * spins it counter-clockwise.
-     * [I know that some of you math nerds will be annoyed by this choice of sign]
-     *
-     * @param speed the speed at which the robot spins.
-     */
-    public void spin(double speed) {
-        drive.tankDrive(speed, -speed);
     }
 
     /**

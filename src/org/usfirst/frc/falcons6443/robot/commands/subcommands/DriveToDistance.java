@@ -70,7 +70,7 @@ public class DriveToDistance extends SimpleCommand {
         //elevator.moveToHeight(true);
         intake.autoMoveIntake();
         driveToDistance();
-        System.out.println("limit" + elevator.getMidLimit());
+        System.out.println("limit" + elevator.getSwitchLimit());
     }
 
     @Override
