@@ -3,7 +3,7 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
+import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
@@ -17,7 +17,7 @@ public class IntakeSystem extends Subsystem {
     private Spark leftMotor;
     private Spark rightMotor;
     private Spark rotateMotor;
-    private IntakeEncoder encoder;
+    private Encoders encoder;
     private IntakePosition currentPosition = IntakePosition.IntakeUpPosition;
 
     private final double intakeSpeed = 0.75;
@@ -33,7 +33,7 @@ public class IntakeSystem extends Subsystem {
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
-        encoder = new IntakeEncoder();
+        encoder = new Encoders(RobotMap.IntakeEncoderA, RobotMap.IntakeEncoderB);
         leftMotor.setInverted(true);
         rotateMotor.setInverted(true);
     }

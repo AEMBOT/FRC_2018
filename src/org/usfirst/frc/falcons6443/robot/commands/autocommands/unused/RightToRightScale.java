@@ -19,7 +19,7 @@ public class RightToRightScale extends CommandGroup {
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(271)); //Short faster method of travel
-        addSequential(new RotateToAngle(270, RobotMap.BackUp));
+        addSequential(new RotateToAngle(270));
 
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, false));
         addSequential(new Delay(2));

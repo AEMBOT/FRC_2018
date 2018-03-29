@@ -18,11 +18,11 @@ public class LeftToRightScale extends CommandGroup {
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(228));
-        addSequential(new RotateToAngle(90, RobotMap.BackUp));
+        addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(232));
-        addSequential(new RotateToAngle(270, RobotMap.BackUp));
+        addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(96));
-        addSequential(new RotateToAngle(270, RobotMap.BackUp));
+        addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(54));
 
 

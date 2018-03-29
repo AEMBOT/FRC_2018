@@ -14,7 +14,7 @@ public class NavigationSystem extends Subsystem {
     public final double PingTimeDelay = 0.05;
 
     public NavX navx;
-    private PIDController pid;
+   // private PIDController pid;
     private boolean isPIDInitialized;
     private UltrasonicSensor uSensor;
 
@@ -64,53 +64,6 @@ public class NavigationSystem extends Subsystem {
      */
     public float getYaw() {
         return navx.getYaw();
-    }
-
-    /**
-     * Initializes a PID controller with the NavX as it's PIDSource.
-     *
-     * @param output the PIDOutput for the PIDController to write to.
-     */
-    public void initPIDController(PIDOutput output) {
-        isPIDInitialized = true;
-        pid = new PIDController(DriveTrainSystem.KP,
-                DriveTrainSystem.KI,
-                DriveTrainSystem.KD,
-                DriveTrainSystem.KF,
-                navx.ahrs(), output);
-        pid.setInputRange(-180.0f, 180.0f);
-        pid.setOutputRange(-0.04, 0.04);
-        pid.setAbsoluteTolerance(2.0f);
-        pid.setContinuous(true);
-        pid.enable();
-    }
-
-    public boolean onTarget() {
-        return pid.onTarget();
-    }
-
-    public void pidSetEnabled(boolean enabled) {
-        if (enabled) {
-            pid.enable();
-        } else {
-            pid.disable();
-        }
-    }
-
-    /**
-     * Sets the setpoint of the PID controller.
-     *
-     * @param setpoint the desired setpoint.
-     */
-    public void pidSetPoint(float setpoint) {
-        if (isPIDInitialized) {
-            pid.setSetpoint(setpoint);
-        }
-    }
-
-    public void freePID() {
-        pid.disable();
-        pid.free();
     }
 
     public double read() {

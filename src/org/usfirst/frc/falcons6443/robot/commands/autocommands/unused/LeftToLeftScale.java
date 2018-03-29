@@ -18,7 +18,7 @@ public class LeftToLeftScale extends CommandGroup {
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(271)); //Short faster method of travel
-        addSequential(new RotateToAngle(90, RobotMap.BackUp));
+        addSequential(new RotateToAngle(90));
 
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, false, false, false));
         addSequential(new Delay(2));

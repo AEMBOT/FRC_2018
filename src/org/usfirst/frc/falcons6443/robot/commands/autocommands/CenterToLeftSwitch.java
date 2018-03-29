@@ -18,9 +18,9 @@ public class CenterToLeftSwitch extends CommandGroup {
       //  addSequential(new MoveElevator(ElevatorPosition.Switch));
 
         addSequential(new DriveToDistance(45));
-        addSequential(new RotateToAngle(268, RobotMap.BackUp)); //Turns 90 degrees left.
+        addSequential(new RotateToAngle(268)); //Turns 90 degrees left.
         addSequential(new DriveToDistance(120));
-        addSequential(new RotateToAngle(90, RobotMap.BackUp));
+        addSequential(new RotateToAngle(90));
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, false, true));
         addSequential(new DriveToDistance(42)); //56
         addSequential(new Crawl(true));

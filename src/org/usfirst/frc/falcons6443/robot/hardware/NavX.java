@@ -29,7 +29,6 @@ public class NavX {
         if (instance == null) {
             instance = new NavX();
         }
-
         return instance;
     }
 
@@ -45,6 +44,35 @@ public class NavX {
      */
     public float getYaw() {
         return ahrs.getYaw();
+    }
+
+    public void reset() {
+        ahrs().reset();
+    }
+
+    public boolean isMoving() {
+        return ahrs().isMoving();
+    }
+
+    /**
+     * @return the x displacement of the NavX.
+     */
+    public float getDisplacementX() {
+        return ahrs().getDisplacementX();
+    }
+
+    /**
+     * @return the y displacement of the NavX.
+     */
+    public float getDisplacementY() {
+        return ahrs().getDisplacementY();
+    }
+
+    /**
+     * Resets the displacement of the NavX.
+     */
+    public void resetDisplacement() {
+        ahrs().resetDisplacement();
     }
 
 }
