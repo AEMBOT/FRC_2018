@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
@@ -14,11 +15,12 @@ public class ElevatorSystem extends Subsystem {
     private DigitalInput scaleLimit;
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
+    private Timer timer;
 
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
-    public boolean manual = false;
+    private boolean manual = false;
     private final double upSpeed = 1;
     private final double downSpeed = -1;
 
@@ -27,11 +29,18 @@ public class ElevatorSystem extends Subsystem {
         scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);
         switchLimit = new DigitalInput (RobotMap.ElevatorSwitchLimit);
         bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
+        timer = new Timer();
         motor.setInverted(true);
     }
 
     @Override
     public void initDefaultCommand() { }
+
+    public void startTimer(){ timer.start(); }
+    public void stopTimer(){ timer.stop(); }
+    public double getTime(){ return timer.get(); }
+
+    public boolean getManual(){ return manual; }
 
     private void updatePreviousLimit(){
         if (!scaleLimit.get()){
@@ -60,8 +69,14 @@ public class ElevatorSystem extends Subsystem {
         }
     }
 
-    public boolean getMidLimit(){
+    public boolean getSwitchLimit(){
         return !switchLimit.get();
+    }
+    public boolean getBottomLimit(){
+        return !bottomLimit.get();
+    }
+    public boolean getScaleLimit(){
+        return !scaleLimit.get();
     }
 
     //put in periodic function
@@ -69,44 +84,43 @@ public class ElevatorSystem extends Subsystem {
         double power = 0;
         updatePreviousLimit();
 
-        if(auto && MoveElevator.getTime() > 3){
+        if(auto && getTime() > 3){
             desiredState = ElevatorPosition.Stop;
             Logger.log(LoggerSystems.Auto, "Elevator ran overtime", "stopped elevator");
             Logger.log(LoggerSystems.Elevator, "Ran overtime in auto", "stopped elevator");
 
+        } else if (!auto){
+            stopTimer();
         }
 
         switch (desiredState) {
             case Exchange:
                 if (!bottomLimit.get()){
-                    Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
                     power = 0;
                 } else {
-                    Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
                     power = downSpeed;
                 }
+                Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
                 break;
             case Scale:
                 if (!scaleLimit.get()){
-                    Logger.log(LoggerSystems.Elevator,"Scale limit", Boolean.toString(!scaleLimit.get()));
                     power = 0;
                 } else {
-                    Logger.log(LoggerSystems.Elevator,"Scale limit", Boolean.toString(!scaleLimit.get()));
                     power = upSpeed;
                }
-                break;
+               Logger.log(LoggerSystems.Elevator,"Scale limit", Boolean.toString(!scaleLimit.get()));
+               break;
             case Switch:
-                if (!switchLimit.get()){
-                    Logger.log(LoggerSystems.Elevator,"Switch limit", Boolean.toString(!switchLimit.get()));
+                 if (!switchLimit.get()){
                     power = 0;
                 } else {
-                    Logger.log(LoggerSystems.Elevator,"Switch limit", Boolean.toString(!switchLimit.get()));
                     if (previousLimit == ElevatorPosition.UnderSwitch){
                         power = upSpeed;
                     } else {
                         power = downSpeed;
                     }
                 }
+                Logger.log(LoggerSystems.Elevator,"Switch limit", Boolean.toString(!switchLimit.get()));
                 break;
             case Stop:
                 Logger.log(LoggerSystems.Elevator,"move to height", "Stop enum");

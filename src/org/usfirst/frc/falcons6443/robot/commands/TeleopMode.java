@@ -50,7 +50,7 @@ public class TeleopMode extends SimpleCommand {
         if (secondary.X()){ elevator.setToHeight(ElevatorPosition.Stop); }
 
         if(primary.seven()){ intake.reset();}
-        System.out.println("limit: " + elevator.getMidLimit());
+        System.out.println("limit: " + elevator.getSwitchLimit());
 
         //elevator manual
       //  if(secondary.seven()){ elevator.up(); }

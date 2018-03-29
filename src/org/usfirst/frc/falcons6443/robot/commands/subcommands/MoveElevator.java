@@ -8,19 +8,13 @@ import edu.wpi.first.wpilibj.Timer;
 public class MoveElevator extends SimpleCommand{
 
     private ElevatorPosition position;
-    private static Timer timer;
     private boolean off;
 
     public MoveElevator(ElevatorPosition pos){
         super("Move ElevatorSystem");
         requires(elevator);
         position = pos;
-        timer = new Timer();
         off = false;
-    }
-
-    public static double getTime(){  //can I have getTime() static? Can I have timer static??
-        return timer.get();
     }
 
     @Override
@@ -28,7 +22,7 @@ public class MoveElevator extends SimpleCommand{
         elevator.setToHeight(position);
         Logger.log(LoggerSystems.Auto, "Setting elevator position", position.getValue());
         if(position != ElevatorPosition.Exchange && position != ElevatorPosition.Stop){
-            timer.start();
+            elevator.startTimer();
         }
     }
 
