@@ -16,7 +16,6 @@ public class Logger {
     //private static int cacheSize = 25;
     private static boolean initOne = true;
 
-    private static String[] oldMessageName = new String[numberOfSystems];
     private static String[] oldMessage = new String[numberOfSystems];
     private static int[] condenser = new int[numberOfSystems];
     // private static int[] cacheNumber = new int[numberOfSystems];
@@ -52,47 +51,43 @@ public class Logger {
     }
 
     //Run to log, using system, message name, and message
-    public static void log(LoggerSystems system, String messageName, String message) {
-        logInterior(system, messageName, message, true);
+    public static void log(LoggerSystems system, String message) {
+        logInterior(system, message, true);
         if (system != LoggerSystems.All) {
-            logInterior(system, messageName, message, false);
+            logInterior(system, message, false);
         }
     }
 
-    private static void logInterior(LoggerSystems system, String messageName, String message, boolean all){
+    private static void logInterior(LoggerSystems system, String message, boolean all){
         LoggerSystems name = null;
         if(all){
             name = system;
             system = LoggerSystems.All;
         }
+        
+        String out;
 
         if(logOne[system.getValue()]){
-            oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
             logOne[system.getValue()] = false;
-        }
-
-        String out;
-        if(messageName.equals(oldMessageName[system.getValue()]) && message.equals(oldMessage[system.getValue()])){
+        } else if(message.equals(oldMessage[system.getValue()])){
             condenser[system.getValue()]++;
         } else if(condenser[system.getValue()] > 1) {
             if(all) {
-                out = name.getName() + ": " + oldMessageName[system.getValue()] + "; " + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
+                out = name.getName() + ": " + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
             } else {
-                out = oldMessageName[system.getValue()] + ": " + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
+                out = oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
             }
             print(system, out);
-            oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
             condenser[system.getValue()] = 0;
         } else {
             if(all) {
-                out = name.getName() + ": " + oldMessageName[system.getValue()] + "; " + oldMessage[system.getValue()];
+                out = name.getName() + ": " + oldMessage[system.getValue()];
             } else {
-                out = oldMessageName[system.getValue()] + ": " + oldMessage[system.getValue()];
+                out = oldMessage[system.getValue()];
             }
             print(system, out);
-            oldMessageName[system.getValue()] = messageName;
             oldMessage[system.getValue()] = message;
         }
     }
