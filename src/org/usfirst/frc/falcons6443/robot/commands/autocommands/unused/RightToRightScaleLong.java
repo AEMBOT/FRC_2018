@@ -19,11 +19,11 @@ public class RightToRightScaleLong extends CommandGroup {
         addSequential(new MoveElevator(ElevatorPosition.Scale));
 
         addSequential(new DriveToDistance(242));
-        addSequential(new RotateToAngle(270, RobotMap.BackUp));
+        addSequential(new RotateToAngle(270));
         addSequential(new DriveToDistance(12));
-        addSequential(new RotateToAngle(90, RobotMap.BackUp));
+        addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(32));
-        addSequential(new RotateToAngle(90, RobotMap.BackUp));
+        addSequential(new RotateToAngle(90));
         addSequential(new DriveToDistance(53));
 
         addSequential(new MoveIntake(IntakePosition.IntakeDownPosition, true, false, false));

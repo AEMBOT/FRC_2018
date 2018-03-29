@@ -39,5 +39,6 @@ public class RobotMap {
     public static final int IntakeEncoderB = 9;
 
     //auto
-    public static final boolean BackUp = false;
+    public static final boolean BackUpDistance = false;
+    public static final boolean BackUpAngle = false;
 }
