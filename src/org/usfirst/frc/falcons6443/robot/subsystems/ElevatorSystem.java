@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 public class ElevatorSystem extends Subsystem {
 
@@ -65,9 +65,16 @@ public class ElevatorSystem extends Subsystem {
     }
 
     //put in periodic function
-    public void moveToHeight(){
+    public void moveToHeight(boolean auto){
         double power = 0;
         updatePreviousLimit();
+
+        if(auto && MoveElevator.getTime() > 3){
+            desiredState = ElevatorPosition.Stop;
+            Logger.log(LoggerSystems.Auto, "Elevator ran overtime", "stopped elevator");
+            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto", "stopped elevator");
+
+        }
 
         switch (desiredState) {
             case Exchange:

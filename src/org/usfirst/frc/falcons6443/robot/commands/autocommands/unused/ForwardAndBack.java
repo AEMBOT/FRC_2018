@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.commands.autocommands;
+package org.usfirst.frc.falcons6443.robot.commands.autocommands.unused;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.MoveByTime;
@@ -9,9 +9,6 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.MoveByTime;
  *
  * @author Owen Engbretson
  */
-
-
-
 public class ForwardAndBack extends SimpleCommand {
 
     MoveByTime moveTime;

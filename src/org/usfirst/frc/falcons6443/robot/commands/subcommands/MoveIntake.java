@@ -2,8 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 public class MoveIntake extends SimpleCommand {
 

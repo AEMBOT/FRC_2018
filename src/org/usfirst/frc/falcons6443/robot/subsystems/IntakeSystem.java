@@ -5,8 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 /**
  * Subsystem for the flywheels that push the block out.
@@ -93,6 +92,8 @@ public class IntakeSystem extends Subsystem {
     }
 
     public void autoMoveIntake(){
+        //Look at logs of intake flipping back up. does it say at half pos?
+        // going up? going down? something else crazy?
         switch (currentPosition){
             case IntakeUpPosition:
                 rotateStop();

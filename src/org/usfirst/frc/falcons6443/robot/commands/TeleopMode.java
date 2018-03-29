@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
-import edu.wpi.first.wpilibj.drive.Vector2d;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
 /**
@@ -66,7 +65,7 @@ public class TeleopMode extends SimpleCommand {
         if (!secondary.rightBumper() && !secondary.leftBumper() /*&&
                 !secondary.seven()*/){ intake.rotateStop(); }
 
-        elevator.moveToHeight();
+        elevator.moveToHeight(false);
     }
 
     public boolean isFinished() {

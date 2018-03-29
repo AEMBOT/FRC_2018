@@ -1,8 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
-import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.PID;
+import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 /**
@@ -18,6 +17,10 @@ public class RotateToAngleSad extends SimpleCommand {
     private static final double Eps = 0.4; //weakest applied power
 
     private static final double buffer = 1; //0.5?? //degrees
+
+    private double oldDistance;
+    private int counter;
+    private boolean done;
 
     private PID pid;
     private double targetAngle;
@@ -53,27 +56,42 @@ public class RotateToAngleSad extends SimpleCommand {
     }
 
     @Override
-    public void initialize() { navigation.reset(); }
+    public void initialize() {
+        navigation.reset();
+        oldDistance = 0;
+        counter = 0;
+        done = false;
+    }
 
     @Override
     public void execute() {
-        //elevator.moveToHeight();
+        if(counter > 50) {
+            oldDistance = driveTrain.getLinearDistance();
+            counter = 0;
+        } else if (counter == 50){
+            if(oldDistance == driveTrain.getLinearDistance()){
+                done = true;
+            }
+        } else {
+            counter++;
+        }
+       // elevator.moveToHeight(true);
         intake.autoMoveIntake();
         setAngle();
         turnToAngle();
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        System.out.println("angle: " + navigation.getYaw());
         Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navigation.getYaw()));
     }
 
     @Override
     public boolean isFinished() {
         if(isAtAngle()){
+            done = true;
             driveTrain.tankDrive(0, 0);
             Logger.log(LoggerSystems.Gyro,"Angle", "at angle");
         }
-        return isAtAngle();
+        return done;
     }
 }

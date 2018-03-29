@@ -3,10 +3,9 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
-import org.usfirst.frc.falcons6443.robot.hardware.DriveEncoders;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.hardware.*;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 

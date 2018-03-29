@@ -1,13 +1,9 @@
-package org.usfirst.frc.falcons6443.robot.commands.autocommands;
+package org.usfirst.frc.falcons6443.robot.commands.autocommands.unused;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.Delay;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveIntake;
-import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.IntakePosition;
+import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
+import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 /**
  * Command to get to leftside scale from second position

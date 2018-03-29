@@ -3,8 +3,7 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.falcons6443.robot.hardware.NavX;
-import org.usfirst.frc.falcons6443.robot.hardware.UltrasonicSensor;
+import org.usfirst.frc.falcons6443.robot.hardware.*;
 
 /**
  * Subsystem containing the NavX sensor as well as ultrasonic sensors.

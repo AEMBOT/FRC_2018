@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.communication;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
-
 /**
  *
  * This command serves as a clean interface

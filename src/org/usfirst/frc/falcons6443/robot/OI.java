@@ -1,6 +1,5 @@
 package org.usfirst.frc.falcons6443.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;

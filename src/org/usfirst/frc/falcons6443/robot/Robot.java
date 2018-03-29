@@ -1,22 +1,17 @@
 package org.usfirst.frc.falcons6443.robot;
+
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
-import org.usfirst.frc.falcons6443.robot.commands.TeleopMode;
-import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
+import org.usfirst.frc.falcons6443.robot.commands.*;
+import org.usfirst.frc.falcons6443.robot.commands.complete.*;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
-import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
-import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
-import org.usfirst.frc.falcons6443.robot.subsystems.IntakeSystem;
-import org.usfirst.frc.falcons6443.robot.subsystems.NavigationSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.Stopwatch;
+import org.usfirst.frc.falcons6443.robot.subsystems.*;
+import org.usfirst.frc.falcons6443.robot.utilities.*;
 
 /**
  * ROBOTS DON'T QUIT!
