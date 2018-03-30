@@ -52,14 +52,14 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
         // elevator.moveToHeight(true);
         intake.autoMoveIntake();
         turnToAngle();
-        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navX.getYaw()));
+        Logger.log(LoggerSystems.Gyro,"Angle: " + Float.toString(navX.getYaw()));
     }
 
     @Override
     public boolean isFinished() {
         if(done){
             driveTrain.tankDrive(0, 0);
-            Logger.log(LoggerSystems.Gyro,"Angle " + targetAngle, "at angle " + navX.getYaw());
+            Logger.log(LoggerSystems.Gyro,"Angle: " + targetAngle+ ", at angle " + navX.getYaw());
         }
         return done;
     }

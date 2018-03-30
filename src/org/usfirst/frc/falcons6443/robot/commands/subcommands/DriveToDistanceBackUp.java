@@ -38,13 +38,13 @@ public class DriveToDistanceBackUp extends SimpleCommand{
      //   elevator.moveToHeight();
         intake.autoMoveIntake();
         driveToDistance();
-        Logger.log(LoggerSystems.Drive,"Distance", Double.toString(driveTrain.getLinearDistance()));
+        Logger.log(LoggerSystems.Drive,"Distance: " + Double.toString(driveTrain.getLinearDistance()));
     }
 
     @Override
     protected boolean isFinished() {
         if(done){
-            Logger.log(LoggerSystems.Drive,"Distance " + targetDistance, "At distance " + driveTrain.getLinearDistance());
+            Logger.log(LoggerSystems.Drive,"Distance: " + targetDistance + ", At distance: " + driveTrain.getLinearDistance());
         }
         return done;
     }

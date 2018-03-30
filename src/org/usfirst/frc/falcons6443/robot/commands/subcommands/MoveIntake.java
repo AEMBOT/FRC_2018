@@ -33,11 +33,11 @@ public class MoveIntake extends SimpleCommand {
     @Override
     public void execute() {
         if (m_output){
-            Logger.log(LoggerSystems.Intake,"Intake auto", "Output");
+            Logger.log(LoggerSystems.Intake,"Auto output");
             intake.output();
         }
         if(m_stop){
-            Logger.log(LoggerSystems.Intake,"Intake auto", "Stop");
+            Logger.log(LoggerSystems.Intake,"Auto stop");
             intake.stop();
         }
         m_off = true;

@@ -82,24 +82,24 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLeftDistance(){
         // Encoders clicks per rotation = 850
-        Logger.log(LoggerSystems.Drive, "left distance", Double.toString(leftEncoder.getDistance() * WheelDiameter * Math.PI / 850));
+        Logger.log(LoggerSystems.Drive, "left distance: " + Double.toString(leftEncoder.getDistance() * WheelDiameter * Math.PI / 850));
         return leftEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getRightDistance(){
-        Logger.log(LoggerSystems.Drive, "right distance", Double.toString(rightEncoder.getDistance() * WheelDiameter * Math.PI / 850));
+        Logger.log(LoggerSystems.Drive, "right distance: " + Double.toString(rightEncoder.getDistance() * WheelDiameter * Math.PI / 850));
         return rightEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
     public double getLinearDistance(){
-        Logger.log(LoggerSystems.Drive, "linear distance", Double.toString((getLeftDistance() + getRightDistance()) / 2));
+        Logger.log(LoggerSystems.Drive, "linear distance: " + Double.toString((getLeftDistance() + getRightDistance()) / 2));
         return (getLeftDistance() + getRightDistance()) / 2;
     }
 
     public void reset(){
         leftEncoder.reset();
         rightEncoder.reset();
-        Logger.log(LoggerSystems.Drive, "drive encoders", "reset");
+        Logger.log(LoggerSystems.Drive, "reset drive encoders");
     }
 
     //Not sure if good format, but these values are only used for this method

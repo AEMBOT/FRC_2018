@@ -35,7 +35,6 @@ public class AutoChooser {
     //performs selection process by using a switch for which two
     //commands then choose command once fms data is received.
     private void choose(){
-
         if(NetTables.getEntry("left").getBoolean(false)){
             this.position = Position.LEFT;
         }else if(NetTables.getEntry("center").getBoolean(false)){
@@ -47,7 +46,6 @@ public class AutoChooser {
         }
 
         switch (position){
-
             //handles which code to run depending on result of the specified switch/scale
             case LEFT:
                 if(FieldData.getChar(FieldData.Object.SCALE) == 'L')
@@ -85,8 +83,4 @@ public class AutoChooser {
     }
 
     public CommandGroup getFinalAuto(){return finalAuto;}
-
-
-
-
 }

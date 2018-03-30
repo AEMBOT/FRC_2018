@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
-        autonomy = new CenterToLeftSwitch(); //
+        autonomy = new CenterToLeftSwitch(); //why not in RobotInit?
         if (autonomy != null) {
             autonomy.start();
         }

@@ -24,30 +24,30 @@ public class Logger {
     //Run in autonomousInit
     public static void autoInit(){
         init();
-        Logger.log(LoggerSystems.Drive,"AUTONOMOUS", "autonomous");
-        Logger.log(LoggerSystems.Elevator,"AUTONOMOUS", "autonomous");
-        Logger.log(LoggerSystems.Intake,"AUTONOMOUS", "autonomous");
-        Logger.log(LoggerSystems.Gyro,"AUTONOMOUS", "autonomous");
-        Logger.log(LoggerSystems.Auto,"AUTONOMOUS", "autonomous");
+        Logger.log(LoggerSystems.Drive,"AUTONOMOUS");
+        Logger.log(LoggerSystems.Elevator,"AUTONOMOUS");
+        Logger.log(LoggerSystems.Intake,"AUTONOMOUS");
+        Logger.log(LoggerSystems.Gyro,"AUTONOMOUS");
+        Logger.log(LoggerSystems.Auto,"AUTONOMOUS");
     }
 
     //Run in teleopInit
     public static void teleopInit(){
         init();
-        Logger.log(LoggerSystems.Drive,"TELEOP", "teleop");
-        Logger.log(LoggerSystems.Elevator,"TELEOP", "teleop");
-        Logger.log(LoggerSystems.Intake,"TELEOP", "teleop");
-        Logger.log(LoggerSystems.Gyro,"TELEOP", "teleop");
-        Logger.log(LoggerSystems.Auto,"TELEOP", "teleop");
+        Logger.log(LoggerSystems.Drive,"TELEOP");
+        Logger.log(LoggerSystems.Elevator,"TELEOP");
+        Logger.log(LoggerSystems.Intake,"TELEOP");
+        Logger.log(LoggerSystems.Gyro,"TELEOP");
+        Logger.log(LoggerSystems.Auto,"TELEOP");
     }
 
     //Run in disabledInit
     public static void disabled(){
-        Logger.log(LoggerSystems.Drive,"DISABLED", "disabled");
-        Logger.log(LoggerSystems.Elevator,"DISABLED", "disabled");
-        Logger.log(LoggerSystems.Intake,"DISABLED", "disabled");
-        Logger.log(LoggerSystems.Gyro,"DISABLED", "disabled");
-        Logger.log(LoggerSystems.Auto,"DISABLED", "disabled");
+        Logger.log(LoggerSystems.Drive,"DISABLED");
+        Logger.log(LoggerSystems.Elevator,"DISABLED");
+        Logger.log(LoggerSystems.Intake,"DISABLED");
+        Logger.log(LoggerSystems.Gyro,"DISABLED");
+        Logger.log(LoggerSystems.Auto,"DISABLED");
     }
 
     //Run to log, using system, message name, and message
@@ -116,7 +116,6 @@ public class Logger {
             startTime = clockTimeStamp();
             initOne = false;
             for (int i = 0; i < numberOfSystems; i++){
-                oldMessageName[i] = "";
                 oldMessage[i] = "";
                 condenser[i] = 0;
                 //cacheNumber[i] = 0;

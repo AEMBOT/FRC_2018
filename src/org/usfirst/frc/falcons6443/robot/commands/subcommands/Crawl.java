@@ -21,10 +21,10 @@ public class Crawl extends SimpleCommand {
     public void execute() {
         if (m_on){
             driveTrain.tankDrive(.45, .45 + .045);
-            Logger.log(LoggerSystems.Auto,"Auto drive ", "Crawl on");
+            Logger.log(LoggerSystems.Auto,"Crawl on");
         } else {
             driveTrain.tankDrive(0, 0);
-            Logger.log(LoggerSystems.Auto,"Auto drive", "Crawl off");
+            Logger.log(LoggerSystems.Auto,"Crawl off");
         }
         m_off = true;
     }

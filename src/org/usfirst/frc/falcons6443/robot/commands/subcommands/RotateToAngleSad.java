@@ -91,7 +91,7 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navX.getYaw()));
+        Logger.log(LoggerSystems.Gyro,"Angle: " + Float.toString(navX.getYaw()));
     }
 
     @Override
@@ -99,7 +99,7 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             done = true;
             driveTrain.tankDrive(0, 0);
-            Logger.log(LoggerSystems.Gyro,"Angle", "at angle");
+            Logger.log(LoggerSystems.Gyro,"At angle");
         }
         return done;
     }

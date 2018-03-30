@@ -13,7 +13,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 public class CenterToRightSwitch extends CommandGroup {
 
     public CenterToRightSwitch() {
-        Logger.log(LoggerSystems.Auto,"Start auto path", "Center to right switch");
+        Logger.log(LoggerSystems.Auto,"Start auto path: Center to right switch");
         addSequential(new MoveIntake(IntakePosition.IntakeHalfPosition, false, false, true));
       //  addSequential(new MoveElevator(ElevatorPosition.Switch));
 

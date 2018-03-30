@@ -77,7 +77,7 @@ public class DriveToDistance extends SimpleCommand {
     protected boolean isFinished() {
         if(isAtDistance()){
             done = true;
-            Logger.log(LoggerSystems.Drive,"Distance", "to distance");
+            Logger.log(LoggerSystems.Drive,"At distance");
         }
         return done;
     }
