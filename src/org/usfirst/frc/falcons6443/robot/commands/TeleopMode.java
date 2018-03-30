@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
+import org.usfirst.frc.falcons6443.robot.hardware.Playstation;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
@@ -14,6 +15,7 @@ public class TeleopMode extends SimpleCommand {
 
     private Xbox primary;         //Drive and intake/output
     private Xbox secondary;      //Secondary functions
+   // private Playstation secondary;
 
     public TeleopMode() {
         super("Teleop Command");
@@ -27,6 +29,7 @@ public class TeleopMode extends SimpleCommand {
     public void initialize() {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
+      //  secondary = Robot.oi.getPlay();
     }
 
     @Override
@@ -53,10 +56,10 @@ public class TeleopMode extends SimpleCommand {
         System.out.println("limit: " + elevator.getSwitchLimit());
 
         //elevator manual
-      //  if(secondary.seven()){ elevator.up(); }
-      //  if(secondary.eight()){ elevator.down(); }
+        if(secondary.seven()){ elevator.up(); }
+        if(secondary.eight()){ elevator.down(); }
 
-      //  if(!secondary.seven() && !secondary.eight()){ elevator.stop(); }
+        if(!secondary.seven() && !secondary.eight()){ elevator.stop(); }
 
         //rotate
         if (secondary.rightBumper()){ intake.moveIntake(true); }

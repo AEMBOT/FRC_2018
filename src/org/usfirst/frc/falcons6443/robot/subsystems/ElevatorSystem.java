@@ -84,7 +84,7 @@ public class ElevatorSystem extends Subsystem {
         double power = 0;
         updatePreviousLimit();
 
-        if(auto && getTime() > 3){
+        if(auto && getTime() > 4){
             desiredState = ElevatorPosition.Stop;
             Logger.log(LoggerSystems.Auto, "Elevator ran overtime", "stopped elevator");
             Logger.log(LoggerSystems.Elevator, "Ran overtime in auto", "stopped elevator");
@@ -111,10 +111,13 @@ public class ElevatorSystem extends Subsystem {
                break;
             case Switch:
                 if(auto){
-                    if (!switchLimit.get() || !scaleLimit.get() || getTime() > 3){
-                        power = 0;
-                    } else {
+                    //if (!switchLimit.get() || !scaleLimit.get() || getTime() > 3){
+                    //    power = 0;
+                    //} else {
+                    if(getTime() < 4){
                         power = upSpeed;
+                    } else if (getTime() > 4)  {
+                        power = 0;//}
                     }
                 } else {
                     if (!switchLimit.get()){

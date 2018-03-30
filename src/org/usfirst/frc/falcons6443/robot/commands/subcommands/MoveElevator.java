@@ -21,9 +21,9 @@ public class MoveElevator extends SimpleCommand{
     public void initialize() {
         elevator.setToHeight(position);
         Logger.log(LoggerSystems.Auto, "Setting elevator position", position.getValue());
-        if(position != ElevatorPosition.Exchange && position != ElevatorPosition.Stop){
+       // if(position != ElevatorPosition.Exchange && position != ElevatorPosition.Stop){
             elevator.startTimer();
-        }
+       // }
     }
 
     @Override

@@ -1,7 +1,9 @@
 package org.usfirst.frc.falcons6443.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
+import org.usfirst.frc.falcons6443.robot.hardware.Playstation;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
 
 import java.util.HashMap;
@@ -20,6 +22,7 @@ public class OI {
 
     private Xbox primary;
     private Xbox secondary;
+    //private Playstation secondary;
 
     private HashMap<String, Button> buttons;
 
@@ -29,6 +32,7 @@ public class OI {
     public OI() {
         primary = new Xbox(new XboxController(PRIMARY_PORT_NUMBER));
         secondary = new Xbox(new XboxController(SECONDARY_PORT_NUMBER));
+        //secondary = new Playstation(new Joystick(SECONDARY_PORT_NUMBER));
         buttons = new HashMap<String, Button>(4);
     }
 
@@ -44,6 +48,10 @@ public class OI {
             return secondary;
         }
     }
+
+   // public Playstation getPlay(){
+   //     return secondary;
+   // }
 
     /**
      * Returns the Button object associated with the key.

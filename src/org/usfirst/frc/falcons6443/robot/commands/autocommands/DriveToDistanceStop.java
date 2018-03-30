@@ -7,7 +7,7 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 public class DriveToDistanceStop extends CommandGroup {
     public DriveToDistanceStop(int distance){
         if(RobotMap.BackUpDistance){
-            addSequential(new DriveToDistanceBackUp(distance));
+            addSequential(new DriveToDistanceBackUp(distance, true));
             addSequential(new StopDrive());
         } else {
             addSequential(new DriveToDistance(distance));
