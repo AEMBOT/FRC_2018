@@ -13,6 +13,7 @@ public class IntakeEncoder {
      }
 
      public double getDistance(){
+         System.out.println("enc" + encoder.getRaw());
          Logger.log(LoggerSystems.Intake,"Encoder", Double.toString(encoder.getRaw()));
          return encoder.getRaw();
      }

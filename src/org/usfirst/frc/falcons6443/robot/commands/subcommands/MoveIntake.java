@@ -24,9 +24,6 @@ public class MoveIntake extends SimpleCommand {
 
     @Override
     public void initialize() {
-        if(m_reset){
-            intake.reset();
-        }
         intake.setIntakePosition(m_position);
     }
 

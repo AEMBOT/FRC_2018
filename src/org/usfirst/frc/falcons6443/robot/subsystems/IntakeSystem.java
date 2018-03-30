@@ -20,13 +20,13 @@ public class IntakeSystem extends Subsystem {
     private IntakeEncoder encoder;
     private IntakePosition currentPosition = IntakePosition.IntakeUpPosition;
 
-    private final double intakeSpeed = 0.75;
+    private final double intakeSpeed = 0.9;
     private final double outputSpeed = 0.75;
     private final double upSpeed = .75;
     private final double downSpeed = -.3;
-    private final int upEncVal = 0;
+    private final int upEncVal = -40;
     private final int downEncVal = -700;
-    private final int midEncVal = -230;
+    private final int midEncVal = -270;
     private final int buffer = 20; //ticks
 
     public IntakeSystem(){
@@ -79,14 +79,15 @@ public class IntakeSystem extends Subsystem {
         double speed;
         if (up) {
             speed = upSpeed;
-            if (encoder.getDistance() > upEncVal) {
-                speed = 0.1; //0? less strain on the motor
-            }
+         //   if (encoder.getDistance() > upEncVal) {
+         //       speed = 0.1; //0? less strain on the motor
+
+             // }
         } else {
             speed = downSpeed;
-            if (encoder.getDistance() < downEncVal) {
-                speed = 0.1;
-            }
+            //if (encoder.getDistance() < downEncVal) {
+            //    speed = 0.1;
+           // }
         }
         rotateMotor.set(speed);
     }
@@ -148,5 +149,7 @@ public class IntakeSystem extends Subsystem {
         }
     }
 
-    public void reset(){ encoder.reset(); }
+    public void resetEnc(){
+        encoder.reset();
+    }
 }
