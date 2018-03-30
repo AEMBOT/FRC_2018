@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
         NetTables.setBoolean("center", false);
         NetTables.setBoolean("right", false);
         NetTables.flush();
+        //CameraServer.getInstance().startAutomaticCapture();
     }
 
     /*
