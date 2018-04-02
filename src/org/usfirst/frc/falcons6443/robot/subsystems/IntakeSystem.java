@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
@@ -17,8 +18,9 @@ public class IntakeSystem extends Subsystem {
     private Spark leftMotor;
     private Spark rightMotor;
     private Spark rotateMotor;
-    private IntakeEncoder encoder;
+    //private IntakeEncoder encoder;
     private IntakePosition currentPosition = IntakePosition.IntakeUpPosition;
+    private Timer timer;
 
     private final double intakeSpeed = 0.9;
     private final double outputSpeed = 0.75;
@@ -33,7 +35,8 @@ public class IntakeSystem extends Subsystem {
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
-        encoder = new IntakeEncoder();
+       // encoder = new IntakeEncoder();
+        timer = new Timer();
         leftMotor.setInverted(true);
         rotateMotor.setInverted(true);
     }
@@ -41,14 +44,18 @@ public class IntakeSystem extends Subsystem {
     @Override
     protected void initDefaultCommand() {    }
 
+    public void startTimer(){ timer.start(); }
+    public void stopTimer(){ timer.stop(); }
+    public double getTime(){ return timer.get(); }
+
     public void intake(){
         rightMotor.set(intakeSpeed);
         leftMotor.set(intakeSpeed);
     }
 
-    public double getIntekeEnc(){
-        return encoder.getDistance();
-    }
+    //public double getIntekeEnc(){
+    //    return encoder.getDistance();
+    //}
 
     public void output(){
         rightMotor.set(-outputSpeed);
@@ -101,7 +108,7 @@ public class IntakeSystem extends Subsystem {
                 Logger.log(LoggerSystems.Intake,"Intake", "at up pos");
                 break;
             case IntakeHalfPosition:
-                if(encoder.getDistance() > (midEncVal + buffer)){
+              /*  if(encoder.getDistance() > (midEncVal + buffer)){
                     rotateMotor.set(downSpeed);
                     Logger.log(LoggerSystems.Intake,"Intake", "going down to half pos");
                } else if(encoder.getDistance() < (midEncVal - buffer)){
@@ -110,16 +117,22 @@ public class IntakeSystem extends Subsystem {
                 } else {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake", "at half pos");
+                }*/
+
+                if(getTime() > 2.5){
+                    rotateMotor.set(0);
+                } else {
+                    rotateMotor.set(downSpeed);
                 }
                 break;
             case IntakeDownPosition:
-                if (encoder.getDistance() < (downEncVal + buffer)) {
+                //if (encoder.getDistance() < (downEncVal + buffer)) {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake", "at down pos");
-                } else {
-                    rotateMotor.set(downSpeed);
-                    Logger.log(LoggerSystems.Intake,"Intake", "going to down pos");
-                }
+                //} else {
+                //    rotateMotor.set(downSpeed);
+                //    Logger.log(LoggerSystems.Intake,"Intake", "going to down pos");
+                //}
             break;
         }
     }
@@ -139,7 +152,7 @@ public class IntakeSystem extends Subsystem {
         Logger.log(LoggerSystems.Intake,"Intake", "manual");
     }
 
-    public void rotateMid(){
+    /*public void rotateMid(){
         if(encoder.getDistance() > (midEncVal + buffer)){
             rotateMotor.set(downSpeed);
         } else if(encoder.getDistance() < (midEncVal - buffer)){
@@ -151,5 +164,5 @@ public class IntakeSystem extends Subsystem {
 
     public void resetEnc(){
         encoder.reset();
-    }
+    }*/
 }

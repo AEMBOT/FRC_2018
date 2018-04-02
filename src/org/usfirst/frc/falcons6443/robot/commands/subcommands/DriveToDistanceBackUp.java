@@ -23,23 +23,25 @@ public class DriveToDistanceBackUp extends SimpleCommand{
     }
 
     private void driveToDistance(boolean fast){
+        System.out.println("enc " + driveTrain.getLeftDistance());
         double power;
         if(fast){
             power = 0.6; //faster? slower? //.53
         } else {
-            power = 0.53;
+            power = 0.57;
         }
-        if(driveTrain.getLinearDistance() > (targetDistance - buffer)){
+        if(driveTrain.getLeftDistance() > (targetDistance - buffer)){
             power = 0;
             done = true;
         }
-        driveTrain.tankDrive(power, power+ .05);
+        driveTrain.tankDrive(power, power);
     }
 
     @Override
     public void initialize() {
         driveTrain.reset();
         done = false;
+        intake.startTimer();
     }
 
     @Override
@@ -47,16 +49,16 @@ public class DriveToDistanceBackUp extends SimpleCommand{
         elevator.moveToHeight(true);
         intake.autoMoveIntake();
         driveToDistance(m_fast);
-        if(elevator.getTime() > 4){
+        if(elevator.getTime() > 5){
             elevator.setToHeight(ElevatorPosition.Stop);
         }
-        Logger.log(LoggerSystems.Drive,"Distance", Double.toString(driveTrain.getLinearDistance()));
+        Logger.log(LoggerSystems.Drive,"Distance", Double.toString(driveTrain.getLeftDistance()));
     }
 
     @Override
     protected boolean isFinished() {
         if(done){
-            Logger.log(LoggerSystems.Drive,"Distance " + targetDistance, "At distance " + driveTrain.getLinearDistance());
+            Logger.log(LoggerSystems.Drive,"Distance " + targetDistance, "At distance " + driveTrain.getLeftDistance());
         }
         return done;
     }

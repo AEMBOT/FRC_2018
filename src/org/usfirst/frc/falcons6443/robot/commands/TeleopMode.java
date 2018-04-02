@@ -30,7 +30,7 @@ public class TeleopMode extends SimpleCommand {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
       //  secondary = Robot.oi.getPlay();
-        intake.resetEnc();
+       // intake.resetEnc();
     }
 
     @Override
@@ -62,12 +62,16 @@ public class TeleopMode extends SimpleCommand {
         //rotate
         if (secondary.rightBumper()){ intake.moveIntake(true); }
         if (secondary.leftBumper()){ intake.moveIntake(false); }
-        if (secondary.seven()) { intake.rotateMid();}
-        if (!secondary.rightBumper() && !secondary.leftBumper() &&
-                !secondary.seven()){ intake.rotateStop(); }
+        //if (secondary.seven()) { intake.rotateMid();}
+        if (!secondary.rightBumper() && !secondary.leftBumper() /*&&
+                !secondary.seven()*/){ intake.rotateStop(); }
        // System.out.println("enc" + intake.getIntekeEnc());
-intake.getIntekeEnc();
+//intake.getIntekeEnc();
         elevator.moveToHeight(false);
+
+        System.out.println("Left: " + driveTrain.getLeftDistance());
+        System.out.println("right: " + driveTrain.getRightDistance());
+
     }
 
     public boolean isFinished() {

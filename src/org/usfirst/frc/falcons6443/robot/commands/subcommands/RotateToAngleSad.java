@@ -11,13 +11,13 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
  */
 public class RotateToAngleSad extends SimpleCommand {
 
-    private static final double P = 0.15; //.3
+    private static final double P = 0.1; //.3
     private static final double I = 0;
-    private static final double D = .4; //1.23
-    private static final double Eps = 0.44; //weakest applied power
+    private static final double D = .2; //1.23
+    private static final double Eps = 0.68; //.44 //weakest applied power //try upping more???
 
-    private static final double buffer = 1; //0.5?? //degrees
-    private static final double counterBuffer = 0.5; //degrees
+    private static final double buffer = 4; //degrees
+    private static final double counterBuffer = 0.75; //degrees
 
     private double oldAngle;
     private int counter;
@@ -36,7 +36,7 @@ public class RotateToAngleSad extends SimpleCommand {
         directionPos = true;
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.7);
-        pid.setMinDoneCycles(5);
+        pid.setMinDoneCycles(2);
         pid.setDoneRange(buffer);
         if (angle > 180){
             angle -= 360;
@@ -70,7 +70,7 @@ public class RotateToAngleSad extends SimpleCommand {
     @Override
     public void execute() {
         //backup counter
-/*        if(counter > 50) {
+        if(counter > 50) {
             oldAngle = navigation.getYaw();
             counter = 0;
         } else if (counter == 50){
@@ -81,14 +81,14 @@ public class RotateToAngleSad extends SimpleCommand {
             }
         } else {
             counter++;
-        }*/
-       // elevator.moveToHeight(true);
+        }//was commented out. if issues occur get rid of it, but maybe it magically works??
         intake.autoMoveIntake();
         setAngle();
         turnToAngle();
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
+        System.out.println("angle: " + navigation.getYaw());
         Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navigation.getYaw()));
     }
 

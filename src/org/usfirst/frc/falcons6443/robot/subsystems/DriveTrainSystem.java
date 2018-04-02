@@ -123,36 +123,40 @@ public class DriveTrainSystem extends Subsystem {
     //Not sure if good format, but these values are only used for this method
     Vector2d vector = new Vector2d(0,0);
     double differential = 0;
-    public void falconDrive(double rotateAxis, double reverseThrottle, double forwardThrottle) {
+    public void falconDrive(double leftStickX, double rightTrigger, double leftTrigger) {
+        Vector2d vector = new Vector2d(0,0);
 
-        //safety settings, to prevent rogue robots
-        //vector represents the values to be assigned to the drive train
         vector.x = 0;
         vector.y = 0;
-        differential = 0;
+        double differential = 0;
 
-        // The Math.abs stuff eliminates erroneous values when the joystick springs back close to 0 when it should be 0
-        if (Math.abs(rotateAxis) < .15) {
+        if (Math.abs(leftStickX) < .15) {
             differential = 0;
         } else {
-            differential = Math.signum(-1 * rotateAxis) * Math.pow(rotateAxis, 2) / 1.8;
+            differential = Math.abs(leftStickX);
         }
-        if (forwardThrottle > 0) {//forward code settings TODO modify so user can quickly drive backwards, TODO increase speed cap
-            vector.x = forwardThrottle * .5 * (forwardThrottle * .7 + .44f) + (differential + .2 * forwardThrottle);//x is right
-            vector.y = forwardThrottle * .5 * (forwardThrottle * .7 + .44f) - (differential - .2 * forwardThrottle);//y is left
-        } else if (reverseThrottle > 0) { //reverse
-            vector.x = reverseThrottle * -.1 * (reverseThrottle * .7 + .44f) + .8 * (differential + reverseThrottle);//x is right
-            vector.y = reverseThrottle * -.1 * (reverseThrottle * .7 + .44f) - .8 * (differential - reverseThrottle);//y is left
+
+        if (rightTrigger > 0) {//forward
+            vector.x = rightTrigger*.75+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+            vector.y = rightTrigger*.75+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX);
             vector.x *= -1;
             vector.y *= -1;
-        } else { //code when none of the triggers are pressed, stationary rotation
-            if(Math.abs(rotateAxis) > .2){
-                vector.x = -rotateAxis/1.68-(.1*Math.signum(rotateAxis));
-                vector.y = rotateAxis/1.68+(.1*Math.signum(rotateAxis));
+        } else if (leftTrigger > 0) { //reverse
+            vector.x = leftTrigger*.65+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX);
+            vector.y = leftTrigger*.65+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+            //vector.x *= -1;
+            //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
+            //            //drive.y = primary.ri
+        } else { //no trigger values, stationary rotation
+            //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
+            // drive.x = 2*differential;
+            //drive.y = -2*differential;
+            if(Math.abs(leftStickX) > .2){
+                vector.x = -leftStickX/1.28-(.1*Math.signum(leftStickX));
+                vector.y = leftStickX/1.28+(.1*Math.signum(leftStickX));
             }
         }
 
-        //set power
         tankDrive(vector.y, vector.x);
     }
 }

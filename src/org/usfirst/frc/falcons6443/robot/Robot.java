@@ -46,14 +46,15 @@ public class Robot extends IterativeRobot {
         //autonomy = null;
         teleop = new TeleopMode();
 
-        //format 1 is kMJPEG
-        VideoMode vm = new VideoMode(1, 640, 480, 60);
-        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+
         //CameraServer.getInstance().putVideo();
         NetTables.setBoolean("left", false);
         NetTables.setBoolean("center", false);
         NetTables.setBoolean("right", false);
         NetTables.flush();
+        //format 1 is kMJPEG
+        VideoMode vm = new VideoMode(1, 640, 480, 60);
+        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
     }
 
     /*
@@ -80,7 +81,7 @@ public class Robot extends IterativeRobot {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
-        autonomy = new LaneToLineWait(); //
+        autonomy = new LaneToLine(); //
         if (autonomy != null) {
             autonomy.start();
         }

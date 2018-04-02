@@ -24,7 +24,9 @@ public class MoveIntake extends SimpleCommand {
 
     @Override
     public void initialize() {
-        intake.setIntakePosition(m_position);
+        if(m_position == IntakePosition.IntakeHalfPosition){
+            intake.setIntakePosition(m_position);
+        }
     }
 
     @Override
