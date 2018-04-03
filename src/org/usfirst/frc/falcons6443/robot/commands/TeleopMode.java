@@ -3,6 +3,8 @@ package org.usfirst.frc.falcons6443.robot.commands;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Playstation;
 import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
+import org.usfirst.frc.falcons6443.robot.utilities.drive.FalconDrive;
+import org.usfirst.frc.falcons6443.robot.utilities.drive.WCDProfile;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 
 /**
@@ -13,8 +15,9 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Xbox primary;         //Drive and intake/output
-    private Xbox secondary;      //Secondary functions
+    private Xbox primary;           //Drive and intake/output
+    private Xbox secondary;         //Secondary functions
+    //private WCDProfile driveProfile;//Profile used to calculate robot drive power
    // private Playstation secondary;
 
     public TeleopMode() {
@@ -29,7 +32,8 @@ public class TeleopMode extends SimpleCommand {
     public void initialize() {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
-      //  secondary = Robot.oi.getPlay();
+        //driveProfile = new FalconDrive(primary);
+        //  secondary = Robot.oi.getPlay();
        // intake.resetEnc();
     }
 
@@ -46,6 +50,7 @@ public class TeleopMode extends SimpleCommand {
 
         //drive controls
         driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
+        // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
 
         //elevator set position
         if (secondary.A()){ elevator.setToHeight(ElevatorPosition.Exchange); }
@@ -72,6 +77,10 @@ public class TeleopMode extends SimpleCommand {
         System.out.println("Left: " + driveTrain.getLeftDistance());
         System.out.println("right: " + driveTrain.getRightDistance());
 
+    }
+
+    public void reset(){
+        //driveProfile = null;
     }
 
     public boolean isFinished() {

@@ -76,6 +76,19 @@ public class DriveTrainSystem extends Subsystem {
     }
 
     /**
+     * Allows for custom setting of motor power level.
+     *
+     * @param power the power for the left and right motors in vector form.
+     */
+    public void tankDrive(Vector2d power){
+        if (reversed){
+            drive.tankDrive(-power.x, power.y);
+        } else {
+            drive.tankDrive(power.x, power.y);
+        }
+    }
+
+    /**
      * Spins the robot.
      * <p>
      * A negative speed spins the robot clockwise and a positive speed
@@ -123,6 +136,7 @@ public class DriveTrainSystem extends Subsystem {
     //Not sure if good format, but these values are only used for this method
     Vector2d vector = new Vector2d(0,0);
     double differential = 0;
+
     public void falconDrive(double leftStickX, double rightTrigger, double leftTrigger) {
         Vector2d vector = new Vector2d(0,0);
 
