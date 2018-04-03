@@ -46,7 +46,6 @@ public class Robot extends IterativeRobot {
         //autonomy = null;
         teleop = new TeleopMode();
 
-
         //CameraServer.getInstance().putVideo();
         NetTables.setBoolean("left", false);
         NetTables.setBoolean("center", false);
