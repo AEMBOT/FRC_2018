@@ -1,36 +1,46 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.MoveElevator;
+import org.usfirst.frc.falcons6443.robot.hardware.ElevatorEncoder;
+import org.usfirst.frc.falcons6443.robot.hardware.ElevatorMotor;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 public class ElevatorSystem extends Subsystem {
 
-    private Spark motor;
+    private ElevatorMotor motor;
     private DigitalInput scaleLimit;
     private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
+    private ElevatorEncoder encoder = null;
     private Timer timer;
 
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
-    private boolean manual = false;
     private final double upSpeed = 1;
     private final double downSpeed = -1;
+    private final double switchHeight = 600; //set in ticks
+    private final double scaleHeight = 10000; //set in ticks
+    private final double autoTimeOneMotor = 5;
+    private final double autoTimeRedlines = 5; //set
+    private double autoTime;
 
     public ElevatorSystem(){
-        motor = new Spark (RobotMap.ElevatorMotor);
-        scaleLimit = new DigitalInput (RobotMap.ElevatorScaleLimit);
-        switchLimit = new DigitalInput (RobotMap.ElevatorSwitchLimit);
-        bottomLimit = new DigitalInput (RobotMap.ElevatorBottomLimit);
+        if(RobotMap.Redline){
+            encoder = new ElevatorEncoder();
+            autoTime = autoTimeRedlines;
+        } else {
+            autoTime = autoTimeOneMotor;
+        }
+        motor = new ElevatorMotor();
+        scaleLimit = new DigitalInput(RobotMap.ElevatorScaleLimit);
+        switchLimit = new DigitalInput(RobotMap.ElevatorSwitchLimit);
+        bottomLimit = new DigitalInput(RobotMap.ElevatorBottomLimit);
         timer = new Timer();
-        motor.setInverted(true);
     }
 
     @Override
@@ -40,19 +50,16 @@ public class ElevatorSystem extends Subsystem {
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
-    public boolean getManual(){ return manual; }
-
     private void updatePreviousLimit(){
-        if (!scaleLimit.get()){
+        if (!scaleLimit.get() || encoder.getDistance() > switchHeight){
             previousLimit = ElevatorPosition.OverSwitch;
-        } else if(!bottomLimit.get()){
+        } else if(!bottomLimit.get() || encoder.getDistance() < switchHeight){
             previousLimit = ElevatorPosition.UnderSwitch;
         }
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
         Logger.log(LoggerSystems.Elevator,"Set elevator position", elevatorState.getValue());
-        manual = false;
         switch (elevatorState){
             case Exchange:
                 desiredState = ElevatorPosition.Exchange;
@@ -69,13 +76,27 @@ public class ElevatorSystem extends Subsystem {
         }
     }
 
-    public boolean getSwitchLimit(){
+    private boolean getSwitchHeight(){
+        if(!switchLimit.get()){
+            return true;
+        } else if (encoder.getDistance() > switchHeight){
+            return true;
+        } else if (encoder.getDistance() < switchHeight){
+            return false;
+        }
         return !switchLimit.get();
     }
-    public boolean getBottomLimit(){
+    private boolean getBottomHeight(){
         return !bottomLimit.get();
     }
-    public boolean getScaleLimit(){
+    private boolean getScaleHeight(){
+        if(!scaleLimit.get()){
+            return true;
+        } else if (encoder.getDistance() > scaleHeight){
+            return true;
+        } else if (encoder.getDistance() < scaleHeight){
+            return false;
+        }
         return !scaleLimit.get();
     }
 
@@ -84,7 +105,7 @@ public class ElevatorSystem extends Subsystem {
         double power = 0;
         updatePreviousLimit();
 
-        if(auto && getTime() > 5){
+        if(auto && getTime() > autoTime){
             desiredState = ElevatorPosition.Stop;
             Logger.log(LoggerSystems.Auto, "Elevator ran overtime", "stopped elevator");
             Logger.log(LoggerSystems.Elevator, "Ran overtime in auto", "stopped elevator");
@@ -94,15 +115,16 @@ public class ElevatorSystem extends Subsystem {
 
         switch (desiredState) {
             case Exchange:
-                if (!bottomLimit.get()){
+                if (getBottomHeight()){
                     power = 0;
+                    encoder.reset();
                 } else {
                     power = downSpeed;
                 }
                 Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
                 break;
             case Scale:
-                if (!scaleLimit.get()){
+                if (getScaleHeight()){
                     power = 0;
                 } else {
                     power = upSpeed;
@@ -111,16 +133,13 @@ public class ElevatorSystem extends Subsystem {
                break;
             case Switch:
                 if(auto){
-                    //if (!switchLimit.get() || !scaleLimit.get() || getTime() > 3){
-                    //    power = 0;
-                    //} else {
-                    if(getTime() < 5){
+                    if(getSwitchHeight() || getScaleHeight() || getTime() > autoTime){
+                        power = 0;
+                    } else if (getTime() < autoTime)  {
                         power = upSpeed;
-                    } else if (getTime() > 5)  {
-                        power = 0;//}
                     }
                 } else {
-                    if (!switchLimit.get()){
+                    if (getSwitchHeight()) {
                         power = 0;
                     } else {
                         if (previousLimit == ElevatorPosition.UnderSwitch) {
@@ -137,24 +156,22 @@ public class ElevatorSystem extends Subsystem {
                 power = 0;
                 break;
         }
-        if (!manual) { motor.set(power);} else {
-            Logger.log(LoggerSystems.Elevator,"manual", "on");
-        }
+        motor.set(power);
     }
 
     public void up (){
-            motor.set(upSpeed);
-            manual = true;
+        motor.set(upSpeed);
     }
 
     public void down (){
-            motor.set(downSpeed);
-            manual = true;
+        motor.set(downSpeed);
     }
 
     public void stop () {
         motor.set(0);
     }
 
-    public void manual(double x) {motor.set(x);}
+    public void manual(double x){
+        motor.set(x);
+    }
 }
