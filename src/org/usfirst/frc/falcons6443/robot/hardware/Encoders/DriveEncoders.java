@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.hardware;
+package org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 
 import edu.wpi.first.wpilibj.Encoder;
 import org.usfirst.frc.falcons6443.robot.RobotMap;

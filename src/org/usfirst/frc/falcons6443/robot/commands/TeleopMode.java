@@ -45,7 +45,7 @@ public class TeleopMode extends SimpleCommand {
         //intake buttons
         if (primary.A()){ intake.intake(); }
         if (primary.B()){ intake.output(); }
-        if (primary.Y()){ intake.readjust(); }
+        if (primary.Y()){ intake.slowOutput(); }
         if (!primary.A() && !primary.B() && !primary.Y()){ intake.stop(); }
 
         //drive controls
@@ -61,7 +61,6 @@ public class TeleopMode extends SimpleCommand {
         //elevator manual
         //if(secondary.seven()){ elevator.up(); }
         //if(secondary.eight()){ elevator.down(); }
-
        // if(!secondary.seven() && !secondary.eight()){ elevator.stop(); }
 
         //rotate

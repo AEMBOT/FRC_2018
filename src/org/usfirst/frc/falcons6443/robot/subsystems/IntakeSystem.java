@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.hardware.IntakeEncoder;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
@@ -24,6 +23,7 @@ public class IntakeSystem extends Subsystem {
 
     private final double intakeSpeed = 0.9;
     private final double outputSpeed = 0.75;
+    private final double outputSlowSpeed = 0.5;
     private final double upSpeed = .75;
     private final double downSpeed = -.3;
     private final int upEncVal = -40;
@@ -60,6 +60,11 @@ public class IntakeSystem extends Subsystem {
     public void output(){
         rightMotor.set(-outputSpeed);
         leftMotor.set(-outputSpeed);
+    }
+
+    public void slowOutput(){
+        rightMotor.set(-outputSlowSpeed);
+        leftMotor.set(-outputSlowSpeed);
     }
 
     public void stop(){
@@ -137,19 +142,8 @@ public class IntakeSystem extends Subsystem {
         }
     }
 
-    public void readjust() {
-        rightMotor.set(intakeSpeed/2);
-        leftMotor.set(intakeSpeed);
-        Logger.log(LoggerSystems.Intake,"Intake", "readjust");
-    }
-
     public void rotateStop(){
         rotateMotor.set(0.1);
-    }
-
-    public void manual(double power){
-        rotateMotor.set(power);
-        Logger.log(LoggerSystems.Intake,"Intake", "manual");
     }
 
     /*public void rotateMid(){
