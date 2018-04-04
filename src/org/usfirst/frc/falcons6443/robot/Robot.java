@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.*;
 import org.usfirst.frc.falcons6443.robot.commands.complete.*;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
