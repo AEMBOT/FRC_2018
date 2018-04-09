@@ -14,6 +14,6 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 public class LaneToLine extends CommandGroup {
      public LaneToLine(){
          Logger.log(LoggerSystems.Auto,"Start auto path", "Lane to line");
-         addSequential(new DriveToDistanceBackUp(120, true));
+         addSequential(new DriveToDistanceBackUp(120, true, false));
     }
 }

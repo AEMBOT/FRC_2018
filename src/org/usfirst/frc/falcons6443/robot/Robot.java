@@ -13,6 +13,9 @@ import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * ROBOTS DON'T QUIT!
  * The Robot class is FRC team 6443's implementation of WPIlib's IterativeRobot class.
@@ -36,12 +39,22 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
-    
+    //public Reader autoReader;
     /*
      * Called when the robot first starts.
      */
     @Override
     public void robotInit() {
+        /*
+        try {
+            autoReader = new Reader();
+            autoReader.readLine(3);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
         oi = new OI();
         //autonomy = null;
         teleop = new TeleopMode();
@@ -62,6 +75,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
         Logger.disabled();
+        Scheduler.getInstance().removeAll();
     }
 
     /*
@@ -69,7 +83,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledPeriodic() {
-        Scheduler.getInstance().run();
+        Scheduler.getInstance().removeAll();
+        //Scheduler.getInstance().run();
     }
 
     /*

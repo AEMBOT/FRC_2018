@@ -13,7 +13,6 @@ public class ElevatorEncoder {
     }
 
     public double getDistance(){
-        System.out.println("enc" + encoder.getRaw());
         Logger.log(LoggerSystems.Elevator,"Encoder", Double.toString(encoder.getRaw()));
         return encoder.getRaw();
     }

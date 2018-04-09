@@ -83,6 +83,7 @@ public class RotateToAngleSad extends SimpleCommand {
             counter++;
         }//was commented out. if issues occur get rid of it, but maybe it magically works??
         intake.autoMoveIntake();
+        elevator.moveToHeight(true);
         setAngle();
         turnToAngle();
         if(isAtAngle()){

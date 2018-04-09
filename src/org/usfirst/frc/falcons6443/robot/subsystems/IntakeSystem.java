@@ -24,12 +24,13 @@ public class IntakeSystem extends Subsystem {
     private final double intakeSpeed = 0.9;
     private final double outputSpeed = 0.75;
     private final double outputSlowSpeed = 0.5;
-    private final double upSpeed = .75;
-    private final double downSpeed = -.3;
+    private final double upSpeed = 1;
+    private final double downSpeed = -.5;
     private final int upEncVal = -40;
     private final int downEncVal = -700;
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
+    private boolean kill = false;
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -39,6 +40,7 @@ public class IntakeSystem extends Subsystem {
         timer = new Timer();
         leftMotor.setInverted(true);
         rotateMotor.setInverted(true);
+        kill = false;
     }
 
     @Override
@@ -48,6 +50,9 @@ public class IntakeSystem extends Subsystem {
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
+    public void setKill(boolean toggle){
+        kill = toggle;
+    }
     public void intake(){
         rightMotor.set(intakeSpeed);
         leftMotor.set(intakeSpeed);
@@ -68,8 +73,12 @@ public class IntakeSystem extends Subsystem {
     }
 
     public void stop(){
-        rightMotor.set(0);
-        leftMotor.set(0);
+        if(kill){
+            rightMotor.set(0);
+            leftMotor.set(0);
+        } else {
+        rightMotor.set(0.22);
+        leftMotor.set(0.26);}
     }
 
     public void setIntakePosition(IntakePosition intakeState){

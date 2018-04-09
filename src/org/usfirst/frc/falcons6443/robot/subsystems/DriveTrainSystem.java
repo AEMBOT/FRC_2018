@@ -74,6 +74,7 @@ public class DriveTrainSystem extends Subsystem {
         } else {
             drive.tankDrive(left, right);
         }
+        Logger.log(LoggerSystems.Drive, "*","{" + left + "}[" + right + "]" );
     }
 
     /**
@@ -137,6 +138,9 @@ public class DriveTrainSystem extends Subsystem {
     //Not sure if good format, but these values are only used for this method
     Vector2d vector = new Vector2d(0,0);
     double differential = 0;
+    boolean shifted = false;
+    public void upShift(){ shifted = true;}
+    public void downShift(){shifted = false;}
 
     public void falconDrive(double leftStickX, double rightTrigger, double leftTrigger) {
         Vector2d vector = new Vector2d(0,0);
@@ -150,28 +154,53 @@ public class DriveTrainSystem extends Subsystem {
         } else {
             differential = Math.abs(leftStickX);
         }
-
-        if (rightTrigger > 0) {//forward
-            vector.x = rightTrigger*.75+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX)*-1;
-            vector.y = rightTrigger*.75+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX);
-            vector.x *= -1;
-            vector.y *= -1;
-        } else if (leftTrigger > 0) { //reverse
-            vector.x = leftTrigger*.65+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX);
-            vector.y = leftTrigger*.65+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX)*-1;
-            //vector.x *= -1;
-            //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
-            //            //drive.y = primary.ri
-        } else { //no trigger values, stationary rotation
-            //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
-            // drive.x = 2*differential;
-            //drive.y = -2*differential;
-            if(Math.abs(leftStickX) > .2){
-                vector.x = -leftStickX/1.28-(.1*Math.signum(leftStickX));
-                vector.y = leftStickX/1.28+(.1*Math.signum(leftStickX));
+        if(!shifted){
+            if (rightTrigger > 0) {//forward
+                vector.x = rightTrigger*.7+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+                vector.y = rightTrigger*.7+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX);
+                vector.x *= -1;
+                vector.y *= -1;
+            } else if (leftTrigger > 0) { //reverse
+                vector.x = leftTrigger*.7+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX);
+                vector.y = leftTrigger*.7+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+                //vector.x *= -1;
+                //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
+                //            //drive.y = primary.ri
+            } else { //no trigger values, stationary rotation
+                //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
+                // drive.x = 2*differential;
+                //drive.y = -2*differential;
+                if(Math.abs(leftStickX) > .2){
+                    vector.x = -leftStickX/1.28-(.1*Math.signum(leftStickX));
+                    vector.y = leftStickX/1.28+(.1*Math.signum(leftStickX));
+                }
             }
+
+            tankDrive(vector.y, vector.x);
+        }else{
+            if (rightTrigger > 0) {//forward
+                vector.x = rightTrigger+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+                vector.y = rightTrigger+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX);
+                vector.x *= -1;
+                vector.y *= -1;
+            } else if (leftTrigger > 0) { //reverse
+                vector.x = leftTrigger+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX);
+                vector.y = leftTrigger+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+                //vector.x *= -1;
+                //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
+                //            //drive.y = primary.ri
+            } else { //no trigger values, stationary rotation
+                //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
+                // drive.x = 2*differential;
+                //drive.y = -2*differential;
+                if(Math.abs(leftStickX) > .2){
+                    vector.x = -leftStickX/1.28-(.1*Math.signum(leftStickX));
+                    vector.y = leftStickX/1.28+(.1*Math.signum(leftStickX));
+                }
+            }
+
+            tankDrive(vector.y, vector.x);
         }
 
-        tankDrive(vector.y, vector.x);
     }
 }
