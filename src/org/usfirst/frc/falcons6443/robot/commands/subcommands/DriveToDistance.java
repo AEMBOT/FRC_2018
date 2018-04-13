@@ -12,7 +12,7 @@ public class DriveToDistance extends SimpleCommand {
     public static final double Eps = 0.5; //weakest applied power //0.4???
 
     private static final double buffer = 1; //inches //0.5
-    private static final double counterBuffer = 4; //inches //0.5
+    private static final double counterBuffer = 2; //inches //0.5
 
     private double targetDistance;
     private double oldDistance;
@@ -57,16 +57,17 @@ public class DriveToDistance extends SimpleCommand {
 
     @Override
     public void execute() {
-        if(counter > 50) {
-            oldDistance = driveTrain.getLinearDistance();
-            counter = 0;
-        } else if (counter == 50){
-            if((oldDistance + buffer) >= driveTrain.getLinearDistance()){
-                done = true;
-            }
-        } else {
-            counter++;
-        }
+        //try w/o first
+  //      if(counter > 50) {
+  //          oldDistance = driveTrain.getLinearDistance();
+  //          counter = 0;
+  //      } else if (counter == 50){
+  //          if((oldDistance + counterBuffer) >= driveTrain.getLinearDistance()){
+  //             done = true;
+  //          }
+  //      } else {
+  //          counter++;
+  //      }
         //elevator.moveToHeight(true);
         intake.autoMoveIntake();
         driveToDistance();

@@ -36,26 +36,22 @@ public class ElevatorSystem extends Subsystem {
     @Override
     public void initDefaultCommand() { }
 
-    public boolean getManual(){ return manual; }
-
-    public boolean get(DigitalInput limitSwitch){ return !limitSwitch.get(); }
-
     public void startTimer(){ timer.start(); }
-
     public void stopTimer(){ timer.stop(); }
-
     public double getTime(){ return timer.get(); }
 
+    public boolean getManual(){ return manual; }
+
     private void updatePreviousLimit(){
-        if (get(scaleLimit)){
+        if (!scaleLimit.get()){
             previousLimit = ElevatorPosition.OverSwitch;
-        } else if(get(bottomLimit)){
+        } else if(!bottomLimit.get()){
             previousLimit = ElevatorPosition.UnderSwitch;
         }
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
-        Logger.log(LoggerSystems.Elevator,"Set elevator position: " + elevatorState.getValue());
+        Logger.log(LoggerSystems.Elevator,"Set elevator position", elevatorState.getValue());
         manual = false;
         switch (elevatorState){
             case Exchange:
@@ -73,9 +69,15 @@ public class ElevatorSystem extends Subsystem {
         }
     }
 
-    public boolean getSwitchLimit(){ return get(switchLimit); }
-    public boolean getScaleLimit(){ return get(scaleLimit); }
-    public boolean getBottomLimit(){ return get(bottomLimit); }
+    public boolean getSwitchLimit(){
+        return !switchLimit.get();
+    }
+    public boolean getBottomLimit(){
+        return !bottomLimit.get();
+    }
+    public boolean getScaleLimit(){
+        return !scaleLimit.get();
+    }
 
     //put in periodic function
     public void moveToHeight(boolean auto){
@@ -84,49 +86,56 @@ public class ElevatorSystem extends Subsystem {
 
         if(auto && getTime() > 3){
             desiredState = ElevatorPosition.Stop;
-            Logger.log(LoggerSystems.Auto, "Elevator ran overtime, stopped elevator");
-            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto, stopped elevator");
+            Logger.log(LoggerSystems.Auto, "Elevator ran overtime", "stopped elevator");
+            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto", "stopped elevator");
+        } else if (!auto){
+            stopTimer();
         }
 
         switch (desiredState) {
             case Exchange:
-                if (get(bottomLimit)){
-                    Logger.log(LoggerSystems.Elevator,"Bottom limit: " + Boolean.toString(get(bottomLimit)));
+                if (!bottomLimit.get()){
                     power = 0;
                 } else {
-                    Logger.log(LoggerSystems.Elevator,"Bottom limit: " + Boolean.toString(get(bottomLimit)));
                     power = downSpeed;
                 }
+                Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
                 break;
             case Scale:
-                if (get(scaleLimit)){
-                    Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(get(scaleLimit)));
+                if (!scaleLimit.get()){
                     power = 0;
                 } else {
-                    Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(get(scaleLimit)));
                     power = upSpeed;
                }
-                break;
+               Logger.log(LoggerSystems.Elevator,"Scale limit", Boolean.toString(!scaleLimit.get()));
+               break;
             case Switch:
-                if (get(switchLimit)){
-                    Logger.log(LoggerSystems.Elevator,"Switch limit: " + Boolean.toString(get(switchLimit)));
-                    power = 0;
-                } else {
-                    Logger.log(LoggerSystems.Elevator,"Switch limit: " + Boolean.toString(get(switchLimit)));
-                    if (previousLimit == ElevatorPosition.UnderSwitch){
-                        power = upSpeed;
+                if(auto){
+                    if (!switchLimit.get() || !scaleLimit.get() || getTime() > 3){
+                        power = 0;
                     } else {
-                        power = downSpeed;
+                        power = upSpeed;
+                    }
+                } else {
+                    if (!switchLimit.get()){
+                        power = 0;
+                    } else {
+                        if (previousLimit == ElevatorPosition.UnderSwitch) {
+                            power = upSpeed;
+                        } else {
+                            power = downSpeed;
+                        }
                     }
                 }
+                Logger.log(LoggerSystems.Elevator,"Switch limit", Boolean.toString(!switchLimit.get()));
                 break;
             case Stop:
-                Logger.log(LoggerSystems.Elevator,"move to height: Stop enum");
+                Logger.log(LoggerSystems.Elevator,"move to height", "Stop enum");
                 power = 0;
                 break;
         }
         if (!manual) { motor.set(power);} else {
-            Logger.log(LoggerSystems.Elevator,"manual on");
+            Logger.log(LoggerSystems.Elevator,"manual", "on");
         }
     }
 
