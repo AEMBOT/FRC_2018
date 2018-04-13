@@ -3,7 +3,6 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
-import edu.wpi.first.wpilibj.Timer;
 
 public class MoveElevator extends SimpleCommand{
 
@@ -17,10 +16,11 @@ public class MoveElevator extends SimpleCommand{
         off = false;
     }
 
+    //IF STOPDRIVE WORKS IMPLEMENT HERE!!
     @Override
     public void initialize() {
         elevator.setToHeight(position);
-        Logger.log(LoggerSystems.Auto, "Setting elevator position", position.getValue());
+        Logger.log(LoggerSystems.Auto, "Setting elevator position" + position.getName());
        // if(position != ElevatorPosition.Exchange && position != ElevatorPosition.Stop){
             elevator.startTimer();
        // }

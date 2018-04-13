@@ -22,7 +22,6 @@ public class OI {
 
     private Xbox primary;
     private Xbox secondary;
-    //private Playstation secondary;
 
     private HashMap<String, Button> buttons;
 
@@ -32,7 +31,6 @@ public class OI {
     public OI() {
         primary = new Xbox(new XboxController(PRIMARY_PORT_NUMBER));
         secondary = new Xbox(new XboxController(SECONDARY_PORT_NUMBER));
-        //secondary = new Playstation(new Joystick(SECONDARY_PORT_NUMBER));
         buttons = new HashMap<String, Button>(4);
     }
 

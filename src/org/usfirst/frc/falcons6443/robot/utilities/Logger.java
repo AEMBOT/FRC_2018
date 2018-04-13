@@ -97,14 +97,14 @@ public class Logger {
         File file = new File(fileName);
         file.getParentFile().mkdirs();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
-            //if (cacheNumber[system.getValue()] < cacheSize) {
+            //if (cacheNumber[system.getName()] < cacheSize) {
             bw.write(oldMessage);
             bw.newLine();
             bw.write(timeStamp() + ", " + clockTimeStamp());
             bw.newLine();
             bw.flush();
             bw.close();
-            //cacheNumber[system.getValue()] = 0;
+            //cacheNumber[system.getName()] = 0;
         } catch (IOException e) {
             e.printStackTrace();
         }

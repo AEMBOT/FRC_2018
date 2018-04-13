@@ -27,12 +27,15 @@ public class SpeedControllerGroup implements SpeedController {
      * @param front the front speed controller.
      * @param back  the back speed controller.
      */
-    public SpeedControllerGroup(SpeedController front, SpeedController back) {
-        controllers = new SpeedController[]{front, back};
-    }
+    //public SpeedControllerGroup(SpeedController front, SpeedController back) {
+    //    controllers = new SpeedController[]{front, back};
+    //}
 
-    public SpeedControllerGroup(SpeedController one, SpeedController two, SpeedController three, SpeedController four) {
-        controllers = new SpeedController[]{one, two, three, four};
+    //TEST
+    public SpeedControllerGroup(SpeedController front, SpeedController back, SpeedController ... more) {
+        for (SpeedController m : more) {
+            controllers = new SpeedController[]{front, back, m};
+        }
     }
 
     @Override

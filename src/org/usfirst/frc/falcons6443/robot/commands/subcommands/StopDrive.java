@@ -4,12 +4,13 @@ import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 
 public class StopDrive extends SimpleCommand {
 
-    private boolean off;
+    //private boolean off;
+    //DOES THIS WORK??
 
     public StopDrive(){
         super("Stop DriveTrain");
         requires(driveTrain);
-        off = false;
+        //off = false;
     }
     @Override
     public void initialize() {
@@ -19,11 +20,12 @@ public class StopDrive extends SimpleCommand {
     @Override
     public void execute() {
         driveTrain.tankDrive(0, 0);
-        off = true;
+        //off = true;
     }
 
     @Override
     public boolean isFinished() {
-        return off;
+        //return off;
+        return true;
     }
 }

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.hardware.Encoders.ElevatorEncoder;
+import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorMotor;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
@@ -15,7 +15,7 @@ public class ElevatorSystem extends Subsystem {
     private DigitalInput scaleLimit;
    // private DigitalInput switchLimit;
     private DigitalInput bottomLimit;
-    private ElevatorEncoder encoder = null;
+    private Encoders encoder = null;
     private Timer timer;
 
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
@@ -25,8 +25,6 @@ public class ElevatorSystem extends Subsystem {
     private final double downSpeed = -.4;
     private final double switchHeight = 600000; //set in ticks//630000
     private final double scaleHeight = 1230000; //set in ticks
-    private final double midHeight1 = 600; //set in ticks
-    private final double midHeight2 = 10000; //set in ticks
 
     private final double autoTimeOneMotor = 5;
     private final double autoTimeRedlines = 1; //set //.8
@@ -35,7 +33,7 @@ public class ElevatorSystem extends Subsystem {
 
     public ElevatorSystem(){
         if(RobotMap.Redline){
-            encoder = new ElevatorEncoder();
+            encoder = new Encoders(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
             autoTime = autoTimeRedlines;
         } else {
             autoTime = autoTimeOneMotor;
@@ -69,7 +67,7 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
-        Logger.log(LoggerSystems.Elevator,"Set elevator position", elevatorState.getValue());
+        Logger.log(LoggerSystems.Elevator,"Set elevator position: " + elevatorState.getName());
         switch (elevatorState){
             case Exchange:
                 desiredState = ElevatorPosition.Exchange;
@@ -117,8 +115,8 @@ public class ElevatorSystem extends Subsystem {
 
         if(auto && getTime() > autoTime){
             desiredState = ElevatorPosition.Stop;
-            Logger.log(LoggerSystems.Auto, "Elevator ran overtime", "stopped elevator");
-            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto", "stopped elevator");
+            Logger.log(LoggerSystems.Auto, "Elevator ran overtime: stopped elevator");
+            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto: stopped elevator");
         } else if (!auto){
             stopTimer();
         }
@@ -133,7 +131,7 @@ public class ElevatorSystem extends Subsystem {
                 } else {
                     power = downSpeed;
                 }
-                Logger.log(LoggerSystems.Elevator,"Bottom limit", Boolean.toString(!bottomLimit.get()));
+                Logger.log(LoggerSystems.Elevator,"Bottom limit: " + Boolean.toString(!bottomLimit.get()));
                 break;
             case Scale:
                 if (getScaleHeight()){
@@ -141,7 +139,7 @@ public class ElevatorSystem extends Subsystem {
                 } else {
                     power = upSpeed;
                }
-               Logger.log(LoggerSystems.Elevator,"Scale limit", Boolean.toString(!scaleLimit.get()));
+               Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(!scaleLimit.get()));
                break;
             case Switch:
                 if(auto){
@@ -164,7 +162,7 @@ public class ElevatorSystem extends Subsystem {
                 //Logger.log(LoggerSystems.Elevator,"Switch limit", Boolean.toString(!switchLimit.get()));
                 break;
             case Stop:
-                Logger.log(LoggerSystems.Elevator,"move to height", "Stop enum");
+                Logger.log(LoggerSystems.Elevator,"move to height: Stop enum");
                 power = 0;
                 break;
         }

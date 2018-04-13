@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
+import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -10,6 +11,8 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
  * @author Christopher Medlin, Ivan Kenevich
  */
 public class RotateToAngleSad extends SimpleCommand {
+    private PID pid;
+    private NavX navX;
 
     private static final double P = 0.1; //.3
     private static final double I = 0;
@@ -19,20 +22,18 @@ public class RotateToAngleSad extends SimpleCommand {
     private static final double buffer = 4; //degrees
     private static final double counterBuffer = 0.75; //degrees
 
+    private double targetAngle;
     private double oldAngle;
     private int counter;
     private boolean directionPos;
     private boolean done;
 
-    private PID pid;
-    private double targetAngle;
-
     public RotateToAngleSad(double angle) {
         super("Rotate To Angle Beta");
-        requires(navigation);
         requires(driveTrain);
         requires(elevator);
         requires(intake);
+        navX = NavX.get();
         directionPos = true;
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.7);
@@ -48,7 +49,7 @@ public class RotateToAngleSad extends SimpleCommand {
     }
 
     private void turnToAngle(){
-        double power = pid.calcPID(navigation.getYaw());
+        double power = pid.calcPID(navX.getYaw());
         driveTrain.tankDrive(power, -power );
     }
 
@@ -61,7 +62,7 @@ public class RotateToAngleSad extends SimpleCommand {
 
     @Override
     public void initialize() {
-        navigation.reset();
+        navX.reset();
         oldAngle = 0;
         counter = 0;
         done = false;
@@ -71,12 +72,12 @@ public class RotateToAngleSad extends SimpleCommand {
     public void execute() {
         //backup counter
         if(counter > 50) {
-            oldAngle = navigation.getYaw();
+            oldAngle = navX.getYaw();
             counter = 0;
         } else if (counter == 50){
-            if((oldAngle + counterBuffer) >= navigation.getYaw() && directionPos){
+            if((oldAngle + counterBuffer) >= navX.getYaw() && directionPos){
                 done = true;
-            } else if((oldAngle - counterBuffer) <= navigation.getYaw() && !directionPos){
+            } else if((oldAngle - counterBuffer) <= navX.getYaw() && !directionPos){
                 done = true;
             }
         } else {
@@ -89,8 +90,8 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        System.out.println("angle: " + navigation.getYaw());
-        Logger.log(LoggerSystems.Gyro,"Angle", Float.toString(navigation.getYaw()));
+        System.out.println("angle: " + navX.getYaw());
+        Logger.log(LoggerSystems.Gyro,"Angle" + Float.toString(navX.getYaw()));
     }
 
     @Override
@@ -98,7 +99,7 @@ public class RotateToAngleSad extends SimpleCommand {
         if(isAtAngle()){
             done = true;
             driveTrain.tankDrive(0, 0);
-            Logger.log(LoggerSystems.Gyro,"Angle", "at angle");
+            Logger.log(LoggerSystems.Gyro,"At angle");
         }
         return done;
     }

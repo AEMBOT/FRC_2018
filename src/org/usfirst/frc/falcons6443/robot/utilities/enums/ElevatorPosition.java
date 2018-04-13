@@ -2,13 +2,13 @@ package org.usfirst.frc.falcons6443.robot.utilities.enums;
 
 public enum ElevatorPosition {
     Exchange("Exchange"), Switch("Switch"), Scale("Scale"), UnderSwitch("Under Switch"), OverSwitch("Over Switch"), Stop("Stop");
-    private String value;
+    private String name;
 
-    ElevatorPosition(String Value) {
-        this.value = Value;
+    ElevatorPosition(String Name) {
+        this.name = Name;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 }

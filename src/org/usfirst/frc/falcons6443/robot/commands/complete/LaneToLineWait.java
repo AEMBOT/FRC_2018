@@ -11,7 +11,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
  **/
 public class LaneToLineWait extends CommandGroup {
     public LaneToLineWait(){
-        Logger.log(LoggerSystems.Auto,"Start auto path", "Lane to line wait");
+        Logger.log(LoggerSystems.Auto,"Start auto path: Lane to line wait");
         addSequential(new Delay(9));
         addSequential(new DriveToDistance(120));
     }

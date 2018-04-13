@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
+import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
@@ -17,7 +18,7 @@ public class IntakeSystem extends Subsystem {
     private Spark leftMotor;
     private Spark rightMotor;
     private Spark rotateMotor;
-    //private IntakeEncoder encoder;
+    private Encoders encoder;
     private IntakePosition currentPosition = IntakePosition.IntakeUpPosition;
     private Timer timer;
 
@@ -30,13 +31,13 @@ public class IntakeSystem extends Subsystem {
     private final int downEncVal = -700;
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
-    private boolean kill = false;
+    private boolean kill = false; //kill stops the constant slow speed
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
         rightMotor = new Spark(RobotMap.IntakeRightMotor);
         rotateMotor = new Spark(RobotMap.IntakeRotateMotor);
-       // encoder = new IntakeEncoder();
+        encoder = new Encoders(RobotMap.IntakeEncoderA, RobotMap.IntakeEncoderB);
         timer = new Timer();
         leftMotor.setInverted(true);
         rotateMotor.setInverted(true);
@@ -53,6 +54,7 @@ public class IntakeSystem extends Subsystem {
     public void setKill(boolean toggle){
         kill = toggle;
     }
+
     public void intake(){
         rightMotor.set(intakeSpeed);
         leftMotor.set(intakeSpeed);
@@ -78,11 +80,12 @@ public class IntakeSystem extends Subsystem {
             leftMotor.set(0);
         } else {
         rightMotor.set(0.22);
-        leftMotor.set(0.26);}
+        leftMotor.set(0.26); //because the left motor doesn't spin as well
+        }
     }
 
     public void setIntakePosition(IntakePosition intakeState){
-        Logger.log(LoggerSystems.Intake,"Set intake position", intakeState.getValue());
+        Logger.log(LoggerSystems.Intake,"Set intake position: " + intakeState.getName());
         switch (intakeState){
             case IntakeUpPosition:
                 currentPosition = IntakePosition.IntakeUpPosition;
@@ -119,7 +122,7 @@ public class IntakeSystem extends Subsystem {
         switch (currentPosition){
             case IntakeUpPosition:
                 rotateStop();
-                Logger.log(LoggerSystems.Intake,"Intake", "at up pos");
+                Logger.log(LoggerSystems.Intake,"Intake at up pos");
                 break;
             case IntakeHalfPosition:
               /*  if(encoder.getDistance() > (midEncVal + buffer)){
@@ -142,7 +145,7 @@ public class IntakeSystem extends Subsystem {
             case IntakeDownPosition:
                 //if (encoder.getDistance() < (downEncVal + buffer)) {
                     rotateStop();
-                    Logger.log(LoggerSystems.Intake,"Intake", "at down pos");
+                    Logger.log(LoggerSystems.Intake,"Intake at down pos");
                 //} else {
                 //    rotateMotor.set(downSpeed);
                 //    Logger.log(LoggerSystems.Intake,"Intake", "going to down pos");

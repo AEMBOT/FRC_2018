@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Encoder;
+
 public class Encoders {
     private Encoder encoder;
 

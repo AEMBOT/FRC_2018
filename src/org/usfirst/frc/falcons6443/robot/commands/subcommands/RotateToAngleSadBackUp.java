@@ -5,13 +5,13 @@ import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
+//GET THE BOT AND FIX DARN IT!!
 public class RotateToAngleSadBackUp extends SimpleCommand {
+    private NavX navX;
 
     private double buffer = 1; //0.5?? //degrees
     private boolean done;
     private double targetAngle;
-
-    private NavX navX;
 
     public RotateToAngleSadBackUp(double angle) {
         super("Rotate To Angle Beta");

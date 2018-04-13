@@ -74,5 +74,4 @@ public class NavX {
     public void resetDisplacement() {
         ahrs().resetDisplacement();
     }
-
 }

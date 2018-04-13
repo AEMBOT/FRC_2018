@@ -29,7 +29,6 @@ public class Robot extends IterativeRobot {
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final ElevatorSystem Elevator = new ElevatorSystem();
-    public static final NavigationSystem Navigation = new NavigationSystem();
     public static final IntakeSystem Intake = new IntakeSystem();
 
     public static OI oi;
@@ -56,7 +55,7 @@ public class Robot extends IterativeRobot {
         }*/
 
         oi = new OI();
-        //autonomy = null;
+        autonomy = null;
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();
@@ -95,7 +94,6 @@ public class Robot extends IterativeRobot {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
-        autonomy = new LaneToLine(); //
         if (autonomy != null) {
             autonomy.start();
         }

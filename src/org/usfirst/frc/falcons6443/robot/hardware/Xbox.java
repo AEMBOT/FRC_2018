@@ -11,10 +11,6 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.XboxRumble;
  */
 public class Xbox {
 
-    // To rumble an Xbox controller, use this in TeleopMode:
-    // primary.controller.setRumble(RumbleType.kLeftRumble, 1);
-    //[primary or secondary].controller.setRumble(RumbleType.[kLeftRumble or kRightRumble], [power]);
-
     public XboxController controller;
 
     /**
@@ -125,6 +121,7 @@ public class Xbox {
         return controller.getRawButton(4);
     }
 
+    //PLEASE FIND THE ACTUAL NAME FOR THESE
     public boolean seven() {
         return controller.getRawButton(7);
     }

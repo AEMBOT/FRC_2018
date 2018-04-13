@@ -9,7 +9,6 @@ public class MoveIntake extends SimpleCommand {
     private IntakePosition m_position;
     private boolean m_output;
     private boolean m_stop;
-    private boolean m_reset; //not in use???
     private boolean m_off;
 
     public MoveIntake(IntakePosition position, boolean output, boolean stop, boolean reset){
@@ -19,9 +18,9 @@ public class MoveIntake extends SimpleCommand {
         m_off = false;
         m_output = output;
         m_stop = stop;
-        m_reset = reset;
     }
 
+    //IF STOPDRIVE WORKS IMPLEMENT HERE!!
     @Override
     public void initialize() {
         if(m_position == IntakePosition.IntakeHalfPosition){

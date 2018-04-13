@@ -6,11 +6,6 @@ public class Playstation {
 
     public Joystick controller;
 
-    /**
-     * Constructor for Xbox.
-     *
-     * @param controller the xbox's joystick.
-     */
     public Playstation(Joystick controller) {
         this.controller = controller;
     }
@@ -114,6 +109,7 @@ public class Playstation {
         return controller.getRawButton(1);
     }
 
+    //PLEASE FIND THE ACTUAL NAME FOR THESE TOO
     public boolean seven() {
         return controller.getRawButton(9);
     }
