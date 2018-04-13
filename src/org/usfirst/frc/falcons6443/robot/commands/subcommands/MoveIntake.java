@@ -9,7 +9,7 @@ public class MoveIntake extends SimpleCommand {
     private IntakePosition m_position;
     private boolean m_output;
     private boolean m_stop;
-    private boolean m_reset;
+    private boolean m_reset; //not in use???
     private boolean m_off;
 
     public MoveIntake(IntakePosition position, boolean output, boolean stop, boolean reset){
@@ -24,10 +24,9 @@ public class MoveIntake extends SimpleCommand {
 
     @Override
     public void initialize() {
-        if(m_reset){
-            intake.reset();
+        if(m_position == IntakePosition.IntakeHalfPosition){
+            intake.setIntakePosition(m_position);
         }
-        intake.setIntakePosition(m_position);
     }
 
     @Override

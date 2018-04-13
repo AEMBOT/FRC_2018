@@ -31,6 +31,10 @@ public class SpeedControllerGroup implements SpeedController {
         controllers = new SpeedController[]{front, back};
     }
 
+    public SpeedControllerGroup(SpeedController one, SpeedController two, SpeedController three, SpeedController four) {
+        controllers = new SpeedController[]{one, two, three, four};
+    }
+
     @Override
     public void pidWrite(double arg0) {
         for (SpeedController controller : controllers) {

@@ -6,7 +6,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class DriveToDistance extends SimpleCommand {
 
-    public static final double P = .1; //.42
+    public static final double P = .15; //.42
     public static final double I = 0;
     public static final double D = .1; //3.5
     public static final double Eps = 0.5; //weakest applied power //0.4???
@@ -34,7 +34,7 @@ public class DriveToDistance extends SimpleCommand {
     }
 
     private void driveToDistance(){
-        double power = pid.calcPID(driveTrain.getLinearDistance());
+        double power = pid.calcPID(driveTrain.getLeftDistance());
         driveTrain.tankDrive(power, power + .05);
     }
 
@@ -58,20 +58,20 @@ public class DriveToDistance extends SimpleCommand {
     @Override
     public void execute() {
         //try w/o first
-  //      if(counter > 50) {
-  //          oldDistance = driveTrain.getLinearDistance();
-  //          counter = 0;
-  //      } else if (counter == 50){
-  //          if((oldDistance + counterBuffer) >= driveTrain.getLinearDistance()){
-  //             done = true;
-  //          }
-  //      } else {
-  //          counter++;
-  //      }
-        //elevator.moveToHeight(true);
+        if(counter > 50) {
+            oldDistance = driveTrain.getLeftDistance();
+            counter = 0;
+        } else if (counter == 50){
+            if((oldDistance + counterBuffer) >= driveTrain.getLeftDistance()){
+               done = true;
+            }
+        } else {
+            counter++;
+        }
+        elevator.moveToHeight(true);
         intake.autoMoveIntake();
         driveToDistance();
-        System.out.println("limit" + elevator.getSwitchLimit());
+       // System.out.println("enc" + driveTrain.getLeftDistance());
     }
 
     @Override
