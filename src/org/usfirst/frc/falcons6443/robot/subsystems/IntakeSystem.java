@@ -31,7 +31,8 @@ public class IntakeSystem extends Subsystem {
     private final int downEncVal = -700;
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
-    private boolean kill = false; //kill stops the constant slow speed
+    private boolean kill; //kill stops the constant slow speed
+    public boolean m_manual;
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -51,8 +52,38 @@ public class IntakeSystem extends Subsystem {
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
-    public void setKill(boolean toggle){
-        kill = toggle;
+    public void toggleKill(){
+        kill =! kill;
+    }
+
+    public void teleop(double manual, boolean[] buttons){
+        if(buttons[0]){
+            m_manual = false;
+            moveIntake(true);
+        } else if(buttons[1]){
+            m_manual = false;
+            moveIntake(false);
+        } else if(buttons[2]){
+            m_manual = false;
+            rotateMid();
+        } else if (!m_manual){
+            rotateStop();
+        }
+
+        if(Math.abs(manual) > 0.2){
+            m_manual = true;
+            rotateMotor.set(manual);
+        } else if(m_manual){
+            rotateStop();
+        }
+
+        if(buttons[3]){
+            intake();
+        } else if(buttons[4]){
+            output();
+        } else {
+            stop();
+        }
     }
 
     public void intake(){
@@ -60,9 +91,9 @@ public class IntakeSystem extends Subsystem {
         leftMotor.set(intakeSpeed);
     }
 
-    //public double getIntekeEnc(){
-    //    return encoder.getDistance();
-    //}
+    public double getIntekeEnc(){
+        return encoder.getDistance();
+    }
 
     public void output(){
         rightMotor.set(-outputSpeed);
@@ -103,15 +134,15 @@ public class IntakeSystem extends Subsystem {
         double speed;
         if (up) {
             speed = upSpeed;
-         //   if (encoder.getDistance() > upEncVal) {
-         //       speed = 0.1; //0? less strain on the motor
+            if (encoder.getDistance() > upEncVal) {
+                speed = 0.1; //0? less strain on the motor
 
-             // }
+            }
         } else {
             speed = downSpeed;
-            //if (encoder.getDistance() < downEncVal) {
-            //    speed = 0.1;
-           // }
+            if (encoder.getDistance() < downEncVal) {
+                speed = 0.1;
+            }
         }
         rotateMotor.set(speed);
     }
@@ -126,10 +157,10 @@ public class IntakeSystem extends Subsystem {
                 break;
             case IntakeHalfPosition:
               /*  if(encoder.getDistance() > (midEncVal + buffer)){
-                    rotateMotor.set(downSpeed);
+                    rotateMotor.setSpeed(downSpeed);
                     Logger.log(LoggerSystems.Intake,"Intake", "going down to half pos");
                } else if(encoder.getDistance() < (midEncVal - buffer)){
-                    rotateMotor.set(upSpeed);
+                    rotateMotor.setSpeed(upSpeed);
                     Logger.log(LoggerSystems.Intake,"Intake", "going up to half pos");
                 } else {
                     rotateStop();
@@ -147,7 +178,7 @@ public class IntakeSystem extends Subsystem {
                     rotateStop();
                     Logger.log(LoggerSystems.Intake,"Intake at down pos");
                 //} else {
-                //    rotateMotor.set(downSpeed);
+                //    rotateMotor.setSpeed(downSpeed);
                 //    Logger.log(LoggerSystems.Intake,"Intake", "going to down pos");
                 //}
             break;
@@ -158,7 +189,7 @@ public class IntakeSystem extends Subsystem {
         rotateMotor.set(0.1);
     }
 
-    /*public void rotateMid(){
+    public void rotateMid(){
         if(encoder.getDistance() > (midEncVal + buffer)){
             rotateMotor.set(downSpeed);
         } else if(encoder.getDistance() < (midEncVal - buffer)){
@@ -170,5 +201,5 @@ public class IntakeSystem extends Subsystem {
 
     public void resetEnc(){
         encoder.reset();
-    }*/
+    }
 }

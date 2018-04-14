@@ -20,7 +20,7 @@ public class UltrasonicSensor extends I2C {
 
     /**
      * Initializes a new Ultrasonic Sensor via the onboard I2C bus.
-     * Before initializing sensors on a bus, it is highly recommended that you set each address individually.
+     * Before initializing sensors on a bus, it is highly recommended that you setSpeed each address individually.
      *
      * @param deviceAddress the address location of the sensor on the bus. Default address is 224.
      */

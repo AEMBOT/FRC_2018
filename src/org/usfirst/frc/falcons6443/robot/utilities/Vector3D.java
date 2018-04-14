@@ -11,7 +11,7 @@ public class Vector3D {
     public float z;
 
     /**
-     * Construct this object with x, y, and z set to 0
+     * Construct this object with x, y, and z setSpeed to 0
      */
     public Vector3D() {
         this.setZero();

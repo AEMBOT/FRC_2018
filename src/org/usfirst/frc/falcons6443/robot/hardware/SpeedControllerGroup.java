@@ -15,27 +15,10 @@ public class SpeedControllerGroup implements SpeedController {
     /**
      * Constructor for SpeedControllerGroup.
      *
-     * @param controllers the speed controllers in the form of an array.
+     * @param controllers any number of speed controllers.
      */
-    public SpeedControllerGroup(SpeedController[] controllers) {
-        this.controllers = controllers;
-    }
-
-    /**
-     * Overloaded constructor for SpeedControllerGroup
-     *
-     * @param front the front speed controller.
-     * @param back  the back speed controller.
-     */
-    //public SpeedControllerGroup(SpeedController front, SpeedController back) {
-    //    controllers = new SpeedController[]{front, back};
-    //}
-
-    //TEST
-    public SpeedControllerGroup(SpeedController front, SpeedController back, SpeedController ... more) {
-        for (SpeedController m : more) {
-            controllers = new SpeedController[]{front, back, m};
-        }
+    public SpeedControllerGroup(SpeedController ... controllers) {
+         this.controllers = controllers;
     }
 
     @Override
@@ -52,10 +35,9 @@ public class SpeedControllerGroup implements SpeedController {
         }
     }
 
+    //returns the current setSpeed speed of the controller
     @Override
     public double get() {
-        //does get() return set power or actual power?
-        //would getting an average of the get() value for each index be more useful?
         return controllers[0].get();
     }
 
@@ -94,5 +76,4 @@ public class SpeedControllerGroup implements SpeedController {
             controller.setInverted(!controller.getInverted());
         }
     }
-
 }

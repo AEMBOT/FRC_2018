@@ -70,7 +70,7 @@ public class PID {
         this.errorEpsilon = eps;
     }
 
-    //set desired val; use in code
+    //setSpeed desired val; use in code
     public void setDesiredValue(double val) {
         this.desiredVal = val;
     }

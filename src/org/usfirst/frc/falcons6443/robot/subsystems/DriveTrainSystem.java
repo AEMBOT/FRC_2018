@@ -45,7 +45,7 @@ public class DriveTrainSystem extends Subsystem {
         leftMotors.setInverted(true);
         leftEncoder = new Encoders(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
         rightEncoder = new Encoders(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
-        // the driver station will complain for some reason if this isn't set so it's pretty necessary.
+        // the driver station will complain for some reason if this isn't setSpeed so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
         reversed = false;
@@ -115,7 +115,7 @@ public class DriveTrainSystem extends Subsystem {
         Vector2d vector = new Vector2d(0,0);
         vector.x = 0;
         vector.y = 0;
-        double differential = 0;
+        double differential;
         double power = 1;
 
         if (Math.abs(leftStickX) < .15) {

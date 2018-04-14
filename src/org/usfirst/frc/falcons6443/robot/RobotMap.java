@@ -23,10 +23,10 @@ public class RobotMap {
 
     //elevator motors
     public static final int ElevatorMotor = 7;
-    public static final int ElevatorRedlineMotor1 = 7;
-    public static final int ElevatorRedlineMotor2 = 8;
-    public static final int ElevatorRedlineMotor3 = 9;
-    public static final int ElevatorRedlineMotor4 = 10;
+    public static final int ElevatorRedLineMotor1 = 7;
+    public static final int ElevatorRedLineMotor2 = 8;
+    public static final int ElevatorRedLineMotor3 = 9;
+    public static final int ElevatorRedLineMotor4 = 10;
 
     //elevator sensors
     public static final int ElevatorScaleLimit = 7;
@@ -47,5 +47,5 @@ public class RobotMap {
     //code settings
     public static final boolean BackUpDistance = false;
     public static final boolean BackUpAngle = false;
-    public static final boolean Redline = true;
+    public static final boolean RedLine = true;
 }

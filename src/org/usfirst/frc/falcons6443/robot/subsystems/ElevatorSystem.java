@@ -23,16 +23,16 @@ public class ElevatorSystem extends Subsystem {
 
     private final double upSpeed = .9;
     private final double downSpeed = -.4;
-    private final double switchHeight = 600000; //set in ticks//630000
-    private final double scaleHeight = 1230000; //set in ticks
+    private final double switchHeight = 600000; //setSpeed in ticks//630000
+    private final double scaleHeight = 1230000; //setSpeed in ticks
 
     private final double autoTimeOneMotor = 5;
-    private final double autoTimeRedlines = 1; //set //.8
+    private final double autoTimeRedlines = 1; //setSpeed //.8
     private double autoTime;
     private boolean manual;
 
     public ElevatorSystem(){
-        if(RobotMap.Redline){
+        if(RobotMap.RedLine){
             encoder = new Encoders(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
             autoTime = autoTimeRedlines;
         } else {
@@ -176,20 +176,20 @@ public class ElevatorSystem extends Subsystem {
             power = 0;
         }
         if(!manual) {
-            motor.set(power);
+            motor.setSpeed(power);
         }
     }
 
     public void up (){
-        motor.set(.5);
+        motor.setSpeed(.5);
     }
 
     public void down (){
-        motor.set(downSpeed);
+        motor.setSpeed(downSpeed);
     }
 
     public void stop () {
-        motor.set(0);
+        motor.setSpeed(0);
     }
 
     public void manual(double x){
@@ -199,15 +199,15 @@ public class ElevatorSystem extends Subsystem {
             x = -.2;
         }
         if(!bottomLimit.get() && x > 0) {
-            motor.set(0);
+            motor.setSpeed(0);
             encoder.reset();
         } else if(encoder.getDistance() < scaleHeight && scaleLimit.get()){
-            motor.set(x);
+            motor.setSpeed(x);
         } else {
             if(x > 0){
-                motor.set(x);
+                motor.setSpeed(x);
             } else {
-                motor.set(-0.2);
+                motor.setSpeed(-0.2);
             }
             System.out.println("Max Height!!");
         }
