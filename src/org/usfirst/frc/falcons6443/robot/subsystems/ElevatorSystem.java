@@ -29,7 +29,7 @@ public class ElevatorSystem extends Subsystem {
     private final double autoTimeOneMotor = 5;
     private final double autoTimeRedlines = 1; //setSpeed //.8
     private double autoTime;
-    private boolean manual;
+    public boolean isManual;
 
     public ElevatorSystem(){
         if(RobotMap.RedLine){
@@ -43,7 +43,7 @@ public class ElevatorSystem extends Subsystem {
         //switchLimit = new DigitalInput(RobotMap.ElevatorSwitchLimit);
         bottomLimit = new DigitalInput(RobotMap.ElevatorBottomLimit);
         timer = new Timer();
-        manual = false;
+        isManual = false;
     }
 
     @Override
@@ -52,6 +52,9 @@ public class ElevatorSystem extends Subsystem {
     public void startTimer(){ timer.start(); }
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
+
+    public boolean getManualBool() { return isManual; }
+    public void setManualBool(boolean set) { isManual = set; }
 
     public double getEncoderDistance(){ return encoder.getDistance(); }
     public double getEncoderDistanceAuto(){ return -encoder.getDistance(); }
@@ -71,12 +74,15 @@ public class ElevatorSystem extends Subsystem {
         switch (elevatorState){
             case Exchange:
                 desiredState = ElevatorPosition.Exchange;
+                setManual(false);
                 break;
             case Switch:
                 desiredState = ElevatorPosition.Switch;
+                setManual(false);
                 break;
             case Scale:
                 desiredState = ElevatorPosition.Scale;
+                setManual(false);
                 break;
             case Stop:
                 desiredState = ElevatorPosition.Stop;
@@ -175,7 +181,7 @@ public class ElevatorSystem extends Subsystem {
         } else if (!scaleLimit.get() && power < 0){
             power = 0;
         }
-        if(!manual) {
+        if(!isManual) {
             motor.setSpeed(power);
         }
     }
@@ -193,6 +199,7 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void manual(double x){
+        isManual = true;
         if(x > 0){
             x = x * .3;
         } else if(x > -.2) {
@@ -214,6 +221,6 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void setManual(boolean on){
-        manual = on;
+        isManual = on;
     }
 }

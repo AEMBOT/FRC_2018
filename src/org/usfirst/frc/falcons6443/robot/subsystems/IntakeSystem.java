@@ -32,7 +32,6 @@ public class IntakeSystem extends Subsystem {
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
     private boolean kill; //kill stops the constant slow speed
-    public boolean m_manual;
 
     public IntakeSystem(){
         leftMotor = new Spark(RobotMap.IntakeLeftMotor);
@@ -54,36 +53,6 @@ public class IntakeSystem extends Subsystem {
 
     public void toggleKill(){
         kill =! kill;
-    }
-
-    public void teleop(double manual, boolean[] buttons){
-        if(buttons[0]){
-            m_manual = false;
-            moveIntake(true);
-        } else if(buttons[1]){
-            m_manual = false;
-            moveIntake(false);
-        } else if(buttons[2]){
-            m_manual = false;
-            rotateMid();
-        } else if (!m_manual){
-            rotateStop();
-        }
-
-        if(Math.abs(manual) > 0.2){
-            m_manual = true;
-            rotateMotor.set(manual);
-        } else if(m_manual){
-            rotateStop();
-        }
-
-        if(buttons[3]){
-            intake();
-        } else if(buttons[4]){
-            output();
-        } else {
-            stop();
-        }
     }
 
     public void intake(){
