@@ -12,7 +12,7 @@ public class Logger {
 
     private static Stopwatch stopwatch;
     private static String startTime;
-    private static int numberOfSystems = 10;
+    private static int numberOfSystems = 7;
     //private static int cacheSize = 25;
     private static boolean initOne = true;
 
@@ -26,7 +26,8 @@ public class Logger {
         init();
         Logger.log(LoggerSystems.Drive,"AUTONOMOUS");
         Logger.log(LoggerSystems.Elevator,"AUTONOMOUS");
-        Logger.log(LoggerSystems.Intake,"AUTONOMOUS");
+        Logger.log(LoggerSystems.Flywheel,"AUTONOMOUS");
+        Logger.log(LoggerSystems.Rotation,"AUTONOMOUS");
         Logger.log(LoggerSystems.Gyro,"AUTONOMOUS");
         Logger.log(LoggerSystems.Auto,"AUTONOMOUS");
     }
@@ -36,7 +37,8 @@ public class Logger {
         init();
         Logger.log(LoggerSystems.Drive,"TELEOP");
         Logger.log(LoggerSystems.Elevator,"TELEOP");
-        Logger.log(LoggerSystems.Intake,"TELEOP");
+        Logger.log(LoggerSystems.Flywheel,"TELEOP");
+        Logger.log(LoggerSystems.Rotation,"TELEOP");
         Logger.log(LoggerSystems.Gyro,"TELEOP");
         Logger.log(LoggerSystems.Auto,"TELEOP");
     }
@@ -45,7 +47,8 @@ public class Logger {
     public static void disabled(){
         Logger.log(LoggerSystems.Drive,"DISABLED");
         Logger.log(LoggerSystems.Elevator,"DISABLED");
-        Logger.log(LoggerSystems.Intake,"DISABLED");
+        Logger.log(LoggerSystems.Flywheel,"DISABLED");
+        Logger.log(LoggerSystems.Rotation,"DISABLED");
         Logger.log(LoggerSystems.Gyro,"DISABLED");
         Logger.log(LoggerSystems.Auto,"DISABLED");
     }

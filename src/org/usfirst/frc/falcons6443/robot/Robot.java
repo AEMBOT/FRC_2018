@@ -7,14 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.*;
-import org.usfirst.frc.falcons6443.robot.commands.complete.*;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * ROBOTS DON'T QUIT!
@@ -29,7 +25,8 @@ public class Robot extends IterativeRobot {
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
     public static final ElevatorSystem Elevator = new ElevatorSystem();
-    public static final IntakeSystem Intake = new IntakeSystem();
+    public static final FlywheelSystem Flywheel = new FlywheelSystem();
+    public static final RotationSystem Rotation = new RotationSystem();
 
     public static OI oi;
 
@@ -38,6 +35,7 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
+
     //public Reader autoReader;
     /*
      * Called when the robot first starts.
@@ -94,9 +92,7 @@ public class Robot extends IterativeRobot {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
-        if (autonomy != null) {
-            autonomy.start();
-        }
+        if (autonomy != null) autonomy.start();
     }
 
     /*

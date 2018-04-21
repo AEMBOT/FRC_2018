@@ -1,10 +1,8 @@
 package org.usfirst.frc.falcons6443.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.falcons6443.robot.hardware.Playstation;
-import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
+import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
 
 import java.util.HashMap;
 

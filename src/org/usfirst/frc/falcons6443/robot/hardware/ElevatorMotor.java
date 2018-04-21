@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
-import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 
 public class ElevatorMotor {
@@ -16,7 +15,7 @@ public class ElevatorMotor {
                     new Talon(RobotMap.ElevatorRedLineMotor2), new Talon(RobotMap.ElevatorRedLineMotor3),
                     new Talon(RobotMap.ElevatorRedLineMotor4));
         } else {
-            singleMotor = new Spark(RobotMap.ElevatorMotor);
+            singleMotor = new Spark(RobotMap.ElevatorSingleMotor);
             singleMotor.setInverted(true);
         }
         redLine = RobotMap.RedLine;

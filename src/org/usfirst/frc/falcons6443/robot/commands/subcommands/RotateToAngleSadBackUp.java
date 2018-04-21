@@ -17,7 +17,8 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
         super("Rotate To Angle Beta");
         requires(driveTrain);
         requires(elevator);
-        requires(intake);
+        requires(flywheel);
+        requires(rotation);
         navX = navX.get();
         if (angle > 180){
             angle -= 360;
@@ -50,7 +51,7 @@ public class RotateToAngleSadBackUp extends SimpleCommand {
     @Override
     public void execute() {
         // elevator.moveToHeight(true);
-        intake.autoMoveIntake();
+        rotation.autoMoveIntake();
         turnToAngle();
         Logger.log(LoggerSystems.Gyro,"Angle: " + Float.toString(navX.getYaw()));
     }

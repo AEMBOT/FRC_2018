@@ -6,41 +6,38 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 public class MoveIntake extends SimpleCommand {
 
-    private IntakePosition m_position;
+    private RotationPosition m_position;
     private boolean m_output;
     private boolean m_stop;
-    private boolean m_off;
 
-    public MoveIntake(IntakePosition position, boolean output, boolean stop, boolean reset){
+    public MoveIntake(RotationPosition position, boolean output, boolean stop, boolean reset){
         super("Move Elevator System");
-        requires(intake);
+        requires(flywheel);
+        requires(rotation);
         m_position = position;
-        m_off = false;
         m_output = output;
         m_stop = stop;
     }
 
-    //IF STOPDRIVE WORKS IMPLEMENT HERE!!
     @Override
     public void initialize() {
-        if(m_position == IntakePosition.IntakeHalfPosition){
-            intake.setIntakePosition(m_position);
+        if(m_position == RotationPosition.IntakeHalfPosition){
+            rotation.setIntakePosition(m_position);
         }
     }
 
     @Override
     public void execute() {
         if (m_output){
-            Logger.log(LoggerSystems.Intake,"Auto output");
-            intake.output();
+            Logger.log(LoggerSystems.Flywheel,"Auto output");
+            flywheel.output();
         }
         if(m_stop){
-            Logger.log(LoggerSystems.Intake,"Auto stop");
-            intake.stop();
+            Logger.log(LoggerSystems.Flywheel,"Auto stop");
+            flywheel.stop();
         }
-        m_off = true;
     }
 
     @Override
-    public boolean isFinished() { return m_off; }
+    public boolean isFinished() { return true; }
 }

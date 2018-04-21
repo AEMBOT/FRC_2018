@@ -7,16 +7,13 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 public class MoveElevator extends SimpleCommand{
 
     private ElevatorPosition position;
-    private boolean off;
 
     public MoveElevator(ElevatorPosition pos){
         super("Move ElevatorSystem");
         requires(elevator);
         position = pos;
-        off = false;
     }
 
-    //IF STOPDRIVE WORKS IMPLEMENT HERE!!
     @Override
     public void initialize() {
         elevator.setToHeight(position);
@@ -27,12 +24,10 @@ public class MoveElevator extends SimpleCommand{
     }
 
     @Override
-    public void execute() {
-       off = true;
-    }
+    public void execute() {    }
 
     @Override
     public boolean isFinished() {
-        return off;
+        return true;
     }
 }

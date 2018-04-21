@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
-import org.usfirst.frc.falcons6443.robot.hardware.Xbox;
+import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.Controls;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class TeleopMode extends SimpleCommand {
 
-    private Xbox primary;           //Drive and intake/output
+    private Xbox primary;           //Drive and flywheel/output
     private Xbox secondary;         //Secondary functions
     private int number = 0;
     private List<Boolean> on = new ArrayList<>();
@@ -30,8 +30,9 @@ public class TeleopMode extends SimpleCommand {
     public TeleopMode() {
         super("Teleop Command");
         requires(driveTrain);
-        requires(intake);
+        requires(flywheel);
         requires(elevator);
+        requires(rotation);
     }
 
     @Override
@@ -39,8 +40,8 @@ public class TeleopMode extends SimpleCommand {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
         //driveProfile = new FalconDrive(primary);
-        isManualGetter.add(Controls.Elevator.getValue(), () -> elevator.getManualBool());
-        isManualSetter.add(Controls.Elevator.getValue(), (Boolean set) -> elevator.setManualBool(set));
+        isManualGetter.add(Controls.Elevator.getValue(), () -> elevator.getManual());
+        isManualSetter.add(Controls.Elevator.getValue(), (Boolean set) -> elevator.setManual(set));
     }
 
     @Override
@@ -54,23 +55,24 @@ public class TeleopMode extends SimpleCommand {
         press(primary.leftBumper(), () -> driveTrain.downShift());
 
         //elevator
-        press((Boolean set) -> elevator.setManualBool(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
-        press((Boolean set) -> elevator.setManualBool(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
-        press((Boolean set) -> elevator.setManualBool(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
-        press((Boolean set) -> elevator.setManualBool(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
+        press((Boolean set) -> elevator.setManual(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
+        press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
+        press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
+        press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
         manual(Controls.Elevator, secondary.leftStickY(), () -> elevator.manual(secondary.leftStickY()));
 
         //flywheels
-        press(primary.A(), () -> intake.intake());
-        press(primary.B(), () -> intake.output());
-        press(primary.Y(), () -> intake.slowOutput());
-        depress(secondary.seven(), () -> intake.toggleKill()); //toggles slow spin while off
+        press(primary.A(), () -> flywheel.intake());
+        press(primary.B(), () -> flywheel.output());
+        press(primary.Y(), () -> flywheel.slowOutput());
+        depress(secondary.seven(), () -> flywheel.toggleKill()); //toggles slow spin while off
 
-        press(secondary.rightBumper(), () -> intake.moveIntake(true));
-        press(secondary.leftBumper(), () -> intake.moveIntake(false));
+        //rotation
+        press(secondary.rightBumper(), () -> rotation.up());
+        press(secondary.leftBumper(), () -> rotation.down());
 
-        off(() -> intake.stop(), primary.A(), primary.B(), primary.Y());
-        off(() -> intake.rotateStop(), secondary.rightBumper(), secondary.leftBumper());
+        off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
+        off(() -> rotation.stop(), secondary.rightBumper(), secondary.leftBumper());
         elevator.moveToHeight(false);
         periodicEnd();
     }

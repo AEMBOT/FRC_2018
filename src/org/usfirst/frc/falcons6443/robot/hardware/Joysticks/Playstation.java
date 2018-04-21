@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.hardware;
+package org.usfirst.frc.falcons6443.robot.hardware.Joysticks;
 
 import edu.wpi.first.wpilibj.Joystick;
 

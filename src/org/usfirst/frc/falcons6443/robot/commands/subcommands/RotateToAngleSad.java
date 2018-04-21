@@ -32,7 +32,8 @@ public class RotateToAngleSad extends SimpleCommand {
         super("Rotate To Angle Beta");
         requires(driveTrain);
         requires(elevator);
-        requires(intake);
+        requires(flywheel);
+        requires(rotation);
         navX = NavX.get();
         directionPos = true;
         pid = new PID(P, I, D, Eps);
@@ -83,7 +84,7 @@ public class RotateToAngleSad extends SimpleCommand {
         } else {
             counter++;
         }//was commented out. if issues occur get rid of it, but maybe it magically works??
-        intake.autoMoveIntake();
+        rotation.autoMoveIntake();
         elevator.moveToHeight(true);
         setAngle();
         turnToAngle();
