@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit() {
-        Logger.disabled();
+        //Logger.disabled();
         Scheduler.getInstance().removeAll();
     }
 
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        Logger.autoInit();
+        //Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
         //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
         if (autonomy != null) autonomy.start();
@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit() {
-        Logger.teleopInit();
+        //Logger.teleopInit();
         if (autonomy != null) autonomy.cancel();
         if (teleop != null) teleop.start();
     }

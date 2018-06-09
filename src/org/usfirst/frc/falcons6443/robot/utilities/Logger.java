@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
 public class Logger {
@@ -55,9 +57,11 @@ public class Logger {
 
     //Run to log, using system, message name, and message
     public static void log(LoggerSystems system, String message) {
-        logInterior(system, message, true);
-        if (system != LoggerSystems.All) {
-            logInterior(system, message, false);
+        if(RobotMap.Logger){
+            logInterior(system, message, true);
+            if (system != LoggerSystems.All) {
+                logInterior(system, message, false);
+            }
         }
     }
 
@@ -114,15 +118,17 @@ public class Logger {
     }
 
     private static void init(){
-        initiateTimer();
-        if (initOne){
-            startTime = clockTimeStamp();
-            initOne = false;
-            for (int i = 0; i < numberOfSystems; i++){
-                oldMessage[i] = "";
-                condenser[i] = 0;
-                //cacheNumber[i] = 0;
-                logOne[i] = true;
+        if(RobotMap.Logger){
+            initiateTimer();
+            if (initOne){
+                startTime = clockTimeStamp();
+                initOne = false;
+                for (int i = 0; i < numberOfSystems; i++){
+                    oldMessage[i] = "";
+                    condenser[i] = 0;
+                    //cacheNumber[i] = 0;
+                    logOne[i] = true;
+                }
             }
         }
     }

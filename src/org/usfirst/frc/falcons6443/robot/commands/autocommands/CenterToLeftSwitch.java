@@ -3,7 +3,7 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
-import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+//import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 /**
@@ -14,7 +14,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 public class CenterToLeftSwitch extends CommandGroup {
 
     public CenterToLeftSwitch() {
-        Logger.log(LoggerSystems.Auto,"Start auto path: Center to left switch");
+//        Logger.log(LoggerSystems.Auto,"Start auto path: Center to left switch");
 
         Scheduler.getInstance().removeAll();
         addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, false, false));

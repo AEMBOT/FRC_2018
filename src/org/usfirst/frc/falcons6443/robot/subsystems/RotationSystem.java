@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
-import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+//import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.RotationPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -17,7 +17,7 @@ public class RotationSystem extends Subsystem {
     private RotationPosition currentPosition = RotationPosition.IntakeUpPosition;
 
     private final double upSpeed = 1;
-    private final double downSpeed = -.5;
+    private final double downSpeed = -.45;
     private final int upEncVal = -40;
     private final int downEncVal = -700;
     private final int midEncVal = -270;
@@ -27,7 +27,7 @@ public class RotationSystem extends Subsystem {
         rotateMotor = new Spark(RobotMap.RotationMotor);
         encoder = new Encoders(RobotMap.RotationEncoderA, RobotMap.RotationEncoderB);
         timer = new Timer();
-        rotateMotor.setInverted(true);
+        rotateMotor.setInverted(false);
     }
 
     public void startTimer(){ timer.start(); }
@@ -40,7 +40,7 @@ public class RotationSystem extends Subsystem {
     public void resetEncoder(){ encoder.reset(); }
 
     public void stop(){
-        rotateMotor.set(0.1);
+        rotateMotor.set(0);
     }
 
     public void middle(){
@@ -54,7 +54,7 @@ public class RotationSystem extends Subsystem {
     }
 
     public void setIntakePosition(RotationPosition intakeState){
-        Logger.log(LoggerSystems.Rotation,"Set flywheel position: " + intakeState.getName());
+ //       Logger.log(LoggerSystems.Rotation,"Set flywheel position: " + intakeState.getName());
         switch (intakeState){
         case IntakeUpPosition:
             currentPosition = RotationPosition.IntakeUpPosition;
@@ -70,18 +70,20 @@ public class RotationSystem extends Subsystem {
 
     public void up() {
         double speed = upSpeed;
-        if (encoder.getDistance() > upEncVal) {
-            speed = 0.1; //0? less strain on the motor
-        }
+//        if (encoder.getDistance() > upEncVal) {
+//            speed = 0.1; //0? less strain on the motor
+//        }
         rotateMotor.set(speed);
+        System.out.println("Encoder: " + encoder.getDistance());
     }
 
     public void down(){
         double speed = downSpeed;
-        if (encoder.getDistance() < downEncVal) {
-            speed = 0.1;
-        }
+//        if (encoder.getDistance() < downEncVal) {
+//            speed = 0.1;
+//        }
         rotateMotor.set(speed);
+        System.out.println("Encoder: " + encoder.getDistance());
     }
 
     public void autoMoveIntake(){
@@ -90,7 +92,7 @@ public class RotationSystem extends Subsystem {
         switch (currentPosition){
             case IntakeUpPosition:
                 stop();
-                Logger.log(LoggerSystems.Flywheel,"Flywheel at up pos");
+//                Logger.log(LoggerSystems.Flywheel,"Flywheel at up pos");
                 break;
             case IntakeHalfPosition:
             /*  if(encoder.getDistance() > (midEncVal + buffer)){
@@ -112,7 +114,7 @@ public class RotationSystem extends Subsystem {
             case IntakeDownPosition:
               //if (encoder.getDistance() < (downEncVal + buffer)) {
                     stop();
-                    Logger.log(LoggerSystems.Flywheel,"Flywheel at down pos");
+ //                   Logger.log(LoggerSystems.Flywheel,"Flywheel at down pos");
               //} else {
               //    rotateMotor.setSpeed(downSpeed);
               //    Logger.log(LoggerSystems.Flywheel,"Flywheel", "going to down pos");

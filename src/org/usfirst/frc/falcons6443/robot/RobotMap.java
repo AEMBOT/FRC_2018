@@ -50,4 +50,5 @@ public class RobotMap {
     public static final boolean BackUpDistance = false;
     public static final boolean BackUpAngle = false;
     public static final boolean RedLine = true;
+    public static final boolean Logger = false;
 }

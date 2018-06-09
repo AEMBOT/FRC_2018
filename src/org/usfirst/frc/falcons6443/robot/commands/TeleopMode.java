@@ -40,6 +40,9 @@ public class TeleopMode extends SimpleCommand {
         primary = Robot.oi.getXbox(true);
         secondary = Robot.oi.getXbox(false);
         //driveProfile = new FalconDrive(primary);
+
+        isManualGetter.add(null);
+        isManualSetter.add(null);
         isManualGetter.add(Controls.Elevator.getValue(), () -> elevator.getManual());
         isManualSetter.add(Controls.Elevator.getValue(), (Boolean set) -> elevator.setManual(set));
     }
@@ -55,11 +58,11 @@ public class TeleopMode extends SimpleCommand {
         press(primary.leftBumper(), () -> driveTrain.downShift());
 
         //elevator
-        press((Boolean set) -> elevator.setManual(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
-        press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
-        press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
-        press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
-        manual(Controls.Elevator, secondary.leftStickY(), () -> elevator.manual(secondary.leftStickY()));
+//        press((Boolean set) -> elevator.setManual(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
+//        press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
+//        press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
+//        press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
+        manual(Controls.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
 
         //flywheels
         press(primary.A(), () -> flywheel.intake());
@@ -73,7 +76,7 @@ public class TeleopMode extends SimpleCommand {
 
         off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
         off(() -> rotation.stop(), secondary.rightBumper(), secondary.leftBumper());
-        elevator.moveToHeight(false);
+        //elevator.moveToHeight(false);
         periodicEnd();
     }
 
@@ -91,7 +94,7 @@ public class TeleopMode extends SimpleCommand {
 
     //Use if you want an action on a manual input (joystick, trigger)
     private void manual(Controls manualNumber, double input, Runnable action){
-        if(input > 0.2){
+        if(Math.abs(input) > 0.2){
             isManualSetter.get(manualNumber.getValue()).accept(true);
             action.run();
         }
@@ -110,6 +113,7 @@ public class TeleopMode extends SimpleCommand {
         } finally {
         }
     }
+
     //Use if you want an action on a button to only be activated when depressed
     private void depress(boolean button, Runnable function){
         if(isFirst) on.add(number, false);
