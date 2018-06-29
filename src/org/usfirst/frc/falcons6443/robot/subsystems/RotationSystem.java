@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 //import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.RotationPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -13,6 +14,7 @@ public class RotationSystem extends Subsystem {
     private Spark rotateMotor;
     private Encoders encoder;
     private Timer timer;
+    private boolean isManual;
 
     private RotationPosition currentPosition = RotationPosition.IntakeUpPosition;
 
@@ -40,6 +42,7 @@ public class RotationSystem extends Subsystem {
     public void resetEncoder(){ encoder.reset(); }
 
     public void stop(){
+        //rotateMotor.set(0.17);
         rotateMotor.set(0);
     }
 
@@ -121,6 +124,17 @@ public class RotationSystem extends Subsystem {
               //}
                 break;
         }
+    }
+
+    public void manual(double input){ rotateMotor.set(input); }
+
+    public void setManual(boolean on){
+        isManual = on;
+        Logger.log(LoggerSystems.Rotation, "Set manual " + on);
+    }
+
+    public boolean getManual(){
+        return isManual;
     }
 
     @Override

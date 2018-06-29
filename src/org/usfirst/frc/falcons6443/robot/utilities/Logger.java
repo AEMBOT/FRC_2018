@@ -66,9 +66,8 @@ public class Logger {
     }
 
     private static void logInterior(LoggerSystems system, String message, boolean all){
-        LoggerSystems name = null;
         if(all){
-            name = system;
+            message = system.getName() + ": " + message;
             system = LoggerSystems.All;
         }
         
@@ -80,40 +79,34 @@ public class Logger {
         } else if(message.equals(oldMessage[system.getValue()])){
             condenser[system.getValue()]++;
         } else if(condenser[system.getValue()] > 1) {
-            if(all) {
-                out = name.getName() + ": " + oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
-            } else {
-                out = oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
-            }
+            out = oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
             print(system, out);
             oldMessage[system.getValue()] = message;
             condenser[system.getValue()] = 0;
         } else {
-            if(all) {
-                out = name.getName() + ": " + oldMessage[system.getValue()];
-            } else {
-                out = oldMessage[system.getValue()];
-            }
+            out = oldMessage[system.getValue()];
             print(system, out);
             oldMessage[system.getValue()] = message;
         }
     }
 
     private static void print(LoggerSystems system, String oldMessage) {
-        String fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt" /*".json"*/;
-        File file = new File(fileName);
-        file.getParentFile().mkdirs();
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
-            //if (cacheNumber[system.getName()] < cacheSize) {
-            bw.write(oldMessage);
-            bw.newLine();
-            bw.write(timeStamp() + ", " + clockTimeStamp());
-            bw.newLine();
-            bw.flush();
-            bw.close();
-            //cacheNumber[system.getName()] = 0;
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (startTime != null) {
+            String fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt" /*".json"*/;
+            File file = new File(fileName);
+            file.getParentFile().mkdirs();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
+                //if (cacheNumber[system.getName()] < cacheSize) {
+                bw.write(oldMessage);
+                bw.newLine();
+                bw.write(timeStamp() + ", " + clockTimeStamp());
+                bw.newLine();
+                bw.flush();
+                bw.close();
+                //cacheNumber[system.getName()] = 0;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -165,6 +158,18 @@ public class Logger {
     private static void initiateTimer(){
         if (stopwatch == null){
             stopwatch = new Stopwatch(true);
+        }
+    }
+
+    //Get programming a permanent thumbdrive!
+    public void pullLogFiles(boolean oneSevenTwo){
+        Runtime runtime = Runtime.getRuntime();
+
+        try {
+            if(oneSevenTwo) runtime.exec("cmd /c start \"\" loggerRetrieval_172.bat");
+            else runtime.exec("cmd /c start \"\" loggerRetrieval_10.bat");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

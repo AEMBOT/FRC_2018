@@ -6,7 +6,7 @@ import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorMotor;
 import org.usfirst.frc.falcons6443.robot.hardware.LimitSwitch;
-//import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 public class ElevatorSystem extends Subsystem {
@@ -171,10 +171,10 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void stop () {
+        //motor.setSpeed(constantSpeed);
         motor.setSpeed(0);
     }
 
-    //all values negative. Look at joystick to see if it was an input problem
     public void manual(double x){
         setManual(true);
         if(x < 0) x = x * .3;
@@ -196,9 +196,8 @@ public class ElevatorSystem extends Subsystem {
 
     public void setManual(boolean on){
         isManual = on;
+        Logger.log(LoggerSystems.Elevator, "Set manual " + on);
     }
 
-    public boolean getManual(){
-        return isManual;
-    }
+    public boolean getManual(){ return isManual; }
 }
