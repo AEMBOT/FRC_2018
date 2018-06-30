@@ -1,0 +1,6 @@
+open lvuser@172.22.11.2
+lcd f:/
+get logs Logs
+rmdir logs
+mkdir logs
+exit

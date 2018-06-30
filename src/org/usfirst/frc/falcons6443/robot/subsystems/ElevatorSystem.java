@@ -20,9 +20,9 @@ public class ElevatorSystem extends Subsystem {
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
     private ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
-    private final double upSpeed = .9;
-    private final double downSpeed = -.4;
-    private final double constantSpeed = -0.2;
+    private final double upSpeed = 0.9;
+    private final double downSpeed = -0.6;
+    private final double constantSpeed = 0.2;
     private final double switchHeight = 600000; //setSpeed in ticks//630000
     private final double scaleHeight = 1230000; //setSpeed in ticks
 
@@ -66,7 +66,7 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
-        Logger.log(LoggerSystems.Elevator,"Set elevator position: " + elevatorState.getName());
+//        Logger.log(LoggerSystems.Elevator,"Set elevator position: " + elevatorState.getName());
         switch (elevatorState){
             case Exchange:
                 desiredState = ElevatorPosition.Exchange;
@@ -110,8 +110,8 @@ public class ElevatorSystem extends Subsystem {
 
         if(auto && getTime() > autoTime){
             desiredState = ElevatorPosition.Stop;
-            Logger.log(LoggerSystems.Auto, "Elevator ran overtime: stopped elevator");
-            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto: stopped elevator");
+//            Logger.log(LoggerSystems.Auto, "Elevator ran overtime: stopped elevator");
+//            Logger.log(LoggerSystems.Elevator, "Ran overtime in auto: stopped elevator");
         } else if (!auto){
             stopTimer();
         }
@@ -124,7 +124,7 @@ public class ElevatorSystem extends Subsystem {
                 } else {
                     power = downSpeed;
                 }
-                Logger.log(LoggerSystems.Elevator,"Bottom limit: " + Boolean.toString(bottomLimit.get()));
+//                Logger.log(LoggerSystems.Elevator,"Bottom limit: " + Boolean.toString(bottomLimit.get()));
                 break;
             case Scale:
                 if (getScaleHeight()){
@@ -132,7 +132,7 @@ public class ElevatorSystem extends Subsystem {
                 } else {
                     power = upSpeed;
                }
-               Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(scaleLimit.get()));
+ //              Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(scaleLimit.get()));
                break;
             case Switch:
                 if(auto){
@@ -154,7 +154,7 @@ public class ElevatorSystem extends Subsystem {
                 }
                 break;
             case Stop:
-                Logger.log(LoggerSystems.Elevator,"move to height: Stop enum");
+//                Logger.log(LoggerSystems.Elevator,"move to height: Stop enum");
                 power = 0;
                 break;
         }
@@ -171,32 +171,33 @@ public class ElevatorSystem extends Subsystem {
     }
 
     public void stop () {
+        //motor.setSpeed(constantSpeed);
         motor.setSpeed(0);
     }
 
-    //all values negative. Look at joystick to see if it was an input problem
     public void manual(double x){
         setManual(true);
-        if(x > 0) x = x * .3;
-        else if(x > constantSpeed) x = constantSpeed;
+        if(x < 0) x = x * .3;
+       // else if(x < constantSpeed) x = constantSpeed;
 
-        if(!bottomLimit.get() && x > 0) {
+       /* if(!bottomLimit.get() && x < 0) {
             motor.setSpeed(0);
             resetEncoder();
         } else if(encoder.getDistance() < scaleHeight && scaleLimit.get()){
             motor.setSpeed(x);
         } else {
-            if(x > 0) motor.setSpeed(x);
+            if(x < 0) motor.setSpeed(x);
             else motor.setSpeed(constantSpeed);
             System.out.println("Max Height!!");
-        }
+        }*/
+       motor.setSpeed(x);
+        System.out.println("E Enc: " + encoder.getDistance());
     }
 
     public void setManual(boolean on){
         isManual = on;
+        Logger.log(LoggerSystems.Elevator, "Set manual " + on);
     }
 
-    public boolean getManual(){
-        return isManual;
-    }
+    public boolean getManual(){ return isManual; }
 }

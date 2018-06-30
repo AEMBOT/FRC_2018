@@ -2,7 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
-import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+//import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 /**
@@ -13,7 +13,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 public class CenterToRightSwitch extends CommandGroup {
 
     public CenterToRightSwitch() {
-        Logger.log(LoggerSystems.Auto,"Start auto path: Center to right switch");
+  //      Logger.log(LoggerSystems.Auto,"Start auto path: Center to right switch");
         addSequential(new MoveElevator(ElevatorPosition.Switch));
         addSequential(new MoveIntake(RotationPosition.IntakeHalfPosition, false, false, true));
 
