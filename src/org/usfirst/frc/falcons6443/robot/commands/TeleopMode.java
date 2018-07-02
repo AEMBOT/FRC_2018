@@ -23,8 +23,8 @@ public class TeleopMode extends SimpleCommand {
     private int numOfSubsystems = 4;
     private List<Boolean> depress = new ArrayList<>();
     private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
-    private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
-    private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
+    private Callable<Boolean>[] isManualGetter = (Callable<Boolean>[]) new Object[numOfSubsystems]; //add control manual getters
+    private Consumer<Boolean>[] isManualSetter = (Consumer<Boolean>[]) new Object[numOfSubsystems]; //add control manual setters
 
     private boolean isFirst = true;
     //private WCDProfile driveProfile;//Profile used to calculate robot drive power
@@ -45,14 +45,10 @@ public class TeleopMode extends SimpleCommand {
 
         //adding manual getters and setters using Subsystems.subsystemEnum.getValue() (to indicate which subsystem),
         // () -> function() or (Boolean set) -> function() (depending on required params)
-        isManualGetter.add(null);
-        isManualSetter.add(null);
-        isManualGetter.add(Subsystems.Elevator.getValue(), () -> elevator.getManual());
-        isManualSetter.add(Subsystems.Elevator.getValue(), (Boolean set) -> elevator.setManual(set));
-        isManualGetter.add(null);
-        isManualSetter.add(null);
-        isManualGetter.add(Subsystems.Rotate.getValue(), () -> rotation.getManual());
-        isManualSetter.add(Subsystems.Rotate.getValue(), (Boolean set) -> rotation.setManual(set));
+        isManualGetter[Subsystems.Elevator.getValue()] = () -> elevator.getManual();
+        isManualSetter[Subsystems.Elevator.getValue()] = (Boolean set) -> elevator.setManual(set);
+        isManualGetter[Subsystems.Rotate.getValue()] = () -> rotation.getManual();
+        isManualSetter[Subsystems.Rotate.getValue()] = (Boolean set) -> rotation.setManual(set);
     }
 
     @Override
@@ -110,7 +106,7 @@ public class TeleopMode extends SimpleCommand {
     //Use if you want an action with a manual input (joystick, trigger, etc)
     private void manual(Subsystems manualNumber, double input, Runnable action){
         if(Math.abs(input) > 0.2){
-            isManualSetter.get(manualNumber.getValue()).accept(true);
+            isManualSetter[manualNumber.getValue()].accept(true);
             isManualLessThanBuffer[manualNumber.getValue()] = false;
             action.run();
         } else {
@@ -132,8 +128,8 @@ public class TeleopMode extends SimpleCommand {
     //Use if you want an action to run when a set of buttons is not pressed and manual is less than buffer
     private void off(Subsystems manualNumber, Runnable off, boolean ... button){
         try {
-            if(areAllFalse(button) && !isManualGetter.get(manualNumber.getValue()).call()) off.run();
-            else if((areAllFalse(button) && isManualGetter.get(manualNumber.getValue()).call()
+            if(areAllFalse(button) && !isManualGetter[manualNumber.getValue()].call()) off.run();
+            else if((areAllFalse(button) && isManualGetter[manualNumber.getValue()].call()
                     && isManualLessThanBuffer[manualNumber.getValue()])) off.run();
         } catch (Exception e) {
         } finally {
