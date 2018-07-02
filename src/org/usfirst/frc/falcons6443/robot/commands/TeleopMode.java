@@ -4,8 +4,7 @@ import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
@@ -17,16 +16,16 @@ import java.util.function.Consumer;
  */
 public class TeleopMode extends SimpleCommand {
 
+    private int unpressedID = 0;
+    private int numOfSubsystems = 4;
+
     private Xbox primary;           //Drive and flywheel/output
     private Xbox secondary;         //Secondary functions
-    private int number = 0;
-    private int numOfSubsystems = 4;
-    private List<Boolean> depress = new ArrayList<>();
+    private boolean[] unpressed = new boolean[numOfSubsystems];
     private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
     private Callable<Boolean>[] isManualGetter = (Callable<Boolean>[]) new Object[numOfSubsystems]; //add control manual getters
     private Consumer<Boolean>[] isManualSetter = (Consumer<Boolean>[]) new Object[numOfSubsystems]; //add control manual setters
 
-    private boolean isFirst = true;
     //private WCDProfile driveProfile;//Profile used to calculate robot drive power
 
     public TeleopMode() {
@@ -43,7 +42,7 @@ public class TeleopMode extends SimpleCommand {
         secondary = Robot.oi.getXbox(false);
         //driveProfile = new FalconDrive(primary);
 
-        //adding manual getters and setters using Subsystems.subsystemEnum.getValue() (to indicate which subsystem),
+        //adding manual getters and setters to their array using Subsystems.subsystemEnum.getValue() (to indicate which subsystem),
         // () -> function() or (Boolean set) -> function() (depending on required params)
         isManualGetter[Subsystems.Elevator.getValue()] = () -> elevator.getManual();
         isManualSetter[Subsystems.Elevator.getValue()] = (Boolean set) -> elevator.setManual(set);
@@ -74,7 +73,7 @@ public class TeleopMode extends SimpleCommand {
         press(primary.A(), () -> flywheel.intake());
         press(primary.B(), () -> flywheel.output());
         press(primary.Y(), () -> flywheel.slowOutput());
-        depress(secondary.seven(), () -> flywheel.toggleKill()); //toggles slow spin while off
+        unpressed(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
 
         //rotation
         press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
@@ -86,6 +85,7 @@ public class TeleopMode extends SimpleCommand {
         off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
         off(Subsystems.Rotate, () -> rotation.stop(), secondary.rightBumper(), secondary.leftBumper());
 
+        //general periodic functions
         //elevator.moveToHeight(false);
         periodicEnd();
     }
@@ -132,32 +132,29 @@ public class TeleopMode extends SimpleCommand {
             else if((areAllFalse(button) && isManualGetter[manualNumber.getValue()].call()
                     && isManualLessThanBuffer[manualNumber.getValue()])) off.run();
         } catch (Exception e) {
-        } finally {
+            e.printStackTrace();
         }
     }
 
-    //Use if you want an action with a button to only be activated when depressed
-    private void depress(boolean button, Runnable function){
-        if(isFirst) depress.add(number, false);
-
+    //Use if you want an action with a button to only be activated once unpressed (true) or once pressed (false)
+    private void unpressed(boolean button, Runnable function, boolean unpressedMode){
         if(button){
-            Logger.log(LoggerSystems.Flywheel, "Depress button pushed");
-            if(!depress.get(number)){
+            if(!unpressedMode && !unpressed[unpressedID]){
                 function.run();
-                Logger.log(LoggerSystems.Flywheel, "Run depress function");
-                depress.set(number, true);
             }
+            unpressed[unpressedID] = true;
         } else {
-            Logger.log(LoggerSystems.Flywheel, "Depress button not pushed");
-            depress.set(number, false);
+            if(unpressedMode && unpressed[unpressedID]){
+                function.run();
+            }
+            unpressed[unpressedID] = false;
         }
-        number++;
+        unpressedID++;
     }
 
-    //clears variables in depress()
+    //clears variables in unpressed()
     private void periodicEnd(){
-        number = 0;
-        isFirst = false;
+        unpressedID = 0;
     }
 
     private boolean areAllFalse(boolean[] array) {
