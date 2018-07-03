@@ -1,5 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
@@ -48,6 +49,7 @@ public class TeleopMode extends SimpleCommand {
         isManualSetter[Subsystems.Elevator.getValue()] = (Boolean set) -> elevator.setManual(set);
         isManualGetter[Subsystems.Rotate.getValue()] = () -> rotation.getManual();
         isManualSetter[Subsystems.Rotate.getValue()] = (Boolean set) -> rotation.setManual(set);
+        SmartDashboard.putNumber("Number", 1);
     }
 
     @Override
@@ -81,9 +83,9 @@ public class TeleopMode extends SimpleCommand {
         manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions
-        off(Subsystems.Elevator, () -> elevator.stop());
+        off(() -> elevator.stop(), Subsystems.Elevator);
         off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        off(Subsystems.Rotate, () -> rotation.stop(), secondary.rightBumper(), secondary.leftBumper());
+        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper());
 
         //general periodic functions
         //elevator.moveToHeight(false);
@@ -115,18 +117,17 @@ public class TeleopMode extends SimpleCommand {
     }
 
     //Use if you want an action to run when a set of buttons is not pressed
-    //Put all off functions at the end of execute
     private void off(Runnable off, boolean ... button){
         if(areAllFalse(button)) off.run();
     }
 
     //Use if you want an action to run when manual is less than buffer
-    private void off(Subsystems manualNumber, Runnable off) {
+    private void off(Runnable off, Subsystems manualNumber) {
         if(isManualLessThanBuffer[manualNumber.getValue()]) off.run();
     }
 
     //Use if you want an action to run when a set of buttons is not pressed and manual is less than buffer
-    private void off(Subsystems manualNumber, Runnable off, boolean ... button){
+    private void off(Runnable off, Subsystems manualNumber, boolean ... button){
         try {
             if(areAllFalse(button) && !isManualGetter[manualNumber.getValue()].call()) off.run();
             else if((areAllFalse(button) && isManualGetter[manualNumber.getValue()].call()
