@@ -20,9 +20,6 @@ import org.usfirst.frc.falcons6443.robot.utilities.*;
  */
 public class Robot extends IterativeRobot {
 
-    //Team laptop was here! (Test for the new 6443driverstation account)
-    //Second try is the charm...?
-
     // All the subsystems that the robot possesses
     // If a new subsystem is added, it must also be added to SimpleCommand.
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.

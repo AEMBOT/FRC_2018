@@ -14,8 +14,6 @@ import java.util.function.Consumer;
 /**
  * Teleoperated mode for the robot.
  * The execute method of this class handles all possible inputs from the driver during the game.
- *
- * @author Ivan Kenevich, Christopher Medlin, Shivashriganesh Mahato
  */
 public class TeleopMode extends SimpleCommand {
 
@@ -96,12 +94,14 @@ public class TeleopMode extends SimpleCommand {
         periodicEnd();
     }
 
-    //Use if you want an action with a button
+    //Pairs an action with a button
     private void press(boolean button, Runnable action){
         if(button) action.run();
     }
 
-    //Use if you want an action with a button (compatible with backup action with a manual input)
+    //Pairs an action with a button, compatible with manual()
+    // ie: this function can be used with manual() to control the same component
+    // eg: button control and (backup) manual control of the same component
     private void press(Consumer<Boolean> setManual, boolean button, Runnable action){
         if(button) {
             setManual.accept(false);
@@ -109,7 +109,7 @@ public class TeleopMode extends SimpleCommand {
         }
     }
 
-    //Use if you want an action with a manual input (joystick, trigger, etc)
+    //Pairs an action with a manual input (joystick, trigger, etc)
     private void manual(Subsystems manualNumber, double input, Runnable action){
         if(Math.abs(input) > 0.2){
             isManualSetter.get(manualNumber.getValue()).accept(true);
@@ -120,17 +120,17 @@ public class TeleopMode extends SimpleCommand {
         }
     }
 
-    //Use if you want an action to run when a set of buttons is not pressed
+    //Runs an action when a set of buttons is not pressed
     private void off(Runnable off, boolean ... button){
         if(areAllFalse(button)) off.run();
     }
 
-    //Use if you want an action to run when manual is less than buffer
+    //Runs an action when manual is less than buffer
     private void off(Runnable off, Subsystems manualNumber) {
         if(isManualLessThanBuffer[manualNumber.getValue()]) off.run();
     }
 
-    //Use if you want an action to run when a set of buttons is not pressed and manual is less than buffer
+    //Runs an action when a set of buttons is not pressed and manual is less than buffer
     private void off(Runnable off, Subsystems manualNumber, boolean ... button){
         try {
             if(areAllFalse(button) && !isManualGetter.get(manualNumber.getValue()).call()) off.run();
@@ -141,7 +141,7 @@ public class TeleopMode extends SimpleCommand {
         }
     }
 
-    //Use if you want an action with a button to only be activated once unpressed (true) or once pressed (false)
+    //Pairs an action with a button, activated only once unpressed (true) or once pressed (false)
     private void unpressed(boolean button, Runnable function, boolean unpressedMode){
         if(button){
             if(!unpressedMode && !unpressed[unpressedID]){
@@ -157,7 +157,7 @@ public class TeleopMode extends SimpleCommand {
         unpressedID++;
     }
 
-    //clears variables in unpressed()
+    //clears the unpressedID
     private void periodicEnd(){
         unpressedID = 0;
     }
