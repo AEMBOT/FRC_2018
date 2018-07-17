@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -15,44 +16,36 @@ public class Logger {
     private static Stopwatch stopwatch;
     private static String startTime;
     private static int numberOfSystems = 7;
-    //private static int cacheSize = 25;
     private static boolean initOne = true;
+    private static boolean disabled = true;
 
+    private static LoggerSystems[] system = LoggerSystems.values();
     private static String[] oldMessage = new String[numberOfSystems];
     private static int[] condenser = new int[numberOfSystems];
-    // private static int[] cacheNumber = new int[numberOfSystems];
     private static boolean[] logOne = new boolean[numberOfSystems];
 
     //Run in autonomousInit
     public static void autoInit(){
         init();
-        Logger.log(LoggerSystems.Drive,"AUTONOMOUS");
-        Logger.log(LoggerSystems.Elevator,"AUTONOMOUS");
-        Logger.log(LoggerSystems.Flywheel,"AUTONOMOUS");
-        Logger.log(LoggerSystems.Rotation,"AUTONOMOUS");
-        Logger.log(LoggerSystems.Gyro,"AUTONOMOUS");
-        Logger.log(LoggerSystems.Auto,"AUTONOMOUS");
+        for (LoggerSystems system : system){
+            Logger.log(system, "AUTONOMOUS");
+        }
     }
 
     //Run in teleopInit
     public static void teleopInit(){
         init();
-        Logger.log(LoggerSystems.Drive,"TELEOP");
-        Logger.log(LoggerSystems.Elevator,"TELEOP");
-        Logger.log(LoggerSystems.Flywheel,"TELEOP");
-        Logger.log(LoggerSystems.Rotation,"TELEOP");
-        Logger.log(LoggerSystems.Gyro,"TELEOP");
-        Logger.log(LoggerSystems.Auto,"TELEOP");
+        for (LoggerSystems system : system){
+            Logger.log(system, "TELEOP");
+        }
     }
 
     //Run in disabledInit
     public static void disabled(){
-        Logger.log(LoggerSystems.Drive,"DISABLED");
-        Logger.log(LoggerSystems.Elevator,"DISABLED");
-        Logger.log(LoggerSystems.Flywheel,"DISABLED");
-        Logger.log(LoggerSystems.Rotation,"DISABLED");
-        Logger.log(LoggerSystems.Gyro,"DISABLED");
-        Logger.log(LoggerSystems.Auto,"DISABLED");
+        disabled = true;
+        for (LoggerSystems system : system){
+             Logger.log(system, "DISABLED");
+        }
     }
 
     //Run to log, using system, message name, and message
@@ -67,43 +60,40 @@ public class Logger {
 
     private static void logInterior(LoggerSystems system, String message, boolean all){
         if(all){
-            message = system.getName() + ": " + message;
+            message = system + ": " + message;
             system = LoggerSystems.All;
         }
-        
+
         String out;
 
-        if(logOne[system.getValue()]){
-            oldMessage[system.getValue()] = message;
-            logOne[system.getValue()] = false;
-        } else if(message.equals(oldMessage[system.getValue()])){
-            condenser[system.getValue()]++;
-        } else if(condenser[system.getValue()] > 1) {
-            out = oldMessage[system.getValue()] + "(X" + condenser[system.getValue()] + ")";
+        if(logOne[system.ordinal()]){
+            oldMessage[system.ordinal()] = message;
+            logOne[system.ordinal()] = false;
+        } else if(message.equals(oldMessage[system.ordinal()])){
+            condenser[system.ordinal()]++;
+        } else if(condenser[system.ordinal()] > 1) {
+            out = oldMessage[system.ordinal()] + "(X" + condenser[system.ordinal()] + ")";
             print(system, out);
-            oldMessage[system.getValue()] = message;
-            condenser[system.getValue()] = 0;
+            oldMessage[system.ordinal()] = message;
+            condenser[system.ordinal()] = 0;
         } else {
-            out = oldMessage[system.getValue()];
+            out = oldMessage[system.ordinal()];
             print(system, out);
-            oldMessage[system.getValue()] = message;
+            oldMessage[system.ordinal()] = message;
         }
     }
 
     private static void print(LoggerSystems system, String oldMessage) {
         if (startTime != null) {
-            String fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt" /*".json"*/;
+            String fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt";
             File file = new File(fileName);
             file.getParentFile().mkdirs();
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
-                //if (cacheNumber[system.getName()] < cacheSize) {
                 bw.write(oldMessage);
                 bw.newLine();
                 bw.write(timeStamp() + ", " + clockTimeStamp());
                 bw.newLine();
-                bw.flush();
-                bw.close();
-                //cacheNumber[system.getName()] = 0;
+                if(disabled) bw.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -112,6 +102,7 @@ public class Logger {
 
     private static void init(){
         if(RobotMap.Logger){
+            disabled = false;
             initiateTimer();
             if (initOne){
                 startTime = clockTimeStamp();
@@ -119,7 +110,6 @@ public class Logger {
                 for (int i = 0; i < numberOfSystems; i++){
                     oldMessage[i] = "";
                     condenser[i] = 0;
-                    //cacheNumber[i] = 0;
                     logOne[i] = true;
                 }
             }
@@ -161,15 +151,11 @@ public class Logger {
         }
     }
 
-    //Get programming a permanent thumbdrive!
-    public void pullLogFiles(boolean oneSevenTwo){
-        Runtime runtime = Runtime.getRuntime();
-
-        try {
-            if(oneSevenTwo) runtime.exec("cmd /c start \"\" loggerRetrieval_172.bat");
-            else runtime.exec("cmd /c start \"\" loggerRetrieval_10.bat");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    //GB
+    public static void printSpace() throws Exception{
+        FileStorage fileStorage = new FileStorage() {};
+        SmartDashboard.putNumber("Total RIO Space", fileStorage.getTotalSpace());
+        SmartDashboard.putNumber("Usable RIO Space: ", fileStorage.getUsableSpace());
+        SmartDashboard.putNumber("Filled RIO Space: ", fileStorage.getFilledSpace());
     }
 }
