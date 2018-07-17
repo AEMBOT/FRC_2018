@@ -17,7 +17,7 @@ public class CenterToLeftSwitch extends CommandGroup {
 //        Logger.log(LoggerSystems.Auto,"Start auto path: Center to left switch");
 
         Scheduler.getInstance().removeAll();
-        addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, false, false));
+        /*addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, false, false));
        // addSequential(new MoveElevator(ElevatorPosition.Exchange));
 
         addSequential(new DriveToDistanceBackUp(25, true, false));//35
@@ -34,6 +34,10 @@ public class CenterToLeftSwitch extends CommandGroup {
         //addSequential(new Delay(2)); //delay??
         addSequential(new MoveIntake(RotationPosition.IntakeHalfPosition, true, false, false));
         addSequential(new Delay(2));
-        addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, true, false));
+        addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, true, false));*/
+
+        System.out.println("At Center"); //120
+        addSequential(new RotateToAngleSad(30));
+        System.out.println("Done Auto");
     }
 }

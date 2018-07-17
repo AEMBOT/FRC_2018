@@ -85,14 +85,14 @@ public class RotateToAngleSad extends SimpleCommand {
             counter++;
         }//was commented out. if issues occur get rid of it, but maybe it magically works??
         rotation.autoMoveIntake();
-        elevator.moveToHeight(true);
+       // elevator.moveToHeight(true);
         setAngle();
         turnToAngle();
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        System.out.println("angle: " + navX.getYaw());
-        Logger.log(LoggerSystems.Gyro,"Angle" + Float.toString(navX.getYaw()));
+        //System.out.println("angle: " + navX.getYaw());
+        //Logger.log(LoggerSystems.Gyro,"Angle" + Float.toString(navX.getYaw()));
     }
 
     @Override

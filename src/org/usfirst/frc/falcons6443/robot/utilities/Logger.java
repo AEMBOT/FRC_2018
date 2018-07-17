@@ -161,13 +161,18 @@ public class Logger {
         }
     }
 
+    public enum Dashboard {
+        ONE_SEVEN_TWO, TEN, NONE
+    }
+
     //Get programming a permanent thumbdrive!
-    public void pullLogFiles(boolean oneSevenTwo){
+    public static void pullLogFiles(boolean oneSevenTwo){
         Runtime runtime = Runtime.getRuntime();
 
         try {
             if(oneSevenTwo) runtime.exec("cmd /c start \"\" loggerRetrieval_172.bat");
             else runtime.exec("cmd /c start \"\" loggerRetrieval_10.bat");
+            System.out.println("running");
         } catch (Exception e) {
             e.printStackTrace();
         }

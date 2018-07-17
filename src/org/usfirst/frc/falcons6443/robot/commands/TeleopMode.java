@@ -1,5 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
@@ -56,7 +57,6 @@ public class TeleopMode extends SimpleCommand {
 
     @Override
     public void execute() {
-        Logger.log(LoggerSystems.Drive, "LOGS!!");
 
         //drive
         driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());

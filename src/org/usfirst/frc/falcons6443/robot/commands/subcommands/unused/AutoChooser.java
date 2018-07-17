@@ -1,10 +1,14 @@
 package org.usfirst.frc.falcons6443.robot.commands.subcommands.unused;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import javafx.geometry.Pos;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.unused.*;
 import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.communication.FieldData;
+import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 
 /**
@@ -18,32 +22,25 @@ import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 public class AutoChooser {
     //represents the three starting robot positions
     public enum Position {
-        LEFT, CENTER, RIGHT, UNKNOWN
+        LEFT, CENTER, RIGHT, LINE
     }
 
     //auto class will be created, must be CommandGroup
     CommandGroup finalAuto;
-    private Position position;
+    //private Position position;
 
 
     //pass in a Position enum from Robot.java
-    public AutoChooser(Position position){
-        this.position = position;
+    public AutoChooser(){//Position position){
+        //this.position = position;
         choose();
     }
 
     //performs selection process by using a switch for which two
     //commands then choose command once fms data is received.
     private void choose(){
-        if(NetTables.getEntry("left").getBoolean(false)){
-            this.position = Position.LEFT;
-        }else if(NetTables.getEntry("center").getBoolean(false)){
-            this.position = Position.CENTER;
-        }else if(NetTables.getEntry("right").getBoolean( false)){
-            this.position = Position.RIGHT;
-        }else{
-            this.position = Position.UNKNOWN;
-        }
+
+        Position position = (Position) Robot.sendable1.getSelected();
 
         switch (position){
             //handles which code to run depending on result of the specified switch/scale
@@ -55,10 +52,11 @@ public class AutoChooser {
                 break;
 
             case CENTER:
-                if(FieldData.getChar(FieldData.Object.SWITCH) == 'L')
+                /*if(FieldData.getChar(FieldData.Object.SWITCH) == 'L')
                     finalAuto = new CenterToLeftSwitch();
                 else
-                    finalAuto = new CenterToRightSwitch();
+                    finalAuto = new CenterToRightSwitch();*/
+                finalAuto = new CenterToLeftSwitch();
                 break;
 
             case RIGHT:
@@ -68,12 +66,12 @@ public class AutoChooser {
                     finalAuto = new RightToLeftScale();
                 break;
 
-            case UNKNOWN:  //position is UNKNOWN if dashboard fails or user fails to enter choice
+            case LINE:  //position is LINE if dashboard fails or user fails to enter choice
+                System.out.println("At Switch Statement");
                 finalAuto = new LaneToLine();
                 break;
         }
-        finalAuto = new LaneToLine();
-
+        //finalAuto = new LaneToLine();
     }
 
     public void cancel(){

@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
+import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
@@ -35,6 +38,8 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
+    public static SendableChooser sendable1;
+    public Logger.Dashboard pullLogs;
 
     //public Reader autoReader;
     /*
@@ -57,13 +62,28 @@ public class Robot extends IterativeRobot {
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();
-        NetTables.setBoolean("left", false);
-        NetTables.setBoolean("center", false);
-        NetTables.setBoolean("right", false);
-        NetTables.flush();
+        //NetTables.setBoolean("left", false);
+       // NetTables.setBoolean("center", false);
+        //NetTables.setBoolean("right", false);
+        //NetTables.flush();
         //format 1 is kMJPEG
-        VideoMode vm = new VideoMode(1, 640, 480, 60);
-        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        //VideoMode vm = new VideoMode(1, 640, 480, 60);
+        //CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        sendable1 = new SendableChooser();
+        sendable1.addObject("Left", AutoChooser.Position.LEFT);
+        sendable1.addObject("Center", AutoChooser.Position.CENTER);
+        sendable1.addObject("Right", AutoChooser.Position.RIGHT);
+        sendable1.addDefault("Line", AutoChooser.Position.LINE);
+        SmartDashboard.putData("Auto Path", sendable1);
+
+        SendableChooser sendable2 = new SendableChooser();
+        sendable2.addObject("172.22.11.2", Logger.Dashboard.ONE_SEVEN_TWO);
+        sendable2.addObject("10.64.43.2", Logger.Dashboard.TEN);
+        sendable2.addDefault("Do Not Pull", Logger.Dashboard.NONE);
+        SmartDashboard.putData("Pull Log Files", sendable2);
+
+        pullLogs = (Logger.Dashboard) sendable2.getSelected();
+
     }
 
     /*
@@ -73,6 +93,15 @@ public class Robot extends IterativeRobot {
     public void disabledInit() {
         Logger.disabled();
         Scheduler.getInstance().removeAll();
+       /* switch (button){
+            case ONE_SEVEN_TWO:
+                Logger.pullLogFiles(true);
+                break;
+            case TEN:
+                Logger.pullLogFiles(false);
+            case NONE:
+                break;
+        }*/
     }
 
     /*
@@ -91,7 +120,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
-        //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
+        chooser = new AutoChooser();
+        autonomy = chooser.getFinalAuto();
         if (autonomy != null) autonomy.start();
     }
 
