@@ -39,7 +39,6 @@ public class Robot extends IterativeRobot {
 
     public Stopwatch autoWatch;
     public static SendableChooser sendable1;
-    public Logger.Dashboard pullLogs;
 
     //public Reader autoReader;
     /*
@@ -75,15 +74,6 @@ public class Robot extends IterativeRobot {
         sendable1.addObject("Right", AutoChooser.Position.RIGHT);
         sendable1.addDefault("Line", AutoChooser.Position.LINE);
         SmartDashboard.putData("Auto Path", sendable1);
-
-        SendableChooser sendable2 = new SendableChooser();
-        sendable2.addObject("172.22.11.2", Logger.Dashboard.ONE_SEVEN_TWO);
-        sendable2.addObject("10.64.43.2", Logger.Dashboard.TEN);
-        sendable2.addDefault("Do Not Pull", Logger.Dashboard.NONE);
-        SmartDashboard.putData("Pull Log Files", sendable2);
-
-        pullLogs = (Logger.Dashboard) sendable2.getSelected();
-
     }
 
     /*
@@ -93,15 +83,6 @@ public class Robot extends IterativeRobot {
     public void disabledInit() {
         Logger.disabled();
         Scheduler.getInstance().removeAll();
-       /* switch (button){
-            case ONE_SEVEN_TWO:
-                Logger.pullLogFiles(true);
-                break;
-            case TEN:
-                Logger.pullLogFiles(false);
-            case NONE:
-                break;
-        }*/
     }
 
     /*

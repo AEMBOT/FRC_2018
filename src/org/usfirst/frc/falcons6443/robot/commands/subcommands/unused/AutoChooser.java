@@ -45,10 +45,11 @@ public class AutoChooser {
         switch (position){
             //handles which code to run depending on result of the specified switch/scale
             case LEFT:
-                if(FieldData.getChar(FieldData.Object.SCALE) == 'L')
+                /*if(FieldData.getChar(FieldData.Object.SCALE) == 'L')
                     finalAuto = new LeftToLeftScale();
                 else
-                    finalAuto = new LeftToRightScale();
+                    finalAuto = new LeftToRightScale();*/
+                finalAuto = new CenterToRightSwitch();
                 break;
 
             case CENTER:
@@ -60,10 +61,10 @@ public class AutoChooser {
                 break;
 
             case RIGHT:
-                if(FieldData.getChar(FieldData.Object.SCALE) == 'R')
+              /*  if(FieldData.getChar(FieldData.Object.SCALE) == 'R')
                     finalAuto = new RightToRightScale();
                 else
-                    finalAuto = new RightToLeftScale();
+                    finalAuto = new RightToLeftScale();*/
                 break;
 
             case LINE:  //position is LINE if dashboard fails or user fails to enter choice

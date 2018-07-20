@@ -47,6 +47,7 @@ public class RotateToAngleSad extends SimpleCommand {
             angle = 179.99;
         }
         targetAngle = angle;
+        navX.reset();
     }
 
     private void turnToAngle(){
@@ -98,6 +99,7 @@ public class RotateToAngleSad extends SimpleCommand {
     @Override
     public boolean isFinished() {
         if(isAtAngle()){
+            System.out.println("angle: " + navX.getYaw());
             done = true;
             driveTrain.tankDrive(0, 0);
             Logger.log(LoggerSystems.Gyro,"At angle");
