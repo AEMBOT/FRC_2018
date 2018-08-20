@@ -12,7 +12,7 @@ public class Reader {
     String fileName;
     File[] files;
     List<String> results = new ArrayList<String>();
-//home/lvuser/logs/2018-04-05/drive
+    //home/lvuser/logs/2018-04-05/drive
     public Reader() throws FileNotFoundException {
 
         files = new File("/home/lvuser/logs/2018-04-05/drive").listFiles();
@@ -26,8 +26,8 @@ public class Reader {
                 System.out.println(f.toString());
             }
         }
-       // fileName = "/home/lvuser/logs/2018-04-05/drive/17-49-12-0770.txt";
-       // fileReader = new FileReader(fileName);
+        // fileName = "/home/lvuser/logs/2018-04-05/drive/17-49-12-0770.txt";
+        // fileReader = new FileReader(fileName);
         //bufferedReader = new BufferedReader(fileReader);
     }
 

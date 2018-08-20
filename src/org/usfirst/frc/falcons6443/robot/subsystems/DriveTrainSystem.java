@@ -1,13 +1,12 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.*;
 //import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+
 
 /**
  * Subsystem for the robot's drive train.
@@ -18,7 +17,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
  *
  * @author Christopher Medlin, Ivan Kenevich, Shivashriganesh Mahato
  */
-public class DriveTrainSystem extends Subsystem {
+public class DriveTrainSystem{
 
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
@@ -52,9 +51,6 @@ public class DriveTrainSystem extends Subsystem {
         drive.setMaxOutput(1);
     }
 
-    @Override
-    public void initDefaultCommand() { }
-
     /**
      * Allows for custom setting of motor power level.
      *
@@ -83,7 +79,7 @@ public class DriveTrainSystem extends Subsystem {
 
     public double getLeftDistance(){
         // Encoders clicks per rotation = 850
- //       Logger.log(LoggerSystems.Drive, "left distance: " + Double.toString(leftEncoder.getDistance() * WheelDiameter * Math.PI / 850));
+        //       Logger.log(LoggerSystems.Drive, "left distance: " + Double.toString(leftEncoder.getDistance() * WheelDiameter * Math.PI / 850));
         return leftEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
     }
 
@@ -133,13 +129,13 @@ public class DriveTrainSystem extends Subsystem {
         } else if (leftTrigger > 0) { //reverse
             vector.x = leftTrigger*power+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX);
             vector.y = leftTrigger*power+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX)*-1;
-          //vector.x *= -1;
-          //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
-          //drive.y = primary.ri
+            //vector.x *= -1;
+            //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
+            //drive.y = primary.ri
         } else { //no trigger values, stationary rotation
-        //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
-         // drive.x = 2*differential;
-          //drive.y = -2*differential;
+            //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
+            // drive.x = 2*differential;
+            //drive.y = -2*differential;
             if(Math.abs(leftStickX) > .2){
                 vector.x = -leftStickX/1.28-(.1*Math.signum(leftStickX));
                 vector.y = leftStickX/1.28+(.1*Math.signum(leftStickX));

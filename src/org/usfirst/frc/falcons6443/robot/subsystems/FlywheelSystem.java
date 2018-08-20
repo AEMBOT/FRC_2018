@@ -1,7 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 
 /**
@@ -9,7 +8,7 @@ import org.usfirst.frc.falcons6443.robot.RobotMap;
  *
  * @author Aleksandras Vidmantas
  */
-public class FlywheelSystem extends Subsystem {
+public class FlywheelSystem{
 
     private Spark leftMotor;
     private Spark rightMotor;
@@ -25,9 +24,6 @@ public class FlywheelSystem extends Subsystem {
         leftMotor.setInverted(true);
         kill = false;
     }
-
-    @Override
-    protected void initDefaultCommand() {    }
 
     public void toggleKill(){
         kill =! kill;
@@ -53,8 +49,8 @@ public class FlywheelSystem extends Subsystem {
             rightMotor.set(0);
             leftMotor.set(0);
         } else {
-        rightMotor.set(0.22);
-        leftMotor.set(0.26); //because the left motor doesn't spin as well
+            rightMotor.set(0.22);
+            leftMotor.set(0.26); //because the left motor doesn't spin as well
         }
     }
 }

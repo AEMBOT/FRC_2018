@@ -1,7 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -64,7 +63,6 @@ public class UltrasonicSensor extends I2C {
     /*
         The method is meant to catch erroneous readings and ignore them
         Thus improving the quality of readings returned by the sensor.
-
         The sensitivity can be adjusted by changing the size of the
         lastFewValues array and/or the value of the JUMP_TOLERANCE constant
      */

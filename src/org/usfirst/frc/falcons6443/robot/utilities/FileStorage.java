@@ -14,7 +14,7 @@ public abstract class FileStorage {
 
     //Gigabytes
     public double getTotalSpace() throws Exception{
-        return getFileStore(rioPath).getTotalSpace() / 1073741824.0;//1073741824
+        return getFileStore(rioPath).getTotalSpace() / 1073741824.0;
     }
 
     public double getUsableSpace() throws Exception{

@@ -1,7 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorMotor;
@@ -9,7 +8,7 @@ import org.usfirst.frc.falcons6443.robot.hardware.LimitSwitch;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
-public class ElevatorSystem extends Subsystem {
+public class ElevatorSystem{
 
     private ElevatorMotor motor;
     private LimitSwitch scaleLimit;
@@ -44,9 +43,6 @@ public class ElevatorSystem extends Subsystem {
         timer = new Timer();
         isManual = false;
     }
-
-    @Override
-    public void initDefaultCommand() { }
 
     public void startTimer(){ timer.start(); }
     public void stopTimer(){ timer.stop(); }
@@ -131,9 +127,9 @@ public class ElevatorSystem extends Subsystem {
                     power = 0;
                 } else {
                     power = upSpeed;
-               }
- //              Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(scaleLimit.get()));
-               break;
+                }
+                //              Logger.log(LoggerSystems.Elevator,"Scale limit: " + Boolean.toString(scaleLimit.get()));
+                break;
             case Switch:
                 if(auto){
                     if(getSwitchHeight() || getTime() > autoTime){
@@ -178,7 +174,7 @@ public class ElevatorSystem extends Subsystem {
     public void manual(double x){
         setManual(true);
         if(x < 0) x = x * .3;
-       // else if(x < constantSpeed) x = constantSpeed;
+        // else if(x < constantSpeed) x = constantSpeed;
 
        /* if(!bottomLimit.get() && x < 0) {
             motor.setSpeed(0);
@@ -190,7 +186,7 @@ public class ElevatorSystem extends Subsystem {
             else motor.setSpeed(constantSpeed);
             System.out.println("Max Height!!");
         }*/
-       motor.setSpeed(x);
+        motor.setSpeed(x);
         System.out.println("E Enc: " + encoder.getDistance());
     }
 

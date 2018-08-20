@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 //import org.usfirst.frc.falcons6443.robot.utilities.Logger;
@@ -10,7 +9,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.RotationPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
-public class RotationSystem extends Subsystem {
+public class RotationSystem{
     private Spark rotateMotor;
     private Encoders encoder;
     private Timer timer;
@@ -57,17 +56,17 @@ public class RotationSystem extends Subsystem {
     }
 
     public void setIntakePosition(RotationPosition intakeState){
- //       Logger.log(LoggerSystems.Rotation,"Set flywheel position: " + intakeState.getName());
+        //       Logger.log(LoggerSystems.Rotation,"Set flywheel position: " + intakeState.getName());
         switch (intakeState){
-        case IntakeUpPosition:
-            currentPosition = RotationPosition.IntakeUpPosition;
-            break;
-        case IntakeDownPosition:
-            currentPosition = RotationPosition.IntakeDownPosition;
-            break;
-        case IntakeHalfPosition:
-            currentPosition = RotationPosition.IntakeHalfPosition;
-            break;
+            case IntakeUpPosition:
+                currentPosition = RotationPosition.IntakeUpPosition;
+                break;
+            case IntakeDownPosition:
+                currentPosition = RotationPosition.IntakeDownPosition;
+                break;
+            case IntakeHalfPosition:
+                currentPosition = RotationPosition.IntakeHalfPosition;
+                break;
         }
     }
 
@@ -115,13 +114,13 @@ public class RotationSystem extends Subsystem {
                 }
                 break;
             case IntakeDownPosition:
-              //if (encoder.getDistance() < (downEncVal + buffer)) {
-                    stop();
- //                   Logger.log(LoggerSystems.Flywheel,"Flywheel at down pos");
-              //} else {
-              //    rotateMotor.setSpeed(downSpeed);
-              //    Logger.log(LoggerSystems.Flywheel,"Flywheel", "going to down pos");
-              //}
+                //if (encoder.getDistance() < (downEncVal + buffer)) {
+                stop();
+                //                   Logger.log(LoggerSystems.Flywheel,"Flywheel at down pos");
+                //} else {
+                //    rotateMotor.setSpeed(downSpeed);
+                //    Logger.log(LoggerSystems.Flywheel,"Flywheel", "going to down pos");
+                //}
                 break;
         }
     }
@@ -136,7 +135,4 @@ public class RotationSystem extends Subsystem {
     public boolean getManual(){
         return isManual;
     }
-
-    @Override
-    protected void initDefaultCommand() {    }
 }

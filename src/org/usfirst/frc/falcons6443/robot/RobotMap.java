@@ -47,8 +47,6 @@ public class RobotMap {
     public static final int RotationEncoderB = 9;
 
     //code settings
-    public static final boolean BackUpDistance = false;
-    public static final boolean BackUpAngle = false;
     public static final boolean RedLine = true;
     public static final boolean Logger = true;
 }

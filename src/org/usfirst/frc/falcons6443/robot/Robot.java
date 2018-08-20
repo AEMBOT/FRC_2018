@@ -1,136 +1,161 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package org.usfirst.frc.falcons6443.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.falcons6443.robot.commands.*;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
-import org.usfirst.frc.falcons6443.robot.communication.NetTables;
+import org.usfirst.frc.falcons6443.robot.Autonomous.AutoDrive;
+import org.usfirst.frc.falcons6443.robot.Autonomous.AutoMain;
+import org.usfirst.frc.falcons6443.robot.hardware.joysticks.Xbox;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
-import org.usfirst.frc.falcons6443.robot.utilities.*;
+import org.usfirst.frc.falcons6443.robot.utilities.TeleopStructure;
+import org.usfirst.frc.falcons6443.robot.utilities.Logger;
+import org.usfirst.frc.falcons6443.robot.utilities.Stopwatch;
 
 /**
- * ROBOTS DON'T QUIT!
- * The Robot class is FRC team 6443's implementation of WPIlib's IterativeRobot class.
- *
- * @author Christopher Medlin
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the IterativeRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.properties file in the
+ * project.
  */
+// If you rename or move this class, update the build.properties file in the project root
 public class Robot extends IterativeRobot {
+    private Xbox primary;
+    private Xbox secondary;
+    private TeleopStructure teleop;
+    private DriveTrainSystem driveTrain;
+    private ElevatorSystem elevator;
+    private FlywheelSystem flywheel;
+    private RotationSystem rotation;
+    private AutoDrive autoDrive;
+    private AutoMain autoMain;
 
-    // All the subsystems that the robot possesses
-    // If a new subsystem is added, it must also be added to SimpleCommand.
-    // From there the subsystem can be referred to from any command that inherits SimpleCommand.
-    public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
-    public static final ElevatorSystem Elevator = new ElevatorSystem();
-    public static final FlywheelSystem Flywheel = new FlywheelSystem();
-    public static final RotationSystem Rotation = new RotationSystem();
-
-    public static OI oi;
-
-    private AutoChooser chooser;
-    private Command autonomy;
-    private Command teleop;
-
-    public Stopwatch autoWatch;
-
-    //public Reader autoReader;
-    /*
-     * Called when the robot first starts.
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
      */
     @Override
-    public void robotInit() {
-        /*
-        try {
-            autoReader = new Reader();
-            autoReader.readLine(3);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        oi = new OI();
-        autonomy = null;
-        teleop = new TeleopMode();
-
+    public void robotInit()
+    {
+        primary = new Xbox(new XboxController(0));
+        secondary = new Xbox(new XboxController(1));
+        teleop = new TeleopStructure();
+        driveTrain = new DriveTrainSystem();
+        elevator = new ElevatorSystem();
+        flywheel = new FlywheelSystem();
+        rotation = new RotationSystem();
+        autoDrive = new AutoDrive();
+        autoMain = new AutoMain(autoDrive, elevator, flywheel, rotation);
         //CameraServer.getInstance().putVideo();
-        NetTables.setBoolean("left", false);
-        NetTables.setBoolean("center", false);
-        NetTables.setBoolean("right", false);
-        NetTables.flush();
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
     }
 
     /*
+     * Called when the robot first enters autonomous mode.
+     */
+    @Override
+    public void autonomousInit()
+    {
+        Logger.autoInit();
+        autoMain.runAutoPath();
+    }
+
+    /**
+     * This function is called periodically during autonomous.
+     */
+    @Override
+    public void autonomousPeriodic() {   }
+
+    /*
+     * Called when the robot first enter teleop mode.
+     */
+    @Override
+    public void teleopInit(){
+        teleop.addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
+        teleop.addIsManualSetter(TeleopStructure.Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
+        teleop.addIsManualGetter(TeleopStructure.Subsystems.Rotate, () -> rotation.getManual());
+        teleop.addIsManualSetter(TeleopStructure.Subsystems.Rotate, (Boolean set) -> rotation.setManual(set));
+        Logger.teleopInit();
+    }
+    /**
+     * This function is called periodically during operator control.
+     */
+    @Override
+    public void teleopPeriodic()
+    {
+        //drive
+        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
+        // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
+
+        //shifting
+        teleop.press(primary.rightBumper(), () -> driveTrain.upShift());
+        teleop.press(primary.leftBumper(), () -> driveTrain.downShift());
+
+        //elevator
+//        teleop.press((Boolean set) -> elevator.setManual(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
+//        teleop.press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
+//        teleop.press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
+//        teleop.press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
+        teleop.manual(TeleopStructure.Subsystems.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
+
+        //flywheels
+        teleop.press(primary.A(), () -> flywheel.intake());
+        teleop.press(primary.B(), () -> flywheel.output());
+        teleop.press(primary.Y(), () -> flywheel.slowOutput());
+        teleop.unpressed(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
+
+        //rotation
+        teleop.press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
+        teleop.press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.down());
+        teleop.manual(TeleopStructure.Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
+
+        //off functions
+        teleop.off(() -> elevator.stop(), TeleopStructure.Subsystems.Elevator);
+        teleop.off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
+        teleop.off(() -> rotation.stop(), TeleopStructure.Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper());
+
+        //general periodic functions
+        //elevator.moveToHeight(false);
+        teleop.periodicEnd();
+    }
+
+    /**
+     * This function is called periodically during test mode.
+     */
+    @Override
+    public void testPeriodic() {    }
+
+    /*
      * Called when the robot first enters disabled mode.
      */
     @Override
-    public void disabledInit() {
+    public void disabledInit(){
         try{
             Logger.printSpace();
         } catch (Exception e){
             System.out.println("Failed to print storage");
         }
         Logger.disabled();
-        Scheduler.getInstance().removeAll();
     }
 
     /*
      * Called periodically when the robot is in disabled mode.
      */
     @Override
-    public void disabledPeriodic() {
-        Scheduler.getInstance().removeAll();
-        //Scheduler.getInstance().run();
-    }
-
-    /*
-     * Called when the robot first enters autonomous mode.
-     */
-    @Override
-    public void autonomousInit() {
-        Logger.autoInit();
-        autoWatch = new Stopwatch(true);//begins timing
-        //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
-        if (autonomy != null) autonomy.start();
-    }
-
-    /*
-     * Called periodically when the robot is in autonomous mode.
-     */
-    @Override
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
-
-    /*
-     * Called when the robot first enter teleop mode.
-     */
-    @Override
-    public void teleopInit() {
-        Logger.teleopInit();
-        if (autonomy != null) autonomy.cancel();
-        if (teleop != null) teleop.start();
-    }
-
-    /*
-     * Called periodically when the robot is in teleop mode.
-     */
-    @Override
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-    }
-
-    /*
-     * Called periodically when the robot is in testing mode.
-     */
-    @Override
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
+    public void disabledPeriodic(){    }
 }

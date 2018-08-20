@@ -1,5 +1,4 @@
 package org.usfirst.frc.falcons6443.robot.utilities;
-
 /**
  * This class was imported from Simbotics code. The original class calculates
  * the PID values based on an error computed externally. We have changed it to

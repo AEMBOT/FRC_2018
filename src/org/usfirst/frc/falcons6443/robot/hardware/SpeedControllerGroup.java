@@ -18,7 +18,7 @@ public class SpeedControllerGroup implements SpeedController {
      * @param controllers any number of speed controllers.
      */
     public SpeedControllerGroup(SpeedController ... controllers) {
-         this.controllers = controllers;
+        this.controllers = controllers;
     }
 
     @Override
