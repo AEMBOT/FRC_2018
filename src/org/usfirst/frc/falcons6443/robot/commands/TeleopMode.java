@@ -37,6 +37,10 @@ public class TeleopMode extends SimpleCommand {
         requires(rotation);
     }
 
+    public enum Subsystems {
+        Drive, Elevator, Flywheels, Rotate;
+    }
+
     @Override
     public void initialize() {
         primary = Robot.oi.getXbox(true);
@@ -47,10 +51,10 @@ public class TeleopMode extends SimpleCommand {
         // () -> function() or (Boolean set) -> function() (depending on required params)
         while(isManualGetter.size() < numOfSubsystems) isManualGetter.add(null);
         while(isManualSetter.size() < numOfSubsystems) isManualSetter.add(null);
-        isManualGetter.add(Subsystems.Elevator.getValue(), () -> elevator.getManual());
-        isManualSetter.add(Subsystems.Elevator.getValue(), (Boolean set) -> elevator.setManual(set));
-        isManualGetter.add(Subsystems.Rotate.getValue(), () -> rotation.getManual());
-        isManualSetter.add(Subsystems.Rotate.getValue(), (Boolean set) -> rotation.setManual(set));
+        isManualGetter.add(Subsystems.Elevator.ordinal(), () -> elevator.getManual());
+        isManualSetter.add(Subsystems.Elevator.ordinal(), (Boolean set) -> elevator.setManual(set));
+        isManualGetter.add(Subsystems.Rotate.ordinal(), () -> rotation.getManual());
+        isManualSetter.add(Subsystems.Rotate.ordinal(), (Boolean set) -> rotation.setManual(set));
 
         SmartDashboard.putNumber("Number", 1);
     }
@@ -112,11 +116,11 @@ public class TeleopMode extends SimpleCommand {
     //Pairs an action with a manual input (joystick, trigger, etc)
     private void manual(Subsystems manualNumber, double input, Runnable action){
         if(Math.abs(input) > 0.2){
-            isManualSetter.get(manualNumber.getValue()).accept(true);
-            isManualLessThanBuffer[manualNumber.getValue()] = false;
+            isManualSetter.get(manualNumber.ordinal()).accept(true);
+            isManualLessThanBuffer[manualNumber.ordinal()] = false;
             action.run();
         } else {
-            isManualLessThanBuffer[manualNumber.getValue()] = true;
+            isManualLessThanBuffer[manualNumber.ordinal()] = true;
         }
     }
 
@@ -127,15 +131,15 @@ public class TeleopMode extends SimpleCommand {
 
     //Runs an action when manual is less than buffer
     private void off(Runnable off, Subsystems manualNumber) {
-        if(isManualLessThanBuffer[manualNumber.getValue()]) off.run();
+        if(isManualLessThanBuffer[manualNumber.ordinal()]) off.run();
     }
 
     //Runs an action when a set of buttons is not pressed and manual is less than buffer
     private void off(Runnable off, Subsystems manualNumber, boolean ... button){
         try {
-            if(areAllFalse(button) && !isManualGetter.get(manualNumber.getValue()).call()) off.run();
-            else if((areAllFalse(button) && isManualGetter.get(manualNumber.getValue()).call()
-                    && isManualLessThanBuffer[manualNumber.getValue()])) off.run();
+            if(areAllFalse(button) && !isManualGetter.get(manualNumber.ordinal()).call()) off.run();
+            else if((areAllFalse(button) && isManualGetter.get(manualNumber.ordinal()).call()
+                    && isManualLessThanBuffer[manualNumber.ordinal()])) off.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
