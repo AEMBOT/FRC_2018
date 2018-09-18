@@ -149,4 +149,12 @@ public class Logger {
             stopwatch = new Stopwatch(true);
         }
     }
+
+    //GB
+    public static void printSpace() throws Exception{
+        FileStorage fileStorage = new FileStorage() {};
+        SmartDashboard.putNumber("Total RIO Space", fileStorage.getTotalSpace());
+        SmartDashboard.putNumber("Usable RIO Space: ", fileStorage.getUsableSpace());
+        SmartDashboard.putNumber("Filled RIO Space: ", fileStorage.getFilledSpace());
+    }
 }

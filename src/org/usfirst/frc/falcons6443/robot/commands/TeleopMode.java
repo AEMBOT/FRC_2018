@@ -47,7 +47,7 @@ public class TeleopMode extends SimpleCommand {
         secondary = Robot.oi.getXbox(false);
         //driveProfile = new FalconDrive(primary);
 
-        //adding manual getters and setters to their array using Subsystems.subsystemEnum.getValue() (to indicate which subsystem),
+        //adding manual getters and setters to their array using Subsystems.subsystemEnum.ordinal() (to indicate which subsystem),
         // () -> function() or (Boolean set) -> function() (depending on required params)
         while(isManualGetter.size() < numOfSubsystems) isManualGetter.add(null);
         while(isManualSetter.size() < numOfSubsystems) isManualSetter.add(null);

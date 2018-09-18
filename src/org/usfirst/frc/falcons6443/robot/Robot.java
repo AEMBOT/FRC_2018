@@ -81,6 +81,11 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit() {
+        try{
+            Logger.printSpace();
+        } catch (Exception e){
+            System.out.println("Failed to print storage");
+        }
         Logger.disabled();
         Scheduler.getInstance().removeAll();
     }
