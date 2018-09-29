@@ -73,18 +73,18 @@ public class RotationSystem extends Subsystem {
 
     public void up() {
         double speed = upSpeed;
-//        if (encoder.getDistance() > upEncVal) {
-//            speed = 0.1; //0? less strain on the motor
-//        }
+        if (encoder.getDistance() > upEncVal) {
+            speed = 0.1; //0? less strain on the motor
+        }
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }
 
     public void down(){
         double speed = downSpeed;
-//        if (encoder.getDistance() < downEncVal) {
-//            speed = 0.1;
-//        }
+        if (encoder.getDistance() < downEncVal) {
+            speed = 0.1;
+        }
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }

@@ -32,8 +32,8 @@ public class RobotMap {
     public static final int ElevatorScaleLimit = 7; //Yep
     public static final int ElevatorSwitchLimit = 4; //Yep
     public static final int ElevatorBottomLimit = 6; //Yep
-    public static final int ElevatorEncoderA = 2; //Yep
-    public static final int ElevatorEncoderB = 3; //Yep
+    public static final int ElevatorEncoderA = 15; //Yep
+    public static final int ElevatorEncoderB = 14; //Yep
 
     //flywheel motors
     public static final int FlywheelLeftMotor = 4; //Yep

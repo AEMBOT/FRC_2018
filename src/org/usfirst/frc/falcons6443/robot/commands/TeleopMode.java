@@ -86,12 +86,14 @@ public class TeleopMode extends SimpleCommand {
         //rotation
         press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
         press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.down());
+        press((Boolean set) -> rotation.setManual(set), secondary.eight(), () -> rotation.middle());
         manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions
         off(() -> elevator.stop(), Subsystems.Elevator);
         off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper());
+        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(),
+                secondary.leftBumper(), secondary.eight());
 
         //general periodic functions
         //elevator.moveToHeight(false);

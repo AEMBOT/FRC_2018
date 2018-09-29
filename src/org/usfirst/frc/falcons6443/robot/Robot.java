@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.falcons6443.robot.commands.*;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
@@ -53,7 +54,7 @@ public class Robot extends IterativeRobot {
         }*/
 
         oi = new OI();
-        autonomy = null;
+        autonomy = new DriveForTime(5, 0.7); //UPDATE!!!!
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();
