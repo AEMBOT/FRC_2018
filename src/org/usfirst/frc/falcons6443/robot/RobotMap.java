@@ -16,10 +16,10 @@ public class RobotMap {
     public static final int BackLeftMotor = 1; //Yep
 
     //drive train encoders
-    public static final int LeftEncoderA = 0; //No
-    public static final int LeftEncoderB = 1; //No
-    public static final int RightEncoderA = 12;//Yep...
-    public static final int RightEncoderB = 13;//Yep...
+    public static final int LeftEncoderA = -1;
+    public static final int LeftEncoderB = -1;
+    public static final int RightEncoderA = -1;
+    public static final int RightEncoderB = -1;
 
     //elevator motors
     public static final int ElevatorSingleMotor = 7; //...
@@ -32,8 +32,8 @@ public class RobotMap {
     public static final int ElevatorScaleLimit = 7; //Yep
     public static final int ElevatorSwitchLimit = 4; //Yep
     public static final int ElevatorBottomLimit = 6; //Yep
-    public static final int ElevatorEncoderA = 15; //Yep
-    public static final int ElevatorEncoderB = 14; //Yep
+    public static final int ElevatorEncoderA = 0; //Yep
+    public static final int ElevatorEncoderB = 1; //Yep
 
     //flywheel motors
     public static final int FlywheelLeftMotor = 4; //Yep

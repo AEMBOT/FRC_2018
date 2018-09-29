@@ -27,7 +27,7 @@ public class DriveForTime extends SimpleCommand {
     @Override
     public void execute() {
         driveTrain.tankDrive(power, power);
-        System.out.println(driveTrain.getLeftDistance());
+ //       System.out.println(driveTrain.getLeftDistance());
         if(timer.get() > desTime) driveTrain.tankDrive(0, 0);
     }
 

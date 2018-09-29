@@ -14,7 +14,7 @@ public class FlywheelSystem extends Subsystem {
     private Spark leftMotor;
     private Spark rightMotor;
 
-    private final double intakeSpeed = 1;
+    private final double intakeSpeed = .75;
     private final double outputSpeed = 0.75;
     private final double outputSlowSpeed = 0.5;
     private boolean kill; //kill stops the constant slow speed
@@ -22,8 +22,9 @@ public class FlywheelSystem extends Subsystem {
     public FlywheelSystem(){
         leftMotor = new Spark(RobotMap.FlywheelLeftMotor);
         rightMotor = new Spark(RobotMap.FlywheelRightMotor);
-        leftMotor.setInverted(true);
-        kill = false;
+        leftMotor.setInverted(false);
+        rightMotor.setInverted(true);
+        kill = true;
     }
 
     @Override

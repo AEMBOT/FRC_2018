@@ -21,9 +21,10 @@ public class RotationSystem extends Subsystem {
     private final double upSpeed = 1;
     private final double downSpeed = -.45;
     private final int upEncVal = -40;
-    private final int downEncVal = -700;
+    private final int downEncVal = -650;
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
+    private boolean constpow = false;
 
     public RotationSystem(){
         rotateMotor = new Spark(RobotMap.RotationMotor);
@@ -42,8 +43,10 @@ public class RotationSystem extends Subsystem {
     public void resetEncoder(){ encoder.reset(); }
 
     public void stop(){
-        //rotateMotor.set(0.17);
-        rotateMotor.set(0);
+        if(constpow)
+        rotateMotor.set(0.17);
+        else rotateMotor.set(0);
+        //rotateMotor.set(0);
     }
 
     public void middle(){
@@ -52,6 +55,7 @@ public class RotationSystem extends Subsystem {
         } else if(encoder.getDistance() < (midEncVal - buffer)){
             rotateMotor.set(upSpeed);
         } else {
+            constpow = true;
             stop();
         }
     }
@@ -74,8 +78,9 @@ public class RotationSystem extends Subsystem {
     public void up() {
         double speed = upSpeed;
         if (encoder.getDistance() > upEncVal) {
-            speed = 0.1; //0? less strain on the motor
-        }
+            speed = 0; //0? less strain on the motor
+            constpow = false;
+        } else constpow = true;
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }
@@ -83,8 +88,9 @@ public class RotationSystem extends Subsystem {
     public void down(){
         double speed = downSpeed;
         if (encoder.getDistance() < downEncVal) {
-            speed = 0.1;
-        }
+            speed = 0;
+            constpow = false;
+        } else constpow = true;
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }

@@ -63,7 +63,7 @@ public class TeleopMode extends SimpleCommand {
         Logger.log(LoggerSystems.Drive, "LOGS!!");
 
         //drive
-        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
+        driveTrain.falconDrive(primary.leftStickX(), primary.rightTrigger(), primary.leftTrigger()); //left, right
         // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
 
         //shifting
@@ -81,11 +81,11 @@ public class TeleopMode extends SimpleCommand {
         press(primary.A(), () -> flywheel.intake());
         press(primary.B(), () -> flywheel.output());
         press(primary.Y(), () -> flywheel.slowOutput());
-        unpressed(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
+        unpressed(secondary.seven(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
 
         //rotation
-        press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
-        press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.down());
+        press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.up());
+        press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.down());
         press((Boolean set) -> rotation.setManual(set), secondary.eight(), () -> rotation.middle());
         manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
