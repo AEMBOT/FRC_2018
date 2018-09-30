@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
         }*/
 
         oi = new OI();
-        autonomy = new DriveForTime(5, 0.7); //UPDATE!!!!
+        autonomy = new DriveForTime(4, 0.6, 0.63); //UPDATE!!!!
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();

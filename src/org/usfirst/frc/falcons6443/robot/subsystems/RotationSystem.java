@@ -19,7 +19,7 @@ public class RotationSystem extends Subsystem {
     private RotationPosition currentPosition = RotationPosition.IntakeUpPosition;
 
     private final double upSpeed = 1;
-    private final double downSpeed = -.45;
+    private final double downSpeed = -.55;
     private final int upEncVal = -40;
     private final int downEncVal = -650;
     private final int midEncVal = -270;

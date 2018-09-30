@@ -186,7 +186,7 @@ public class ElevatorSystem extends Subsystem {
     public void manual(double x){
         setManual(true);
         if(Math.abs(x) < constantSpeed) x = constantSpeed;
-        if(x < 0) x = x * .3;
+        if(x < 0) x = x * .4;
 
 
 //        if(!bottomLimit.get() && x < 0) {

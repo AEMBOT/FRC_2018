@@ -86,7 +86,8 @@ public class TeleopMode extends SimpleCommand {
         //rotation
         press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.up());
         press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.down());
-        press((Boolean set) -> rotation.setManual(set), secondary.eight(), () -> rotation.middle());
+        press((Boolean set) -> rotation.setManual(set), secondary.B(), () -> rotation.middle());
+        press((Boolean set) -> rotation.setManual(set), secondary.eight(), () -> rotation.resetEncoder());
         manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions

@@ -7,15 +7,17 @@ public class DriveForTime extends SimpleCommand {
 
     private Timer timer;
     private double desTime;
-    private double power;
+    private double powerl;
+    private double powerr;
 
 
-    public DriveForTime(double desTime, double power){
+    public DriveForTime(double desTime, double powerl, double powerr){
         super("Move For Time");
         requires(driveTrain);
         timer = new Timer();
         this.desTime = desTime;
-        this.power = power;
+        this.powerl = powerl;
+        this.powerr = powerr;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class DriveForTime extends SimpleCommand {
 
     @Override
     public void execute() {
-        driveTrain.tankDrive(power, power);
+        driveTrain.tankDrive(powerl, powerr);
  //       System.out.println(driveTrain.getLeftDistance());
         if(timer.get() > desTime) driveTrain.tankDrive(0, 0);
     }
