@@ -24,7 +24,7 @@ public class RotationSystem extends Subsystem {
     private final int downEncVal = -650;
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
-    private boolean constpow = false;
+    private boolean constantPower = false;
 
     public RotationSystem(){
         rotateMotor = new Spark(RobotMap.RotationMotor);
@@ -37,13 +37,11 @@ public class RotationSystem extends Subsystem {
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
-    public double getEncoderVal(){
-        return encoder.getDistance();
-    }
+    public double getEncoderVal(){ return encoder.getDistance(); }
     public void resetEncoder(){ encoder.reset(); }
 
     public void stop(){
-        if(constpow)
+        if(constantPower)
         rotateMotor.set(0.17);
         else rotateMotor.set(0);
         //rotateMotor.set(0);
@@ -55,7 +53,7 @@ public class RotationSystem extends Subsystem {
         } else if(encoder.getDistance() < (midEncVal - buffer)){
             rotateMotor.set(upSpeed);
         } else {
-            constpow = true;
+            constantPower = true;
             stop();
         }
     }
@@ -79,8 +77,8 @@ public class RotationSystem extends Subsystem {
         double speed = upSpeed;
         if (encoder.getDistance() > upEncVal) {
             speed = 0; //0? less strain on the motor
-            constpow = false;
-        } else constpow = true;
+            constantPower = false;
+        } else constantPower = true;
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }
@@ -89,8 +87,8 @@ public class RotationSystem extends Subsystem {
         double speed = downSpeed;
         if (encoder.getDistance() < downEncVal) {
             speed = 0;
-            constpow = false;
-        } else constpow = true;
+            constantPower = false;
+        } else constantPower = true;
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }
