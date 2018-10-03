@@ -15,20 +15,19 @@ public class Logger {
 
     private static Stopwatch stopwatch;
     private static String startTime;
-    private static int numberOfSystems = 7;
     private static boolean initOne = true;
     private static boolean disabled = true;
 
     private static LoggerSystems[] system = LoggerSystems.values();
-    private static String[] oldMessage = new String[numberOfSystems];
-    private static int[] condenser = new int[numberOfSystems];
-    private static boolean[] logOne = new boolean[numberOfSystems];
+    private static String[] oldMessage = new String[LoggerSystems.values().length];
+    private static int[] condenser = new int[LoggerSystems.values().length];
+    private static boolean[] logOne = new boolean[LoggerSystems.values().length];
 
     //Run in autonomousInit
     public static void autoInit(){
         init();
         for (LoggerSystems system : system){
-            Logger.log(system, "AUTONOMOUS");
+            log(system, "AUTONOMOUS");
         }
     }
 
@@ -36,7 +35,7 @@ public class Logger {
     public static void teleopInit(){
         init();
         for (LoggerSystems system : system){
-            Logger.log(system, "TELEOP");
+            log(system, "TELEOP");
         }
     }
 
@@ -44,7 +43,7 @@ public class Logger {
     public static void disabled(){
         disabled = true;
         for (LoggerSystems system : system){
-             Logger.log(system, "DISABLED");
+            log(system, "DISABLED");
         }
     }
 
@@ -107,7 +106,7 @@ public class Logger {
             if (initOne){
                 startTime = clockTimeStamp();
                 initOne = false;
-                for (int i = 0; i < numberOfSystems; i++){
+                for (int i = 0; i < LoggerSystems.values().length; i++){
                     oldMessage[i] = "";
                     condenser[i] = 0;
                     logOne[i] = true;
