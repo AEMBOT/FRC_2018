@@ -31,7 +31,7 @@ public class DriveToDistance extends SimpleCommand {
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.65);
         pid.setMinDoneCycles(5);
-        pid.setDoneRange(buffer);
+        pid.setFinishedRange(buffer);
         targetDistance = distance;
     }
 
