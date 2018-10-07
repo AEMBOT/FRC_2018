@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.commands.subcommands.unused;
+package org.usfirst.frc.falcons6443.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

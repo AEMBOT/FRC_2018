@@ -1,7 +1,5 @@
 package org.usfirst.frc.falcons6443.robot;
 
-import edu.wpi.cscore.VideoMode;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -9,9 +7,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
-import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
-import org.usfirst.frc.falcons6443.robot.communication.NetTables;
+import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 
@@ -57,7 +54,7 @@ public class Robot extends IterativeRobot {
         }*/
 
         oi = new OI();
-        autonomy = null;
+        autonomy = new DriveForTime(4, 0.6, 0.63); //Update when GGPrep gets pushed
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();

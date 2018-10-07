@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.utilities;
+package org.usfirst.frc.falcons6443.robot.utilities.pointLineVector;
 
 /**
  * Expresses the features of a vector in 3 dimensions. Contains data to represent x, y, and z components of a vector
