@@ -7,7 +7,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
 public class ForwardHalfLeftSwitch extends CommandGroup {
     public ForwardHalfLeftSwitch(){
-        if(FieldData.getChar(FieldData.Object.SWITCH) == 'L'){
+ //       if(FieldData.getChar(FieldData.Object.SWITCH) == 'L'){
             addSequential(new MoveIntake(RotationPosition.IntakeHalfPosition, false, false, true));
             addSequential(new MoveElevator(ElevatorPosition.Switch));
 
@@ -17,8 +17,8 @@ public class ForwardHalfLeftSwitch extends CommandGroup {
             addSequential(new MoveIntake(RotationPosition.IntakeHalfPosition, true, false, false));
             addSequential(new Delay(4));
             addSequential(new MoveIntake(RotationPosition.IntakeHalfPosition, false, true, false));
-        }else{
-            addSequential(new DriveToDistance(140));
-        }
+   //     }else{
+     //       addSequential(new DriveToDistance(140));
+       // }
     }
 }
