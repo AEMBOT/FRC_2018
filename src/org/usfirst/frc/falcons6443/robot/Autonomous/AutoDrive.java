@@ -1,8 +1,8 @@
 package org.usfirst.frc.falcons6443.robot.Autonomous;
 
 import org.usfirst.frc.falcons6443.robot.subsystems.DriveTrainSystem;
-import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.hardware.NavX;
+import org.usfirst.frc.falcons6443.robot.utilities.pid.PID;
 
 public class AutoDrive extends DriveTrainSystem {
     private static final double distanceP = .15; //.42
@@ -26,12 +26,12 @@ public class AutoDrive extends DriveTrainSystem {
         distancePID = new PID(distanceP, distanceI, distanceD, distanceEps);
         distancePID.setMaxOutput(.65);
         distancePID.setMinDoneCycles(5);
-        distancePID.setDoneRange(distanceBuffer);
+        distancePID.setFinishedRange(distanceBuffer);
         navX = NavX.get();
         anglePID = new PID(angleP, angleI, angleD, angleEps);
         anglePID.setMaxOutput(.7);
         anglePID.setMinDoneCycles(2);
-        anglePID.setDoneRange(angleBuffer);
+        anglePID.setFinishedRange(angleBuffer);
     }
 
     public void driveToDistance(){
