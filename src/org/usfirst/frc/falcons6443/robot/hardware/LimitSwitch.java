@@ -9,6 +9,7 @@ public class LimitSwitch {
         limit = new DigitalInput(channel);
     }
 
+    //returns true if triggered and false if not triggered
     public boolean get() {
         return !limit.get();
     }

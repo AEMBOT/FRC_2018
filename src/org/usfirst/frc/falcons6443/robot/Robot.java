@@ -9,20 +9,14 @@ package org.usfirst.frc.falcons6443.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.falcons6443.robot.Autonomous.AutoDrive;
-import org.usfirst.frc.falcons6443.robot.Autonomous.AutoMain;
+import org.usfirst.frc.falcons6443.robot.autonomous.AutoDrive;
+import org.usfirst.frc.falcons6443.robot.autonomous.AutoMain;
 import org.usfirst.frc.falcons6443.robot.hardware.joysticks.Xbox;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.TeleopStructure;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.Stopwatch;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -117,7 +111,7 @@ public class Robot extends IterativeRobot {
         teleop.press(primary.A(), () -> flywheel.intake());
         teleop.press(primary.B(), () -> flywheel.output());
         teleop.press(primary.Y(), () -> flywheel.slowOutput());
-        teleop.unpressed(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
+        teleop.runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
 
         //rotation
         teleop.press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());

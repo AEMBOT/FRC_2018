@@ -2,7 +2,7 @@ package org.usfirst.frc.falcons6443.robot.utilities.pid;
 
 /**
  * This class was imported from Simbotics code.
- * PID: proportional–integral–derivative controller
+ * PIDF: proportional–integral–derivative-feedforward controller
  *
  * @author Simbotics 2017
  */
@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDF extends PID {
 
+    //The feedForward term is used to start the PID at a certain value and then try to approach the target.
+    //Very useful in shooter PIDs and others to get up to speed faster.
     private double feedForward;
 
     public PIDF(double p, double i, double d, double f, double eps) {

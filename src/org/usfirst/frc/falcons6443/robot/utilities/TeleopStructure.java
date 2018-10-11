@@ -5,31 +5,43 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
+
+/*
+ * A class containing all of the logic for teleop, including pairing a button with an action 
+ * running continuously or once per press), manual controls with and without backup buttons, 
+ * and functions that run when a set of buttons are not pressed.
+ *
+ * Use this class in Robot.java, function TeleopInit() and TeleopPeriodic()
+ */
 public class TeleopStructure {
 
-    private int unpressedID = 0;
-    private int numOfSubsystems = 4;
+    private int unpressedID;
+    private int numOfSubsystems = Subsystems.values().length; 
 
-    private boolean[] unpressed = new boolean[numOfSubsystems];
+    private boolean[] runOnceSavedData = new boolean[numOfSubsystems]; //should it be numOfSubs???
     private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
     private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
 
     public TeleopStructure(){
-        while(isManualGetter.size() < numOfSubsystems) isManualGetter.add(null);
-        while(isManualSetter.size() < numOfSubsystems) isManualSetter.add(null);
+        //While loops to fill Lists with nulls (allows us to change them later)
+        while(isManualGetter.size() <= numOfSubsystems) isManualGetter.add(null);
+        while(isManualSetter.size() <= numOfSubsystems) isManualSetter.add(null);
     }
 
+    //A list of al subsystems. KEEP THIS UPDATED PLEASE!
     public enum Subsystems {
         Drive, Elevator, Flywheels, Rotate
     }
 
-    //adding manual getters and setters to their array using Subsystems.subsystemEnum.ordinal() (to indicate which subsystem),
-    // () -> function() or (Boolean set) -> function() (depending on required params)
+    //adding manual getters to List using params Subsystems.subsystemEnum, () -> function()
+    //Example: addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
     public void addIsManualGetter(Subsystems system, Callable<Boolean> call) {
         isManualGetter.add(system.ordinal(), call);
     }
 
+    //adding manual setters to List using params Subsystems.subsystemEnum, (Boolean set) -> function(set)
+    //Example: addIsManualSetter(TeleopStructure.Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
     public void addIsManualSetter(Subsystems system, Consumer<Boolean> consumer) {
         isManualSetter.add(system.ordinal(), consumer);
     }
@@ -82,17 +94,17 @@ public class TeleopStructure {
     }
 
     //Pairs an action with a button, activated only once unpressed (true) or once pressed (false)
-    public void unpressed(boolean button, Runnable function, boolean unpressedMode){
+    public void runOncePerPress(boolean button, Runnable function, boolean unpressedMode){
         if(button){
-            if(!unpressedMode && !unpressed[unpressedID]){
+            if(!unpressedMode && !runOnceSavedData[unpressedID]){
                 function.run();
             }
-            unpressed[unpressedID] = true;
+            runOnceSavedData[unpressedID] = true;
         } else {
-            if(unpressedMode && unpressed[unpressedID]){
+            if(unpressedMode && runOnceSavedData[unpressedID]){
                 function.run();
             }
-            unpressed[unpressedID] = false;
+            runOnceSavedData[unpressedID] = false;
         }
         unpressedID++;
     }

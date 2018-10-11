@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.SPI;
 /**
  * Singleton wrapper class for the robot's NavX sensor.
  *
+ * NavX, AKA: gyro/gyroscope
+ *
  * @author Shivashriganesh Mahato
  */
 public class NavX {

@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.Autonomous;
+package org.usfirst.frc.falcons6443.robot.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.subsystems.ElevatorSystem;
@@ -8,26 +8,32 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.ElevatorPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.RotationPosition;
 import java.util.function.Supplier;
 
-public class AutoPath{
+/*
+ * A package-private class where you create all of the auto paths. Contains wait and other
+ * private functions to make building auto paths easier. The auto path is selected by
+ * AutoMain and only runs one path per match.
+ */
+class AutoPaths {
 
     private AutoDrive autoDrive;
     private ElevatorSystem elevator;
     private FlywheelSystem flywheel;
     private RotationSystem rotation;
 
-    public AutoPath(AutoDrive autoDrive, ElevatorSystem elevator, FlywheelSystem flywheel, RotationSystem rotation){
+    AutoPaths(AutoDrive autoDrive, ElevatorSystem elevator, FlywheelSystem flywheel, RotationSystem rotation){
         this.autoDrive = autoDrive;
         this.elevator = elevator;
         this.flywheel = flywheel;
         this.rotation = rotation;
     }
 
+    //Put initial positions, sensor resets, or other actions needed at the start of EVERY auto path
     private void begin(){
         rotation.setIntakePosition(RotationPosition.IntakeUpPosition);
         elevator.setToHeight(ElevatorPosition.Exchange);
     }
 
-    public void centerToLeftSwitch() {
+    void centerToLeftSwitch() {
         begin();
         autoDrive.setDistance(25, true);
         waitDrive(true, true, true);
@@ -50,7 +56,7 @@ public class AutoPath{
         flywheel.stop();
     }
 
-    public void centerToRightSwitch(){
+    void centerToRightSwitch(){
         begin();
         elevator.setToHeight(ElevatorPosition.Switch);
         autoDrive.setDistance(75, true);
@@ -61,6 +67,13 @@ public class AutoPath{
         flywheel.output();
         sleep(2);
         flywheel.stop();
+    }
+
+    void driveToLine(){
+        begin();
+        autoDrive.setDistance(120, true);
+        autoDrive.driveToDistance();
+        waitDrive(true, false, false);
     }
 
     private void sleepAndRun(double seconds, Runnable periodic){
@@ -99,6 +112,9 @@ public class AutoPath{
         }
     }
 
+    //the wait function used while driving
+    //distance false is angle, elevator/rotation true will move those subsystems while driving
+    // if set to a position (does not work while turning)
     private void waitDrive(boolean distance, boolean elevator, boolean rotation){
         if (distance){
             waitFor(() -> autoDrive.isAtDistance(), () -> {
