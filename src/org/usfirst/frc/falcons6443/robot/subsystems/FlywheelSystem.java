@@ -24,7 +24,7 @@ public class FlywheelSystem extends Subsystem {
         rightMotor = new Spark(RobotMap.FlywheelRightMotor);
         leftMotor.setInverted(false);
         rightMotor.setInverted(true);
-        kill = true;
+        kill = false;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class FlywheelSystem extends Subsystem {
             rightMotor.set(0);
             leftMotor.set(0);
         } else {
-        rightMotor.set(0.22);
-        leftMotor.set(0.26); //because the left motor doesn't spin as well
+        rightMotor.set(0.24);
+        leftMotor.set(0.24); //because the left motor doesn't spin as well
         }
     }
 }
