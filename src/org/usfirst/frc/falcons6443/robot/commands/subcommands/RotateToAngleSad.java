@@ -4,6 +4,7 @@ import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.hardware.NavX;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+import org.usfirst.frc.falcons6443.robot.utilities.pid.PID;
 
 /**
  * Command to rotate the robot to an angle specified in a constructor parameter.
@@ -39,7 +40,7 @@ public class RotateToAngleSad extends SimpleCommand {
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.7);
         pid.setMinDoneCycles(2);
-        pid.setDoneRange(buffer);
+        pid.setFinishedRange(buffer);
         if (angle > 180){
             angle -= 360;
             directionPos = false;
@@ -47,6 +48,7 @@ public class RotateToAngleSad extends SimpleCommand {
             angle = 179.99;
         }
         targetAngle = angle;
+        navX.reset();
     }
 
     private void turnToAngle(){
@@ -85,19 +87,20 @@ public class RotateToAngleSad extends SimpleCommand {
             counter++;
         }//was commented out. if issues occur get rid of it, but maybe it magically works??
         rotation.autoMoveIntake();
-        elevator.moveToHeight(true);
+       // elevator.moveToHeight(true);
         setAngle();
         turnToAngle();
         if(isAtAngle()){
             driveTrain.tankDrive(0, 0);
         }
-        System.out.println("angle: " + navX.getYaw());
-        Logger.log(LoggerSystems.Gyro,"Angle" + Float.toString(navX.getYaw()));
+        //System.out.println("angle: " + navX.getYaw());
+        //Logger.log(LoggerSystems.Gyro,"Angle" + Float.toString(navX.getYaw()));
     }
 
     @Override
     public boolean isFinished() {
         if(isAtAngle()){
+            System.out.println("angle: " + navX.getYaw());
             done = true;
             driveTrain.tankDrive(0, 0);
             Logger.log(LoggerSystems.Gyro,"At angle");

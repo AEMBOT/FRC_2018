@@ -6,8 +6,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
+import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
@@ -36,6 +39,7 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
+    public static SendableChooser sendable1;
 
     //public Reader autoReader;
     /*
@@ -65,6 +69,12 @@ public class Robot extends IterativeRobot {
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        sendable1 = new SendableChooser();
+        sendable1.addObject("Left", AutoChooser.Position.LEFT);
+        sendable1.addObject("Center", AutoChooser.Position.CENTER);
+        sendable1.addObject("Right", AutoChooser.Position.RIGHT);
+        sendable1.addDefault("Line", AutoChooser.Position.LINE);
+        SmartDashboard.putData("Auto Path", sendable1);
     }
 
     /*
@@ -97,7 +107,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
-        //chooser = new AutoChooser(AutoChooser.Position.UNKNOWN);
+       // chooser = new AutoChooser();   //Commented out until working auto modes
+       // autonomy = chooser.getFinalAuto();   //Commented out until working auto modes
         if (autonomy != null) autonomy.start();
     }
 
