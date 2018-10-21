@@ -43,10 +43,12 @@ public class PID {
         this.dConst = d;
     }
 
+    //sets the value the PID needs to reach to be done
     public void setDesiredValue(double val) {
         this.desiredVal = val;
     }
 
+    //set the acceptable range the PID needs to be in to be done
     public void setFinishedRange(double range){
         this.finishedRange = range;
     }
@@ -67,6 +69,7 @@ public class PID {
         this.debug = false;
     }
 
+    //sets the max speed the PID will give the motors between 0 and 1
     public void setMaxOutput(double max) {
         if(max < 0.0) {
             this.maxOutput = 0.0;
@@ -87,6 +90,7 @@ public class PID {
         }
     }
 
+    //sets how many cycles the PID needs to be in done range before PID is done
     public void setMinDoneCycles(int num) {
         this.minCycleCount = num;
     }
@@ -99,6 +103,7 @@ public class PID {
         return this.desiredVal;
     }
 
+    //use to calculate what power the motor should be set to
     public double calcPID(double current) {
         return calcPIDError(this.desiredVal - current);
     }
@@ -162,6 +167,7 @@ public class PID {
         return output;
     }
 
+    //use to check if PID has finished
     public boolean isDone() {
         double currError = Math.abs(this.previousError);
 

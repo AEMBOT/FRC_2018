@@ -47,6 +47,6 @@ public class RobotMap {
     public static final int RotationEncoderB = 9;
 
     //code settings
-    public static final boolean RedLine = true;
-    public static final boolean Logger = true;
+    public static final boolean RedLine = true; //sets whether the elevator is one SIM or 4 redLines
+    public static final boolean Logger = true; //turns the logger on and off
 }

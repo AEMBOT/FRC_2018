@@ -76,6 +76,17 @@ class AutoPaths {
         waitDrive(true, false, false);
     }
 
+    //stops the thread until the time has passed
+    private void sleep(double seconds){
+        long time = Math.round(seconds * 1000);
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //stops the thread and runs the periodic function until the time has passed
     private void sleepAndRun(double seconds, Runnable periodic){
         periodic.run();
         Timer t = new Timer();
@@ -90,16 +101,8 @@ class AutoPaths {
         }
     }
 
-    private void sleep(double seconds){
-        long time = Math.round(seconds * 1000);
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void waitFor(Supplier<Boolean> expression, Runnable periodic) {
+    //stops the thread and runs the periodic function until the expression is true
+    private void waitForTrue(Supplier<Boolean> expression, Runnable periodic) {
         periodic.run();
         while (!expression.get()) {
             try {
@@ -117,13 +120,13 @@ class AutoPaths {
     // if set to a position (does not work while turning)
     private void waitDrive(boolean distance, boolean elevator, boolean rotation){
         if (distance){
-            waitFor(() -> autoDrive.isAtDistance(), () -> {
+            waitForTrue(() -> autoDrive.isAtDistance(), () -> {
                 autoDrive.driveToDistance();
                 if (elevator) this.elevator.moveToHeight(true);
                 if (rotation) this.rotation.autoMoveIntake();
             });
         } else {
-            waitFor(() -> autoDrive.isAtAngle(), () -> autoDrive.turnToAngle());
+            waitForTrue(() -> autoDrive.isAtAngle(), () -> autoDrive.turnToAngle());
         }
     }
 }

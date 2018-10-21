@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
-
 /*
  * A class containing all of the logic for teleop, including pairing a button with an action 
  * running continuously or once per press), manual controls with and without backup buttons, 

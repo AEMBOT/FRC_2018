@@ -20,6 +20,7 @@ public class PIDF extends PID {
     }
 
     @Override
+    //use to calculate what power the motor should be set to
     public double calcPID(double current) {
         double feedForwardOutput = (super.getDesiredVal() * this.feedForward);
         if (this.debug) {
@@ -34,6 +35,7 @@ public class PIDF extends PID {
     }
 
     @Override
+    //use to check if PID has finished
     public boolean isDone() {
         double currError = Math.abs(this.previousError);
 

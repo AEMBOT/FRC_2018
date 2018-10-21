@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 
+/*
+ * Class specific to the elevator motor(s). Either creates one motor or four depending on the RedLine
+ * setting in RobotMap.
+ */
 public class ElevatorMotor {
     private Spark singleMotor;
     private SpeedControllerGroup redLineMotors;

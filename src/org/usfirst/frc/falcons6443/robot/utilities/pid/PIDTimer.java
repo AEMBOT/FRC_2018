@@ -18,15 +18,16 @@ public class PIDTimer extends PID {
     }
 
     @Override
+    //use to calculate what power the motor should be set to
     public double calcPID(double current) {
         if (this.startTime == -1 || this.getFirstCycle()) {
             this.startTime = System.currentTimeMillis();
         }
         return super.calcPID(current);
-
     }
 
     @Override
+    //use to check if PID has finished
     public boolean isDone() {
         long currentTime = System.currentTimeMillis();
         if ((currentTime - this.startTime) >= this.timeout) {
@@ -35,6 +36,7 @@ public class PIDTimer extends PID {
         return super.isDone() || ((currentTime - this.startTime) >= this.timeout);
     }
 
+    //set at what time the PID should stop. When timed out isDone() returns true
     public void setTimeOut(long timeout) {
         this.timeout = timeout;
     }

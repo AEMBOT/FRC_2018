@@ -1,6 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.hardware.ElevatorMotor;
@@ -8,12 +9,12 @@ import org.usfirst.frc.falcons6443.robot.hardware.LimitSwitch;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
-public class ElevatorSystem{
+public class ElevatorSystem extends Subsystem {
 
     private ElevatorMotor motor;
     private LimitSwitch scaleLimit;
     private LimitSwitch bottomLimit;
-    private Encoders encoder;
+    //  private Encoder encoder;
     private Timer timer;
 
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
@@ -21,7 +22,7 @@ public class ElevatorSystem{
 
     private final double upSpeed = 0.9;
     private final double downSpeed = -0.6;
-    private final double constantSpeed = 0.2;
+    private final double constantSpeed = 0.15;
     private final double switchHeight = 600000; //setSpeed in ticks//630000
     private final double scaleHeight = 1230000; //setSpeed in ticks
 
@@ -32,33 +33,44 @@ public class ElevatorSystem{
 
     public ElevatorSystem(){
         if(RobotMap.RedLine){
-            encoder = new Encoders(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
+            //        encoder = new Encoder(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB, false, Encoder.EncodingType.k4X);
             autoTime = autoTimeRedlines;
         } else {
             autoTime = autoTimeOneMotor;
         }
         motor = new ElevatorMotor();
+
         scaleLimit = new LimitSwitch(RobotMap.ElevatorScaleLimit);
         bottomLimit = new LimitSwitch(RobotMap.ElevatorBottomLimit);
         timer = new Timer();
         isManual = false;
     }
 
+    @Override
+    public void initDefaultCommand() { }
+
     public void startTimer(){ timer.start(); }
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
-    public double getEncoderDistance(){ return encoder.getDistance(); }
-    public double getEncoderDistanceAuto(){ return -encoder.getDistance(); }
+    public double getEncoderDistance(){
+        //return encoder.getDistance();
+        return 100;}
+    public double getEncoderDistanceAuto(){
+        //return -encoder.getDistance();
+        return 100;
+    }
 
-    public void resetEncoder() { encoder.reset(); }
+    public void resetEncoder() {
+        //encoder.reset();
+    }
 
     private void updatePreviousLimit(){
-        if (scaleLimit.get() || encoder.getDistance() > switchHeight){
+/*        if (scaleLimit.get() || encoder.getDistance() > switchHeight){
             previousLimit = ElevatorPosition.OverSwitch;
         } else if(bottomLimit.get() || encoder.getDistance() < switchHeight){
             previousLimit = ElevatorPosition.UnderSwitch;
-        }
+        }*/
     }
 
     public void setToHeight (ElevatorPosition elevatorState){
@@ -91,9 +103,9 @@ public class ElevatorSystem{
     private boolean getScaleHeight(){
         if(scaleLimit.get()){
             return true;
-        } else if (encoder.getDistance() > scaleHeight){
+        } else if (/*encoder.getDistance() > scaleHeight*/false){
             return true;
-        } else if (encoder.getDistance() < scaleHeight){
+        } else if (/*encoder.getDistance() < scaleHeight*/true){
             return false;
         }
         return scaleLimit.get();
@@ -116,7 +128,7 @@ public class ElevatorSystem{
             case Exchange:
                 if (getBottomHeight()){
                     power = 0;
-                    resetEncoder();
+//                    resetEncoder();
                 } else {
                     power = downSpeed;
                 }
@@ -157,7 +169,7 @@ public class ElevatorSystem{
         if(auto) power = -power;
         if (getBottomHeight()){
             power = 0;
-            resetEncoder();
+            //           resetEncoder();
         } else if (scaleLimit.get() && power < 0){
             power = 0;
         }
@@ -167,27 +179,26 @@ public class ElevatorSystem{
     }
 
     public void stop () {
-        //motor.setSpeed(constantSpeed);
-        motor.setSpeed(0);
+        motor.setSpeed(constantSpeed);
     }
 
     public void manual(double x){
         setManual(true);
-        if(x < 0) x = x * .3;
-        // else if(x < constantSpeed) x = constantSpeed;
-
-       /* if(!bottomLimit.get() && x < 0) {
-            motor.setSpeed(0);
-            resetEncoder();
-        } else if(encoder.getDistance() < scaleHeight && scaleLimit.get()){
-            motor.setSpeed(x);
-        } else {
-            if(x < 0) motor.setSpeed(x);
-            else motor.setSpeed(constantSpeed);
-            System.out.println("Max Height!!");
-        }*/
+        if(Math.abs(x) < constantSpeed) x = constantSpeed;
+        if(x < 0) x = x * .4;
+//        if(!bottomLimit.get() && x < 0) {
+//            motor.setSpeed(0);
+//            resetEncoder();
+//        } else if(encoder.getDistance() < scaleHeight && scaleLimit.get()){
+//            motor.setSpeed(x);
+//        } else {
+        //if(x < 0) motor.setSpeed(x);
+        //else motor.setSpeed(constantSpeed);
+        //        System.out.println("Max Height!!");
+        //}
         motor.setSpeed(x);
-        System.out.println("E Enc: " + encoder.getDistance());
+        //    System.out.println("E Enc: " + encoder.get());
+        System.out.println("Manual");
     }
 
     public void setManual(boolean on){
