@@ -2,22 +2,31 @@ package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Encoder;
 
-public class Encoders {
-    private Encoder encoder;
+public class Encoders extends Encoder{
+    private int offset;
 
     public Encoders(int channelA, int channelB) {
-        encoder = new Encoder(channelA, channelB);
+        super(channelA, channelB);
     }
 
-    public double getDistance() {
-        return encoder.getRaw();
+    public Encoders(int channelA, int channelB, int offset) {
+        super(channelA, channelB, offset);
+        this.offset = offset;
     }
 
+    @Override
+    public int get() {
+        return super.get() + this.offset;
+    }
+
+    @Override
     public void reset() {
-        encoder.reset();
+        super.reset();
+        this.offset = 0;
     }
 
-    public void setReverseDirection(boolean reversed) {
-        encoder.setReverseDirection(reversed);
+    public void set(int val) {
+        super.reset();
+        this.offset = val;
     }
 }
