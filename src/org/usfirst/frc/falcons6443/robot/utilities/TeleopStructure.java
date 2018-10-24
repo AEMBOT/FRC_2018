@@ -15,10 +15,11 @@ import java.util.function.Consumer;
 public class TeleopStructure {
 
     private int unpressedID;
-    private int numOfSubsystems = Subsystems.values().length; 
+    private int numOfSubsystems = Subsystems.values().length;
+    private boolean first = true;
 
-    private boolean[] runOnceSavedData = new boolean[numOfSubsystems]; //should it be numOfSubs???
     private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
+    private List<Boolean> runOnceSavedData = new ArrayList<>();
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
     private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
 
@@ -94,22 +95,24 @@ public class TeleopStructure {
 
     //Pairs an action with a button, activated only once unpressed (true) or once pressed (false)
     public void runOncePerPress(boolean button, Runnable function, boolean unpressedMode){
+        if(first) runOnceSavedData.add(unpressedID, false);
         if(button){
-            if(!unpressedMode && !runOnceSavedData[unpressedID]){
+            if(!unpressedMode && !runOnceSavedData.get(unpressedID)){
                 function.run();
             }
-            runOnceSavedData[unpressedID] = true;
+            runOnceSavedData.set(unpressedID, true);
         } else {
-            if(unpressedMode && runOnceSavedData[unpressedID]){
+            if(unpressedMode && runOnceSavedData.get(unpressedID)){
                 function.run();
             }
-            runOnceSavedData[unpressedID] = false;
+            runOnceSavedData.set(unpressedID, false);
         }
         unpressedID++;
     }
 
     //clears the unpressedID
     public void periodicEnd(){
+        first = false;
         unpressedID = 0;
     }
 
