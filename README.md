@@ -21,6 +21,7 @@ This document goes over general Github and Java code standards for this reposito
 * [Git Bash](https://git-scm.com/downloads)
 * [SilverLight](https://www.microsoft.com/silverlight/)
 * [NavX Calibration Software](https://www.kauailabs.com/support/navx-mxp/kb/faq.php?id=26)
+* [Radio Config Software and Instructions](https://wpilib.screenstepslive.com/s/currentCS/m/getting_started/l/144986-programming-your-radio)
 
 ## General Resources
 * [wpilibj](http://first.wpi.edu/FRC/roborio/release/docs/java/)
