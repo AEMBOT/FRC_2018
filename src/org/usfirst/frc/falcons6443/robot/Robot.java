@@ -35,7 +35,8 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
-    public static SendableChooser sendable1;
+    public static SendableChooser autoSendable;
+    public boolean babyMode = false;
 
     //public Reader autoReader;
     /*
@@ -65,12 +66,14 @@ public class Robot extends IterativeRobot {
         //format 1 is kMJPEG
         //VideoMode vm = new VideoMode(1, 640, 480, 60);
         //CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
-        sendable1 = new SendableChooser();
-        sendable1.addObject("Left", AutoChooser.Position.LEFT);
-        sendable1.addObject("Center", AutoChooser.Position.CENTER);
-        sendable1.addObject("Right", AutoChooser.Position.RIGHT);
-        sendable1.addDefault("Line", AutoChooser.Position.LINE);
-        SmartDashboard.putData("Auto Path", sendable1);
+        autoSendable = new SendableChooser();
+        autoSendable.addObject("Left", AutoChooser.Position.LEFT);
+        autoSendable.addObject("Center", AutoChooser.Position.CENTER);
+        autoSendable.addObject("Right", AutoChooser.Position.RIGHT);
+        autoSendable.addDefault("Line", AutoChooser.Position.LINE);
+        SmartDashboard.putData("Auto Path", autoSendable);
+
+        SmartDashboard.putBoolean("Baby Mode", babyMode);
     }
 
     /*

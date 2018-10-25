@@ -2,38 +2,38 @@ package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Counter;
 
-public class Counters extends Counter {
-    private Counter encoder;
+public class Counters {
+    private Counter counter;
     private LimitSwitch limitSwitch1;  //Useful to reset encoder at specific location
     private LimitSwitch limitSwitch2;
     private boolean forward;
     private int lastCount;
 
     public Counters(int counterPort, int limitPort1, int limitPort2){
-        encoder = new Counter(counterPort);
+        counter = new Counter(counterPort);
         limitSwitch1 = new LimitSwitch(limitPort1);
         limitSwitch2 = new LimitSwitch(limitPort2);
         forward = true;
     }
 
     public Counters(int counterPort, int limitPort1){
-        encoder = new Counter(counterPort);
+        counter = new Counter(counterPort);
         limitSwitch1 = new LimitSwitch(limitPort1);
         forward = true;
     }
 
     public Counters(int counterPort){
-        encoder = new Counter(counterPort);
+        counter = new Counter(counterPort);
         forward = true;
     }
 
     public void reset(){
-        encoder.reset();
+        this.reset();
         lastCount = 0;
     }
 
     public void reset(int offset){
-        encoder.reset();
+        this.reset();
         lastCount = offset;
     }
 
@@ -45,24 +45,24 @@ public class Counters extends Counter {
         return limitSwitch2.get();
     }
 
-    public int getValueReal(){
-        return encoder.get();
+    public int getTicksReal(){
+        return counter.get();
     }
 
-    public int getValue(){ //returns ticks
+    public int getTicks(){ //returns ticks
         if(getDirection()){
-            lastCount += encoder.get();
-            encoder.reset();
+            lastCount += counter.get();
+            this.reset();
             return lastCount;
         } else {
-            lastCount -= encoder.get();
-            encoder.reset();
+            lastCount -= counter.get();
+            this.reset();
             return lastCount;
         }
     }
 
     public void setDirection(boolean forward){
-        lastCount = getValue(); //flipped these two to get accurate last count
+        lastCount = getTicks(); //flipped these two to get accurate last count
         this.forward = forward;
     }
 

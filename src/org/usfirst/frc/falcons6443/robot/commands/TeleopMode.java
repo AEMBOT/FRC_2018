@@ -20,11 +20,12 @@ public class TeleopMode extends SimpleCommand {
 
     private int unpressedID = 0;
     private int numOfSubsystems = 4;
+    private boolean first = true;
 
     private Xbox primary;           //Drive and flywheel/output
     private Xbox secondary;         //Secondary functions
-    private boolean[] unpressed = new boolean[numOfSubsystems];
     private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
+    private List<Boolean> runOnceSavedData = new ArrayList<>();
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
     private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
     //private WCDProfile driveProfile;//Profile used to calculate robot drive power
@@ -37,6 +38,7 @@ public class TeleopMode extends SimpleCommand {
         requires(rotation);
     }
 
+    //A list of al subsystems. KEEP THIS UPDATED PLEASE!
     public enum Subsystems {
         Drive, Elevator, Flywheels, Rotate;
     }
@@ -81,7 +83,7 @@ public class TeleopMode extends SimpleCommand {
         press(primary.A(), () -> flywheel.intake());
         press(primary.B(), () -> flywheel.output());
         press(primary.Y(), () -> flywheel.slowOutput());
-        unpressed(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
+        runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
 
         //rotation
         press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
@@ -98,15 +100,29 @@ public class TeleopMode extends SimpleCommand {
         periodicEnd();
     }
 
+
+
+    //adding manual getters to List using params Subsystems.subsystemEnum, () -> function()
+    //Example: addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
+    public void addIsManualGetter(Subsystems system, Callable<Boolean> call) {
+        isManualGetter.add(system.ordinal(), call);
+    }
+
+    //adding manual setters to List using params Subsystems.subsystemEnum, (Boolean set) -> function(set)
+    //Example: addIsManualSetter(TeleopStructure.Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
+    public void addIsManualSetter(Subsystems system, Consumer<Boolean> consumer) {
+        isManualSetter.add(system.ordinal(), consumer);
+    }
+
     //Pairs an action with a button
-    private void press(boolean button, Runnable action){
+    public void press(boolean button, Runnable action){
         if(button) action.run();
     }
 
     //Pairs an action with a button, compatible with manual()
     // ie: this function can be used with manual() to control the same component
     // eg: button control and (backup) manual control of the same component
-    private void press(Consumer<Boolean> setManual, boolean button, Runnable action){
+    public void press(Consumer<Boolean> setManual, boolean button, Runnable action){
         if(button) {
             setManual.accept(false);
             action.run();
@@ -114,7 +130,7 @@ public class TeleopMode extends SimpleCommand {
     }
 
     //Pairs an action with a manual input (joystick, trigger, etc)
-    private void manual(Subsystems manualNumber, double input, Runnable action){
+    public void manual(Subsystems manualNumber, double input, Runnable action){
         if(Math.abs(input) > 0.2){
             isManualSetter.get(manualNumber.ordinal()).accept(true);
             isManualLessThanBuffer[manualNumber.ordinal()] = false;
@@ -125,17 +141,17 @@ public class TeleopMode extends SimpleCommand {
     }
 
     //Runs an action when a set of buttons is not pressed
-    private void off(Runnable off, boolean ... button){
+    public void off(Runnable off, boolean ... button){
         if(areAllFalse(button)) off.run();
     }
 
     //Runs an action when manual is less than buffer
-    private void off(Runnable off, Subsystems manualNumber) {
+    public void off(Runnable off, Subsystems manualNumber) {
         if(isManualLessThanBuffer[manualNumber.ordinal()]) off.run();
     }
 
     //Runs an action when a set of buttons is not pressed and manual is less than buffer
-    private void off(Runnable off, Subsystems manualNumber, boolean ... button){
+    public void off(Runnable off, Subsystems manualNumber, boolean ... button){
         try {
             if(areAllFalse(button) && !isManualGetter.get(manualNumber.ordinal()).call()) off.run();
             else if((areAllFalse(button) && isManualGetter.get(manualNumber.ordinal()).call()
@@ -146,23 +162,25 @@ public class TeleopMode extends SimpleCommand {
     }
 
     //Pairs an action with a button, activated only once unpressed (true) or once pressed (false)
-    private void unpressed(boolean button, Runnable function, boolean unpressedMode){
+    public void runOncePerPress(boolean button, Runnable function, boolean unpressedMode){
+        if(first) runOnceSavedData.add(unpressedID, false);
         if(button){
-            if(!unpressedMode && !unpressed[unpressedID]){
+            if(!unpressedMode && !runOnceSavedData.get(unpressedID)){
                 function.run();
             }
-            unpressed[unpressedID] = true;
+            runOnceSavedData.set(unpressedID, true);
         } else {
-            if(unpressedMode && unpressed[unpressedID]){
+            if(unpressedMode && runOnceSavedData.get(unpressedID)){
                 function.run();
             }
-            unpressed[unpressedID] = false;
+            runOnceSavedData.set(unpressedID, false);
         }
         unpressedID++;
     }
 
     //clears the unpressedID
-    private void periodicEnd(){
+    public void periodicEnd(){
+        first = false;
         unpressedID = 0;
     }
 

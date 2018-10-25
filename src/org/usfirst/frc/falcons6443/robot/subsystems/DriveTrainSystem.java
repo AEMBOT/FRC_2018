@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.*;
 //import org.usfirst.frc.falcons6443.robot.utilities.Logger;
@@ -117,6 +118,13 @@ public class DriveTrainSystem extends Subsystem {
         vector.y = 0;
         double differential;
         double power = 1;
+
+        if(SmartDashboard.getBoolean("Baby Mode", false)){
+            shifted = false;
+            leftStickX /= 1.2;
+            leftTrigger /= 1.2;
+            rightTrigger /= 1.2;
+        }
 
         if (Math.abs(leftStickX) < .15) {
             differential = 0;
