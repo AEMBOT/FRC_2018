@@ -24,8 +24,8 @@ public class DriveTrainSystem extends Subsystem {
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
 
-    private Encoders leftEncoder;
-    private Encoders rightEncoder;
+   // private Encoders leftEncoder;
+   // private Encoders rightEncoder;
 
     private boolean reversed;
     private static final double WheelDiameter = 6;
@@ -44,8 +44,8 @@ public class DriveTrainSystem extends Subsystem {
                 new Spark(RobotMap.BackRightMotor));
         drive = new DifferentialDrive(leftMotors, rightMotors);
         leftMotors.setInverted(true);
-        leftEncoder = new Encoders(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
-        rightEncoder = new Encoders(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
+        //leftEncoder = new Encoders(RobotMap.LeftEncoderA, RobotMap.LeftEncoderB);
+        //rightEncoder = new Encoders(RobotMap.RightEncoderA, RobotMap.RightEncoderB);
         // the driver station will complain for some reason if this isn't setSpeed so it's pretty necessary.
         // [FOR SCIENCE!]
         drive.setSafetyEnabled(false);
@@ -82,26 +82,26 @@ public class DriveTrainSystem extends Subsystem {
         return reversed;
     }
 
-    public double getLeftDistance(){
+   // public double getLeftDistance(){
         // Encoders clicks per rotation = 850
  //       Logger.log(LoggerSystems.Drive, "left distance: " + Double.toString(leftEncoder.getDistance() * WheelDiameter * Math.PI / 850));
-        return leftEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
-    }
+   //     return leftEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
+   // }
 
-    public double getRightDistance(){
+    //public double getRightDistance(){
 //        Logger.log(LoggerSystems.Drive, "right distance: " + Double.toString(rightEncoder.getDistance() * WheelDiameter * Math.PI / 850));
-        return rightEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
-    }
+    //    return rightEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
+    //}
 
     //FIND A BETTER WAY!!!
-    public double getLinearDistance(){
+    //public double getLinearDistance(){
 //        Logger.log(LoggerSystems.Drive, "linear distance: " + Double.toString((getLeftDistance() + getRightDistance()) / 2));
-        return (getLeftDistance() + getRightDistance()) / 2;
-    }
+    //    return (getLeftDistance() + getRightDistance()) / 2;
+    //}
 
     public void reset(){
-        leftEncoder.reset();
-        rightEncoder.reset();
+        //leftEncoder.reset();
+        //rightEncoder.reset();
 //        Logger.log(LoggerSystems.Drive, "reset drive encoders");
     }
 

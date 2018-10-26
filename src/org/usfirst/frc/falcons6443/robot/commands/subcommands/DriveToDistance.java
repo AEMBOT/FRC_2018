@@ -31,13 +31,13 @@ public class DriveToDistance extends SimpleCommand {
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.65);
         pid.setMinDoneCycles(5);
-        pid.setDoneRange(buffer);
+        pid.setFinishedRange(buffer);
         targetDistance = distance;
     }
 
     private void driveToDistance(){
-        double power = pid.calcPID(driveTrain.getLeftDistance());
-        driveTrain.tankDrive(power, power + .05);
+    //    double power = pid.calcPID(driveTrain.getLeftDistance());
+    //    driveTrain.tankDrive(power, power + .05);
     }
 
     private void setDistance(){
@@ -61,12 +61,12 @@ public class DriveToDistance extends SimpleCommand {
     public void execute() {
         //try w/o first
         if(counter > 50) {
-            oldDistance = driveTrain.getLeftDistance();
+        //    oldDistance = driveTrain.getLeftDistance();
             counter = 0;
         } else if (counter == 50){
-            if((oldDistance + counterBuffer) >= driveTrain.getLeftDistance()){
-               done = true;
-            }
+        //    if((oldDistance + counterBuffer) >= driveTrain.getLeftDistance()){
+        //       done = true;
+        //    }
         } else {
             counter++;
         }

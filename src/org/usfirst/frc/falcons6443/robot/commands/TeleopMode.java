@@ -38,7 +38,7 @@ public class TeleopMode extends SimpleCommand {
         requires(rotation);
     }
 
-    //A list of al subsystems. KEEP THIS UPDATED PLEASE!
+    //A list of al subsystems. KEEP THIS UPDATED PLEASE! Used for manual controls
     public enum Subsystems {
         Drive, Elevator, Flywheels, Rotate;
     }
@@ -57,8 +57,6 @@ public class TeleopMode extends SimpleCommand {
         isManualSetter.add(Subsystems.Elevator.ordinal(), (Boolean set) -> elevator.setManual(set));
         isManualGetter.add(Subsystems.Rotate.ordinal(), () -> rotation.getManual());
         isManualSetter.add(Subsystems.Rotate.ordinal(), (Boolean set) -> rotation.setManual(set));
-
-        SmartDashboard.putNumber("Number", 1);
     }
 
     @Override
@@ -73,34 +71,36 @@ public class TeleopMode extends SimpleCommand {
         press(primary.leftBumper(), () -> driveTrain.downShift());
 
         //elevator
-//        press((Boolean set) -> elevator.setManual(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
-//        press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
-//        press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
-//        press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
+//        press(Subsystems.Elevator, secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
+//        press(Subsystems.Elevator, secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
+//        press(Subsystems.Elevator, secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
+//        press(Subsystems.Elevator, secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
         manual(Subsystems.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
 
         //flywheels
         press(primary.A(), () -> flywheel.intake());
         press(primary.B(), () -> flywheel.output());
         press(primary.Y(), () -> flywheel.slowOutput());
-        runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
+        runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
 
         //rotation
-        press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
-        press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.down());
+        press(Subsystems.Rotate, secondary.rightBumper(), () -> rotation.up());
+        press(Subsystems.Rotate, secondary.leftBumper(), () -> rotation.down());
+        //    press(Subsystems.Rotate, secondary.leftBumper(), () -> rotation.up());
+        //    press(Subsystems.Rotate, secondary.rightBumper(), () -> rotation.down());
+        //    press(Subsystems.Rotate, secondary.B(), () -> rotation.middle());
+        //    press(Subsystems.Rotate, secondary.eight(), () -> rotation.resetEncoder());
         manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions
         off(() -> elevator.stop(), Subsystems.Elevator);
         off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper());
+        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper(), secondary.B());
 
         //general periodic functions
         //elevator.moveToHeight(false);
         periodicEnd();
     }
-
-
 
     //adding manual getters to List using params Subsystems.subsystemEnum, () -> function()
     //Example: addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
@@ -122,9 +122,9 @@ public class TeleopMode extends SimpleCommand {
     //Pairs an action with a button, compatible with manual()
     // ie: this function can be used with manual() to control the same component
     // eg: button control and (backup) manual control of the same component
-    public void press(Consumer<Boolean> setManual, boolean button, Runnable action){
+    public void press(Subsystems subsystem, boolean button, Runnable action){
         if(button) {
-            setManual.accept(false);
+            isManualSetter.get(subsystem.ordinal()).accept(false); //turn manual off if nonmanual button pressed
             action.run();
         }
     }
@@ -162,6 +162,7 @@ public class TeleopMode extends SimpleCommand {
     }
 
     //Pairs an action with a button, activated only once unpressed (true) or once pressed (false)
+    //This action will only run once, unlike press() which runs periodically until unpressed
     public void runOncePerPress(boolean button, Runnable function, boolean unpressedMode){
         if(first) runOnceSavedData.add(unpressedID, false);
         if(button){

@@ -40,7 +40,7 @@ public class RotateToAngleSad extends SimpleCommand {
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.7);
         pid.setMinDoneCycles(2);
-        pid.setDoneRange(buffer);
+        pid.setFinishedRange(buffer);
         if (angle > 180){
             angle -= 360;
             directionPos = false;
