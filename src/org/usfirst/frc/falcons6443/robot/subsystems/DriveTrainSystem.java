@@ -4,11 +4,9 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.Vector2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.*;
-//import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Subsystem for the robot's drive train.
@@ -83,19 +81,19 @@ public class DriveTrainSystem extends Subsystem {
     }
 
    // public double getLeftDistance(){
-        // Encoders clicks per rotation = 850
+        // //Encoders clicks per rotation = 850
  //       Logger.log(LoggerSystems.Drive, "left distance: " + Double.toString(leftEncoder.getDistance() * WheelDiameter * Math.PI / 850));
    //     return leftEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
    // }
 
     //public double getRightDistance(){
 //        Logger.log(LoggerSystems.Drive, "right distance: " + Double.toString(rightEncoder.getDistance() * WheelDiameter * Math.PI / 850));
-    //    return rightEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
+      //  return rightEncoder.getDistance() * WheelDiameter * Math.PI / 850; // In inches
     //}
 
     //FIND A BETTER WAY!!!
     //public double getLinearDistance(){
-//        Logger.log(LoggerSystems.Drive, "linear distance: " + Double.toString((getLeftDistance() + getRightDistance()) / 2));
+///        Logger.log(LoggerSystems.Drive, "linear distance: " + Double.toString((getLeftDistance() + getRightDistance()) / 2));
     //    return (getLeftDistance() + getRightDistance()) / 2;
     //}
 

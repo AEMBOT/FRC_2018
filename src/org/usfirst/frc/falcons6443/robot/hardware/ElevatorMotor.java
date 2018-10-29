@@ -19,6 +19,7 @@ public class ElevatorMotor {
             redLineMotors = new SpeedControllerGroup(new Talon(RobotMap.ElevatorRedLineMotor1),
                     new Talon(RobotMap.ElevatorRedLineMotor2), new Talon(RobotMap.ElevatorRedLineMotor3),
                     new Talon(RobotMap.ElevatorRedLineMotor4));
+
         } else {
             singleMotor = new Spark(RobotMap.ElevatorSingleMotor);
             singleMotor.setInverted(true);

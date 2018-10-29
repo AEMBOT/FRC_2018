@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
-import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
+import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 
@@ -108,8 +108,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
-        chooser = new AutoChooser();
-        autonomy = chooser.getFinalAuto();
+       // chooser = new AutoChooser();   //Commented out until working auto modes
+       // autonomy = chooser.getFinalAuto();   //Commented out until working auto modes
         if (autonomy != null) autonomy.start();
     }
 

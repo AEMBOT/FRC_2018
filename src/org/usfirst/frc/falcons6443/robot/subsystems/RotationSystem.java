@@ -36,9 +36,7 @@ public class RotationSystem extends Subsystem {
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
-    public double getEncoderVal(){
-        return encoder.getDistance();
-    }
+    public double getEncoderVal(){ return encoder.getDistance(); }
     public void resetEncoder(){ encoder.reset(); }
 
     public void stop(){
@@ -53,6 +51,7 @@ public class RotationSystem extends Subsystem {
         } else if(encoder.getDistance() < (midEncVal - buffer)){
             rotateMotor.set(upSpeed);
         } else {
+            constantPower = true;
             stop();
         }
     }
@@ -75,7 +74,7 @@ public class RotationSystem extends Subsystem {
     public void up() {
         double speed = upSpeed;
         if (encoder.getDistance() > upEncVal) {
-              speed = 0; //0? less strain on the motor
+              speed = 0;
               constantPower = false;
         } else constantPower = true;
         rotateMotor.set(speed);

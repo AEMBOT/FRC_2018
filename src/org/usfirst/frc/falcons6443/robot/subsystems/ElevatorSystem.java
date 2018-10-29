@@ -14,7 +14,7 @@ public class ElevatorSystem extends Subsystem {
     private ElevatorMotor motor;
     private LimitSwitch scaleLimit;
     private LimitSwitch bottomLimit;
-    //private Encoders encoder;
+    //private Encoder encoder;
     private Timer timer;
 
     private ElevatorPosition desiredState = ElevatorPosition.Exchange;
@@ -33,7 +33,7 @@ public class ElevatorSystem extends Subsystem {
 
     public ElevatorSystem(){
         if(RobotMap.RedLine){
-            //encoder = new Encoders(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB);
+            //encoder = new Encoder(RobotMap.ElevatorEncoderA, RobotMap.ElevatorEncoderB, false, Encoder.EncodingType.k4X);
             autoTime = autoTimeRedlines;
         } else {
             autoTime = autoTimeOneMotor;
@@ -61,8 +61,7 @@ public class ElevatorSystem extends Subsystem {
         return -1;
     }
 
-    public void resetEncoder() { //encoder.reset();
-         }
+    public void resetEncoder() { /*encoder.reset(); */}
 
     private void updatePreviousLimit(){
       /*  if (scaleLimit.get() || encoder.getDistance() > switchHeight){
@@ -197,8 +196,8 @@ public class ElevatorSystem extends Subsystem {
             System.out.println("Max Height!!");
         }*/
        motor.setSpeed(x);
-       //System.out.println("E Enc: " + encoder.getDistance());
-        System.out.println("Manual");
+        //System.out.println("E Enc: " + encoder.get());
+        System.out.println("Manual");System.out.println("Manual");
     }
 
     public void setManual(boolean on){
