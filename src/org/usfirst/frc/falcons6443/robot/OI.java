@@ -2,14 +2,13 @@ package org.usfirst.frc.falcons6443.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
+import org.usfirst.frc.falcons6443.robot.hardware.joysticks.Xbox;
 
 import java.util.HashMap;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
- *
  * 
  * @author Christopher Medlin
  */
@@ -37,17 +36,13 @@ public class OI {
      *
      * @return the Joystick associated with this OI object.
      */
-    public Xbox getXbox(boolean primaryController) {
+    public Xbox getXbox(boolean primaryController) { //put your intended joystick here: public Logitech getLogitech(bool...) etc
         if(primaryController) {
             return primary;
         } else {
             return secondary;
         }
     }
-
-   // public Playstation getPlay(){
-   //     return secondary;
-   // }
 
     /**
      * Returns the Button object associated with the key.

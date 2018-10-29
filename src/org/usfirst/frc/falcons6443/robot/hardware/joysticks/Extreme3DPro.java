@@ -1,7 +1,11 @@
-package org.usfirst.frc.falcons6443.robot.hardware.Joysticks;
+package org.usfirst.frc.falcons6443.robot.hardware.joysticks;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+/**
+ * Wrapper for an extreme3D pro controller. Provides clearer interface with button and axis inputs.
+ * Use class in Teleop and OI classes
+ **/
 public class Extreme3DPro {
 
     public Joystick controller;

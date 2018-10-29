@@ -9,12 +9,12 @@ public class DoublePiston extends DoubleSolenoid{
 
     public DoublePiston(int doublePistonPortA, int doublePistonPortB){
         super(doublePistonPortA, doublePistonPortB);
-        Compressor.createCompressor();
+        SingularCompressor.createCompressor();
     }
 
-    public void forward() { this.set(DoubleSolenoid.Value.kForward); }
+    public void forward() { this.set(Value.kForward); }
 
-    public void backward() { this.set(DoubleSolenoid.Value.kForward); }
+    public void backward() { this.set(Value.kForward); }
 
-    public void off() { this.set(DoubleSolenoid.Value.kOff);}
+    public void off() { this.set(Value.kOff);}
 }

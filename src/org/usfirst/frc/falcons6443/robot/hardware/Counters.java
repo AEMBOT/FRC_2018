@@ -2,97 +2,86 @@ package org.usfirst.frc.falcons6443.robot.hardware;
 
 import edu.wpi.first.wpilibj.Counter;
 
+/*
+ * Used with encoders that do not register negative ticks. This class should be used with motor direction
+ * to check if counter is adding or subtracting ticks. Can be used with a limit switch to reset the counter.
+ * CheckMotorOutput is an example of how to use this class in your Subsystems.
+ */
 public class Counters {
     private Counter counter;
-    private LimitSwitch limitSwitch1;  //Useful to reset encoder at specific location
-    private LimitSwitch limitSwitch2;
+    private LimitSwitch limitSwitch;  //Useful to reset encoder at specific location, but not required
     private boolean forward;
     private int lastCount;
 
-    public Counters(int counterPort, int limitPort1, int limitPort2){
-        counter = new Counter(counterPort);
-        limitSwitch1 = new LimitSwitch(limitPort1);
-        limitSwitch2 = new LimitSwitch(limitPort2);
-        forward = true;
-    }
-
     public Counters(int counterPort, int limitPort1){
-        counter = new Counter(counterPort);
-        limitSwitch1 = new LimitSwitch(limitPort1);
-        forward = true;
+        this.counter = new Counter(counterPort);
+        this.limitSwitch = new LimitSwitch(limitPort1);
+        this.forward = true;
     }
 
     public Counters(int counterPort){
-        counter = new Counter(counterPort);
-        forward = true;
+        this.counter = new Counter(counterPort);
+        this.forward = true;
     }
 
     public void reset(){
-        this.reset();
-        lastCount = 0;
+        this.counter.reset();
+        this.lastCount = 0;
     }
 
     public void reset(int offset){
-        this.reset();
+        this.counter.reset();
         lastCount = offset;
     }
 
-    public boolean getLimit1(){
-        return limitSwitch1.get();
+    public boolean getLimit(){
+        return this.limitSwitch.get();
     }
 
-    public boolean getLimit2(){
-        return limitSwitch2.get();
-    }
-
+    //returns straight from the counter, so this value has never been subtracted from even with motor running backwards
     public int getTicksReal(){
-        return counter.get();
+        return this.counter.get();
     }
 
     public int getTicks(){ //returns ticks
         if(getDirection()){
-            lastCount += counter.get();
-            this.reset();
-            return lastCount;
+            this.lastCount += this.counter.get();
+            this.counter.reset();
+            return this.lastCount;
         } else {
-            lastCount -= counter.get();
-            this.reset();
-            return lastCount;
+            this.lastCount -= this.counter.get();
+            this.counter.reset();
+            return this.lastCount;
         }
     }
 
     public void setDirection(boolean forward){
-        lastCount = getTicks(); //flipped these two to get accurate last count
+        this.lastCount = getTicks(); //update the tick count before changing the direction
         this.forward = forward;
     }
 
-    public boolean getDirection(){
-        return forward;
-    }
+    public boolean getDirection(){ return this.forward; }
 
-    // -- if limit one is not zero ticks, then declare a limit one offset
-    // -- if motorOutput > 0 is direction true, than isPositivePowerDirection is true
+    // -- if motorOutput > 0 is forwards, than isPositivePowerForward is true
     //
-    //This function is used to check if the limit switches are pressed and to correctly set
-    // the motor output, direction of counter, and reset when needed. This is not a necessary
+    //This function is used to check if the limit switch is pressed or if the max tick limit is reached and to
+    // correctly set the motor output, direction of counter, and reset when needed. This is not a necessary
     // function but could be useful in knowing how to use the Counters class effectively.
-    public double checkMotorOutput(double desiredMotorOutput, boolean isLimitOneZero,
-                                   boolean isLimitOnePositive, int limitOneOffset,
-                                   boolean isPositivePowerDirection){
+    public double checkMotorOutput(double desiredMotorOutput, boolean isLimitForward, int limitOffset,
+                                   boolean isPositivePowerForward, int tickLimit){
         double motorOutput = desiredMotorOutput;
-        if(getLimit1()){
-            if(isLimitOnePositive && desiredMotorOutput > 0)motorOutput = 0;
-            else if(!isLimitOnePositive && desiredMotorOutput < 0)motorOutput = 0;
+        if(getLimit()){
+            if(isLimitForward && desiredMotorOutput > 0)motorOutput = 0;
+            else if(!isLimitForward && desiredMotorOutput < 0)motorOutput = 0;
 
-            if(isLimitOneZero) reset();
-            else reset(limitOneOffset);
-        } else if(getLimit2()){
-            if(isLimitOnePositive && desiredMotorOutput < 0)motorOutput = 0;
-            else if(!isLimitOnePositive && desiredMotorOutput > 0)motorOutput = 0;
+            reset(limitOffset);
+        } else if(getTicks() > tickLimit){
+            if(isLimitForward && desiredMotorOutput < 0)motorOutput = 0;
+            else if(!isLimitForward && desiredMotorOutput > 0)motorOutput = 0;
         }
 
-        if(motorOutput > 0) setDirection(isPositivePowerDirection);
-        else if(motorOutput < 0) setDirection(!isPositivePowerDirection);
+        if(motorOutput > 0) setDirection(isPositivePowerForward);
+        else if(motorOutput < 0) setDirection(!isPositivePowerForward);
 
         return motorOutput;
     }

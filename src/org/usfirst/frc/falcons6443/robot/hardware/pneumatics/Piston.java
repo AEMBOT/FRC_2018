@@ -12,7 +12,7 @@ public class Piston extends Solenoid{
 
     public Piston(int pistonPort, boolean outTrue){
         super(pistonPort);
-        Compressor.createCompressor();
+        SingularCompressor.createCompressor();
         this.outTrue = outTrue;
     }
 
