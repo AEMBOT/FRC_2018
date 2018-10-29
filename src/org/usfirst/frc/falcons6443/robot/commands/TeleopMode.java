@@ -15,13 +15,12 @@ import java.util.function.Consumer;
 public class TeleopMode extends SimpleCommand {
 
     private int unpressedID = 0;
-    private int numOfSubsystems = 4;
     private boolean first = true;
 
     private Xbox primary;           //Drive and flywheel/output
     private Xbox secondary;         //Secondary functions
-    private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
     private List<Boolean> runOnceSavedData = new ArrayList<>();
+    private List<Boolean> isManualLessThanBuffer = new ArrayList<>();
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
     private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
     //private WCDProfile driveProfile;//Profile used to calculate robot drive power
@@ -34,10 +33,10 @@ public class TeleopMode extends SimpleCommand {
         requires(rotation);
     }
 
-    //A list of al subsystems. KEEP THIS UPDATED PLEASE!
-    // Used for manual controls. Can only have
-    public enum Subsystems {
-        Drive, Elevator, Flywheels, Rotate;
+    //A list of all manual controls of the robot, excluding drive
+    //Used for manual controls. Can only have one ManualControls per manual axis (NOT per subsystem!)
+    public enum ManualControls {
+        Elevator, Rotate
     }
 
     @Override
@@ -46,14 +45,13 @@ public class TeleopMode extends SimpleCommand {
         secondary = Robot.oi.getXbox(false);
         //driveProfile = new FalconDrive(primary);
 
-        //adding manual getters and setters to their array using Subsystems.subsystemEnum.ordinal() (to indicate which subsystem),
-        // () -> function() or (Boolean set) -> function() (depending on required params)
-        while(isManualGetter.size() < numOfSubsystems) isManualGetter.add(null);
-        while(isManualSetter.size() < numOfSubsystems) isManualSetter.add(null);
-        addIsManualGetter(Subsystems.Elevator, () -> elevator.getManual());
-        addIsManualSetter(Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
-        addIsManualGetter(Subsystems.Rotate, () -> rotation.getManual());
-        addIsManualSetter(Subsystems.Rotate, (Boolean set) -> rotation.setManual(set));
+        //adding manual getters and setters to their array
+        while(isManualGetter.size() < ManualControls.values().length) isManualGetter.add(null);
+        while(isManualSetter.size() < ManualControls.values().length) isManualSetter.add(null);
+        addIsManualGetterSetter(ManualControls.Elevator, () -> elevator.getManual(),
+                (Boolean set) -> elevator.setManual(set));
+        addIsManualGetterSetter(ManualControls.Rotate, () -> rotation.getManual(),
+                (Boolean set) -> rotation.setManual(set));
     }
 
     @Override
@@ -68,11 +66,11 @@ public class TeleopMode extends SimpleCommand {
         press(primary.leftBumper(), () -> driveTrain.downShift());
 
         //elevator
-//        press(Subsystems.Elevator, secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
-//        press(Subsystems.Elevator, secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
-//        press(Subsystems.Elevator, secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
-//        press(Subsystems.Elevator, secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
-        manual(Subsystems.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
+//        press(ManualControls.Elevator, secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
+//        press(ManualControls.Elevator, secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
+//        press(ManualControls.Elevator, secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
+//        press(ManualControls.Elevator, secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
+        manual(ManualControls.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
 
         //flywheels
         press(primary.A(), () -> flywheel.intake());
@@ -81,16 +79,16 @@ public class TeleopMode extends SimpleCommand {
         runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
 
         //rotation
-        //    press(Subsystems.Rotate, secondary.leftBumper(), () -> rotation.up());
-        //    press(Subsystems.Rotate, secondary.rightBumper(), () -> rotation.down());
-        //    press(Subsystems.Rotate, secondary.B(), () -> rotation.middle());
-        //    press(Subsystems.Rotate, secondary.eight(), () -> rotation.resetEncoder());
-        manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
+        //    press(ManualControls.Rotate, secondary.leftBumper(), () -> rotation.up());
+        //    press(ManualControls.Rotate, secondary.rightBumper(), () -> rotation.down());
+        //    press(ManualControls.Rotate, secondary.B(), () -> rotation.middle());
+        //    press(ManualControls.Rotate, secondary.eight(), () -> rotation.resetEncoder());
+        manual(ManualControls.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions
-        off(() -> elevator.stop(), Subsystems.Elevator);
+        off(() -> elevator.stop(), ManualControls.Elevator);
         off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(),
+        off(() -> rotation.stop(), ManualControls.Rotate, secondary.rightBumper(),
                 secondary.leftBumper(), secondary.B());
 
         //general periodic functions
@@ -98,16 +96,16 @@ public class TeleopMode extends SimpleCommand {
         periodicEnd();
     }
 
-    //adding manual getters to List using params Subsystems.subsystemEnum, () -> function()
-    //Example: addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
-    private void addIsManualGetter(Subsystems system, Callable<Boolean> callable) {
-        isManualGetter.add(system.ordinal(), callable);
-    }
-
-    //adding manual setters to List using params Subsystems.subsystemEnum, (Boolean set) -> function(set)
-    //Example: addIsManualSetter(TeleopStructure.Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
-    private void addIsManualSetter(Subsystems system, Consumer<Boolean> consumer) {
-        isManualSetter.add(system.ordinal(), consumer);
+    //adding manual getters and setters to Lists using params:
+    // ManualControls.manualEnum, () -> function(), (Boolean set) -> function(set)
+    //Example: addIsManualGetter(TeleopStructure.ManualControls.Elevator, () -> elevator.getManual(),
+    //                      (Boolean set) -> elevator.setManual(set));
+    //also adds isManualLessThanBuffer to ensure equal numbers of getters/setters to buffer checkers
+    private void addIsManualGetterSetter(ManualControls manual, Callable<Boolean> callable,
+                                         Consumer<Boolean> consumer) {
+        isManualGetter.add(manual.ordinal(), callable);
+        isManualSetter.add(manual.ordinal(), consumer);
+        isManualLessThanBuffer.add(manual.ordinal(), true);
     }
 
     //Pairs an action with a button
@@ -118,21 +116,21 @@ public class TeleopMode extends SimpleCommand {
     //Pairs an action with a button, compatible with manual()
     // ie: this function can be used with manual() to control the same component
     // eg: button control and (backup) manual control of the same component
-    private void press(Subsystems subsystem, boolean button, Runnable action){
+    private void press(ManualControls manual, boolean button, Runnable action){
         if(button) {
-            isManualSetter.get(subsystem.ordinal()).accept(false); //turn manual off if nonmanual button pressed
+            isManualSetter.get(manual.ordinal()).accept(false); //turn manual off if nonmanual button pressed
             action.run();
         }
     }
 
     //Pairs an action with a manual input (joystick, trigger, etc)
-    private void manual(Subsystems manualNumber, double input, Runnable action){
+    private void manual(ManualControls manualNumber, double input, Runnable action){
         if(Math.abs(input) > 0.2){
             isManualSetter.get(manualNumber.ordinal()).accept(true);
-            isManualLessThanBuffer[manualNumber.ordinal()] = false;
+            isManualLessThanBuffer.set(manualNumber.ordinal(), false);
             action.run();
         } else {
-            isManualLessThanBuffer[manualNumber.ordinal()] = true;
+            isManualLessThanBuffer.set(manualNumber.ordinal(), true);
         }
     }
 
@@ -142,16 +140,16 @@ public class TeleopMode extends SimpleCommand {
     }
 
     //Runs an action when manual is less than buffer
-    private void off(Runnable off, Subsystems manualNumber) {
-        if(isManualLessThanBuffer[manualNumber.ordinal()]) off.run();
+    private void off(Runnable off, ManualControls manualNumber) {
+        if(isManualLessThanBuffer.get(manualNumber.ordinal())) off.run();
     }
 
     //Runs an action when a set of buttons is not pressed and manual is less than buffer
-    private void off(Runnable off, Subsystems manualNumber, boolean ... button){
+    private void off(Runnable off, ManualControls manualNumber, boolean ... button){
         try {
             if(areAllFalse(button) && !isManualGetter.get(manualNumber.ordinal()).call()) off.run();
             else if((areAllFalse(button) && isManualGetter.get(manualNumber.ordinal()).call()
-                    && isManualLessThanBuffer[manualNumber.ordinal()])) off.run();
+                    && isManualLessThanBuffer.get(manualNumber.ordinal()))) off.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
