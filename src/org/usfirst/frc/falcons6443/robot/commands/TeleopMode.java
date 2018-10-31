@@ -46,7 +46,7 @@ public class TeleopMode extends SimpleCommand {
         //driveProfile = new FalconDrive(primary);
 
         //adding manual getters and setters to their array
-        while(isManualGetter.size() < ManualControls.values().length) isManualGetter.add(null);
+        while(isManualGetter.size() < ManualControls.values().length) isManualGetter.add(null); //ensures that array is at least size of ManualControls enum
         while(isManualSetter.size() < ManualControls.values().length) isManualSetter.add(null);
         addIsManualGetterSetter(ManualControls.Elevator, () -> elevator.getManual(),
                 (Boolean set) -> elevator.setManual(set));
