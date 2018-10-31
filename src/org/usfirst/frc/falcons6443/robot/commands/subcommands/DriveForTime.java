@@ -3,7 +3,9 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands;
 import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 
-// A MoveByTime class that actually works
+/* 
+* Moves the robot for a specified period of time. Can set each side to the same power or different powers
+*/
 public class DriveForTime extends SimpleCommand {
 
     private Timer timer;
