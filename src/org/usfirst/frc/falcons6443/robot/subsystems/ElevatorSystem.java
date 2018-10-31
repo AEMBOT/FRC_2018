@@ -27,7 +27,7 @@ public class ElevatorSystem extends Subsystem {
     private final double scaleHeight = 1230000; //setSpeed in ticks
 
     private final double autoTimeOneMotor = 5;
-    private final double autoTimeRedlines = 1; //setSpeed //.8
+    private final double autoTimeRedlines = 1;
     private double autoTime;
     private boolean isManual;
 
