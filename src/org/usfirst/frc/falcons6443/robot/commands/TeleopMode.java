@@ -100,7 +100,6 @@ public class TeleopMode extends SimpleCommand {
     // ManualControls.manualEnum, () -> function(), (Boolean set) -> function(set)
     //Example: addIsManualGetter(TeleopStructure.ManualControls.Elevator, () -> elevator.getManual(),
     //                      (Boolean set) -> elevator.setManual(set));
-    //also adds isManualLessThanBuffer to ensure equal numbers of getters/setters to buffer checkers
     private void addIsManualGetterSetter(ManualControls manual, Callable<Boolean> callable,
                                          Consumer<Boolean> consumer) {
         isManualGetter.add(manual.ordinal(), callable);
