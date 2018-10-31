@@ -105,7 +105,7 @@ public class TeleopMode extends SimpleCommand {
                                          Consumer<Boolean> consumer) {
         isManualGetter.add(manual.ordinal(), callable);
         isManualSetter.add(manual.ordinal(), consumer);
-        isManualLessThanBuffer.add(manual.ordinal(), true);
+        isManualLessThanBuffer.add(manual.ordinal(), true);  //included to ensure equal numbers of getters/setters to buffer checkers
     }
 
     //Pairs an action with a button
