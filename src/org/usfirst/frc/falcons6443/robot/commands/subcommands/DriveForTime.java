@@ -23,6 +23,15 @@ public class DriveForTime extends SimpleCommand {
         this.rightPower = rightPower;
     }
 
+    public DriveForTime(double desiredTime, double power){
+        super("Move For Time");
+        requires(driveTrain);
+        timer = new Timer();
+        this.desiredTime = desiredTime;
+        this.leftPower = power;
+        this.rightPower = power;
+    }
+
     @Override
     public void initialize() {
         driveTrain.reset();
@@ -32,13 +41,16 @@ public class DriveForTime extends SimpleCommand {
     @Override
     public void execute() {
         driveTrain.tankDrive(leftPower, rightPower);
-        //       System.out.println(driveTrain.getLeftDistance());
-        if(timer.get() > desiredTime) driveTrain.tankDrive(0, 0);
     }
 
     @Override
     protected boolean isFinished() {
-        if(timer.get() > desiredTime) driveTrain.tankDrive(0, 0);
         return timer.get() > desiredTime;
+    }
+
+    //test this end function
+    @Override
+    public void end(){
+        driveTrain.tankDrive(0, 0);
     }
 }

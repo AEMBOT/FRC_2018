@@ -79,12 +79,12 @@ public class Extreme3DPro {
     public boolean six() { return controller.getRawButton(6); }
 
     /**
-     * @return the value of the seven button.
+     * @return the value of the back button.
      */
     public boolean seven() { return controller.getRawButton(7); }
 
     /**
-     * @return the value of the eight button.
+     * @return the value of the start button.
      */
     public boolean eight() { return controller.getRawButton(8); }
 

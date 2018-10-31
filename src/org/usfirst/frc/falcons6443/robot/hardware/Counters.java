@@ -13,14 +13,20 @@ public class Counters {
     private boolean forward;
     private int lastCount;
 
-    public Counters(int counterPort, int limitPort1){
+    public Counters(int counterPort, int offset){
         this.counter = new Counter(counterPort);
-        this.limitSwitch = new LimitSwitch(limitPort1);
         this.forward = true;
     }
 
     public Counters(int counterPort){
         this.counter = new Counter(counterPort);
+        this.forward = true;
+    }
+
+    public Counters(int counterPort, int limitPort, int offset){
+        this.counter = new Counter(counterPort);
+        this.limitSwitch = new LimitSwitch(limitPort);
+        this.lastCount = offset;
         this.forward = true;
     }
 
@@ -32,10 +38,6 @@ public class Counters {
     public void reset(int offset){
         this.counter.reset();
         lastCount = offset;
-    }
-
-    public boolean getLimit(){
-        return this.limitSwitch.get();
     }
 
     //returns straight from the counter, so this value has never been subtracted from even with motor running backwards
@@ -56,11 +58,15 @@ public class Counters {
     }
 
     public void setDirection(boolean forward){
-        this.lastCount = getTicks(); //update the tick count before changing the direction
+        this.lastCount = getTicks(); //updates the tick count before changing the direction
         this.forward = forward;
     }
 
     public boolean getDirection(){ return this.forward; }
+
+
+
+    public boolean getLimit(){ return this.limitSwitch.get(); }
 
     // -- if motorOutput > 0 is forwards, than isPositivePowerForward is true
     //

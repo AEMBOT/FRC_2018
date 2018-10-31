@@ -120,11 +120,17 @@ public class Xbox {
         return controller.getRawButton(4);
     }
 
-    //PLEASE FIND THE ACTUAL NAME FOR THESE
-    public boolean seven() {
+    /**
+     * @return the value of the back button.
+     */
+    public boolean back() {
         return controller.getRawButton(7);
     }
-    public boolean eight() {
+
+    /**
+     * @return the value of the start button.
+     */
+    public boolean start() {
         return controller.getRawButton(8);
     }
 

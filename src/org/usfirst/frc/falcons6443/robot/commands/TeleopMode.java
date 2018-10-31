@@ -76,13 +76,13 @@ public class TeleopMode extends SimpleCommand {
         press(primary.A(), () -> flywheel.intake());
         press(primary.B(), () -> flywheel.output());
         press(primary.Y(), () -> flywheel.slowOutput());
-        runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
+        runOncePerPress(secondary.back(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
 
         //rotation
         //    press(ManualControls.Rotate, secondary.leftBumper(), () -> rotation.up());
         //    press(ManualControls.Rotate, secondary.rightBumper(), () -> rotation.down());
         //    press(ManualControls.Rotate, secondary.B(), () -> rotation.middle());
-        //    press(ManualControls.Rotate, secondary.eight(), () -> rotation.resetEncoder());
+        //    press(ManualControls.Rotate, secondary.start(), () -> rotation.resetEncoder());
         manual(ManualControls.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions

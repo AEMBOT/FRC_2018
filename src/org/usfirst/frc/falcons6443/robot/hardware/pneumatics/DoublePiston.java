@@ -7,14 +7,30 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  */
 public class DoublePiston extends DoubleSolenoid{
 
+    private boolean reversed = false;
+
     public DoublePiston(int doublePistonPortA, int doublePistonPortB){
         super(doublePistonPortA, doublePistonPortB);
         SingularCompressor.createCompressor();
     }
 
-    public void forward() { this.set(Value.kForward); }
+    public DoublePiston(int doublePistonPortA, int doublePistonPortB, boolean reverse){
+        super(doublePistonPortA, doublePistonPortB);
+        SingularCompressor.createCompressor();
+        this.reversed = reverse;
+    }
 
-    public void backward() { this.set(Value.kForward); }
+    public void forward() {
+        if(!this.reversed) this.set(Value.kForward);
+        else this.set(Value.kReverse);
+    }
 
-    public void off() { this.set(Value.kOff);}
+    public void backward() {
+        if(!this.reversed) this.set(Value.kReverse);
+        else this.set(Value.kForward);
+    }
+
+    public void off() { this.set(Value.kOff); }
+
+    public void reverse() { this.reversed = !this.reversed; }
 }
