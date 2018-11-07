@@ -16,9 +16,6 @@ public class DriveToDistanceBackUp extends SimpleCommand{
     public DriveToDistanceBackUp(int distance, boolean fast, boolean elvator){
         super("Drive To Distance");
         requires(driveTrain);
-        requires(elevator);
-        requires(flywheel);
-        requires(rotation);
         targetDistance = distance;
         m_fast = fast;
         m_elevator = elvator;
@@ -50,14 +47,7 @@ public class DriveToDistanceBackUp extends SimpleCommand{
 
     @Override
     public void execute() {
-        if(m_elevator){
-            elevator.moveToHeight(true);
-        }
-        rotation.autoMoveIntake();
         driveToDistance(m_fast);
-        if(elevator.getTime() > 1){
-            elevator.setToHeight(ElevatorPosition.Stop);
-        }
       //  Logger.log(LoggerSystems.Drive,"Distance: " + Double.toString(driveTrain.getLeftDistance()));
     }
 

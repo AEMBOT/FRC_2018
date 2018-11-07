@@ -2,7 +2,6 @@ package org.usfirst.frc.falcons6443.robot.commands.subcommands.Intake;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.RotationPosition;
-import sun.nio.ch.SelectorImpl;
 
 public class AutoRotateIntake extends SimpleCommand {
 
@@ -21,10 +20,13 @@ public class AutoRotateIntake extends SimpleCommand {
     }
 
     @Override
-    public void execute() { rotation.autoMoveIntake(); }
+    public void execute() { rotation.down(); }
 
     @Override
     protected boolean isFinished() {
         return isTimedOut();
     }
+
+    @Override
+    public void end(){ rotation.stop(); }
 }

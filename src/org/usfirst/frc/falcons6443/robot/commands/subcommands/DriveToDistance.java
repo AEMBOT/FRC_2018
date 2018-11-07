@@ -25,9 +25,6 @@ public class DriveToDistance extends SimpleCommand {
     public DriveToDistance(double distance){
         super("Drive To Distance");
         requires(driveTrain);
-        requires(elevator);
-        requires(flywheel);
-        requires(rotation);
         pid = new PID(P, I, D, Eps);
         pid.setMaxOutput(.65);
         pid.setMinDoneCycles(5);
@@ -70,8 +67,6 @@ public class DriveToDistance extends SimpleCommand {
         } else {
             counter++;
         }
-        elevator.moveToHeight(true);
-        rotation.autoMoveIntake();
         driveToDistance();
        // System.out.println("enc: " + driveTrain.getLeftDistance());
         //System.out.println("counter: " + counter);

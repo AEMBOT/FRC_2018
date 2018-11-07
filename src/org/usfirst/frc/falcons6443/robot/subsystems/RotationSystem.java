@@ -91,43 +91,6 @@ public class RotationSystem extends Subsystem {
         System.out.println("Encoder: " + encoder.getDistance());
     }
 
-    public void autoMoveIntake(){
-        //Look at logs of flywheel flipping back up. does it say at half pos?
-        // going up? going down? something else crazy?
-        switch (currentPosition){
-            case IntakeUpPosition:
-                stop();
-//                Logger.log(LoggerSystems.Flywheel,"Flywheel at up pos");
-                break;
-            case IntakeHalfPosition:
-            /*  if(encoder.getDistance() > (midEncVal + buffer)){
-                    rotateMotor.setSpeed(downSpeed);
-                    Logger.log(LoggerSystems.Flywheel,"Flywheel", "going down to half pos");
-                } else if(encoder.getDistance() < (midEncVal - buffer)){
-                    rotateMotor.setSpeed(upSpeed);
-                    Logger.log(LoggerSystems.Flywheel,"Flywheel", "going up to half pos");
-                } else {
-                    stop();
-                    Logger.log(LoggerSystems.Flywheel,"Flywheel", "at half pos");
-                }*/
-                if(getTime() > 2.5){
-                    rotateMotor.set(0);
-                } else {
-                    rotateMotor.set(downSpeed);
-                }
-                break;
-            case IntakeDownPosition:
-              //if (encoder.getDistance() < (downEncVal + buffer)) {
-                    stop();
- //                   Logger.log(LoggerSystems.Flywheel,"Flywheel at down pos");
-              //} else {
-              //    rotateMotor.setSpeed(downSpeed);
-              //    Logger.log(LoggerSystems.Flywheel,"Flywheel", "going to down pos");
-              //}
-                break;
-        }
-    }
-
     public void manual(double input){ rotateMotor.set(input); }
 
     public void setManual(boolean on){
