@@ -36,4 +36,6 @@ public class PIDTimer extends PID {
     public void setTimeOut(long timeout) {
         this.timeout = timeout;
     }
+
+    public void resetTimeOut(){ this.startTime = 0; }
 }
