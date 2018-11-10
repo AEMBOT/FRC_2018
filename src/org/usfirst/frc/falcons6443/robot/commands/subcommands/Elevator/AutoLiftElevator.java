@@ -7,7 +7,7 @@ public class AutoLiftElevator extends SimpleCommand {
 
     private ElevatorPosition position;
 
-    public AutoLiftElevator(ElevatorPosition position){
+    public AutoLiftElevator(){
         super("Lift ElevatorSystem");
         requires(elevator);
         this.position = position;
@@ -15,7 +15,6 @@ public class AutoLiftElevator extends SimpleCommand {
 
     @Override
     public void initialize() {
-        elevator.setToHeight(position);
         elevator.startTimer();
     }
 

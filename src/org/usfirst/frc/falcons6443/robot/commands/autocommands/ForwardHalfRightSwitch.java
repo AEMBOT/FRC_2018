@@ -8,6 +8,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 public class ForwardHalfRightSwitch extends CommandGroup {
     public ForwardHalfRightSwitch(){
 //        if(FieldData.getChar(FieldData.Object.SWITCH) == 'R'){
+
             addSequential(new MoveIntake(RotationPosition.IntakeHalfPosition, false, false, true));
             addSequential(new MoveElevator(ElevatorPosition.Switch));
 

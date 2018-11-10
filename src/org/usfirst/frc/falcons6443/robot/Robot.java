@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
         autoSendable = new SendableChooser();
         autoSendable.addObject("Left", AutoChooser.Position.LEFT);
-        autoSendable.addObject("Center", AutoChooser.Position.CENTER);
+        autoSendable.addObject( "Center", AutoChooser.Position.CENTER);
         autoSendable.addObject("Right", AutoChooser.Position.RIGHT);
         autoSendable.addDefault("Line", AutoChooser.Position.LINE);
         SmartDashboard.putData("Auto Path", autoSendable);

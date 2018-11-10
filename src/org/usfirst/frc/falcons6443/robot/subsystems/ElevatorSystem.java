@@ -20,6 +20,7 @@ public class ElevatorSystem extends Subsystem {
     public ElevatorPosition desiredState = ElevatorPosition.Exchange;
     public ElevatorPosition previousLimit = ElevatorPosition.UnderSwitch;
 
+    public double manualSpeed;
     public final double upSpeed = 0.9;
     public final double downSpeed = -0.6;
     public final double constantSpeed = 0.15;
@@ -71,27 +72,6 @@ public class ElevatorSystem extends Subsystem {
         }*/
     }
 
-    public void setToHeight (ElevatorPosition elevatorState){
-//        Logger.log(LoggerSystems.Elevator,"Set elevator position: " + elevatorState.getName());
-        switch (elevatorState){
-            case Exchange:
-                desiredState = ElevatorPosition.Exchange;
-                setManual(false);
-                break;
-            case Switch:
-                desiredState = ElevatorPosition.Switch;
-                setManual(false);
-                break;
-            case Scale:
-                desiredState = ElevatorPosition.Scale;
-                setManual(false);
-                break;
-            case Stop:
-                desiredState = ElevatorPosition.Stop;
-                break;
-        }
-    }
-
     public boolean getSwitchHeight(){
         return getEncoderDistanceAuto() > switchHeight;
     }
@@ -111,26 +91,6 @@ public class ElevatorSystem extends Subsystem {
 
     public void stop () {
         motor.setSpeed(constantSpeed);
-    }
-
-    public void manual(double x){
-        setManual(true);
-        if(Math.abs(x) < constantSpeed) x = constantSpeed;
-        if(x < 0) x = x * .4;
-
-       /* if(!bottomLimit.get() && x < 0) {
-            motor.setSpeed(0);
-            resetEncoder();
-        } else if(encoder.getDistance() < scaleHeight && scaleLimit.get()){
-            motor.setSpeed(x);
-        } else {
-            if(x < 0) motor.setSpeed(x);
-            else motor.setSpeed(constantSpeed);
-            System.out.println("Max Height!!");
-        }*/
-       motor.setSpeed(x);
-        //System.out.println("E Enc: " + encoder.get());
-        System.out.println("Manual");System.out.println("Manual");
     }
 
     public void setManual(boolean on){
