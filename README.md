@@ -17,7 +17,10 @@ See [here](https://github.com/LibertyRobotics/FRC_2018/wiki/Setting-up-the-Progr
 ### [6443's Convention Document](https://github.com/LibertyRobotics/FRC_2018/wiki/Conventions)
 This document goes over general Github and Java code standards for this repository.
 
-## Nice to Have Software ##
+## Software ##
+* [FRC Plugin](https://plugins.jetbrains.com/plugin/9405-frc)
+* [Download Java](https://www.java.com/en/download/)
+* [NavX Libraries](https://pdocs.kauailabs.com/navx-mxp/software/roborio-libraries/java/)
 * [Git Bash](https://git-scm.com/downloads)
 * [SilverLight](https://www.microsoft.com/silverlight/)
 * [NavX Calibration Software](https://www.kauailabs.com/support/navx-mxp/kb/faq.php?id=26)
