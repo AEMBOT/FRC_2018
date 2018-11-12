@@ -14,36 +14,35 @@ import java.util.function.Consumer;
  */
 public class TeleopStructure {
 
-    private int unpressedID;
-    private int numOfSubsystems = Subsystems.values().length;
+    private int unpressedID = 0;
     private boolean first = true;
 
-    private boolean[] isManualLessThanBuffer = new boolean[numOfSubsystems];
     private List<Boolean> runOnceSavedData = new ArrayList<>();
+    private List<Boolean> isManualLessThanBuffer = new ArrayList<>();
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
     private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
 
     public TeleopStructure(){
         //While loops to fill Lists with nulls (allows us to change them later)
-        while(isManualGetter.size() <= numOfSubsystems) isManualGetter.add(null);
-        while(isManualSetter.size() <= numOfSubsystems) isManualSetter.add(null);
+        while(isManualGetter.size() <= ManualControls.values().length) isManualGetter.add(null);
+        while(isManualSetter.size() <= ManualControls.values().length) isManualSetter.add(null);
     }
 
-    //A list of al subsystems. KEEP THIS UPDATED PLEASE!
-    public enum Subsystems {
-        Drive, Elevator, Flywheels, Rotate
+    //A list of all manual controls of the robot, excluding drive
+    //Used for manual controls. Can only have one ManualControls per manual axis (NOT per subsystem!)
+    public enum ManualControls {
+        Elevator, Rotate
     }
 
-    //adding manual getters to List using params Subsystems.subsystemEnum, () -> function()
-    //Example: addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
-    public void addIsManualGetter(Subsystems system, Callable<Boolean> call) {
-        isManualGetter.add(system.ordinal(), call);
-    }
-
-    //adding manual setters to List using params Subsystems.subsystemEnum, (Boolean set) -> function(set)
-    //Example: addIsManualSetter(TeleopStructure.Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
-    public void addIsManualSetter(Subsystems system, Consumer<Boolean> consumer) {
-        isManualSetter.add(system.ordinal(), consumer);
+    //adding manual getters and setters to Lists using params:
+    // ManualControls.manualEnum, () -> function(), (Boolean set) -> function(set)
+    //Example: addIsManualGetter(TeleopStructure.ManualControls.Elevator, () -> elevator.getManual(),
+    //                      (Boolean set) -> elevator.setManual(set));
+    public void addIsManualGetterSetter(ManualControls manual, Callable<Boolean> callable,
+                                         Consumer<Boolean> consumer) {
+        isManualGetter.add(manual.ordinal(), callable);
+        isManualSetter.add(manual.ordinal(), consumer);
+        isManualLessThanBuffer.add(manual.ordinal(), true);  //included to ensure equal numbers of getters/setters to buffer checkers
     }
 
     //Pairs an action with a button
@@ -54,21 +53,21 @@ public class TeleopStructure {
     //Pairs an action with a button, compatible with manual()
     // ie: this function can be used with manual() to control the same component
     // eg: button control and (backup) manual control of the same component
-    public void press(Consumer<Boolean> setManual, boolean button, Runnable action){
+    public void press(ManualControls manual, boolean button, Runnable action){
         if(button) {
-            setManual.accept(false);
+            isManualSetter.get(manual.ordinal()).accept(false); //turn manual off if nonmanual button pressed
             action.run();
         }
     }
 
     //Pairs an action with a manual input (joystick, trigger, etc)
-    public void manual(Subsystems manualNumber, double input, Runnable action){
+    public void manual(ManualControls manualNumber, double input, Runnable action){
         if(Math.abs(input) > 0.2){
             isManualSetter.get(manualNumber.ordinal()).accept(true);
-            isManualLessThanBuffer[manualNumber.ordinal()] = false;
+            isManualLessThanBuffer.set(manualNumber.ordinal(), false);
             action.run();
         } else {
-            isManualLessThanBuffer[manualNumber.ordinal()] = true;
+            isManualLessThanBuffer.set(manualNumber.ordinal(), true);
         }
     }
 
@@ -78,22 +77,23 @@ public class TeleopStructure {
     }
 
     //Runs an action when manual is less than buffer
-    public void off(Runnable off, Subsystems manualNumber) {
-        if(isManualLessThanBuffer[manualNumber.ordinal()]) off.run();
+    public void off(Runnable off, ManualControls manualNumber) {
+        if(isManualLessThanBuffer.get(manualNumber.ordinal())) off.run();
     }
 
     //Runs an action when a set of buttons is not pressed and manual is less than buffer
-    public void off(Runnable off, Subsystems manualNumber, boolean ... button){
+    public void off(Runnable off, ManualControls manualNumber, boolean ... button){
         try {
             if(areAllFalse(button) && !isManualGetter.get(manualNumber.ordinal()).call()) off.run();
             else if((areAllFalse(button) && isManualGetter.get(manualNumber.ordinal()).call()
-                    && isManualLessThanBuffer[manualNumber.ordinal()])) off.run();
+                    && isManualLessThanBuffer.get(manualNumber.ordinal()))) off.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //Pairs an action with a button, activated only once unpressed (true) or once pressed (false)
+    //This action will only run once, unlike press() which runs periodically until unpressed
     public void runOncePerPress(boolean button, Runnable function, boolean unpressedMode){
         if(first) runOnceSavedData.add(unpressedID, false);
         if(button){

@@ -80,10 +80,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopInit(){
-        teleop.addIsManualGetter(TeleopStructure.Subsystems.Elevator, () -> elevator.getManual());
-        teleop.addIsManualSetter(TeleopStructure.Subsystems.Elevator, (Boolean set) -> elevator.setManual(set));
-        teleop.addIsManualGetter(TeleopStructure.Subsystems.Rotate, () -> rotation.getManual());
-        teleop.addIsManualSetter(TeleopStructure.Subsystems.Rotate, (Boolean set) -> rotation.setManual(set));
+        teleop.addIsManualGetterSetter(TeleopStructure.ManualControls.Elevator, () -> elevator.getManual(), (Boolean set) -> elevator.setManual(set));
+        teleop.addIsManualGetterSetter(TeleopStructure.ManualControls.Rotate, () -> rotation.getManual(), (Boolean set) -> rotation.setManual(set));
         Logger.teleopInit();
     }
     /**
@@ -105,7 +103,7 @@ public class Robot extends IterativeRobot {
 //        teleop.press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
 //        teleop.press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
 //        teleop.press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
-        teleop.manual(TeleopStructure.Subsystems.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
+        teleop.manual(TeleopStructure.ManualControls.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
 
         //flywheels
         teleop.press(primary.A(), () -> flywheel.intake());
@@ -114,14 +112,14 @@ public class Robot extends IterativeRobot {
         teleop.runOncePerPress(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
 
         //rotation
-        teleop.press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
-        teleop.press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.down());
-        teleop.manual(TeleopStructure.Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
+        teleop.press(TeleopStructure.ManualControls.Rotate, secondary.rightBumper(), () -> rotation.up());
+        teleop.press(TeleopStructure.ManualControls.Rotate, secondary.leftBumper(), () -> rotation.down());
+        teleop.manual(TeleopStructure.ManualControls.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions
-        teleop.off(() -> elevator.stop(), TeleopStructure.Subsystems.Elevator);
+        teleop.off(() -> elevator.stop(), TeleopStructure.ManualControls.Elevator);
         teleop.off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        teleop.off(() -> rotation.stop(), TeleopStructure.Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper());
+        teleop.off(() -> rotation.stop(), TeleopStructure.ManualControls.Rotate, secondary.rightBumper(), secondary.leftBumper());
 
         //general periodic functions
         //elevator.moveToHeight(false);

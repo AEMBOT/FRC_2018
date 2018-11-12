@@ -20,7 +20,7 @@ public class AutoMain {
 
     public AutoMain(AutoDrive autoDrive, ElevatorSystem elevator, FlywheelSystem flywheel, RotationSystem rotation) {
         autoPaths = new AutoPaths(autoDrive, elevator, flywheel, rotation);
-        autoChooser();
+        printAutoSelection();
     }
 
     //enums for auto selection off the dashboard
@@ -30,7 +30,7 @@ public class AutoMain {
 
     //sets up the dashboard for auto path choices
     //Test and see where these should be created!!
-    private void autoChooser() {
+    private void printAutoSelection() {
         sendable = new SendableChooser();
         sendable.addObject("Left", Position.LEFT);
         sendable.addObject("Center", Position.CENTER);

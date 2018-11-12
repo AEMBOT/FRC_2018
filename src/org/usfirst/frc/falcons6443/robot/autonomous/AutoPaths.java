@@ -72,8 +72,23 @@ class AutoPaths {
     void driveToLine(){
         begin();
         autoDrive.setDistance(120, true);
-        autoDrive.driveToDistance();
         waitDrive(true, false, false);
+    }
+
+    //time in seconds
+    void driveForTime(double time, double leftPower, double rightPower){
+        begin();
+        autoDrive.tankDrive(leftPower, rightPower);
+        sleep(time);
+        autoDrive.stop();
+    }
+
+    //time in seconds
+    void driveForTime(double time, double power){
+        begin();
+        autoDrive.tankDrive(power, power);
+        sleep(time);
+        autoDrive.stop();
     }
 
     //stops the thread until the time has passed
@@ -116,9 +131,10 @@ class AutoPaths {
     }
 
     //the wait function used while driving
-    //distance false is angle, elevator/rotation true will move those subsystems while driving
+    //distance false is angle. Elevator/rotation true will move those subsystems while driving
     // if set to a position (does not work while turning)
     private void waitDrive(boolean distance, boolean elevator, boolean rotation){
+        autoDrive.first = true;
         if (distance){
             waitForTrue(() -> autoDrive.isAtDistance(), () -> {
                 autoDrive.driveToDistance();
@@ -128,5 +144,7 @@ class AutoPaths {
         } else {
             waitForTrue(() -> autoDrive.isAtAngle(), () -> autoDrive.turnToAngle());
         }
+        autoDrive.stop();
+        autoDrive.encoderCheck.stop();
     }
 }
