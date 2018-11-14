@@ -6,12 +6,7 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 
 public class RotateToAngle extends CommandGroup {
     public RotateToAngle(double angle){
-        if(RobotMap.BackUpAngle){
-            addSequential(new RotateToAngleSadBackUp(angle));
-            addSequential(new StopDrive());
-        } else {
             addSequential(new RotateToAngleSad(angle));
             addSequential(new StopDrive());
-        }
     }
 }
