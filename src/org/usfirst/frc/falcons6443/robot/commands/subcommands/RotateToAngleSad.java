@@ -16,7 +16,7 @@ public class RotateToAngleSad extends SimpleCommand {
     private PIDTimer pid;
     private NavX navX;
 
-    private static final double P = 0.5; //.3
+    private static final double P = 0.3; //.3
     private static final double I = 0;
     private static final double D = 1; //1.23 //0.85
     private static final double Eps = 0;
@@ -29,9 +29,9 @@ public class RotateToAngleSad extends SimpleCommand {
         super("Rotate To Angle Beta");
         requires(driveTrain);
         navX = NavX.get();
-        pid = new PIDTimer(P, I, D, Eps, 200000);
+        pid = new PIDTimer(P, I, D, Eps, 2000);
         pid.setMaxOutput(.72);
-        pid.setMinDoneCycles(2);
+        pid.setMinDoneCycles(5);
         pid.setFinishedRange(buffer);
         if (angle > 180){
             angle -= 360;
