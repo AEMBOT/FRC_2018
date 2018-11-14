@@ -3,7 +3,7 @@ package org.usfirst.frc.falcons6443.robot.commands.autocommands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 //import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
+
 
 /**
  * Command to move forward and place cube on right switch from center position
@@ -28,7 +28,7 @@ public class CenterToRightSwitch extends CommandGroup {
         addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, true, false));*/
 
         System.out.println("At Right"); //120
-        addSequential(new RotateToAngleSad(120));
+        addSequential(new RotateToAngle(120));
         System.out.println("Done Auto");
     }
 }

@@ -12,7 +12,7 @@ import org.usfirst.frc.falcons6443.robot.utilities.pid.PIDTimer;
  *
  * @author Christopher Medlin, Ivan Kenevich
  */
-public class RotateToAngleSad extends SimpleCommand {
+public class RotateToAngle extends SimpleCommand {
     private PIDTimer pid;
     private NavX navX;
 
@@ -25,7 +25,7 @@ public class RotateToAngleSad extends SimpleCommand {
 
     private double targetAngle;
 
-    public RotateToAngleSad(double angle) {
+    public RotateToAngle(double angle) {
         super("Rotate To Angle Beta");
         requires(driveTrain);
         navX = NavX.get();

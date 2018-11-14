@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 //import org.usfirst.frc.falcons6443.robot.utilities.Logger;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
+
 
 /**
  * Command to move to the left switch from the right starting position and place block
@@ -37,7 +37,7 @@ public class CenterToLeftSwitch extends CommandGroup {
         addSequential(new MoveIntake(RotationPosition.IntakeUpPosition, false, true, false));*/
 
         System.out.println("At Center"); //120
-        addSequential(new RotateToAngleSad(30));
+        addSequential(new RotateToAngle(30));
         System.out.println("Done Auto");
     }
 }
