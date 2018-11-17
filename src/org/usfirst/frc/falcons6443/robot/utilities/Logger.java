@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
 
@@ -84,7 +85,14 @@ public class Logger {
 
     private static void print(LoggerSystems system, String oldMessage) {
         if (startTime != null) {
-            String fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt";
+            String fileName;
+            //if no match number, use time. Else, use match number
+            if(DriverStation.getInstance().isDSAttached()) { //only when connected to FMS
+                fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + DriverStation.getInstance().getMatchNumber() + ".txt";
+
+            } else {
+                fileName = "/home/lvuser/logs/" + dateStamp() + "/" + system + "/" + startTime + ".txt";
+            }
             File file = new File(fileName);
             file.getParentFile().mkdirs();
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true))) {
