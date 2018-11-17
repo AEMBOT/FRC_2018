@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands.unused;
 
 import org.usfirst.frc.falcons6443.robot.commands.SimpleCommand;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.MoveByTime;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
 
 /**
  * Moves the robot forward based one time, then backwards the same distance
@@ -11,7 +11,7 @@ import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.MoveByTime;
  */
 public class ForwardAndBack extends SimpleCommand {
 
-    MoveByTime moveTime;
+    DriveForTime moveTime;
 
     double stopTime;
 
@@ -31,9 +31,9 @@ public class ForwardAndBack extends SimpleCommand {
     @Override
     public void execute() {
         super.execute();
-        moveTime =  new MoveByTime(stopTime, .4,.4);
+        moveTime =  new DriveForTime(stopTime, .4,.4);
         driveTrain.reverse();
-        moveTime =  new MoveByTime(stopTime, .4,.4);
+        moveTime =  new DriveForTime(stopTime, .4,.4);
     }
 
     @Override

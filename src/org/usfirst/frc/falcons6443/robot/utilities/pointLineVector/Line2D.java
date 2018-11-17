@@ -1,4 +1,4 @@
-package org.usfirst.frc.falcons6443.robot.utilities;
+package org.usfirst.frc.falcons6443.robot.utilities.pointLineVector;
 
 /**
  * Represents a two-dimensional linear equation.

@@ -1,7 +1,13 @@
-package org.usfirst.frc.falcons6443.robot.hardware.Joysticks;
+package org.usfirst.frc.falcons6443.robot.hardware.joysticks;
 
 import edu.wpi.first.wpilibj.Joystick;
 
+/**
+ * Wrapper for a playstation controller. Provides clearer interface with button and axis inputs.
+ * Use class in Teleop and OI classes
+ *
+ * Which version of playstation is this? Compare numbers to different controller models
+ **/
 public class Playstation {
 
     public Joystick controller;

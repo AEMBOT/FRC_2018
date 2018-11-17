@@ -1,7 +1,7 @@
 package org.usfirst.frc.falcons6443.robot.utilities.drive;
 
 import edu.wpi.first.wpilibj.drive.Vector2d;
-import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
+import org.usfirst.frc.falcons6443.robot.hardware.joysticks.Xbox;
 
 /**
  * Drive specific code should be separate from other code, as it

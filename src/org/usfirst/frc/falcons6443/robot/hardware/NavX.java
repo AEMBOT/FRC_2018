@@ -43,7 +43,7 @@ public class NavX {
      * @return the yaw read from the NavX.
      */
     public float getYaw() {
-        return ahrs.getYaw();
+        return ahrs().getYaw();
     }
 
     public void reset() {

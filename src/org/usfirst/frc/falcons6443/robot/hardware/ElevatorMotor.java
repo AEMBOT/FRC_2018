@@ -4,6 +4,11 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 
+/*
+ * Specific to the elevator motor(s). Allows for either one SIM motor or four RedLine motors.
+ *
+ * Change which motor is in use in RobotMap.RedLine, true using the RedLine motors
+ */
 public class ElevatorMotor {
     private Spark singleMotor;
     private SpeedControllerGroup redLineMotors;
@@ -14,6 +19,7 @@ public class ElevatorMotor {
             redLineMotors = new SpeedControllerGroup(new Talon(RobotMap.ElevatorRedLineMotor1),
                     new Talon(RobotMap.ElevatorRedLineMotor2), new Talon(RobotMap.ElevatorRedLineMotor3),
                     new Talon(RobotMap.ElevatorRedLineMotor4));
+
         } else {
             singleMotor = new Spark(RobotMap.ElevatorSingleMotor);
             singleMotor.setInverted(true);

@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Used to check storage space on RIO, flash drive, etc
+ **/
 public abstract class FileStorage {
     private Path rioPath = Paths.get("/home");
 

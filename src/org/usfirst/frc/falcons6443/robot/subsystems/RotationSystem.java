@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
-//import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.RotationPosition;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.LoggerSystems;
@@ -19,11 +18,12 @@ public class RotationSystem extends Subsystem {
     private RotationPosition currentPosition = RotationPosition.IntakeUpPosition;
 
     private final double upSpeed = 1;
-    private final double downSpeed = -.45;
+    private final double downSpeed = -.55;
     private final int upEncVal = -40;
-    private final int downEncVal = -700;
+    private final int downEncVal = -650;
     private final int midEncVal = -270;
     private final int buffer = 20; //ticks
+    private boolean constantPower = false;
 
     public RotationSystem(){
         rotateMotor = new Spark(RobotMap.RotationMotor);
@@ -36,14 +36,13 @@ public class RotationSystem extends Subsystem {
     public void stopTimer(){ timer.stop(); }
     public double getTime(){ return timer.get(); }
 
-    public double getEncoderVal(){
-        return encoder.getDistance();
-    }
+    public double getEncoderVal(){ return encoder.getDistance(); }
     public void resetEncoder(){ encoder.reset(); }
 
     public void stop(){
-        //rotateMotor.set(0.17);
-        rotateMotor.set(0);
+        if(constantPower)
+            rotateMotor.set(0.17);
+        else rotateMotor.set(0);
     }
 
     public void middle(){
@@ -52,6 +51,7 @@ public class RotationSystem extends Subsystem {
         } else if(encoder.getDistance() < (midEncVal - buffer)){
             rotateMotor.set(upSpeed);
         } else {
+            constantPower = true;
             stop();
         }
     }
@@ -73,18 +73,20 @@ public class RotationSystem extends Subsystem {
 
     public void up() {
         double speed = upSpeed;
-//        if (encoder.getDistance() > upEncVal) {
-//            speed = 0.1; //0? less strain on the motor
-//        }
+        if (encoder.getDistance() > upEncVal) {
+              speed = 0;
+              constantPower = false;
+        } else constantPower = true;
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }
 
     public void down(){
         double speed = downSpeed;
-//        if (encoder.getDistance() < downEncVal) {
-//            speed = 0.1;
-//        }
+        if (encoder.getDistance() < downEncVal) {
+            speed = 0;
+            constantPower = false;
+        } else constantPower = true;
         rotateMotor.set(speed);
         System.out.println("Encoder: " + encoder.getDistance());
     }

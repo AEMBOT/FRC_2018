@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
-import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.unused.AutoChooser;
-import org.usfirst.frc.falcons6443.robot.communication.NetTables;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
+import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 
@@ -38,7 +38,8 @@ public class Robot extends IterativeRobot {
     private Command teleop;
 
     public Stopwatch autoWatch;
-    public static SendableChooser sendable1;
+    public static SendableChooser autoSendable;
+    public boolean babyMode = false;
 
     //public Reader autoReader;
     /*
@@ -57,23 +58,25 @@ public class Robot extends IterativeRobot {
         }*/
 
         oi = new OI();
-        autonomy = null;
+        autonomy = new RotateToAngleSad(90);//DriveForTime(4, 0.6, 0.63);
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();
         //NetTables.setBoolean("left", false);
-       // NetTables.setBoolean("center", false);
+        //NetTables.setBoolean("center", false);
         //NetTables.setBoolean("right", false);
         //NetTables.flush();
         //format 1 is kMJPEG
-        //VideoMode vm = new VideoMode(1, 640, 480, 60);
-        //CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
-        sendable1 = new SendableChooser();
-        sendable1.addObject("Left", AutoChooser.Position.LEFT);
-        sendable1.addObject("Center", AutoChooser.Position.CENTER);
-        sendable1.addObject("Right", AutoChooser.Position.RIGHT);
-        sendable1.addDefault("Line", AutoChooser.Position.LINE);
-        SmartDashboard.putData("Auto Path", sendable1);
+        VideoMode vm = new VideoMode(1, 640, 480, 60);
+        CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+        autoSendable = new SendableChooser();
+        autoSendable.addObject("Left", AutoChooser.Position.LEFT);
+        autoSendable.addObject("Center", AutoChooser.Position.CENTER);
+        autoSendable.addObject("Right", AutoChooser.Position.RIGHT);
+        autoSendable.addDefault("Line", AutoChooser.Position.LINE);
+        SmartDashboard.putData("Auto Path", autoSendable);
+
+        SmartDashboard.putBoolean("Baby Mode", babyMode);
     }
 
     /*
@@ -106,8 +109,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
-        chooser = new AutoChooser();
-        autonomy = chooser.getFinalAuto();
+       // chooser = new AutoChooser();   //Commented out until working auto modes
+       // autonomy = chooser.getFinalAuto();   //Commented out until working auto modes
         if (autonomy != null) autonomy.start();
     }
 

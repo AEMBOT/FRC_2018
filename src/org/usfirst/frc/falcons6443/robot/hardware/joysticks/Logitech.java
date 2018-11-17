@@ -1,31 +1,25 @@
-package org.usfirst.frc.falcons6443.robot.hardware.Joysticks;
+package org.usfirst.frc.falcons6443.robot.hardware.joysticks;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import org.usfirst.frc.falcons6443.robot.utilities.enums.XboxRumble;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * Wrapper for an Xbox 360 Xbox. Provides clearer interface with button and axis inputs.
+ * Wrapper for a logitech controller. Provides clearer interface with button and axis inputs.
+ * Use class in Teleop and OI classes
  *
- * @author Patrick Higgins
- */
-public class Xbox {
+ * NOTE: no rumble feature
+ **/
 
-    public XboxController controller;
+public class Logitech {
 
-    /**
-     * Constructor for Xbox.
-     *
-     * @param controller the xbox's joystick.
-     */
-    public Xbox(XboxController controller) {
+    public Joystick controller;
+
+    public Logitech(Joystick controller) {
         this.controller = controller;
     }
 
-    public XboxController getJoystick(XboxController xbox) {
-        return xbox;
-    }
-
+    /**
+     * @return The value of the X axis of the left stick.
+     */
     public double leftStickX() {
         return controller.getRawAxis(0);
     }
@@ -54,15 +48,15 @@ public class Xbox {
     /**
      * @return The value of the axis for the left trigger.
      */
-    public double leftTrigger() {
-        return controller.getRawAxis(2);
+    public boolean leftTrigger() {
+        return controller.getRawButton(2);
     }
 
     /**
      * @return The value of the axis for the right trigger.
      */
-    public double rightTrigger() {
-        return controller.getRawAxis(3);
+    public boolean rightTrigger() {
+        return controller.getRawButton(3);
     }
 
     /**
@@ -121,27 +115,15 @@ public class Xbox {
         return controller.getRawButton(4);
     }
 
-    //PLEASE FIND THE ACTUAL NAME FOR THESE
-    public boolean seven() {
+    /**
+     * @return the value of the back button.
+     */
+    public boolean back() {
         return controller.getRawButton(7);
     }
-    public boolean eight() {
-        return controller.getRawButton(8);
-    }
 
-
-    public void setRumble(XboxRumble rumble, double value){
-        switch (rumble){
-            case RumbleLeft:
-                controller.setRumble(GenericHID.RumbleType.kLeftRumble, value);
-                break;
-            case RumbleRight:
-                controller.setRumble(GenericHID.RumbleType.kRightRumble, value);
-                break;
-            case RumbleBoth:
-                controller.setRumble(GenericHID.RumbleType.kLeftRumble, value);
-                controller.setRumble(GenericHID.RumbleType.kRightRumble, value);
-                break;
-        }
-    }
+    /**
+     * @return the value of the start button.
+     */
+    public boolean start() { return controller.getRawButton(8); }
 }

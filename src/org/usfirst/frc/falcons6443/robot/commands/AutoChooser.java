@@ -1,15 +1,9 @@
-package org.usfirst.frc.falcons6443.robot.commands.subcommands.unused;
+package org.usfirst.frc.falcons6443.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import javafx.geometry.Pos;
 import org.usfirst.frc.falcons6443.robot.commands.autocommands.*;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.unused.*;
 import org.usfirst.frc.falcons6443.robot.commands.complete.LaneToLine;
-import org.usfirst.frc.falcons6443.robot.communication.FieldData;
 import org.usfirst.frc.falcons6443.robot.Robot;
-import org.usfirst.frc.falcons6443.robot.communication.NetTables;
 
 /**
  * This class handles will choose and autonomous mode
@@ -40,7 +34,7 @@ public class AutoChooser {
     //commands then choose command once fms data is received.
     private void choose(){
 
-        Position position = (Position) Robot.sendable1.getSelected();
+        Position position = (Position) Robot.autoSendable.getSelected();
 
         switch (position){
             //handles which code to run depending on result of the specified switch/scale
