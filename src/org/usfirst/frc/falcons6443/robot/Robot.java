@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot {
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
 
 
+        //sets variable found in AutoChooser class that returns final auto  
         autoSendable = new SendableChooser();
         autoSendable.addObject("Left", AutoChooser.Position.LEFT);
         autoSendable.addObject("Center", AutoChooser.Position.CENTER);
@@ -133,8 +134,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Logger.autoInit();
         autoWatch = new Stopwatch(true);//begins timing
-       // chooser = new AutoChooser();   //Commented out until working auto modes
-       // autonomy = chooser.getFinalAuto();   //Commented out until working auto modes
+        chooser = new AutoChooser();
+        autonomy = chooser.getFinalAuto();
         if (autonomy != null) autonomy.start();
     }
 
