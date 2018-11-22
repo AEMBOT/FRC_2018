@@ -7,10 +7,10 @@ import org.usfirst.frc.falcons6443.robot.utilities.pid.PID;
 
 public class DriveToDistance extends SimpleCommand {
 
-    private static final double P = .15; //.42
-    private static final double I = 0;
-    private static final double D = .1; //3.5
-    private static final double Eps = 0.5; //weakest applied power //0.4???
+    public static double P = .15; //.42
+    public static double I = 0;
+    public static double D = .1; //3.5
+    private  double Eps = 0.5; //weakest applied power //0.4???
 
     private static final double buffer = 1; //inches //0.5
     private static final double counterBuffer = 2; //inches //0.5

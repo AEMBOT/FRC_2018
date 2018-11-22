@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveToDistance;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
@@ -30,6 +31,7 @@ public class Robot extends IterativeRobot {
     public static final ElevatorSystem Elevator = new ElevatorSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
     public static final RotationSystem Rotation = new RotationSystem();
+    double testDistance, testAngle;
 
     public static OI oi;
 
@@ -69,14 +71,36 @@ public class Robot extends IterativeRobot {
         //format 1 is kMJPEG
         VideoMode vm = new VideoMode(1, 640, 480, 60);
         CameraServer.getInstance().startAutomaticCapture().setVideoMode(vm);
+
+
         autoSendable = new SendableChooser();
         autoSendable.addObject("Left", AutoChooser.Position.LEFT);
         autoSendable.addObject("Center", AutoChooser.Position.CENTER);
         autoSendable.addObject("Right", AutoChooser.Position.RIGHT);
         autoSendable.addDefault("Line", AutoChooser.Position.LINE);
-        SmartDashboard.putData("Auto Path", autoSendable);
 
         SmartDashboard.putBoolean("Baby Mode", babyMode);
+
+
+        //PID values from drive command, need to test mutability
+        SmartDashboard.putNumber("P (DriveToDistance)", DriveToDistance.P);
+        SmartDashboard.putNumber("I (DriveToDistance)", DriveToDistance.I);
+        SmartDashboard.putNumber("D (DriveToDistance)", DriveToDistance.D);
+
+        //command with mutable parameter, need to test
+        SmartDashboard.putNumber("Distance to Test",testDistance);
+        SmartDashboard.putData("Drive To Distance", new DriveToDistance(testDistance));
+
+        //PID values from rotate command, need to test mutability
+        SmartDashboard.putNumber("P (RotateToAngleSad)", RotateToAngleSad.P);
+        SmartDashboard.putNumber("I (RotateToAngleSad)", RotateToAngleSad.I);
+        SmartDashboard.putNumber("D (RotateToAngleSad)", RotateToAngleSad.D);
+
+        //command with mutable parameter, need to test
+        SmartDashboard.putNumber("Angle to Test",testAngle);
+        SmartDashboard.putData("RotateToAngleSad", new RotateToAngleSad(testAngle));
+
+
     }
 
     /*
@@ -137,7 +161,9 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void teleopPeriodic() {
+
         Scheduler.getInstance().run();
+
     }
 
     /*
@@ -145,6 +171,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
+
+
         LiveWindow.run();
     }
 }

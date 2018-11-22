@@ -16,10 +16,10 @@ public class RotateToAngleSad extends SimpleCommand {
     private PID pid;
     private NavX navX;
 
-    private static final double P = 0.2; //.3
-    private static final double I = 0;
-    private static final double D = 0.85; //1.23
-    private static final double Eps = 0;
+    public static double P = 0.2; //.3
+    public static double I = 0;
+    public static double D = 0.85; //1.23
+    public static double Eps = 0;
 
     private static final double buffer = 1; //degrees
 
