@@ -9,9 +9,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.commands.*;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.DriveForTime;
 import org.usfirst.frc.falcons6443.robot.commands.AutoChooser;
-import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngleSad;
+import org.usfirst.frc.falcons6443.robot.commands.subcommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.subsystems.*;
 import org.usfirst.frc.falcons6443.robot.utilities.*;
 
@@ -58,7 +57,7 @@ public class Robot extends IterativeRobot {
         }*/
 
         oi = new OI();
-        autonomy = new RotateToAngleSad(90);//DriveForTime(4, 0.6, 0.63);
+        autonomy = new RotateToAngle(90);//DriveForTime(4, 0.6, 0.63);
         teleop = new TeleopMode();
 
         //CameraServer.getInstance().putVideo();

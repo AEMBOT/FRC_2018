@@ -1,8 +1,6 @@
 package org.usfirst.frc.falcons6443.robot.commands.autocommands.unused;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.falcons6443.robot.RobotMap;
-import org.usfirst.frc.falcons6443.robot.commands.autocommands.RotateToAngle;
 import org.usfirst.frc.falcons6443.robot.commands.subcommands.*;
 
 /**

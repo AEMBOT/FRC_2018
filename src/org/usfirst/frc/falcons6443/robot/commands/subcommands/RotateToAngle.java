@@ -12,27 +12,26 @@ import org.usfirst.frc.falcons6443.robot.utilities.pid.PIDTimer;
  *
  * @author Christopher Medlin, Ivan Kenevich
  */
-public class RotateToAngleSad extends SimpleCommand {
-    private PID pid;
+public class RotateToAngle extends SimpleCommand {
+    private PIDTimer pid;
     private NavX navX;
 
-    private static final double P = 0.2; //.3
+    private static final double P = 0.3; //.3
     private static final double I = 0;
-    private static final double D = 0.85; //1.23
+    private static final double D = 1; //1.23 //0.85
     private static final double Eps = 0;
 
     private static final double buffer = 1; //degrees
 
     private double targetAngle;
 
-    public RotateToAngleSad(double angle) {
+    public RotateToAngle(double angle) {
         super("Rotate To Angle Beta");
         requires(driveTrain);
         navX = NavX.get();
-        //pidt = new PIDTimer(P, I, D, Eps, 20000);
-        pid = new PIDTimer(P, I, D, Eps, 20000);
+        pid = new PIDTimer(P, I, D, Eps, 2000);
         pid.setMaxOutput(.72);
-        pid.setMinDoneCycles(2);
+        pid.setMinDoneCycles(5);
         pid.setFinishedRange(buffer);
         if (angle > 180){
             angle -= 360;
@@ -73,10 +72,12 @@ public class RotateToAngleSad extends SimpleCommand {
 
     @Override
     public boolean isFinished() {
-        if(isAtAngle()){
-            driveTrain.tankDrive(0, 0);
-            System.out.println("DONE");
-        }
         return isAtAngle();
+    }
+
+    @Override
+    public void end(){
+        driveTrain.tankDrive(0, 0);
+        System.out.println("DONE");
     }
 }
