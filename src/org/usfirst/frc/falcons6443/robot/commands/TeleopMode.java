@@ -59,7 +59,7 @@ public class TeleopMode extends SimpleCommand {
         Logger.log(LoggerSystems.Drive, "LOGS!!");
 
         //drive
-        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
+        driveTrain.falconTankDrive(primary.leftStickY(), primary.rightStickY());
         // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
 
         //shifting

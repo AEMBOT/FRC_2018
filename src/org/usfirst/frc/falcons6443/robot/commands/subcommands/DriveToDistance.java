@@ -35,8 +35,8 @@ public class DriveToDistance extends SimpleCommand {
     }
 
     private void driveToDistance(){
-        double power = pid.calcPID(driveTrain.getLeftDistance());
-        driveTrain.tankDrive(power, power + .05);
+        //double power = pid.calcPID(driveTrain.getLeftDistance());
+        //driveTrain.tankDrive(power, power + .05);
     }
 
     private void setDistance(){
@@ -59,19 +59,19 @@ public class DriveToDistance extends SimpleCommand {
     @Override
     public void execute() {
         //try w/o first
-        if(counter > 50) {
-            oldDistance = driveTrain.getLeftDistance();
-            counter = 0;
-        } else if (counter == 50){
-            if((oldDistance + counterBuffer) >= driveTrain.getLeftDistance()){
-               done = true;
-            }
-        } else {
-            counter++;
-        }
-        elevator.moveToHeight(true);
-        rotation.autoMoveIntake();
-        driveToDistance();
+        //if(counter > 50) {
+        //    //oldDistance = driveTrain.getLeftDistance();
+        //    counter = 0;
+        //} else if (counter == 50){
+        //    if((oldDistance + counterBuffer) >= driveTrain.getLeftDistance()){
+        //       done = true;
+        //    }
+        //} else {
+        //    counter++;
+        //}
+        //elevator.moveToHeight(true);
+        //rotation.autoMoveIntake();
+        //driveToDistance();
        // System.out.println("enc: " + driveTrain.getLeftDistance());
         //System.out.println("counter: " + counter);
     }

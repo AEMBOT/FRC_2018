@@ -19,7 +19,7 @@ public abstract class SimpleCommand extends Command {
     // Subsystems.
     // When a subsystem is added to Robot, it must also be added here.
     // It can then be referred to from any command inheriting this class.
-    public DriveTrainSystem driveTrain = Robot.DriveTrain;
+    public DriveTrainSystemV2 driveTrain = Robot.DriveTrain;
     public ElevatorSystem elevator = Robot.Elevator;
     public FlywheelSystem flywheel = Robot.Flywheel;
     public RotationSystem rotation = Robot.Rotation;
