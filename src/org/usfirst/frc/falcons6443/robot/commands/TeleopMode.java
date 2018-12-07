@@ -52,18 +52,45 @@ public class TeleopMode extends SimpleCommand {
         isManualSetter.add(Subsystems.Rotate.getValue(), (Boolean set) -> rotation.setManual(set));
 
         SmartDashboard.putNumber("Number", 1);
+
+        //Decide which driveMode we are using... Defaults to tank raw
+        /* Since we cant just return the enum (and strings are annoying) I used Int's the following are the number and the corresponding mode
+         * 0 = Raw Input Tank Drive
+         * 1 = Smooth Input Tank Drive
+         * 2 = Arcade Like Drive Mode
+         */
+
+        //Sets the drive mode at robot init
+        int driveModeInt = 0;
+        driveTrain.setDriveMode(driveModeInt);
     }
 
     @Override
     public void execute() {
         Logger.log(LoggerSystems.Drive, "LOGS!!");
 
-        //drive
-        driveTrain.falconTankDrive(primary.leftStickY(), primary.rightStickY());
-        // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
+        //Same Table as above
+        /* Since we cant just return the enum (and strings are annoying) I used Int's the following are the number and the corresponding mode
+         * 0 = Raw Input Tank Drive
+         * 1 = Smooth Input Tank Drive
+         * 2 = Arcade Like Drive Mode
+         */
 
-        //Kept For Demo in case
-        press(primary.A(), () -> flywheel.intake());
+        //Sets drive mode based off selected
+        switch (driveTrain.getSelectedDriveMode()){
+            case 0:
+                driveTrain.TankDrive(primary.leftStickY(), primary.rightStickY());
+                // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
+                break;
+            case 1:
+                driveTrain.SmoothTankDrive(primary.leftStickY(), primary.rightStickY());
+                break;
+
+        }
+
+
+        //Kept For Demo in case I forget how it works
+        //press(primary.A(), () -> flywheel.intake());
 
 
         //general periodic functions

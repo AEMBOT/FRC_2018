@@ -110,8 +110,6 @@ public class Playstation {
     }
 
     //PLEASE FIND THE ACTUAL NAME FOR THESE TOO
-    public boolean seven() {
-        return controller.getRawButton(9);
-    }
+    public boolean seven() { return controller.getRawButton(9); }
     public boolean eight() { return controller.getRawButton(10); }
 }

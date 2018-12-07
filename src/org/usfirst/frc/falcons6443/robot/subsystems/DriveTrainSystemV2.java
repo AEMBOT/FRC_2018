@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.drive.Vector2d;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
+import org.usfirst.frc.falcons6443.robot.utilities.drive.DriveSmoother;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.Subsystems;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class DriveTrainSystemV2 extends Subsystem {
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
     private DifferentialDrive drive;
+    private DriveSmoother driveSmoother;
 
     /**
      * Constructor for DriveTrainSystem.
@@ -79,6 +81,10 @@ public class DriveTrainSystemV2 extends Subsystem {
 
         for(int i = 0; i <= 1; i++) encoderList.add(i, new ArrayList<>());
         encoderCheck = new Timer();
+
+        //Creates a reference to an calls the start method within the driveSmoother class
+        driveSmoother = new DriveSmoother(drive);
+        driveSmoother.Start();
     }
 
     @Override
@@ -204,9 +210,46 @@ public class DriveTrainSystemV2 extends Subsystem {
         tankDrive(vector.y, vector.x);
     }
 
-    public void falconTankDrive(double leftStickY, double rightStickY){
+    public void TankDrive(double leftStickY, double rightStickY){
          tankDrive(-leftStickY, -rightStickY);
     }
 
+
+    //Implements Mark's attempted at a smoother drive system  TODO: Test to see if this actually works
+    public void SmoothTankDrive(double leftStickY, double rightStickY){ driveSmoother.SetPower(leftStickY, rightStickY); }
+
+    //Just In Case We Need It, Returns the name as a int cause it is easier to work with
+    public int getSelectedDriveMode(){
+        int driveModeInt = 0;
+
+        switch (selectedMode.toString()){
+            case "RAWTANK":
+                driveModeInt = 0;
+                break;
+            case "SMOOTHTANK":
+                driveModeInt = 1;
+                break;
+            case "ARCADE":
+                driveModeInt = 2;
+                break;
+        }
+
+        return driveModeInt;
+    }
+
+    //Allows for easy changing of the selected drive mode from other classes
+    public void setDriveMode(int driveMode){
+        switch (driveMode){
+            case 0:
+                selectedMode = selectedDriveMode.RAWTANK;
+                break;
+            case 1:
+                selectedMode = selectedDriveMode.SMOOTHTANK;
+                break;
+            case 2:
+                selectedMode = selectedDriveMode.ARCADE;
+                break;
+        }
+    }
 
 }
