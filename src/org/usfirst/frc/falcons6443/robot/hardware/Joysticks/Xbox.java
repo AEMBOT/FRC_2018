@@ -121,6 +121,27 @@ public class Xbox {
         return controller.getRawButton(4);
     }
 
+
+    /**
+     * @return the value of the dpad up arrow. TODO: Add real value
+     */
+    public boolean DpadUp() { return controller.getRawButton(-1); }
+
+    /**
+     * @return the value of the dpad down arrow. TODO: Add real value
+     */
+    public boolean DpadDown() { return controller.getRawButton(-1); }
+
+    /**
+     * @return the value of the dpad left arrow. TODO: Add real value
+     */
+    public boolean DpadLeft() { return controller.getRawButton(-1); }
+
+    /**
+     * @return the value of the dpad right arrow. TODO: Add real value
+     */
+    public boolean DpadRight() { return controller.getRawButton(-1); }
+
     //PLEASE FIND THE ACTUAL NAME FOR THESE
     public boolean seven() {
         return controller.getRawButton(7);

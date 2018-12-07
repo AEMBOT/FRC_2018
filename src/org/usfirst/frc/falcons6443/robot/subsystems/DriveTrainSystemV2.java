@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class DriveTrainSystemV2 extends Subsystem {
 
+    //RAWTANK = Raw Input Tank Drive, SMOOTHTANK = Smoother less jerky tank drive, ARCADE = More like a racing game style of drive
+    public enum selectedDriveMode {RAWTANK, SMOOTHTANK, ARCADE}
 
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
@@ -38,6 +40,9 @@ public class DriveTrainSystemV2 extends Subsystem {
 
     private List<List<Integer>> encoderList = new ArrayList<List<Integer>>(); //Lists of lists! this holds a list of the encoder lists
     public Timer encoderCheck;
+
+    //Init SelectedDriveMode and default it to raw tank
+    private selectedDriveMode selectedMode = selectedDriveMode.RAWTANK;
 
     //Creates an enum for the active encoder and assigns its value to left leave this as is
     public enum activeEncoderEnum {leftEncoder, rightEncoder}
@@ -200,6 +205,8 @@ public class DriveTrainSystemV2 extends Subsystem {
     }
 
     public void falconTankDrive(double leftStickY, double rightStickY){
-        tankDrive(-leftStickY, -rightStickY);
+         tankDrive(-leftStickY, -rightStickY);
     }
+
+
 }

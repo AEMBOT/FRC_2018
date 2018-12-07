@@ -62,32 +62,9 @@ public class TeleopMode extends SimpleCommand {
         driveTrain.falconTankDrive(primary.leftStickY(), primary.rightStickY());
         // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
 
-        //shifting
-        press(primary.rightBumper(), () -> driveTrain.upShift());
-        press(primary.leftBumper(), () -> driveTrain.downShift());
-
-        //elevator
-//        press((Boolean set) -> elevator.setManual(set), secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
-//        press((Boolean set) -> elevator.setManual(set), secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
-//        press((Boolean set) -> elevator.setManual(set), secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
-//        press((Boolean set) -> elevator.setManual(set), secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
-        manual(Subsystems.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
-
-        //flywheels
+        //Kept For Demo in case
         press(primary.A(), () -> flywheel.intake());
-        press(primary.B(), () -> flywheel.output());
-        press(primary.Y(), () -> flywheel.slowOutput());
-        unpressed(secondary.seven(), () -> flywheel.toggleKill(), true); //toggles slow spin while off
 
-        //rotation
-        press((Boolean set) -> rotation.setManual(set), secondary.rightBumper(), () -> rotation.up());
-        press((Boolean set) -> rotation.setManual(set), secondary.leftBumper(), () -> rotation.down());
-        manual(Subsystems.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
-
-        //off functions
-        off(() -> elevator.stop(), Subsystems.Elevator);
-        off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        off(() -> rotation.stop(), Subsystems.Rotate, secondary.rightBumper(), secondary.leftBumper());
 
         //general periodic functions
         //elevator.moveToHeight(false);
