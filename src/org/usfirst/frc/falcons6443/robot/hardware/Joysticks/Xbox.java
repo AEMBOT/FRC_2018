@@ -26,6 +26,9 @@ public class Xbox {
         return xbox;
     }
 
+    /**
+     * @return The value of the X axis of the left stick.
+     */
     public double leftStickX() {
         return controller.getRawAxis(0);
     }
@@ -125,28 +128,74 @@ public class Xbox {
     /**
      * @return the value of the dpad up arrow. TODO: Add real value
      */
-    public boolean DpadUp() { return controller.getRawButton(-1); }
+    public boolean DpadUp() {
+        boolean buttonPushed = false;
+
+        if(controller.getPOV() == 0){
+            buttonPushed = true;
+        }
+        else {
+            buttonPushed = false;
+        }
+        return buttonPushed;
+    }
 
     /**
-     * @return the value of the dpad down arrow. TODO: Add real value
+     * @return the value of the dpad down arrow.
      */
-    public boolean DpadDown() { return controller.getRawButton(-1); }
+    public boolean DpadDown() {
+        boolean buttonPushed = false;
+
+        if(controller.getPOV() == 180){
+            buttonPushed = true;
+        }
+        else {
+            buttonPushed = false;
+        }
+        return buttonPushed;
+    }
 
     /**
-     * @return the value of the dpad left arrow. TODO: Add real value
+     * @return the value of the dpad left arrow.
      */
-    public boolean DpadLeft() { return controller.getRawButton(-1); }
+    public boolean DpadLeft() {
+        boolean buttonPushed = false;
+
+        if(controller.getPOV() == 270){
+            buttonPushed = true;
+        }
+        else {
+            buttonPushed = false;
+        }
+        return buttonPushed;
+    }
 
     /**
-     * @return the value of the dpad right arrow. TODO: Add real value
+     * @return the value of the dpad right arrow.
      */
-    public boolean DpadRight() { return controller.getRawButton(-1); }
+    public boolean DpadRight() {
+        boolean buttonPushed = false;
 
-    //PLEASE FIND THE ACTUAL NAME FOR THESE
-    public boolean seven() {
+        if(controller.getPOV() == 90){
+            buttonPushed = true;
+        }
+        else {
+            buttonPushed = false;
+        }
+        return buttonPushed;
+    }
+
+    /**
+     * @return the value of the start button.
+     */
+    public boolean startButton() {
         return controller.getRawButton(7);
     }
-    public boolean eight() {
+
+    /**
+     * @return the value of the back button.
+     */
+    public boolean backButton() {
         return controller.getRawButton(8);
     }
 

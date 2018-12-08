@@ -76,6 +76,8 @@ public class TeleopMode extends SimpleCommand {
          * 2 = Arcade Like Drive Mode
          */
 
+        //TODO: Add dropdown to smart dashboard for switching drive mode from dashboard
+
         //Sets drive mode based off selected
         switch (driveTrain.getSelectedDriveMode()){
             case 0:
@@ -84,6 +86,9 @@ public class TeleopMode extends SimpleCommand {
                 break;
             case 1:
                 driveTrain.SmoothTankDrive(primary.leftStickY(), primary.rightStickY());
+                break;
+            case 2:
+                driveTrain.ArcadeDrive(primary.rightTrigger(), primary.leftTrigger(), primary.leftStickX());
                 break;
 
         }

@@ -218,18 +218,27 @@ public class DriveTrainSystemV2 extends Subsystem {
     //Implements Mark's attempted at a smoother drive system  TODO: Test to see if this actually works
     public void SmoothTankDrive(double leftStickY, double rightStickY){ driveSmoother.SetPower(leftStickY, rightStickY); }
 
+    /*RC Style drive
+    * Left Trigger = Forward
+    * Right Trigger = Backward
+    * Left Stick x = Turns
+    * */
+    public void ArcadeDrive(double rightTrigger, double leftTrigger, double leftStickX){
+
+    }
+
     //Just In Case We Need It, Returns the name as a int cause it is easier to work with
     public int getSelectedDriveMode(){
         int driveModeInt = 0;
 
-        switch (selectedMode.toString()){
-            case "RAWTANK":
+        switch (selectedMode){
+            case RAWTANK:
                 driveModeInt = 0;
                 break;
-            case "SMOOTHTANK":
+            case SMOOTHTANK:
                 driveModeInt = 1;
                 break;
-            case "ARCADE":
+            case ARCADE:
                 driveModeInt = 2;
                 break;
         }
