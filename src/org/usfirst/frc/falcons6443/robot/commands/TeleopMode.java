@@ -3,6 +3,9 @@ package org.usfirst.frc.falcons6443.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.Joysticks.Xbox;
+import org.usfirst.frc.falcons6443.robot.subsystems.driveModes.ArcadeDrive;
+import org.usfirst.frc.falcons6443.robot.subsystems.driveModes.RawTank;
+import org.usfirst.frc.falcons6443.robot.subsystems.driveModes.SmoothTank;
 import org.usfirst.frc.falcons6443.robot.utilities.Logger;
 import org.usfirst.frc.falcons6443.robot.utilities.enums.*;
 
@@ -27,6 +30,10 @@ public class TeleopMode extends SimpleCommand {
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
     private List<Consumer<Boolean>> isManualSetter = new ArrayList<>(); //add control manual setters
     //private WCDProfile driveProfile;//Profile used to calculate robot drive power
+
+    private ArcadeDrive arcade = new ArcadeDrive();
+    private SmoothTank smooth = new SmoothTank();
+    private RawTank tank = new RawTank();
 
     public TeleopMode() {
         super("Teleop Command");
@@ -81,14 +88,14 @@ public class TeleopMode extends SimpleCommand {
         //Sets drive mode based off selected
         switch (driveTrain.getSelectedDriveMode()){
             case 0:
-                driveTrain.TankDrive(primary.leftStickY(), primary.rightStickY());
-                // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
+                tank.TankDrive(primary.leftStickY(), primary.rightStickY());
+                // tank.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
                 break;
             case 1:
-                driveTrain.SmoothTankDrive(primary.leftStickY(), primary.rightStickY());
+                smooth.SmoothTankDrive(primary.leftStickY(), primary.rightStickY());
                 break;
             case 2:
-                driveTrain.ArcadeDrive(primary.rightTrigger(), primary.leftTrigger(), primary.leftStickX());
+                 arcade.ArcadeDrive(primary.rightTrigger(), primary.leftTrigger(), primary.leftStickX());
                 break;
 
         }

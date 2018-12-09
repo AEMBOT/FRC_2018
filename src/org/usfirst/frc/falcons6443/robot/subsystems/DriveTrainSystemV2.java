@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.Vector2d;
+import org.opencv.core.Mat;
 import org.usfirst.frc.falcons6443.robot.RobotMap;
 import org.usfirst.frc.falcons6443.robot.hardware.Encoders;
 import org.usfirst.frc.falcons6443.robot.hardware.SpeedControllerGroup;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 /**
- * System that allows driving of the robot.
+ * Holds core drive code driving off the robot is done from the appropriate class
  * <p>
  * Contains 2 SpeedControllerGroups which are controlled by an instance of RobotDrive.
  * This class is meant to fix some of the shortcomings of the original DriveTrainSystem
@@ -36,9 +37,6 @@ public class DriveTrainSystemV2 extends Subsystem {
     private Encoders leftEncoder; // Encoders clicks per rotation = 850 (default in Encoders class)
     private Encoders rightEncoder;
 
-    private double leftMotorPower;
-    private double rightMotorPower;
-
     private List<List<Integer>> encoderList = new ArrayList<List<Integer>>(); //Lists of lists! this holds a list of the encoder lists
     public Timer encoderCheck;
 
@@ -56,7 +54,7 @@ public class DriveTrainSystemV2 extends Subsystem {
     // A [nice] class in the wpilib that provides numerous driving capabilities.
     // Use it whenever you want your robot to move.
     private DifferentialDrive drive;
-    private DriveSmoother driveSmoother;
+    public DriveSmoother driveSmoother;
 
     /**
      * Constructor for DriveTrainSystem.
@@ -208,23 +206,6 @@ public class DriveTrainSystemV2 extends Subsystem {
         }
 
         tankDrive(vector.y, vector.x);
-    }
-
-    public void TankDrive(double leftStickY, double rightStickY){
-         tankDrive(-leftStickY, -rightStickY);
-    }
-
-
-    //Implements Mark's attempted at a smoother drive system  TODO: Test to see if this actually works
-    public void SmoothTankDrive(double leftStickY, double rightStickY){ driveSmoother.SetPower(leftStickY, rightStickY); }
-
-    /*RC Style drive
-    * Left Trigger = Forward
-    * Right Trigger = Backward
-    * Left Stick x = Turns
-    * */
-    public void ArcadeDrive(double rightTrigger, double leftTrigger, double leftStickX){
-
     }
 
     //Just In Case We Need It, Returns the name as a int cause it is easier to work with
