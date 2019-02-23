@@ -2,6 +2,7 @@ package org.usfirst.frc.falcons6443.robot.commands;
 
 import org.usfirst.frc.falcons6443.robot.Robot;
 import org.usfirst.frc.falcons6443.robot.hardware.joysticks.Xbox;
+import org.usfirst.frc.falcons6443.robot.hardware.joysticks.vJoy;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -17,8 +18,7 @@ public class TeleopMode extends SimpleCommand {
     private int unpressedID = 0;
     private boolean first = true;
 
-    private Xbox primary;           //Drive and flywheel/output
-    private Xbox secondary;         //Secondary functions
+    private vJoy primary;           //Drive and flywheel/output
     private List<Boolean> runOnceSavedData = new ArrayList<>();
     private List<Boolean> isManualLessThanBuffer = new ArrayList<>();
     private List<Callable<Boolean>> isManualGetter = new ArrayList<>(); //add control manual getters
@@ -42,7 +42,6 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void initialize() {
         primary = Robot.oi.getXbox(true);
-        secondary = Robot.oi.getXbox(false);
         //driveProfile = new FalconDrive(primary);
 
         //adding manual getters and setters to their array
@@ -58,38 +57,34 @@ public class TeleopMode extends SimpleCommand {
     public void execute() {
 
         //drive
-        driveTrain.falconDrive(primary.leftStickX(), primary.leftTrigger(), primary.rightTrigger());
+        driveTrain.falconDrive(primary.getX(), primary.getY());
         // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
-
-        //shifting
-        press(primary.rightBumper(), () -> driveTrain.upShift());
-        press(primary.leftBumper(), () -> driveTrain.downShift());
 
         //elevator
 //        press(ManualControls.Elevator, secondary.A(), () -> elevator.setToHeight(ElevatorPosition.Exchange));
 //        press(ManualControls.Elevator, secondary.B(), () -> elevator.setToHeight(ElevatorPosition.Switch));
 //        press(ManualControls.Elevator, secondary.X(), () -> elevator.setToHeight(ElevatorPosition.Stop));
 //        press(ManualControls.Elevator, secondary.Y(), () -> elevator.setToHeight(ElevatorPosition.Scale));
-        manual(ManualControls.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
+        //manual(ManualControls.Elevator, secondary.leftStickY(), () -> elevator.manual(-secondary.leftStickY()));
 
         //flywheels
-        press(primary.A(), () -> flywheel.intake());
-        press(primary.B(), () -> flywheel.output());
-        press(primary.Y(), () -> flywheel.slowOutput());
-        runOncePerPress(secondary.back(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
+        //press(primary.A(), () -> flywheel.intake());
+        //press(primary.B(), () -> flywheel.output());
+        //press(primary.Y(), () -> flywheel.slowOutput());
+        //runOncePerPress(secondary.back(), () -> flywheel.toggleKill(), false); //toggles slow spin while off
 
         //rotation
         //    press(ManualControls.Rotate, secondary.leftBumper(), () -> rotation.up());
         //    press(ManualControls.Rotate, secondary.rightBumper(), () -> rotation.down());
         //    press(ManualControls.Rotate, secondary.B(), () -> rotation.middle());
         //    press(ManualControls.Rotate, secondary.start(), () -> rotation.resetEncoder());
-        manual(ManualControls.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
+        //manual(ManualControls.Rotate, secondary.rightStickY(), () -> rotation.manual(-secondary.rightStickY()));
 
         //off functions
-        off(() -> elevator.stop(), ManualControls.Elevator);
-        off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
-        off(() -> rotation.stop(), ManualControls.Rotate, secondary.rightBumper(),
-                secondary.leftBumper(), secondary.B());
+        //off(() -> elevator.stop(), ManualControls.Elevator);
+        //off(() -> flywheel.stop(), primary.A(), primary.B(), primary.Y());
+        //off(() -> rotation.stop(), ManualControls.Rotate, secondary.rightBumper(),
+        //        secondary.leftBumper(), secondary.B());
 
         //general periodic functions
         //elevator.moveToHeight(false);
