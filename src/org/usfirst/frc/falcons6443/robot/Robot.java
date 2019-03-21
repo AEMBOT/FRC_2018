@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
     // If a new subsystem is added, it must also be added to SimpleCommand.
     // From there the subsystem can be referred to from any command that inherits SimpleCommand.
     public static final DriveTrainSystem DriveTrain = new DriveTrainSystem();
-    public static final ElevatorSystem Elevator = new ElevatorSystem();
+    //public static final ElevatorSystem Elevator = new ElevatorSystem();
     public static final FlywheelSystem Flywheel = new FlywheelSystem();
     public static final RotationSystem Rotation = new RotationSystem();
 

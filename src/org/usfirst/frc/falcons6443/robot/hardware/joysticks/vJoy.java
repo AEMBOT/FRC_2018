@@ -21,4 +21,6 @@ public class vJoy {
      * @return Y axis on virtual joystick for driving
      */
     public double getY() {return controller.getRawAxis(1);}
+
+    public double getYBack() {return  controller.getRawAxis(3);}
 }

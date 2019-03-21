@@ -10,16 +10,16 @@ public class MoveElevator extends SimpleCommand{
 
     public MoveElevator(ElevatorPosition pos){
         super("Move ElevatorSystem");
-        requires(elevator);
+        //requires(elevator);
         position = pos;
     }
 
     @Override
     public void initialize() {
-        elevator.setToHeight(position);
+        //elevator.setToHeight(position);
         Logger.log(LoggerSystems.Auto, "Setting elevator position" + position);
        // if(position != ElevatorPosition.Exchange && position != ElevatorPosition.Stop){
-            elevator.startTimer();
+            //elevator.startTimer();
        // }
     }
 

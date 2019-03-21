@@ -110,7 +110,7 @@ public class DriveTrainSystem extends Subsystem {
     public void upShift(){ shifted = true;}
     public void downShift(){shifted = false;}
 
-    public void falconDrive(double leftStickX, double rightStickY) {
+    public void falconDrive(double leftStickX, double rightTrigger, double leftTrigger) {
         Vector2d vector = new Vector2d(0,0);
         vector.x = 0;
         vector.y = 0;
@@ -120,7 +120,8 @@ public class DriveTrainSystem extends Subsystem {
         if(SmartDashboard.getBoolean("Baby Mode", false)){
             shifted = false;
             leftStickX /= 1.2;
-            rightStickY /= 1.2;
+            leftTrigger /= 1.2;
+            rightTrigger /= 1.2;
         }
 
         if (Math.abs(leftStickX) < .15) {
@@ -130,21 +131,21 @@ public class DriveTrainSystem extends Subsystem {
         }
         if(!shifted){ power = .7; }
 
-        if (rightStickY > 0) {//forward
-            vector.x = rightStickY*power+.1 - Math.pow(Math.E,-rightStickY)*.5*differential*Math.signum(leftStickX)*-1;
-            vector.y = rightStickY*power+.1 - Math.pow(Math.E,-rightStickY)*.5*differential*Math.signum(leftStickX);
+        if (rightTrigger > 0) {//forward
+            vector.x = rightTrigger*power+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+            vector.y = rightTrigger*power+.1 - Math.pow(Math.E,-rightTrigger)*.5*differential*Math.signum(leftStickX);
             vector.x *= -1;
             vector.y *= -1;
-        } else if (rightStickY < 0) { //reverse
-            vector.x = rightStickY*power+.1 - Math.pow(Math.E,-rightStickY)*.5*differential*Math.signum(leftStickX);
-            vector.y = rightStickY*power+.1 - Math.pow(Math.E,-rightStickY)*.5*differential*Math.signum(leftStickX)*-1;
-          //vector.x *= -1;
-          //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
-          //drive.y = primary.ri
+        } else if (leftTrigger > 0) { //reverse
+            vector.x = leftTrigger*power+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX);
+            vector.y = leftTrigger*power+.1 - Math.pow(Math.E,-leftTrigger)*.5*differential*Math.signum(leftStickX)*-1;
+            //vector.x *= -1;
+            //vector.y *= -1;ghtTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) + (differential + .71 * primary.rightTrigger());//x is right
+            //drive.y = primary.ri
         } else { //no trigger values, stationary rotation
-        //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
-         // drive.x = 2*differential;
-          //drive.y = -2*differential;
+            //  drive.x = primary.rightTrigger() * 1.2 * (primary.rightTrigger() * .7 + .44f) - (differential - .71 * primary.rightTrigger());//y is left
+            // drive.x = 2*differential;
+            //drive.y = -2*differential;
             if(Math.abs(leftStickX) > .2){
                 vector.x = -leftStickX/1.28-(.1*Math.signum(leftStickX));
                 vector.y = leftStickX/1.28+(.1*Math.signum(leftStickX));

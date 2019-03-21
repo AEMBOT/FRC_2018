@@ -29,7 +29,6 @@ public class TeleopMode extends SimpleCommand {
         super("Teleop Command");
         requires(driveTrain);
         requires(flywheel);
-        requires(elevator);
         requires(rotation);
     }
 
@@ -47,8 +46,6 @@ public class TeleopMode extends SimpleCommand {
         //adding manual getters and setters to their array
         while(isManualGetter.size() < ManualControls.values().length) isManualGetter.add(null); //ensures that array is at least size of ManualControls enum
         while(isManualSetter.size() < ManualControls.values().length) isManualSetter.add(null);
-        addIsManualGetterSetter(ManualControls.Elevator, () -> elevator.getManual(),
-                (Boolean set) -> elevator.setManual(set));
         addIsManualGetterSetter(ManualControls.Rotate, () -> rotation.getManual(),
                 (Boolean set) -> rotation.setManual(set));
     }
@@ -56,8 +53,9 @@ public class TeleopMode extends SimpleCommand {
     @Override
     public void execute() {
 
+        System.out.println(primary.getY());
         //drive
-        driveTrain.falconDrive(primary.getX(), primary.getY());
+        driveTrain.falconDrive(primary.getX(), primary.getY(), primary.getYBack());
         // driveTrain.tankDrive(driveProfile.calculate()); TODO: TEST this cause profiles are cool
 
         //elevator
@@ -97,9 +95,6 @@ public class TeleopMode extends SimpleCommand {
     //                      (Boolean set) -> elevator.setManual(set));
     private void addIsManualGetterSetter(ManualControls manual, Callable<Boolean> callable,
                                          Consumer<Boolean> consumer) {
-        isManualGetter.add(manual.ordinal(), callable);
-        isManualSetter.add(manual.ordinal(), consumer);
-        isManualLessThanBuffer.add(manual.ordinal(), true);  //included to ensure equal numbers of getters/setters to buffer checkers
     }
 
     //Pairs an action with a button
